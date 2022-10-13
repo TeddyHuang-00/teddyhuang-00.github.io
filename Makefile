@@ -72,8 +72,9 @@ publish:
 	"$(PELICAN)" "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(PUBLISHCONF)" $(PELICANOPTS)
 
 github: publish
-	ghp-import -m "Generate Pelican site $(shell date -u +"%Y-%m-%d %H:%M:%S")" -b $(GITHUB_PAGES_BRANCH) "$(OUTPUTDIR)"
-	git push origin $(GITHUB_PAGES_BRANCH)
+	- git branch -D $(GITHUB_PAGES_BRANCH)
+	ghp-import -n -o -m "Generate Pelican site $(shell date -u +"%Y-%m-%d %H:%M:%S")" -b $(GITHUB_PAGES_BRANCH) "$(OUTPUTDIR)"
+	git push -f origin $(GITHUB_PAGES_BRANCH)
 
 
 .PHONY: html help clean regenerate serve serve-global devserver publish github
