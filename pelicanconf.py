@@ -59,11 +59,11 @@ AUTHOR_FEED_RSS = None
 # Blogroll
 LINKS = (
     (
-        "<i class='fa fa-github'></i> GitHub",
+        "<i class='fa fa-github fa-xl'></i> GitHub",
         "https://github.com/TeddyHuang-00",
     ),
     (
-        "<i class='fa fa-file-o'></i> Pages",
+        "<i class='fa fa-file'></i> Pages",
         "https://TeddyHuang-00.github.io",
     ),
 )
