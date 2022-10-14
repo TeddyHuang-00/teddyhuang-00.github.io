@@ -2,6 +2,7 @@ AUTHOR = "Nan Huang"
 SITENAME = "Nan Huang's Secret Base"
 SITENAME = "WWW::CyberBase(NanHuang);"
 SITEURL = ""
+COPYRIGHT_YEAR = 2022
 
 PATH = "content"
 ARTICLE_EXCLUDES = [
@@ -21,7 +22,7 @@ EXTRA_PATH_METADATA = {
 
 TIMEZONE = "Asia/Shanghai"
 
-DEFAULT_LANG = "en"
+DEFAULT_LANG = "zh"
 
 THEME = "./content/theme"
 
@@ -56,14 +57,19 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
+ARCHIVES_SAVE_AS = "archives.html"
+AUTHORS_SAVE_AS = "authors.html"
+CATEGORIES_SAVE_AS = "categories.html"
+TAGS_SAVE_AS = "tags.html"
+
 # Blogroll
 LINKS = (
     (
-        "<i class='fa fa-github fa-xl'></i> GitHub",
+        "<i class='fa-brands fa-github'></i> GitHub",
         "https://github.com/TeddyHuang-00",
     ),
     (
-        "<i class='fa fa-file'></i> Pages",
+        "<i class='fa-solid fa-file'></i> Pages",
         "https://TeddyHuang-00.github.io",
     ),
 )
@@ -71,11 +77,11 @@ LINKS = (
 # Social widget
 SOCIAL = (
     (
-        "<i class='fa fa-envelope'></i> E-mail",
+        "<i class='fa-solid fa-envelope'></i> E-mail",
         "mailto:teddyhuangnan@gmail.com",
     ),
     (
-        "<i class='fa fa-film'></i> Bilibili",
+        "<i class='fa-brands fa-youtube'></i> Bilibili",
         "https://space.bilibili.com/13229205",
     ),
 )
@@ -96,17 +102,18 @@ MATH_JAX = {
     "responsive": True,
 }
 # Assets bundles that gets merged and minified
+WEBASSETS_SOURCE_PATHS = ["src"]
 WEBASSETS_BUNDLES = (
     (
         "css_bundle",
         (
-            "../src/css/simple.css",
-            "../src/css/code.css",
-            "../src/css/columns.css",
-            "../src/css/iframe-player.css",
-            "../src/css/typed.css",
-            "../src/css/logo.css",
-            "../src/css/hover.css",
+            "css/simple.css",
+            "css/code.css",
+            "css/columns.css",
+            "css/iframe-player.css",
+            "css/typed.css",
+            "css/logo.css",
+            "css/hover.css",
         ),
         {
             "output": "css/main.min.css",
@@ -115,7 +122,7 @@ WEBASSETS_BUNDLES = (
     ),
     (
         "css_404",
-        ("../src/css/404.css",),
+        ("css/404.css",),
         {
             "output": "css/404.min.css",
             "filters": ["cssmin"],
@@ -123,7 +130,7 @@ WEBASSETS_BUNDLES = (
     ),
     (
         "js_bundle",
-        ("../src/js/localizer.js",),
+        ("js/localizer.js",),
         {
             "output": "js/packed.js",
             "filters": ["jsmin"],
