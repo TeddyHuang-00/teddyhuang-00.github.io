@@ -16,11 +16,6 @@ CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
 
 DELETE_OUTPUT_DIRECTORY = True
 
-WEBASSETS_CONFIG = [
-    ("url_expire", False),
-    ("versions", None),
-]
-
 # Following items are often useful when publishing
 
 # DISQUS_SITENAME = ""

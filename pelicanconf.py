@@ -114,9 +114,10 @@ WEBASSETS_BUNDLES = (
             "css/typed.css",
             "css/logo.css",
             "css/hover.css",
+            "css/copy-code.css",
         ),
         {
-            "output": "css/main.min.css",
+            "output": "css/main.%(version)s.css",
             "filters": ["cssmin"],
         },
     ),
@@ -124,15 +125,23 @@ WEBASSETS_BUNDLES = (
         "css_404",
         ("css/404.css",),
         {
-            "output": "css/404.min.css",
+            "output": "css/404.%(version)s.css",
             "filters": ["cssmin"],
         },
     ),
     (
-        "js_bundle",
+        "js_pre_bundle",
         ("js/localizer.js",),
         {
-            "output": "js/packed.js",
+            "output": "js/pre.%(version)s.js",
+            "filters": ["jsmin"],
+        },
+    ),
+    (
+        "js_post_bundle",
+        ("js/copy-code.js",),
+        {
+            "output": "js/post.%(version)s.js",
             "filters": ["jsmin"],
         },
     ),
