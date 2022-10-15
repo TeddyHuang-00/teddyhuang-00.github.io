@@ -16,6 +16,10 @@ CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
 
 DELETE_OUTPUT_DIRECTORY = True
 
+WEBASSETS_CONFIG = [
+    ("cache", "./tmp/webassets-cache"),
+]
+
 # Following items are often useful when publishing
 
 # DISQUS_SITENAME = ""
