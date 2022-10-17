@@ -135,7 +135,7 @@ WEBASSETS_BUNDLES = (
         ("js/localizer.js",),
         {
             "output": "js/pre.%(version)s.js",
-            "filters": ["jsmin"],
+            "filters": ["jsmin","uglifyjs"],
         },
     ),
     (
@@ -146,7 +146,7 @@ WEBASSETS_BUNDLES = (
         ),
         {
             "output": "js/post.%(version)s.js",
-            "filters": ["jsmin"],
+            "filters": ["jsmin","uglifyjs"],
         },
     ),
 )
