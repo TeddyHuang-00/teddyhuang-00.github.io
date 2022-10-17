@@ -111,7 +111,7 @@ WEBASSETS_BUNDLES = (
             "css/code.css",
             "css/columns.css",
             "css/iframe-player.css",
-            "css/typed.css",
+            "css/typewriter.css",
             "css/logo.css",
             "css/hover.css",
             "css/copy-code.css",
