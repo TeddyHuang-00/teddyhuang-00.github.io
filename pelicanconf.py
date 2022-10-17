@@ -69,7 +69,7 @@ LINKS = (
         "https://github.com/TeddyHuang-00",
     ),
     (
-        "<i class='fa-solid fa-file'></i> Pages",
+        "<i class='fa-solid fa-house-user'></i> Pages",
         "https://TeddyHuang-00.github.io",
     ),
 )
