@@ -115,6 +115,7 @@ WEBASSETS_BUNDLES = (
             "css/logo.css",
             "css/hover.css",
             "css/copy-code.css",
+            "css/toggle-theme.css",
         ),
         {
             "output": "css/main.%(version)s.css",
@@ -139,7 +140,10 @@ WEBASSETS_BUNDLES = (
     ),
     (
         "js_post_bundle",
-        ("js/copy-code.js",),
+        (
+            "js/copy-code.js",
+            "js/toggle-theme.js",
+        ),
         {
             "output": "js/post.%(version)s.js",
             "filters": ["jsmin"],
