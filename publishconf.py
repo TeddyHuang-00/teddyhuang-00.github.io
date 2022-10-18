@@ -16,9 +16,9 @@ CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
 
 DELETE_OUTPUT_DIRECTORY = True
 
-WEBASSETS_CONFIG = [
+WEBASSETS_CONFIG.append(
     ("cache", "./tmp/webassets-cache"),
-]
+)
 
 # Following items are often useful when publishing
 

@@ -102,8 +102,11 @@ MATH_JAX = {
     "responsive": True,
 }
 # Assets bundles that gets merged and minified
-WEBASSETS_CONFIG = [
-    ("TYPESCRIPT_CONFIG", "--lib es2016,dom --target ES6 --removeComments true --skipLibCheck --allowSyntheticDefaultImports"),
+WEBASSETS_CONFIG: list[tuple[str, str]] = [
+    (
+        "TYPESCRIPT_CONFIG",
+        "--lib es2016,dom --target ES6 --removeComments true --skipLibCheck --allowSyntheticDefaultImports",
+    ),
 ]
 WEBASSETS_SOURCE_PATHS = ["src"]
 WEBASSETS_BUNDLES = (
