@@ -1,5 +1,4 @@
 AUTHOR = "Nan Huang"
-SITENAME = "Nan Huang's Secret Base"
 SITENAME = "WWW::CyberBase(NanHuang);"
 SITEURL = ""
 COPYRIGHT_YEAR = 2022
@@ -131,7 +130,7 @@ WEBASSETS_BUNDLES = (
         ),
         {
             "output": "css/main.%(version)s.css",
-            "filters": ["cssmin"],
+            "filters": ["cssprefixer", "cssmin"],
         },
     ),
     (
@@ -139,7 +138,7 @@ WEBASSETS_BUNDLES = (
         ("css/404.css",),
         {
             "output": "css/404.min.css",
-            "filters": ["cssmin"],
+            "filters": ["cssprefixer", "cssmin"],
         },
     ),
     (
