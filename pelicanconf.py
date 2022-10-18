@@ -130,7 +130,7 @@ WEBASSETS_BUNDLES = (
         ),
         {
             "output": "css/main.%(version)s.css",
-            "filters": ["cssprefixer", "cssmin"],
+            "filters": ["cssmin"],
         },
     ),
     (
@@ -138,7 +138,7 @@ WEBASSETS_BUNDLES = (
         ("css/404.css",),
         {
             "output": "css/404.min.css",
-            "filters": ["cssprefixer", "cssmin"],
+            "filters": ["cssmin"],
         },
     ),
     (
