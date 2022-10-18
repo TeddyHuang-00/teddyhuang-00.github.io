@@ -102,6 +102,9 @@ MATH_JAX = {
     "responsive": True,
 }
 # Assets bundles that gets merged and minified
+WEBASSETS_CONFIG = [
+    ("TYPESCRIPT_CONFIG", "--lib es2016,dom --target ES6 --removeComments true --skipLibCheck --allowSyntheticDefaultImports"),
+]
 WEBASSETS_SOURCE_PATHS = ["src"]
 WEBASSETS_BUNDLES = (
     (
@@ -126,27 +129,27 @@ WEBASSETS_BUNDLES = (
         "css_404",
         ("css/404.css",),
         {
-            "output": "css/404.%(version)s.css",
+            "output": "css/404.min.css",
             "filters": ["cssmin"],
         },
     ),
     (
         "js_pre_bundle",
-        ("js/localizer.js",),
+        ("ts/localizer.ts",),
         {
             "output": "js/pre.%(version)s.js",
-            "filters": ["jsmin","uglifyjs"],
+            "filters": ["typescript", "jsmin", "uglifyjs"],
         },
     ),
     (
         "js_post_bundle",
         (
-            "js/copy-code.js",
-            "js/toggle-theme.js",
+            "ts/copy-code.ts",
+            "ts/toggle-theme.ts",
         ),
         {
             "output": "js/post.%(version)s.js",
-            "filters": ["jsmin","uglifyjs"],
+            "filters": ["typescript", "jsmin", "uglifyjs"],
         },
     ),
 )
