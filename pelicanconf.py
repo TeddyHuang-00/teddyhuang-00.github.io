@@ -105,8 +105,14 @@ MATH_JAX = {
 WEBASSETS_CONFIG: list[tuple[str, str]] = [
     (
         "TYPESCRIPT_CONFIG",
-        "--lib es2016,dom --target ES6 --removeComments true --skipLibCheck --allowSyntheticDefaultImports",
+        "--lib es2015,dom \
+        --target es6 \
+        --removeComments true \
+        --skipLibCheck true \
+        --allowSyntheticDefaultImports true \
+        --experimentalDecorators",
     ),
+    ("cache", "./tmp/webassets-cache"),
 ]
 WEBASSETS_SOURCE_PATHS = ["src"]
 WEBASSETS_BUNDLES = (

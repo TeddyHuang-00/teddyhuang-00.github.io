@@ -47,7 +47,7 @@ help:
 	@echo 'Set the RELATIVE variable to 1 to enable relative urls                    '
 	@echo '                                                                          '
 
-html:
+html: clean
 	"$(PELICAN)" "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(CONFFILE)" $(PELICANOPTS)
 
 clean:
@@ -68,7 +68,7 @@ devserver:
 devserver-global:
 	$(PELICAN) -lr $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS) -b 0.0.0.0
 
-publish:
+publish: clean
 	"$(PELICAN)" "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(PUBLISHCONF)" $(PELICANOPTS)
 
 github: publish
