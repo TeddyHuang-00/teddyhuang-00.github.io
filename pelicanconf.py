@@ -85,6 +85,15 @@ SOCIAL = (
     ),
 )
 
+# Cool friends of mine
+FRIENDS = sorted(
+    (
+        ("BicPotato", "https://v2.blog.bicpotato.net/"),
+        ("Yixuan Wang", "https://blog.yixuan-wang.site/"),
+    ),
+    key=lambda x: x[0],
+)
+
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
