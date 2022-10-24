@@ -138,7 +138,7 @@ WEBASSETS_BUNDLES = (
             "css/toggle-theme.css",
         ),
         {
-            "output": "css/main.%(version)s.css",
+            "output": "css/main.min.css",
             "filters": ["autoprefixer6", "cssmin"],
         },
     ),
@@ -154,7 +154,7 @@ WEBASSETS_BUNDLES = (
         "js_pre_bundle",
         ("ts/localizer.ts",),
         {
-            "output": "js/pre.%(version)s.js",
+            "output": "js/pre.min.js",
             "filters": ["typescript", "jsmin", "uglifyjs"],
         },
     ),
@@ -165,7 +165,7 @@ WEBASSETS_BUNDLES = (
             "ts/toggle-theme.ts",
         ),
         {
-            "output": "js/post.%(version)s.js",
+            "output": "js/post.min.js",
             "filters": ["typescript", "jsmin", "uglifyjs"],
         },
     ),
