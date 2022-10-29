@@ -6,11 +6,13 @@ COPYRIGHT_YEAR = 2022
 PATH = "content"
 ARTICLE_EXCLUDES = [
     "images",
+    "pdfs",
     "theme",
 ]
 STATIC_PATHS = [
     "images",
     "extra",
+    "pdfs",
 ]
 EXTRA_PATH_METADATA = {
     "extra/favicon-16x16.png": {"path": "favicon-16x16.png"},
