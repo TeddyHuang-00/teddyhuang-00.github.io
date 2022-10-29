@@ -103,7 +103,6 @@ RELATIVE_URLS = True
 
 # # Plugins
 PLUGINS = [
-    "pelican_jupyter.markup",
     "pelican.plugins.jinja_filters",
     "pelican.plugins.jinja2content",
     "pelican.plugins.simple_footnotes",
@@ -111,12 +110,6 @@ PLUGINS = [
     "pelican.plugins.webassets",
     "minify",
 ]
-# # ipynb
-MARKUP = ("md", "ipynb")
-IGNORE_FILES = [".ipynb_checkpoints"]
-IPYNB_MARKUP_USE_FIRST_CELL = True
-IPYNB_SKIP_CSS = True
-# IPYNB_EXPORT_TEMPLATE = 'basic'
 # # display math
 MATH_JAX = {
     "responsive": True,
@@ -148,7 +141,6 @@ WEBASSETS_BUNDLES = (
             "css/hover.css",
             "css/copy-code.css",
             "css/toggle-theme.css",
-            "css/notebook.css",
         ),
         {
             "output": "css/main.min.css",
