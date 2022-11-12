@@ -58,10 +58,13 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
+DIRECT_TEMPLATES = ("index", "tags", "categories", "archives", "series", "authors")
+
 ARCHIVES_SAVE_AS = "archives.html"
 AUTHORS_SAVE_AS = "authors.html"
 CATEGORIES_SAVE_AS = "categories.html"
 TAGS_SAVE_AS = "tags.html"
+SERIES_SAVE_AS = "series.html"
 
 # Blogroll
 LINKS = (
@@ -96,7 +99,7 @@ FRIENDS = sorted(
     key=lambda x: x[0],
 )
 
-DEFAULT_PAGINATION = 10
+DEFAULT_PAGINATION = 4
 
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
@@ -108,6 +111,7 @@ PLUGINS = [
     "pelican.plugins.simple_footnotes",
     "pelican.plugins.render_math",
     "pelican.plugins.webassets",
+    "pelican.plugins.series",
     "minify",
 ]
 # # display math
