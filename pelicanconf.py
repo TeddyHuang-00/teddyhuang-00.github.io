@@ -159,6 +159,7 @@ WEBASSETS_BUNDLES = (
             "css/copy-code.css",
             "css/toggle-theme.css",
             "css/toc.css",
+            "css/cover-image.css",
         ),
         {
             "output": "css/main.min.css",
