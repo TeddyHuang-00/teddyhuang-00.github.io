@@ -104,6 +104,19 @@ DEFAULT_PAGINATION = 4
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
+# Markdown settings
+MARKDOWN = {
+    "extension_configs": {
+        # Needed for code syntax highlighting
+        "markdown.extensions.codehilite": {"css_class": "highlight"},
+        "markdown.extensions.extra": {},
+        "markdown.extensions.meta": {},
+        # This is for enabling the TOC generation
+        "markdown.extensions.toc": {"title": "Table of Contents"},
+    },
+    "output_format": "html5",
+}
+
 # # Plugins
 PLUGINS = [
     "pelican.plugins.jinja_filters",
@@ -145,6 +158,7 @@ WEBASSETS_BUNDLES = (
             "css/hover.css",
             "css/copy-code.css",
             "css/toggle-theme.css",
+            "css/toc.css",
         ),
         {
             "output": "css/main.min.css",
