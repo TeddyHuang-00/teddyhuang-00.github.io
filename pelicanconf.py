@@ -17,6 +17,7 @@ STATIC_PATHS = [
 EXTRA_PATH_METADATA = {
     "extra/favicon-16x16.png": {"path": "favicon-16x16.png"},
     "extra/favicon-32x32.png": {"path": "favicon-32x32.png"},
+    "extra/favicon-300x300.png": {"path": "favicon-300x300.png"},
     "extra/favicon.ico": {"path": "favicon.ico"},
     "extra/giscus.json": {"path": "giscus.json"},
 }
