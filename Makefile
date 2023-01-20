@@ -70,6 +70,7 @@ devserver-global:
 
 publish:
 	"$(PELICAN)" "$(INPUTDIR)" -o "$(OUTPUTDIR)" -s "$(PUBLISHCONF)" $(PELICANOPTS)
+	cp -r .github $(OUTPUTDIR)
 
 github: publish
 	- git branch -D $(GITHUB_PAGES_BRANCH)
