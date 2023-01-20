@@ -74,7 +74,7 @@ publish:
 
 github: publish
 	- git branch -D $(GITHUB_PAGES_BRANCH)
-	ghp-import -n -o -m "Generate and publish site on $(shell date -u +"%Y-%m-%d %H:%M:%S")" -b $(GITHUB_PAGES_BRANCH) "$(OUTPUTDIR)"
+	ghp-import -n -o -m "Generate and publish site on $(shell date +"%Y-%m-%d %H:%M:%S")" -b $(GITHUB_PAGES_BRANCH) "$(OUTPUTDIR)"
 	git push -f origin $(GITHUB_PAGES_BRANCH)
 
 .PHONY: html help clean regenerate serve serve-global devserver publish github
