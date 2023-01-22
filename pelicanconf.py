@@ -161,6 +161,7 @@ WEBASSETS_BUNDLES = (
             "css/toggle-theme.css",
             "css/toc.css",
             "css/cover-image.css",
+            "css/mock-browser.css",
         ),
         {
             "output": "css/main.min.css",
@@ -188,6 +189,7 @@ WEBASSETS_BUNDLES = (
         (
             "ts/copy-code.ts",
             "ts/toggle-theme.ts",
+            "ts/dispaly-alt.ts",
         ),
         {
             "output": "js/post.min.js",
