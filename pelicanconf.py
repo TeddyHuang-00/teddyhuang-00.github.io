@@ -7,12 +7,14 @@ PATH = "content"
 ARTICLE_EXCLUDES = [
     "images",
     "pdfs",
+    "videos",
     "theme",
 ]
 STATIC_PATHS = [
     "images",
-    "extra",
     "pdfs",
+    "videos",
+    "extra",
 ]
 EXTRA_PATH_METADATA = {
     "extra/favicon-16x16.png": {"path": "favicon-16x16.png"},
