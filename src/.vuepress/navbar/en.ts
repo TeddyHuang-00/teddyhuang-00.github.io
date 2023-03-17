@@ -22,7 +22,7 @@ export const enNavbar = navbar([
   {
     text: "Tutorial",
     icon: "material-symbols:school",
-    prefix: "/tutorials/",
+    prefix: "/en/tutorials/",
     children: [
       {
         text: "Streamlit",
@@ -34,7 +34,7 @@ export const enNavbar = navbar([
   {
     text: "Slides",
     icon: "material-symbols:slideshow",
-    prefix: "/slides/",
+    prefix: "/en/slides/",
     children: [
       {
         text: "Journal Club",
