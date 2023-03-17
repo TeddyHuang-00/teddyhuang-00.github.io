@@ -3,13 +3,19 @@
 @tailwind components;
 @tailwind utilities;
 
-// Here are some global styles
 .blog-hero h1 {
+  // Amend font size for blog hero title
   @apply font-mono text-lg sm:text-3xl #{!important};
 }
 
+.highlight-line {
+  // Amend styles when using shiki to highlight
+  @apply z-10 opacity-25;
+}
+
 @layer base {
+  // Make iframe default to full width and responsive height
   iframe {
-    @apply w-full max-h-screen h-96 border-none;
+    @apply w-full max-h-screen h-80 lg:h-96 xl:h-[30rem] border-none;
   }
 }

@@ -81,7 +81,7 @@ export default hopeTheme({
 
       // page meta
       metaLocales: {
-        editLink: "在 GitHub 上编辑此页",
+        editLink: "编辑此页",
       },
     },
 
@@ -106,7 +106,7 @@ export default hopeTheme({
       },
 
       metaLocales: {
-        editLink: "Edit this page on GitHub",
+        editLink: "Edit this page",
       },
     },
   },
@@ -200,6 +200,11 @@ export default hopeTheme({
       vPre: true,
       vuePlayground: true,
     },
+
+    prismjs: {
+      light: "one-dark",
+      dark: "one-dark"
+    }
   },
 
   sidebarSorter: ["readme", "order", "date", "title", "filename"],

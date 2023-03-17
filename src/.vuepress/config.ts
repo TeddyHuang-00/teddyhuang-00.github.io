@@ -2,6 +2,7 @@ import { defineUserConfig, viteBundler } from "vuepress";
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import { getDirname, path } from '@vuepress/utils'
 import { docsearchPlugin } from "@vuepress/plugin-docsearch"
+import { shikiPlugin } from '@vuepress/plugin-shiki'
 import tailwindcss from "tailwindcss"
 import autoprefixer from "autoprefixer"
 import theme from "./theme.js"
@@ -21,8 +22,8 @@ export default defineUserConfig({
       css: {
         postcss: {
           plugins: [
-            tailwindcss("./tailwind.config.cjs"),
-            autoprefixer(),
+            tailwindcss,
+            autoprefixer,
           ],
         }
       }
@@ -47,6 +48,9 @@ export default defineUserConfig({
   plugins: [
     registerComponentsPlugin({
       componentsDir: path.resolve(__dirname, './components'),
+    }),
+    shikiPlugin({
+      theme: "dark-plus"
     }),
     docsearchPlugin({
       appId: "GQWRTHZR5O",

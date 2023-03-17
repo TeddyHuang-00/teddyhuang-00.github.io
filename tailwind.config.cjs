@@ -26,8 +26,9 @@ module.exports = {
       screens: {
         // Overwrite some breakpoint to align
         // with the hope theme
-        "sm": "720px",
-        "lg": "960px",
+        sm: "720px",
+        lg: "960px",
+        xl: "1440px",
       },
     },
   },
