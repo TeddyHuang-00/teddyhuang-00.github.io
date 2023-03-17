@@ -5,7 +5,7 @@
 
 // Here are some global styles
 .blog-hero h1 {
-  @apply font-mono;
+  @apply font-mono text-lg sm:text-3xl #{!important};
 }
 
 @layer base {

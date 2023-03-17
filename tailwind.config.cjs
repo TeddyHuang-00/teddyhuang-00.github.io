@@ -23,6 +23,12 @@ module.exports = {
         "text-color": "var(--text-color)",
         "card-shadow": "var(--card-shadow)",
       },
+      screens: {
+        // Overwrite some breakpoint to align
+        // with the hope theme
+        "sm": "720px",
+        "lg": "960px",
+      },
     },
   },
   plugins: [],
