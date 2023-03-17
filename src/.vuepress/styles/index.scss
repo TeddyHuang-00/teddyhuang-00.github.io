@@ -10,7 +10,7 @@
 
 .highlight-line {
   // Amend styles when using shiki to highlight
-  @apply z-10 opacity-25;
+  @apply z-10 opacity-25 relative;
 }
 
 @layer base {
