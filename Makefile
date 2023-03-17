@@ -1,4 +1,4 @@
-.PHONY = github
+.PHONY: github
 
 github:
 	rm -rf src/.vuepress/dist
@@ -7,4 +7,5 @@ github:
 	git init && \
 	git add -A && \
 	git commit -m 'deploy at $(shell date)' && \
-	git push -f git@github.com:TeddyHuang-00/teddyhuang-00.github.io.git main:gh-pages
+	git branch -m local-build && \
+	git push -f git@github.com:TeddyHuang-00/teddyhuang-00.github.io.git local-build:gh-pages
