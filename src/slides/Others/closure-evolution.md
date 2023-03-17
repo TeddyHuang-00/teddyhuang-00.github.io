@@ -7,8 +7,6 @@ icon: material-symbols:hub
 
 @slidestart
 
-<!-- .slide: data-transition="slide" -->
-
 ## 闭包网络演化
 
 <!-- .element: class="r-fit-text" -->
@@ -227,7 +225,7 @@ python3 random_data.py -N 100 -C 10 -p 0.1 -q 0.1
 
 ---
 
-<!-- .slide: data-transition="slide" data-auto-animate -->
+<!-- .slide: data-auto-animate -->
 
 ## 闭包演化
 
@@ -373,7 +371,7 @@ freq /= np.sum(A * np.triu(np.ones_like(A, dtype=bool), k=1))
 
 ---
 
-<!-- .slide: data-transition="slide" data-auto-animate -->
+<!-- .slide: data-auto-animate -->
 
 ## 可视化
 
@@ -439,7 +437,7 @@ nx.draw_networkx_labels(G, pos)
 
 ---
 
-<!-- .slide: data-transition="slide" data-auto-animate -->
+<!-- .slide: data-auto-animate -->
 
 ## 后期处理
 
@@ -447,7 +445,7 @@ nx.draw_networkx_labels(G, pos)
 
 --
 
-<!-- .slide: data-transition="slide" data-auto-animate -->
+<!-- .slide: data-auto-animate -->
 
 ## 后期处理
 
@@ -487,7 +485,7 @@ python3 post_process.py \
 
 ---
 
-<!-- .slide: data-transition="slide" data-auto-animate -->
+<!-- .slide: data-auto-animate -->
 
 # 完整代码
 
@@ -499,7 +497,7 @@ python3 post_process.py \
 
 ---
 
-<!-- .slide: data-transition="slide" data-auto-animate data-background-gradient="linear-gradient(to bottom,rgb(0,0,0),rgb(40,40,40))" -->
+<!-- .slide: data-auto-animate data-background-gradient="linear-gradient(to bottom,rgb(0,0,0),rgb(40,40,40))" -->
 
 # Thanks for your time!
 
