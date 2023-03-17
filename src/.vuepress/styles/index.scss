@@ -1,0 +1,15 @@
+// place your custom styles here
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Here are some global styles
+.blog-hero h1 {
+  @apply font-mono;
+}
+
+@layer base {
+  iframe {
+    @apply w-full max-h-screen h-96 border-none;
+  }
+}
