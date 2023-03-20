@@ -428,7 +428,7 @@ nx.draw_networkx_edges(G, pos)
 ```python
 # 高亮新加入的边（红色：新朋友、绿色：新成员）
 if new_friend is not None:
-    nx.draw_networkx_edges(G, pos, edgelist=new_friend, edge_color="tab:red")
+    nx.draw_networkx_edges(G, pos, ..., edge_color="tab:red")
 if new_member is not None:
     nx.draw_networkx_edges(G, pos, ..., edge_color="tab:green")
 # 绘制节点标签
