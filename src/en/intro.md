@@ -19,6 +19,8 @@ icon: material-symbols:info
 
 - 🌱 I’m currently learning **Bioinformatics & Computational Neuroscience**
 
+- 🔍 **EXTERNAL reviewer** for KDD
+
 - 💬 Ask me about **Python / Pytorch / Streamlit / C++**
 
 - 🏠 Check out my [**GitHub Pages**](https://teddyhuang-00.github.io/) also
