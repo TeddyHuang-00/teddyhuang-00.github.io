@@ -505,6 +505,8 @@ $$
 \nabla_ \theta\mathbb{E}_ {\pi_ \theta}\left[r(\tau)\right]=\mathbb{E}_ {\pi_ \theta}\left[r(\tau)\sum_ {t=1}^{T}{\nabla\log_ \theta\pi _\theta\left(a_t\mid s_t\right)}\right]
 $$
 
+<!-- .element: class="r-fit-text" -->
+
 --
 
 <!-- .slide: data-auto-animate -->
@@ -518,6 +520,8 @@ REINFORCE
 $$
 \nabla_ \theta\mathbb{E}_ {\pi_ \theta}\left[r(\tau)\right]=\mathbb{E}_ {\pi_ \theta}\left[\sum_ {t=1}^{T}{\color{red}{G_t}\nabla\log_ \theta\pi _\theta\left(a_t\mid s_t\right)}\right]
 $$
+
+<!-- .element: class="r-fit-text" -->
 
 --
 
@@ -533,6 +537,8 @@ $$
 \nabla_ \theta\mathbb{E}_ {\pi_ \theta}\left[r(\tau)\right]=\mathbb{E}_ {\pi_ \theta}\left[\sum_ {t=1}^{T}{\nabla\log_ \theta\pi_ \theta\left(a_t\mid s_t\right)\color{red}{Q^{\pi_ \theta}(s_t,a_t)}}\right]
 $$
 
+<!-- .element: class="r-fit-text" -->
+
 --
 
 <!-- .slide: data-auto-animate -->
@@ -547,6 +553,8 @@ $$
 \nabla_ \theta\mathbb{E}_ {\pi_ \theta}\left[r(\tau)\right]=\mathbb{E}_ {\pi_ \theta}\left[\nabla\log_ \theta\pi_ \theta\color{red}{\left(a\mid s\right)}Q^{\pi_ \theta}\color{red}{(s,a)}\right]
 $$
 
+<!-- .element: class="r-fit-text" -->
+
 --
 
 <!-- .slide: data-auto-animate -->
@@ -560,6 +568,8 @@ REINFORCE with baseline
 $$
 \nabla_ \theta\mathbb{E}_ {\pi_ \theta}\left[r(\tau)\right]=\mathbb{E}_ {\pi_ \theta}\left[\nabla\log_ \theta\pi_ \theta\left(a\mid s\right)\left(Q^{\pi_ \theta}(s,a)\color{red}{-b}\right)\right]
 $$
+
+<!-- .element: class="r-fit-text" -->
 
 --
 
@@ -594,6 +604,8 @@ $$
 $$
 D_ {KL}(\theta\mid\mid\theta')=\mathbb{E}_ {\pi_ \theta}\left[D_ {KL}(\pi_ \theta(\cdot\mid s)\mid\mid\pi_ \theta'(\cdot\mid s))\right]\le\delta
 $$
+
+<!-- .element: class="r-fit-text" -->
 
 --
 
@@ -786,6 +798,8 @@ Sliding windows sized determined by regression
 
 $\text{EWMA}(t)=\alpha x(t)+(1-\alpha)\text{EWMA}(t-1), \alpha=\frac{2}{N+1}$
 
+<!-- .element: class="r-fit-text" -->
+
 --
 
 <!-- .slide: data-auto-animate -->
@@ -800,7 +814,7 @@ Variable features are related with module state
 
 - Accuracy $64\\\% \to 77\\\%$ (v.s. observations only)
 <!-- .element: class="fragment fade-in" -->
-- Accuracy $37\\\% \to 77\\\%$ (v.s. observations only)
+- Accuracy $37\\\% \to 77\\\%$ (v.s. majority class)
 <!-- .element: class="fragment fade-in" -->
 
 ---
@@ -911,6 +925,8 @@ Reduction in timescale
 Longer memory length are more favorable
 
 ![Time scale](/projects/AAOTP/Fig-6-c.svg)
+
+<!-- .element: class="r-stretch" -->
 
 - MLP as fixed memory length RNN
 <!-- .element: class="fragment fade-in" -->
