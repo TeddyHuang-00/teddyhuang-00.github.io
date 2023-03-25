@@ -9,10 +9,18 @@ heroText: WWW::CyberBase(NanHuang);
 tagline: Code for fun
 heroFullScreen: true
 projects:
-  # - icon: material-symbols:deployed-code
-  #   name: project name
-  #   desc: project detailed description
-  #   link: https://your.project.link
+  - icon: material-symbols:checklist
+    name: Todo List
+    desc: 一个简单的 Todo 应用
+    link: https://teddyhuang-00.github.io/TodoApp/
+  - icon: material-symbols:person
+    name: BicPotato
+    desc: Tinker enthusiast like me
+    link: https://v2.blog.bicpotato.net/
+  - icon: material-symbols:person
+    name: Yixuan Wang
+    desc: A linguist who is (very) good at programming
+    link: https://blog.yixuan-wang.site/
 
   # - icon: material-symbols:link
   #   name: link name
@@ -28,11 +36,5 @@ projects:
   #   name: article name
   #   desc: Detailed description of the article
   #   link: https://link.to.your.article
-
-  # - icon: material-symbols:person
-  #   name: friend name
-  #   desc: Detailed description of friend
-  #   link: https://link.to.your.friend
-
 # footer: customize your footer text
 ---
