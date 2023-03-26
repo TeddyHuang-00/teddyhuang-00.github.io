@@ -206,10 +206,12 @@ export default hopeTheme({
       vuePlayground: true,
     },
 
-    prismjs: {
-      light: "one-dark",
-      dark: "one-dark",
-    },
+    // prismjs: {
+    //   light: "one-dark",
+    //   dark: "one-dark",
+    // },
+    // Disable prism to use shiki
+    prismjs: false,
   },
 
   sidebarSorter: ["readme", "order", "date", "title", "filename"],

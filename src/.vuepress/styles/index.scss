@@ -8,11 +8,6 @@
   @apply font-mono text-lg sm:text-3xl #{!important};
 }
 
-.highlight-line {
-  // Amend styles when using shiki to highlight
-  @apply z-10 opacity-20 relative mix-blend-plus-lighter;
-}
-
 @layer base {
   // Make iframe default to full width and responsive height
   iframe {
