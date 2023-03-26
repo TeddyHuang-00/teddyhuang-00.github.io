@@ -72,7 +72,7 @@ export default hopeTheme({
       // sidebar
       sidebar: zhSidebar,
 
-      footer: "MIT 协议 | 由 ❤️ 驱动",
+      footer: "CC BY-NC-SA 4.0 协议 | 由 ❤️ 驱动",
 
       displayFooter: true,
 
@@ -98,7 +98,7 @@ export default hopeTheme({
       // sidebar
       sidebar: enSidebar,
 
-      footer: "MIT Licensed | Made with ❤️",
+      footer: "CC BY-NC-SA 4.0 Licensed | Made with ❤️",
 
       displayFooter: true,
 
@@ -150,6 +150,8 @@ export default hopeTheme({
       global: true,
       // 禁用复制
       disableCopy: false,
+      // 版权信息
+      license: "CC BY-NC-SA 4.0",
     },
 
     git: {
