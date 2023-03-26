@@ -13,10 +13,6 @@
   @apply z-10 opacity-20 relative mix-blend-plus-lighter;
 }
 
-.timeline-wrapper .timeline-date {
-  @apply w-12 #{!important};
-}
-
 @layer base {
   // Make iframe default to full width and responsive height
   iframe {
