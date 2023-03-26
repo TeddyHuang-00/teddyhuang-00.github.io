@@ -59,6 +59,8 @@ export default hopeTheme({
     roundAvatar: true,
   },
 
+  headerDepth: 2,
+
   locales: {
     /**
      * Chinese locale config
