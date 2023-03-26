@@ -9,6 +9,7 @@ The code base of this project is licensed under the [MIT License](LICENSE), whil
 ## Acknowledgements
 
 Huge shout out to:
+
 - [Vuepress 2](https://v2.vuepress.vuejs.org/) for the static site generator
 - [Vuepress theme Hope](https://theme-hope.vuejs.press/) for the theme and components
 - [Tailwind CSS](https://tailwindcss.com/) for the CSS framework

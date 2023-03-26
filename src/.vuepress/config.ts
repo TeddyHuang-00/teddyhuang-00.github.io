@@ -1,17 +1,17 @@
 import { defineUserConfig, viteBundler } from "vuepress";
-import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
-import { getDirname, path } from '@vuepress/utils'
-import { docsearchPlugin } from "@vuepress/plugin-docsearch"
-import { shikiPlugin } from '@vuepress/plugin-shiki'
-import tailwindcss from "tailwindcss"
-import autoprefixer from "autoprefixer"
-import theme from "./theme.js"
+import { registerComponentsPlugin } from "@vuepress/plugin-register-components";
+import { getDirname, path } from "@vuepress/utils";
+import { docsearchPlugin } from "@vuepress/plugin-docsearch";
+import { shikiPlugin } from "@vuepress/plugin-shiki";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
+import theme from "./theme.js";
 
-const __dirname = getDirname(import.meta.url)
+const __dirname = getDirname(import.meta.url);
 
 export default defineUserConfig({
   alias: {
-    '@': path.resolve(__dirname, '../.vuepress')
+    "@": path.resolve(__dirname, "../.vuepress"),
   },
 
   base: "/",
@@ -21,13 +21,10 @@ export default defineUserConfig({
     viteOptions: {
       css: {
         postcss: {
-          plugins: [
-            tailwindcss,
-            autoprefixer,
-          ],
-        }
-      }
-    }
+          plugins: [tailwindcss, autoprefixer],
+        },
+      },
+    },
   }),
 
   locales: {
@@ -47,10 +44,10 @@ export default defineUserConfig({
 
   plugins: [
     registerComponentsPlugin({
-      componentsDir: path.resolve(__dirname, './components'),
+      componentsDir: path.resolve(__dirname, "./components"),
     }),
     shikiPlugin({
-      theme: "dark-plus"
+      theme: "dark-plus",
     }),
     docsearchPlugin({
       appId: "GQWRTHZR5O",
@@ -133,13 +130,14 @@ export default defineUserConfig({
               noResultsScreen: {
                 noResultsText: "No results found",
                 suggestedQueryText: "You can try searching for",
-                reportMissingResultsText: "Do you think this query should have results?",
+                reportMissingResultsText:
+                  "Do you think this query should have results?",
                 reportMissingResultsLinkText: "Click here to report it",
               },
             },
           },
         },
       },
-    })
+    }),
   ],
 });

@@ -87,7 +87,6 @@ export default hopeTheme({
       },
     },
 
-
     /**
      * English locale config
      */
@@ -116,7 +115,7 @@ export default hopeTheme({
   navbarLayout: {
     start: ["Brand"],
     center: ["Links"],
-    end: ["Language", 'Repo', 'Outlook', 'Search']
+    end: ["Language", "Repo", "Outlook", "Search"],
   },
 
   plugins: {
@@ -132,8 +131,8 @@ export default hopeTheme({
         // "Replit",
         // "StackBlitz",
         "VideoPlayer",
-        "YouTube"
-      ]
+        "YouTube",
+      ],
     },
 
     comment: {
@@ -142,7 +141,9 @@ export default hopeTheme({
       repo: "TeddyHuang-00/teddyhuang-00.github.io",
       repoId: "R_kgDOIIxzaw",
       category: "Announcements",
-      categoryId: "DIC_kwDOIIxza84CR07z"
+      categoryId: "DIC_kwDOIIxza84CR07z",
+      lightTheme: "light_protanopia",
+      darkTheme: "transparent_dark",
     },
 
     copyright: {
@@ -207,8 +208,8 @@ export default hopeTheme({
 
     prismjs: {
       light: "one-dark",
-      dark: "one-dark"
-    }
+      dark: "one-dark",
+    },
   },
 
   sidebarSorter: ["readme", "order", "date", "title", "filename"],
