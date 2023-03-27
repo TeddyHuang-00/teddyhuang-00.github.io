@@ -42,7 +42,7 @@ st.dataframe(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-dataframe-wh.png"
+        src="/projects/streamlit/streamlit-dataframe-wh.png"
         alt="st.dataframe 指定显示宽高">
 </BrowserMockup>
 
@@ -59,7 +59,7 @@ st.dataframe(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-dataframe-pd.png"
+        src="/projects/streamlit/streamlit-dataframe-pd.png"
         alt="st.dataframe 使用父容器宽度">
 </BrowserMockup>
 
@@ -73,7 +73,7 @@ st.dataframe(
 
 <BrowserMockup>
     <VideoPlayer
-        src="/assets/videos/streamlit-dataframe-interact.mp4"
+        src="/projects/streamlit/streamlit-dataframe-interact.mp4"
         alt="st.dataframe 交互演示">
     </VideoPlayer>
 </BrowserMockup>
@@ -88,7 +88,7 @@ st.table({"a": [1, 2], "b": [3, 4]})
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-table.png"
+        src="/projects/streamlit/streamlit-table.png"
         alt="st.table 显示样式示例">
 </BrowserMockup>
 
@@ -120,7 +120,7 @@ st.metric(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-metric-int.png"
+        src="/projects/streamlit/streamlit-metric-int.png"
         alt="st.table 显示样式示例">
 </BrowserMockup>
 
@@ -137,7 +137,7 @@ st.metric(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-metric-str.png"
+        src="/projects/streamlit/streamlit-metric-str.png"
         alt="st.table 显示负的 delta">
 </BrowserMockup>
 
@@ -154,7 +154,7 @@ st.json(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-json.png"
+        src="/projects/streamlit/streamlit-json.png"
         alt="st.json 显示示例">
 </BrowserMockup>
 
@@ -192,7 +192,7 @@ st.line_chart(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-line-chart.png"
+        src="/projects/streamlit/streamlit-line-chart.png"
         alt="st.line_chart 显示示例">
 </BrowserMockup>
 
@@ -218,7 +218,7 @@ st.area_chart(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-area-chart.png"
+        src="/projects/streamlit/streamlit-area-chart.png"
         alt="st.area_chart 显示示例">
 </BrowserMockup>
 
@@ -244,7 +244,7 @@ st.bar_chart(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-bar-chart.png"
+        src="/projects/streamlit/streamlit-bar-chart.png"
         alt="st.bar_chart 显示示例">
 </BrowserMockup>
 
@@ -285,7 +285,7 @@ st.map(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-map.png"
+        src="/projects/streamlit/streamlit-map.png"
         alt="st.map 显示示例">
 </BrowserMockup>
 
@@ -573,7 +573,7 @@ st.image(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-image-url.png"
+        src="/projects/streamlit/streamlit-image-url.png"
         alt="st.image 显示通过 URL 指定的图片">
 </BrowserMockup>
 
@@ -591,7 +591,7 @@ st.image(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-image-bytes.png"
+        src="/projects/streamlit/streamlit-image-bytes.png"
         alt="st.image 显示图片的二进制数据">
 </BrowserMockup>
 
@@ -619,7 +619,7 @@ st.audio(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-audio.png"
+        src="/projects/streamlit/streamlit-audio.png"
         alt="st.audio 播放生成的音频">
 </BrowserMockup>
 
@@ -649,7 +649,7 @@ st.video(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-video.png"
+        src="/projects/streamlit/streamlit-video.png"
         alt="st.video 播放本地视频">
 </BrowserMockup>
 

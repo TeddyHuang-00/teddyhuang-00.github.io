@@ -87,7 +87,7 @@ streamlit hello
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-hello.png"
+        src="/projects/streamlit/streamlit-hello.png"
         alt="Streamlit hello 示例页面">
 </BrowserMockup>
 

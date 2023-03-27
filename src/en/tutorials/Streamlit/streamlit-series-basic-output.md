@@ -50,7 +50,7 @@ streamlit run app.py
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-rerun-info.png"
+        src="/projects/streamlit/streamlit-rerun-info.png"
         alt="Streamlit 重新运行提示">
 </BrowserMockup>
 
@@ -97,7 +97,7 @@ st.header(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-title-text.png"
+        src="/projects/streamlit/streamlit-title-text.png"
         alt="streamlit title、header、subheader 和 text 对比">
 </BrowserMockup>
 
@@ -124,7 +124,7 @@ st.code(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-code.png"
+        src="/projects/streamlit/streamlit-code.png"
         alt="st.code 示例">
 </BrowserMockup>
 
@@ -149,7 +149,7 @@ st.markdown(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-markdown.png"
+        src="/projects/streamlit/streamlit-markdown.png"
         alt="st.markdown 示例">
 </BrowserMockup>
 
@@ -163,7 +163,7 @@ st.caption("小号显示的说明文字")
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-caption.png"
+        src="/projects/streamlit/streamlit-caption.png"
         alt="st.caption 示例">
 </BrowserMockup>
 
@@ -177,7 +177,7 @@ st.latex(r"""\LaTeX""")
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-latex.png"
+        src="/projects/streamlit/streamlit-latex.png"
         alt="st.latex 示例">
 </BrowserMockup>
 
@@ -223,7 +223,7 @@ st.write(
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-write-magic.png"
+        src="/projects/streamlit/streamlit-write-magic.png"
         alt="st.write 和魔法方法示例">
 </BrowserMockup>
 
@@ -240,7 +240,7 @@ with st.echo("above"):
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-echo.png"
+        src="/projects/streamlit/streamlit-echo.png"
         alt="st.echo 示例">
 </BrowserMockup>
 
@@ -254,7 +254,7 @@ st.help(st.help)
 
 <BrowserMockup>
     <img
-        src="/assets/images/streamlit-help.png"
+        src="/projects/streamlit/streamlit-help.png"
         alt="st.help 示例">
 </BrowserMockup>
 
