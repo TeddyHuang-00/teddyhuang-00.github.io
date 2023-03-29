@@ -434,13 +434,13 @@ git remote add origin git@github.com:TeddyHuang-00/teddyhuang-00.github.io.git
 
 Vuepress 默认的构建输出目录是 `/src/.vuepress/dist`，因此想要使用 GitHub Actions，需要在此目录中添加 `.github/workflows/deploy.yml` 文件，可以选择将整个 `.github` 文件夹添加至 `/src/.vuepress/public` 文件夹下，这样在构建时就能够被复制到构建输出目录中。`deploy.yml` 的文件内容如下：
 
-@[code yaml](../../.vuepress/public/.github/workflows/static-deploy.yml)
+@[code yaml](../../../.vuepress/public/.github/workflows/static-deploy.yml)
 
 ### 自动部署
 
 最后我们只需要在根目录中新建一个 `Makefile` 文件，用于在本地构建并自动推送到 `gh-pages` 分支：
 
-@[code makefile{11}](../../../Makefile)
+@[code makefile{11}](../../../../Makefile)
 
 ::: tip
 你需要将最后一行中的路径设置为你自己的仓库路径。

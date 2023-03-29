@@ -3,6 +3,7 @@ import { registerComponentsPlugin } from "@vuepress/plugin-register-components";
 import { getDirname, path } from "@vuepress/utils";
 import { docsearchPlugin } from "@vuepress/plugin-docsearch";
 import { shikiPlugin } from "@vuepress/plugin-shiki";
+import { redirectPlugin } from "vuepress-plugin-redirect";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import theme from "./theme.js";
@@ -28,7 +29,7 @@ export default defineUserConfig({
   }),
 
   locales: {
-    "/": {
+    "/zh/": {
       lang: "zh-CN",
       title: "楠的博客",
       description: "WWW::CyberBase(NanHuang);",
@@ -49,12 +50,20 @@ export default defineUserConfig({
     shikiPlugin({
       theme: "dark-plus",
     }),
+    redirectPlugin({
+      autoLocale: true,
+      localeConfig: {
+        "/zh/": ["zh-CN", "zh-TW", "zh"],
+        "/en/": ["en-US", "en-UK", "en"],
+      },
+      // TODO: Redirect old default pages to /zh/
+    }),
     docsearchPlugin({
       appId: "GQWRTHZR5O",
       apiKey: "29d33a940d6df255b8e18ce923022671",
       indexName: "teddyhuang-00io",
       locales: {
-        "/": {
+        "/zh/": {
           placeholder: "搜索站点",
           translations: {
             button: {

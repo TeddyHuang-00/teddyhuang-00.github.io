@@ -65,7 +65,7 @@ export default hopeTheme({
     /**
      * Chinese locale config
      */
-    "/": {
+    "/zh/": {
       // navbar
       navbar: zhNavbar,
 

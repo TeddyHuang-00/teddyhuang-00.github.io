@@ -1,6 +1,6 @@
 ---
 layout: Slide
-title: Emergent behavior and neural dynamics in artifical agents tracking odour plums
+title: Emergent behavior and neural dynamics in artifical agents tracking odour plumes
 date: 2023-03-23
 icon: material-symbols:slideshow
 ---
