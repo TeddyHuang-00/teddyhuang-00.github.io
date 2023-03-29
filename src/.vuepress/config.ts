@@ -56,7 +56,6 @@ export default defineUserConfig({
         "/zh/": ["zh-CN", "zh-TW", "zh"],
         "/en/": ["en-US", "en-UK", "en"],
       },
-      // TODO: Redirect old default pages to /zh/
     }),
     docsearchPlugin({
       appId: "GQWRTHZR5O",
