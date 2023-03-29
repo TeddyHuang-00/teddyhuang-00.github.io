@@ -8,6 +8,10 @@
   @apply font-mono text-lg sm:text-3xl #{!important};
 }
 
+.project .image {
+  @apply rounded-full;
+}
+
 @layer base {
   // Make iframe default to full width and responsive height
   iframe {

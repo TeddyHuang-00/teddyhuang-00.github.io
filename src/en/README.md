@@ -13,11 +13,11 @@ projects:
     name: Todo List
     desc: 一个简单的 Todo 应用
     link: https://teddyhuang-00.github.io/TodoApp/
-  - icon: material-symbols:person
+  - icon: https://github.com/bic-potato.png?size=256
     name: BicPotato
     desc: Tinker enthusiast like me
     link: https://v2.blog.bicpotato.net/
-  - icon: material-symbols:person
+  - icon: https://github.com/Yixuan-Wang.png?size=256
     name: Yixuan Wang
     desc: A linguist who is (very) good at programming
     link: https://blog.yixuan-wang.site/
