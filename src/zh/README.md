@@ -13,6 +13,10 @@ projects:
     name: Todo List
     desc: 一个简单的 Todo 应用
     link: https://teddyhuang-00.github.io/TodoApp/
+  - icon: https://github.com/HuiwenZheng-Ariel.png?size=256
+    name: HuiwenZheng-Ariel
+    desc: 包容性倡导者及女朋友
+    link: https://HuiwenZheng-Ariel.github.io/
   - icon: https://github.com/bic-potato.png?size=256
     name: BicPotato
     desc: 同我一样喜欢捣鼓的人

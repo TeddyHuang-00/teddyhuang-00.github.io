@@ -11,8 +11,12 @@ heroFullScreen: true
 projects:
   - icon: material-symbols:checklist
     name: Todo List
-    desc: 一个简单的 Todo 应用
+    desc: A simple TODO app
     link: https://teddyhuang-00.github.io/TodoApp/
+  - icon: https://github.com/HuiwenZheng-Ariel.png?size=256
+    name: HuiwenZheng-Ariel
+    desc: Inclusion advocator and girlfriend
+    link: https://HuiwenZheng-Ariel.github.io/
   - icon: https://github.com/bic-potato.png?size=256
     name: BicPotato
     desc: Tinker enthusiast like me
