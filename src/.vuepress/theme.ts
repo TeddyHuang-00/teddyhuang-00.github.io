@@ -17,7 +17,7 @@ export default hopeTheme({
 
   repo: "TeddyHuang-00/teddyhuang-00.github.io",
 
-  docsBranch: "next",
+  docsBranch: "main",
 
   docsDir: "src",
 
