@@ -11,7 +11,7 @@ tag:
   - Vue
   - Tailwind
 sticky: false
-star: false
+star: true
 ---
 
 使用基于 Vuepress 2 的 Hope 主题和 Tailwind CSS 重构了个人博客。

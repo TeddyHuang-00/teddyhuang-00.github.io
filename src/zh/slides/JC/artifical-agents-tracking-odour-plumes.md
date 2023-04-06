@@ -5,9 +5,11 @@ date: 2023-03-23
 icon: material-symbols:slideshow
 ---
 
-<!-- .slide: data-auto-animate -->
+<!-- more -->
 
 @slidestart white
+
+<!-- .slide: data-auto-animate -->
 
 ### Emergent behaviour and neural dynamics in artificial agents tracking odour plumes
 

@@ -78,7 +78,7 @@ export default hopeTheme({
 
       blog: {
         description: "一个不专业的全栈开发者",
-        intro: "/intro.html",
+        intro: "/zh/intro.html",
       },
 
       // page meta

@@ -5,6 +5,8 @@ date: 2023-03-17
 icon: material-symbols:hub
 ---
 
+<!-- more -->
+
 @slidestart
 
 ## 闭包网络演化

@@ -11,7 +11,7 @@ tag:
   - Vue
   - Tailwind
 sticky: false
-star: false
+star: true
 ---
 
 <!-- TODO: translate this page -->
