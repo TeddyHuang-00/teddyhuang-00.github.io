@@ -5,6 +5,8 @@ date: 2023-03-23
 icon: material-symbols:slideshow
 ---
 
+<!-- 2023 年 03 月 24 日 JC -->
+
 <!-- more -->
 
 @slidestart white

@@ -5,6 +5,8 @@ date: 2023-03-23
 icon: material-symbols:slideshow
 ---
 
+<!-- Journal club presentation on March 24th, 2023 -->
+
 <!-- more -->
 
 @slidestart white

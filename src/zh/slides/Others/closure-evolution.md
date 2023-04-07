@@ -5,6 +5,8 @@ date: 2023-03-17
 icon: material-symbols:hub
 ---
 
+<!-- 社会科学中的计算思维方法 -->
+
 <!-- more -->
 
 @slidestart
