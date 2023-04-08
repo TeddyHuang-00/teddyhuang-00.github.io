@@ -440,7 +440,29 @@ Vuepress 默认的构建输出目录是 `/src/.vuepress/dist`，因此想要使�
 
 最后我们只需要在根目录中新建一个 `Makefile` 文件，用于在本地构建并自动推送到 `gh-pages` 分支：
 
-@[code makefile{11}](../../../../Makefile)
+```make {11}
+.PHONY: github clean build
+
+github: clean build
+	@echo "======================================================"
+	@echo "deploying to github"
+	cd src/.vuepress/dist && \
+	git init && \
+	git add -A && \
+	git commit -m 'deploy at $(shell date)' && \
+	git branch -m local-build && \
+	git push -f git@github.com:TeddyHuang-00/teddyhuang-00.github.io.git local-build:gh-pages
+
+clean:
+	@echo "======================================================"
+	@echo "cleaning up output directory"
+	- rm -rf src/.vuepress/dist
+
+build:
+	@echo "======================================================"
+	@echo "building site"
+	npm run docs:build
+```
 
 ::: tip
 你需要将最后一行中的路径设置为你自己的仓库路径。
