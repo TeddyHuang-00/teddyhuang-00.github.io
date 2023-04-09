@@ -410,7 +410,7 @@ export default defineUserConfig({
 
 ### 准备仓库
 
-为了能够将站点部署到 `.github.io` 的根路径下，我们需要创建一个和 GitHub 用户名相同<Badge text="全部转为小写" type="info"/>的仓库，例如如果 GitHub 用户名是 `MeteorGuy`，那么就需要创建一个名为 `meteorguy.github.io` 的仓库。
+为了能够将站点部署到 `.github.io` 的根路径下，我们需要创建一个和 GitHub 用户名相同<Badge text="也可全部转为小写" type="info"/>的仓库，例如如果 GitHub 用户名是 `MeteorGuy`，那么就需要创建一个名为 `meteorguy.github.io` 的仓库。
 
 为了后续方便操作，最好将仓库设置为追踪远程分支：
 
@@ -432,13 +432,158 @@ git remote add origin git@github.com:TeddyHuang-00/teddyhuang-00.github.io.git
 
 具体选项可以在仓库的 `设置` -> `页面` 中进行更改。这里我们使用第三种方式，即使用 GitHub Actions 来部署。可以自定义发布流程，灵活程度较高。
 
-由于我个人不太喜欢基于 GitHub Actions 的 CI/CD，感觉速度较慢，因此我将在本地构建完后，将构建好的文件强制推送到 `gh-pages` 分支<Badge text="可以防止污染git仓库" type="info"/>，然后再使用 GitHub Actions 直接将 `gh-pages` 分支下的内容部署到 GitHub Pages。
+### 配置 GitHub Actions
+
+GitHub Actions 是 GitHub 提供的 CI/CD 服务，可以在 GitHub 仓库中自动运行脚本，以实现自动化部署等功能。这里我保留了两种部署方式，一种是自动部署（在主分支有更新推送时自动构建），一种是手动部署（本地构建后部署）。两种方式各有优劣，自动部署更适合上手，因此我更推荐使用自动部署的方式。
+
+:::: tabs
+
+@tab 自动部署
+
+尽管 Hope 主题已经提供了 GitHub Actions 的工作流，但是由于它会保留所有构建历史，对于站点仓库而言就是一种污染，会导致 git 不无限膨胀，因此我选择在此基础上魔改一下，将构建结果直接部署，因此也就不会有污染问题了。
+
+首先，我们需要在仓库的根目录下创建 `.github/workflows/deploy.yml` 文件，内容如下：
+
+```yml
+# 工作流名称
+name: 部署文档
+
+# 确保有权限访问仓库和 GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# 触发条件，仅当有推送到 main 分支时触发
+on:
+  push:
+    branches:
+      # 确保这是你正在使用的分支名称
+      - main
+  # 允许你需要手动触发部署
+  workflow_dispatch:
+
+# 限制并发，防止多个相同工作流同时运行
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-n-deploy:
+    # 部署到 GitHub Pages 必需的环境
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # 如果你文档需要 Git 子模块，取消注释下一行
+          # submodules: true
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 构建文档
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run: |-
+          npm run docs:build
+          > src/.vuepress/dist/.nojekyll
+
+      # 这一步是为了方便我们使用 Makefile
+      # 来做一些后处理任务，不需要的话可以删除这步
+      - name: Make 任务
+        run: |
+          make
+
+      - name: 设置 Pages
+        uses: actions/configure-pages@v2
+
+      - name: 上传文件
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: "src/.vuepress/dist"
+
+      - name: 部署 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+```
+
+在上面的流程中，我们还设置了一步运行 Makefile 的任务，这是为了方便我们在构建完成后做一些后处理任务，即便不需要这一步，我也建议你暂时保留，以备不时之需。对应地，我们还需要在仓库的根目录下创建 `Makefile` 文件，内容如下：
+
+```makefile
+.PHONY: post-process
+
+post-process:
+	@echo "Hello from Makefile!"
+```
+
+其中具体任务的部分则可以根据需求自行配置，如果不需要，保持目标任务为空即可。
+
+至此，你就可以利用 GitHub Actions 来自动构建和部署啦。
+
+@tab 手动部署
+
+由于我之前不太喜欢基于 GitHub Actions 的 CI/CD，感觉速度较慢，因此我选择将在本地构建完后，将构建好的文件作为无历史的孤儿分支强制推送到远程 `gh-pages` 分支 <Badge text="可以防止污染git仓库" type="info"/>，然后再使用 GitHub Actions 直接将 `gh-pages` 分支下的内容部署到 GitHub Pages。
 
 Vuepress 默认的构建输出目录是 `/src/.vuepress/dist`，因此想要使用 GitHub Actions，需要在此目录中添加 `.github/workflows/deploy.yml` 文件，可以选择将整个 `.github` 文件夹添加至 `/src/.vuepress/public` 文件夹下，这样在构建时就能够被复制到构建输出目录中。`deploy.yml` 的文件内容如下：
 
-@[code yaml](../../../.vuepress/public/.github/workflows/static-deploy.yml)
+```yaml
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
 
-### 自动部署
+on:
+  # Runs on pushes targeting the gh-pages branch
+  push:
+    branches:
+      - gh-pages
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload entire repository
+          path: "."
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+```
 
 最后我们只需要在根目录中新建一个 `Makefile` 文件，用于在本地构建并自动推送到 `gh-pages` 分支：
 
@@ -477,6 +622,8 @@ make github
 # 或者
 make
 ```
+
+::::
 
 ## 总结
 
