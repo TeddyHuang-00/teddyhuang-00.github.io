@@ -21,12 +21,12 @@ star: true
 
 ## 命令行
 
-### Homebrew
+### homebrew
 
 ::: info
 
 - 主页：[brew.sh](https://brew.sh/)
-- GitHub 仓库：[Homebrew/brew](https://github.com/homebrew/brew)
+- GitHub 仓库：[homebrew/brew](https://github.com/homebrew/brew)
 
 :::
 
