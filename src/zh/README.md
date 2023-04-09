@@ -25,6 +25,10 @@ projects:
     name: Yixuan Wang
     desc: （极）会编程的语言学家
     link: https://blog.yixuan-wang.site/
+  - icon: https://github.com/wr786.png?size=256
+    name: wr786
+    desc: 热爱生活的绝赞码农
+    link: https://wr786.github.io/
 
   # - icon: material-symbols:link
   #   name: 链接名称

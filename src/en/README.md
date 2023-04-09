@@ -25,6 +25,10 @@ projects:
     name: Yixuan Wang
     desc: A linguist who is (very) good at programming
     link: https://blog.yixuan-wang.site/
+  - icon: https://github.com/wr786.png?size=256
+    name: wr786
+    desc: An excellent coder loving life
+    link: https://wr786.github.io/
 
   # - icon: material-symbols:link
   #   name: link name
