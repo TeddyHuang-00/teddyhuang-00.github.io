@@ -7,12 +7,13 @@
       <span class="w-3 h-3 rounded-full bg-amber-400"></span>
       <span class="w-3 h-3 rounded-full bg-green-400"></span>
     </div>
-    <div v-if="$slots.default!()[0].props?.alt || props.alt !== ''">
-      <div
-        class="absolute block text-sm font-mono pl-1 top-1.5 left-20 right-10 h-5 bg-bg-tertiary rounded-sm overflow-x-scroll whitespace-nowrap"
-      >
+    <div
+      class="absolute block text-sm font-mono pl-1 top-1.5 left-20 right-10 bg-bg-tertiary rounded-md overflow-x-scroll whitespace-nowrap hide-scrollbar"
+      v-if="$slots.default!()[0].props?.alt || props.alt !== ''"
+    >
+      <span>
         {{ $slots.default!()[0].props?.alt || props.alt }}
-      </div>
+      </span>
     </div>
     <div class="w-full leading-3 block">
       <slot>
@@ -36,5 +37,3 @@ const props = defineProps({
   },
 });
 </script>
-
-<style></style>

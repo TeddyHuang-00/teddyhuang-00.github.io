@@ -18,3 +18,15 @@
     @apply w-full max-h-screen h-80 lg:h-96 xl:h-[30rem] border-none;
   }
 }
+
+@layer utilities {
+  .hide-scrollbar {
+    &::-webkit-scrollbar {
+      display: none; /* Chromium */
+    }
+    & {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+}
