@@ -10,6 +10,11 @@ on:
     branches:
       # 确保这是你正在使用的分支名称
       - main
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build-n-deploy:
