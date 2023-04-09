@@ -1,28 +1,6 @@
-.PHONY: github clean build temp-fix
+.PHONY: post-process
 
-github: clean build temp-fix
-	@echo "======================================================"
-	@echo "deploying to github"
-	cd src/.vuepress/dist && \
-	git init && \
-	git add -A && \
-	git commit -m 'deploy at $(shell date)' && \
-	git branch -m local-build && \
-	git push -f git@github.com:TeddyHuang-00/teddyhuang-00.github.io.git local-build:gh-pages
-
-clean:
-	@echo "======================================================"
-	@echo "cleaning up output directory"
-	- rm -rf src/.vuepress/dist
-
-build:
-	@echo "======================================================"
-	@echo "building site"
-	npm run docs:build
-
-# this is meant for a temporary fix for redirect
-temp-fix:
-	@echo "======================================================"
+post-process:
 	@echo "running temp fix for redirect"
 	@echo "fixing home page"
 	cp src/.vuepress/dist/posts/index.html src/.vuepress/dist/index.html

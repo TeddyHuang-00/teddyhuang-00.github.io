@@ -1,0 +1,58 @@
+name: 部署文档
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+on:
+  push:
+    branches:
+      # 确保这是你正在使用的分支名称
+      - main
+
+jobs:
+  build-n-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # 如果你文档需要 Git 子模块，取消注释下一行
+          # submodules: true
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 构建文档
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run: |-
+          npm run docs:build
+          > src/.vuepress/dist/.nojekyll
+
+      - name: Make 任务
+        run: |
+          make
+
+      - name: 设置 Pages
+        uses: actions/configure-pages@v2
+
+      - name: 上传文件
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: "src/.vuepress/dist"
+
+      - name: 部署 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
