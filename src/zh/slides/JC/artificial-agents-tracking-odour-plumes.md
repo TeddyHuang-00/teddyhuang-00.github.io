@@ -1,6 +1,6 @@
 ---
 layout: Slide
-title: Artifical agents tracking odour plumes
+title: Artificial agents tracking odour plumes
 date: 2023-03-23
 icon: material-symbols:slideshow
 tag:
@@ -9,7 +9,7 @@ tag:
   - Comp Neuro
 ---
 
-<!-- Journal club presentation on March 24th, 2023 -->
+<!-- 2023 年 03 月 24 日 JC -->
 
 <!-- more -->
 
