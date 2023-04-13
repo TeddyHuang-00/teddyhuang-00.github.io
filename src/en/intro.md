@@ -1,5 +1,6 @@
 ---
 icon: material-symbols:info
+sticky: true
 ---
 
 :::center
