@@ -47,8 +47,7 @@ jobs:
       - name: 构建文档
         env:
           NODE_OPTIONS: --max_old_space_size=8192
-        run: |-
-          pnpm docs:build
+        run: pnpm docs:build
 
       - name: Make 任务
         run: |
