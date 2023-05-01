@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@vuepress/client": "2.0.0-beta.61",
-    "@vuepress/plugin-docsearch": "2.0.0-beta.61",
+    "@vuepress/plugin-docsearch": "2.0.0-beta.50-pre.1",
     "@vuepress/plugin-register-components": "2.0.0-beta.61",
     "@vuepress/plugin-shiki": "2.0.0-beta.61",
     "@vuepress/utils": "2.0.0-beta.61",
