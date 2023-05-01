@@ -15,7 +15,7 @@
     "@vuepress/plugin-docsearch": "2.0.0-beta.61",
     "@vuepress/plugin-register-components": "2.0.0-beta.61",
     "@vuepress/plugin-shiki": "2.0.0-beta.61",
-    "@vuepress/utils": "2.0.0-beta.61",
+    "@vuepress/utils": "2.0.0-beta.50-pre.1",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
     "tailwindcss": "^3.3.2",
