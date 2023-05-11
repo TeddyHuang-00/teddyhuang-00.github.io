@@ -5,6 +5,10 @@
     {
       "matchPackagePatterns": ["^@vuepress", "^vuepress$"],
       "followTag": "next"
+    },
+    {
+      "groupName": "vuepress-theme-hope",
+      "matchPackageNames": ["vuepress-theme-hope", "vuepress-plugin-redirect"]
     }
   ]
 }
