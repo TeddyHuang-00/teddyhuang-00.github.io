@@ -3,7 +3,7 @@ home: true
 layout: BlogHome
 icon: material-symbols:home
 title: Home Page
-bgImage: /cover.png
+bgImage: /cover.svg
 heroImage: /logo.svg
 heroText: WWW::CyberBase(NanHuang);
 tagline: Code for fun

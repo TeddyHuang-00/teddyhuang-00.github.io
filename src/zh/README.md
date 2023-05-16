@@ -3,7 +3,7 @@ home: true
 layout: BlogHome
 icon: material-symbols:home
 title: 主页
-bgImage: /cover.png
+bgImage: /cover.svg
 heroImage: /logo.svg
 heroText: WWW::CyberBase(NanHuang);
 heroFullScreen: true

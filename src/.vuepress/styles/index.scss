@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.blog-hero * {
+  @apply drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)] #{!important};
+}
+
 .blog-hero h1 {
   // Amend font size for blog hero title
   @apply font-mono text-lg sm:text-3xl #{!important};
