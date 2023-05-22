@@ -5,6 +5,7 @@ export const content = [
   "./src/.vuepress/**/*.{vue,ts,js,jsx,tsx,md,html}",
   "./src/**/*.{vue,ts,js,jsx,tsx,md,html}",
 ];
+export const darkMode = ["class", '[data-theme="dark"]'];
 export const corePlugins = {
   preflight: false,
 };
