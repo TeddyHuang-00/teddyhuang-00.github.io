@@ -3,8 +3,10 @@ home: true
 layout: BlogHome
 icon: material-symbols:home
 title: 主页
-bgImage: /cover.svg
-heroImage: /logo.svg
+bgImage: /cover-light.svg
+bgImageDark: /cover-dark.svg
+heroImage: /logo-light.svg
+heroImageDark: /logo-dark.svg
 heroText: WWW::CyberBase(NanHuang);
 heroFullScreen: true
 tagline: 代码，写着玩儿

@@ -3,8 +3,10 @@ home: true
 layout: BlogHome
 icon: material-symbols:home
 title: Home Page
-bgImage: /cover.svg
-heroImage: /logo.svg
+bgImage: /cover-light.svg
+bgImageDark: /cover-dark.svg
+heroImage: /logo-light.svg
+heroImageDark: /logo-dark.svg
 heroText: WWW::CyberBase(NanHuang);
 tagline: Code for fun
 heroFullScreen: true
