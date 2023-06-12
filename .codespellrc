@@ -1,2 +1,2 @@
 [codespell]
-skip = package.json,pnpm-lock.yaml
+skip = package.json,pnpm-lock.yaml,src/.vuepress/theme.ts
