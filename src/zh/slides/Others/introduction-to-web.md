@@ -640,7 +640,9 @@ h1 {
 
 ## CSS
 
-![CSS sucks](https://cdn.hashnode.com/res/hashnode/image/upload/v1618132016248/KgEmbHf7K.gif?auto=compress)
+![CSS sucks](https://media.tenor.com/QWdPngpHxZ8AAAAd/family-guy-css.gif)
+
+<!-- .element: class="r-stretch" -->
 
 ---
 
