@@ -1,6 +1,6 @@
 ---
 layout: Slide
-title: Web 基础与项目入门
+title: Web 基础与入门
 date: 2023-07-08
 icon: material-symbols:web
 ---
@@ -15,7 +15,7 @@ icon: material-symbols:web
 
 <!-- .element: class="r-fit-text" -->
 
-第一讲：Web 基础与项目入门
+第一讲：Web 基础与入门
 
 <!-- .element: class="r-fit-text" -->
 
