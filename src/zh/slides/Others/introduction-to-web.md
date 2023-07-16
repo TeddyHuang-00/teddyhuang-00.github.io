@@ -816,6 +816,29 @@ function welcome() {
 
 <!-- .slide: data-auto-animate -->
 
+# 拓展阅读
+
+<!-- .element: class="r-fit-text" -->
+
+--
+
+<!-- .slide: data-auto-animate -->
+
+# 拓展阅读
+
+- [Web 入门](https://developer.mozilla.org/zh-CN/docs/Learn/Getting_started_with_the_web)
+<!-- .element: class="fragment fade-in" -->
+- [HTML](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
+<!-- .element: class="fragment fade-in" -->
+- [CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS)
+<!-- .element: class="fragment fade-in" -->
+- [JS](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
+<!-- .element: class="fragment fade-in" -->
+
+--
+
+<!-- .slide: data-auto-animate -->
+
 # Thanks for your time!
 
 <!-- .element: class="r-fit-text" -->
