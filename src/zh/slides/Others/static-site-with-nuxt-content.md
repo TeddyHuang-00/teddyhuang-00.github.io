@@ -1,7 +1,7 @@
 ---
 layout: Slide
 title: Vue Tailwind TypeScript 速成
-date: 2023-07-15
+date: 2023-07-16
 icon: material-symbols:web
 ---
 
@@ -35,7 +35,7 @@ icon: material-symbols:web
 
 ## Why Vue?
 
-视图组件
+基于 Vue.js 的宏框架
 
 <!-- .element: class="r-fit-text" -->
 
@@ -45,23 +45,9 @@ icon: material-symbols:web
 
 ## Why Vue?
 
-视图组件
+基于 Vue.js 的宏框架
 
-代码复用
-
-<!-- .element: class="r-fit-text" -->
-
---
-
-<!-- .slide: data-auto-animate -->
-
-## Why Vue?
-
-视图组件
-
-代码复用
-
-社区生态
+自动路由与布局
 
 <!-- .element: class="r-fit-text" -->
 
@@ -71,13 +57,27 @@ icon: material-symbols:web
 
 ## Why Vue?
 
-视图组件
+基于 Vue.js 的宏框架
 
-代码复用
+自动路由与布局
 
-社区生态
+插件与模块系统
 
-简单易学
+<!-- .element: class="r-fit-text" -->
+
+--
+
+<!-- .slide: data-auto-animate -->
+
+## Why Vue?
+
+基于 Vue.js 的宏框架
+
+自动路由与布局
+
+插件与模块系统
+
+服务端渲染
 
 <!-- .element: class="r-fit-text" -->
 
@@ -103,35 +103,11 @@ icon: material-symbols:web
 
 ## 环境配置
 
-### [Node.js](https://nodejs.org/zh-cn)
-
-<iframe src="https://nodejs.org/zh-cn"></iframe>
-
---
-
-<!-- .slide: data-auto-animate -->
-
-## 环境配置
-
-### [pnpm](https://pnpm.io/zh/)
-
-<iframe src="https://pnpm.io/zh/installation"></iframe>
-
---
-
-<!-- .slide: data-auto-animate -->
-
-## 环境配置
-
 创建项目
 
 ```bash
-pnpm create vue@latest
+pnpm dlx nuxi@latest init content-app -t content
 ```
-
-✅Add TypeScript? Yes
-
-✅Add Vue Router? Yes
 
 在 VS Code 中打开项目并安装依赖
 
