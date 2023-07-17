@@ -754,7 +754,7 @@ Tailwind CSS IntelliSense
 
 ## Tailwind 实战
 
-flex - `App.vue`
+flex - `components/TodoItem.vue`
 
 ```html
 <div class="pt-1 flex flex-row gap-1">
