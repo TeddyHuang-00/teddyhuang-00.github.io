@@ -75,6 +75,8 @@ icon: material-symbols:web
 
 更便捷的开发体验
 
+插件/模块系统
+
 自动路由
 
 <!-- .element: class="r-fit-text" -->
