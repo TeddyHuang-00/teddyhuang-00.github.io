@@ -586,6 +586,50 @@ export default defineAppConfig({
 
 <!-- .slide: data-auto-animate -->
 
+## GitLab
+
+<!-- .element: class="r-fit-text" -->
+
+--
+
+<!-- .slide: data-auto-animate -->
+
+## GitLab
+
+CI/CD - `.gitlab-ci.yml`
+
+```yml
+default:
+  image: node:latest
+  before_script:
+    - corepack enable
+    - corepack prepare pnpm@latest-8 --activate
+    - pnpm config set store-dir .pnpm-store
+  cache:
+    key:
+      files:
+        - pnpm-lock.yaml
+    paths:
+      - .pnpm-store
+
+pages:
+  stage: deploy
+  script:
+    - pnpm install
+    - pnpm generate
+    - rm -rf public
+    - mv .output/public public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+```
+
+---
+
+<!-- .slide: data-auto-animate -->
+
 # 拓展阅读
 
 <!-- .element: class="r-fit-text" -->
