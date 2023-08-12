@@ -21,7 +21,7 @@ projects:
     link: https://HuiwenZheng-Ariel.github.io/
   - icon: https://github.com/bic-potato.png?size=256
     name: BicPotato
-    desc: 同我一样喜欢捣鼓的人
+    desc: 纪念一位喜欢捣鼓的人
     link: https://v2.blog.bicpotato.net/
   - icon: https://github.com/Yixuan-Wang.png?size=256
     name: Yixuan Wang
