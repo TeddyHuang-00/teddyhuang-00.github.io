@@ -8,10 +8,10 @@
     "docs:build": "vuepress build src",
     "docs:clean-dev": "vuepress dev src --clean-cache",
     "docs:dev": "vuepress dev src",
-    "docs:update-package": "pnpm dlx vp-update"
+    "docs:update-package": "bunx vp-update"
   },
   "devDependencies": {
-    "@vue/repl": "^2.6.1",
+    "@vue/repl": "^2.6.3",
     "@vuepress/client": "2.0.0-beta.67",
     "@vuepress/plugin-docsearch": "2.0.0-beta.67",
     "@vuepress/plugin-register-components": "2.0.0-beta.67",
@@ -25,11 +25,11 @@
     "mathjax-full": "^3.2.2",
     "mermaid": "^10.6.0",
     "postcss": "^8.4.31",
-    "reveal.js": "^5.0.0",
+    "reveal.js": "^5.0.1",
     "tailwindcss": "^3.3.5",
     "vue": "^3.3.7",
     "vuepress": "2.0.0-beta.67",
-    "vuepress-plugin-redirect": "2.0.0-beta.244",
-    "vuepress-theme-hope": "2.0.0-beta.244"
+    "vuepress-plugin-redirect": "2.0.0-beta.245",
+    "vuepress-theme-hope": "2.0.0-beta.245"
   }
 }
