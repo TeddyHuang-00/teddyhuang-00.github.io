@@ -9,9 +9,9 @@ sticky: true
 
 :::
 
-- 🌱 I’m currently learning **Computational Biology**
+- 🌱 I’m currently studying **Computer Science**
 
-- 🔍 **EXTERNAL reviewer** for KDD
+- 🔍 **Reviewer** for AISTATS, **EXTERNAL reviewer** for AAAI, KDD, NeurlIPS
 
 - 💬 Ask me about **Python / Pytorch / Streamlit / C++**
 

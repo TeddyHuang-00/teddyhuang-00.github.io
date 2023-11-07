@@ -9,9 +9,9 @@ sticky: true
 
 :::
 
-- 🌱 目前学习专业为 **计算生物学**
+- 🌱 目前正在学习 **计算机科学**
 
-- 🔍 KDD **外部审稿人**
+- 🔍 AISTATS **审稿人**，AAAI、KDD、NeurlIPS **外部审稿人**
 
 - 💬 向我提问有关 **Python / Pytorch / Streamlit / C++** 的一切
 
