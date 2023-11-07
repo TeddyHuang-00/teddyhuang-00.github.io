@@ -29,7 +29,7 @@
     "tailwindcss": "^3.3.5",
     "vue": "^3.3.7",
     "vuepress": "2.0.0-beta.67",
-    "vuepress-plugin-redirect": "2.0.0-beta.245",
-    "vuepress-theme-hope": "2.0.0-beta.245"
+    "vuepress-plugin-redirect": "2.0.0-beta.246",
+    "vuepress-theme-hope": "2.0.0-beta.246"
   }
 }
