@@ -115,7 +115,7 @@ $$
 
 ### 收敛标准
 
-假定定义域中 $x_*\in\Omega$ 是 $f$ 的最小值点，对应的函数值为 $f_* = f_*$，那么对于 $\forall\varepsilon > 0$：
+假定定义域中 $x_*\in\Omega$ 是 $f$ 的最小值点，对应的函数值为 $f(x_*) = f_*$，那么对于 $\forall\varepsilon > 0$：
 
 1. 如果 $f(x)-f_* \le\varepsilon$，那么称 $x$ 是 $\varepsilon$-最优点（$\varepsilon$-optimal point）
 2. 如果 $\|\nabla f(x)\| \le\varepsilon$，那么称 $x$ 是 $\varepsilon$-临界点（$\varepsilon$-critical point）
