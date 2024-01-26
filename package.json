@@ -29,6 +29,7 @@
     "postcss": "^8.4.33",
     "reveal.js": "^5.0.4",
     "tailwindcss": "^3.4.1",
+    "vidstack": "1",
     "vue": "^3.4.15",
     "vuepress": "2.0.0-rc.2",
     "vuepress-plugin-redirect": "2.0.0-rc.14",
