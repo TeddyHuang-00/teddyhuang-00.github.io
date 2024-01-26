@@ -74,10 +74,10 @@ st.dataframe(
 - 复制：选中一个区域，<kbd>Ctrl</kbd>+<kbd>C</kbd>（Windows）或 <kbd>⌘ Cmd</kbd>+<kbd>C</kbd>（MacOS）复制，<kbd>Ctrl</kbd>+<kbd>V</kbd>（Windows）或 <kbd>⌘ Cmd</kbd>+<kbd>V</kbd>（MacOS）粘贴
 
 <BrowserMockup>
-    <VideoPlayer
+    <VidStack
         src="/projects/streamlit/streamlit-dataframe-interact.mp4"
         alt="st.dataframe 交互演示">
-    </VideoPlayer>
+    </VidStack>
 </BrowserMockup>
 
 ### `st.table`

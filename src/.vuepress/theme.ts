@@ -123,15 +123,13 @@ export default hopeTheme({
 
     components: {
       components: [
-        "AudioPlayer",
         "Badge",
         "BiliBili",
         "CodePen",
         "PDF",
         // "Replit",
         // "StackBlitz",
-        "VideoPlayer",
-        "YouTube",
+        "VidStack",
       ],
     },
 
