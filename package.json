@@ -12,12 +12,10 @@
   },
   "devDependencies": {
     "@vue/repl": "^3.4.0",
-    "@vuepress/bundler-vite": "next",
-    "@vuepress/client": "2.0.0-rc.2",
+    "@vuepress/bundler-vite": "2.0.0-rc.2",
     "@vuepress/plugin-docsearch": "2.0.0-rc.1",
     "@vuepress/plugin-register-components": "2.0.0-rc.1",
     "@vuepress/plugin-shiki": "2.0.0-rc.1",
-    "@vuepress/utils": "2.0.0-rc.2",
     "autoprefixer": "^10.4.17",
     "chart.js": "^4.4.1",
     "echarts": "^5.4.3",
