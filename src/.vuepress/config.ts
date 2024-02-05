@@ -3,7 +3,7 @@ import { viteBundler } from "@vuepress/bundler-vite";
 import { registerComponentsPlugin } from "@vuepress/plugin-register-components";
 import { getDirname, path } from "@vuepress/utils";
 import { shikiPlugin } from "@vuepress/plugin-shiki";
-import { redirectPlugin } from "vuepress-plugin-redirect";
+import { redirectPlugin } from "@vuepress/plugin-redirect";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import theme from "./theme.js";

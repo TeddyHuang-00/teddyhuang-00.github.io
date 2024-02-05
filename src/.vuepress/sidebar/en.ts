@@ -4,4 +4,5 @@ export const enSidebar = sidebar({
   "/en/posts/": "structure",
   "/en/tutorials/": "structure",
   "/en/slides/": "structure",
+  "/en/": ["", "intro"], // fallback
 });
