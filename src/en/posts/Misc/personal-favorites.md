@@ -170,6 +170,16 @@ star: true
 
 命令行下的 Git 客户端，可以直接在终端中查看 Git 仓库的状态、分支图、提交历史、文件差异等等。
 
+### gitui
+
+::: info
+
+- GitHub 仓库：[extrawurst/gitui](https://github.com/extrawurst/gitui)
+
+:::
+
+另一个命令行下的 Git 客户端，基于 Rust，支持多平台。在提供了相当丰富的功能的同时还减少了内存占用和启动时间（相比于 tig 和 lazygit）。并且键位绑定相对更加符合直觉。
+
 ## 编辑器
 
 ### VSCode
@@ -185,7 +195,7 @@ star: true
 
 > 好用到什么程度？除了 VSCode 我可以不用任何其他编辑器，就能够完成所有的工作。 <Badge text="当然剪视频/看网页啥的不算" type="warning" />
 
-### Cursor
+### Cursor <Badge text="不再推荐" type="danger" />
 
 ::: info
 
@@ -198,7 +208,7 @@ star: true
 
 > 虽然目前仍然在积极开发中，但是最近套壳了 VSCode，接入了庞大的插件生态，因此一下子可以进入第一梯队了，值得后续持续关注。
 
-### SpaceVim
+### SpaceVim <Badge text="更推荐 AstroNvim" type="info" />
 
 ::: info
 
@@ -212,6 +222,21 @@ star: true
 > 模块化是最大的优点，只需要简单的几行配置就能启用或禁用某个模块，而且还能自定义模块的配置。界面也很好看，有多种主题可供选择。作为图形化编辑器的临时替代或者主力编辑器都非常不错。
 
 > 如果想要更进一步精简配置，做到开箱即用，你也可以尝试 [Helix](https://github.com/helix-editor/helix)，或许会适合你。
+
+### AstroNvim
+
+::: info
+
+- 主页：[astronvim.com](https://astronvim.com/)
+- GitHub 仓库：[AstroNvim/AstroNvim](https://github.com/AstroNvim/AstroNvim)
+
+:::
+
+一个基于 NeoVim 的编辑器。相比于 SpaceVim，AstroNvim 更加注重可拓展性与易用性。对于希望开箱即用的用户，[AstroCommunity](https://github.com/AstroNvim/AstroCommunity)提供了许多预配置的插件（包），可以通过修改一行配置来快速启动。同时支持基于 lazy.nvim 的插件管理，可以相对便捷地添加 AstroCommunity 未提供的插件。
+
+> AstroNvim 更适合对于 Vim/NeoVim 有一定了解的用户，因为它更加注重可拓展性，因此需要一定的配置才能发挥其最大的作用。但其提供的教程，以及丰富到基本不需要自行添加配置的社区插件（包），都尽可能降低了上手的门槛。
+
+> 最大的缺点可能莫过于 AstroCommunity 缺乏一个较好的检索系统，目前依赖于 GitHub 提供的搜索/文件预览功能。尽管社区插件按照所属功能类别分为了几个大类，这仍使得用户在寻找插件时需要花费更多的时间，同时缺乏示例，对于不了解这些插件的用户不那么友好。
 
 ### Warp
 
@@ -331,8 +356,42 @@ star: true
 
 > 如果要我说最讨厌 $\LaTeX$ 的一点，那莫过于其语法的复杂性了。而 Typst 不仅功能强大、语法简洁，还得益于其 Rust 编译器内核的高效性，Typst 的编译 PDF 速度也非常快，即便是从头生成，也不过一眨眼的事情，更不用说还提供了增量编译来实时预览了，睥睨 Microsoft Word 和 Markdown 那样的所见即所得。
 
-> 如果你不愿意本地安装，也可以直接使用在线的编辑器来编写文档，依然可以享受自动补全和实时预览带来的顶级体验。<Badge text="完全符合我对现代排版系统的想象" type="danger" />
+> 如果你不愿意本地安装，也可以直接使用在线的编辑器来编写文档，依然可以享受自动补全和实时预览带来的顶级体验。<Badge text="完全符合我对现代排版系统的想象" type="success" />
 
 > 比较有争议的点可能在于数学公式采用了一套自己的语法，而不是大量借鉴 $\LaTeX$ 的语法，这可能会让一些人从 $\LaTeX$ 迁移过来时感到不适应，也是很多人批评它的地方。不过我认为这个见仁见智，这样做的好处是可以让 Typst 的语法更加简单，而且在 VSCode 插件的自动补全功能的加持下，似乎也不是什么大问题，这点学习新语法的成本远低于其收益，非常划得来。
 
 > Typst 迅速发展起来的社区生态（比如这个 [awesome list](https://github.com/qjcg/awesome-typst)），也反映出了其在不断地吸引新用户，这也是我非常看好它的原因之一。
+
+### Zathura
+
+::: info
+
+- 主页：[pwmt.org/projects/zathura](https://pwmt.org/projects/zathura/)
+- GitLab 仓库：[pwmt/zathura](https://git.pwmt.org/pwmt/zathura)
+
+:::
+
+一个非常轻量级的 PDF 阅读器，支持多种插件。<Badge text="干翻Acrobat！" type="info" />
+
+> 支持 Vim 的键位绑定，并且命令行友好，非常适合 Vim 用户。
+
+> 支持颜色配置，可以根据喜好对文档进行重新着色，再也不用担心长期盯着白花花的 PDF 看眼睛疼了。
+
+> 缺点可能在于缺少部分高级功能，比如注释、标注等等，但是对于一般的阅读需求，已经足够了。
+
+## 图像
+
+### Inkscape
+
+::: info
+
+- 主页：[inkscape.org](https://inkscape.org/)
+- GitHub 仓库：[inkscape/inkscape](https://github.com/inkscape/inkscape)
+
+:::
+
+一个非常好用的矢量图形编辑器，支持多种格式的导入和导出，包括 SVG、PDF 等。
+
+> Inkscape 不仅仅是 Adobe Illustrator 的替代品，还有一些功能是 Illustrator 没有的，比如在导入 PDF 时正确绘制缺少的字体。
+>
+> 对于习惯了 Adobe Illustrator 的用户来说，Inkscape 的学习曲线可能会比较陡峭，因为许多键位绑定<Badge text="即便选择了 Illustrator 键位映射" type="warning" />和功能布局不尽相同，但是只要克服了这一点，Inkscape 也是一个非常好用的工具。
