@@ -22,6 +22,8 @@ star: true
 }
 </style>
 
+<!-- more -->
+
 他们是肉做的。 {.left}
 
 肉？ {.right}
