@@ -11,7 +11,7 @@
     "docs:update-package": "bunx vp-update"
   },
   "devDependencies": {
-    "@vue/repl": "^3.4.0",
+    "@vue/repl": "^4.0.0",
     "@vuepress/bundler-vite": "2.0.0-rc.7",
     "@vuepress/plugin-docsearch": "2.0.0-rc.14",
     "@vuepress/plugin-redirect": "^2.0.0-rc.8",
