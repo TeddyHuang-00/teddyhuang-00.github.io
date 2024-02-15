@@ -11,6 +11,10 @@ heroText: WWW::CyberBase(NanHuang);
 tagline: Code for fun
 heroFullScreen: true
 projects:
+  - icon: https://teddyhuang-00.github.io/StrangeAttractors/android-chrome-512x512.png
+    name: Strange Attractors
+    desc: Visualization of strange attractors using WebGL
+    link: https://teddyhuang-00.github.io/StrangeAttractors/
   - icon: material-symbols:checklist
     name: Todo List
     desc: A simple TODO app
