@@ -31,6 +31,6 @@
     "vidstack": "^1.10.4",
     "vue": "^3.4.15",
     "vuepress": "2.0.0-rc.8",
-    "vuepress-theme-hope": "2.0.0-rc.24"
+    "vuepress-theme-hope": "2.0.0-rc.25"
   }
 }
