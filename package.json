@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@vue/repl": "^4.1.1",
-    "@vuepress/bundler-vite": "2.0.0-rc.8",
+    "@vuepress/bundler-vite": "2.0.0-rc.9",
     "@vuepress/plugin-docsearch": "2.0.0-rc.19",
     "@vuepress/plugin-redirect": "2.0.0-rc.19",
     "@vuepress/plugin-register-components": "2.0.0-rc.15",
@@ -30,7 +30,7 @@
     "tailwindcss": "^3.4.1",
     "vidstack": "^1.10.4",
     "vue": "^3.4.21",
-    "vuepress": "2.0.0-rc.8",
+    "vuepress": "2.0.0-rc.9",
     "vuepress-theme-hope": "2.0.0-rc.31"
   }
 }
