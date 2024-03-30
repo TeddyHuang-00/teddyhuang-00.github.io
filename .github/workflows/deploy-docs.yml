@@ -43,7 +43,7 @@ jobs:
         run: bun docs:build
 
       - name: 设置 Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: 上传文件
         uses: actions/upload-pages-artifact@v3
