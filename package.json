@@ -22,7 +22,7 @@
     "echarts": "^5.5.0",
     "flowchart.ts": "^3.0.0",
     "katex": "^0.16.10",
-    "mathjax-full": "4.0.0-beta.4",
+    "mathjax-full": "4.0.0-beta.5",
     "mermaid": "^10.9.0",
     "plyr": "^3.7.8",
     "postcss": "^8.4.38",
