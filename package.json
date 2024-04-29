@@ -19,8 +19,10 @@
     "@vuepress/plugin-shiki": "2.0.0-rc.25",
     "autoprefixer": "^10.4.19",
     "chart.js": "^4.4.2",
+    "dashjs": "^4.7.4",
     "echarts": "^5.5.0",
     "flowchart.ts": "^3.0.0",
+    "hls.js": "^1.5.8",
     "katex": "^0.16.10",
     "mathjax-full": "4.0.0-beta.5",
     "mermaid": "^10.9.0",
@@ -28,9 +30,9 @@
     "postcss": "^8.4.38",
     "reveal.js": "^5.0.5",
     "tailwindcss": "^3.4.3",
-    "vidstack": "^1.10.4",
+    "vidstack": "^1",
     "vue": "^3.4.21",
     "vuepress": "2.0.0-rc.9",
-    "vuepress-theme-hope": "2.0.0-rc.34"
+    "vuepress-theme-hope": "2.0.0-rc.38"
   }
 }
