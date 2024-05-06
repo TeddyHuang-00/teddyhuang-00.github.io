@@ -13,8 +13,8 @@
   "devDependencies": {
     "@vue/repl": "^4.1.1",
     "@vuepress/bundler-vite": "2.0.0-rc.9",
-    "@vuepress/plugin-docsearch": "2.0.0-rc.26",
-    "@vuepress/plugin-redirect": "2.0.0-rc.26",
+    "@vuepress/plugin-docsearch": "2.0.0-rc.27",
+    "@vuepress/plugin-redirect": "2.0.0-rc.27",
     "@vuepress/plugin-register-components": "2.0.0-rc.21",
     "@vuepress/plugin-shiki": "2.0.0-rc.25",
     "autoprefixer": "^10.4.19",
