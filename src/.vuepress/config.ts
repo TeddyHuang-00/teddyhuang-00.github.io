@@ -3,7 +3,6 @@ import { viteBundler } from "@vuepress/bundler-vite";
 import { registerComponentsPlugin } from "@vuepress/plugin-register-components";
 import { getDirname, path } from "@vuepress/utils";
 import { shikiPlugin } from "@vuepress/plugin-shiki";
-import { redirectPlugin } from "@vuepress/plugin-redirect";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import theme from "./theme.js";
@@ -66,13 +65,6 @@ export default defineUserConfig({
     }),
     registerComponentsPlugin({
       componentsDir: path.resolve(__dirname, "./components"),
-    }),
-    redirectPlugin({
-      autoLocale: true,
-      localeConfig: {
-        "/zh/": ["zh-CN", "zh-TW", "zh"],
-        "/en/": ["en-US", "en-UK", "en"],
-      },
     }),
   ],
 });
