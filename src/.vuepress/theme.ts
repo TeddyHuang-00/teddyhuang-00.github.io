@@ -299,6 +299,14 @@ export default hopeTheme({
     // },
     // Disable prism to use shiki
     prismjs: false,
+
+    redirect: {
+      autoLocale: true,
+      localeConfig: {
+        "/zh/": ["zh-CN", "zh-TW", "zh"],
+        "/en/": ["en-US", "en-UK", "en"],
+      },
+    },
   },
 
   sidebarSorter: ["readme", "order", "date", "title", "filename"],
