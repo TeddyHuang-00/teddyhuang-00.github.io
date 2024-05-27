@@ -16,7 +16,7 @@
     "@vuepress/plugin-docsearch": "2.0.0-rc.31",
     "@vuepress/plugin-redirect": "2.0.0-rc.31",
     "@vuepress/plugin-register-components": "2.0.0-rc.31",
-    "@vuepress/plugin-shiki": "2.0.0-rc.31",
+    "@vuepress/plugin-shiki": "2.0.0-rc.32",
     "autoprefixer": "^10.4.19",
     "chart.js": "^4.4.2",
     "dashjs": "^4.7.4",
