@@ -2,7 +2,6 @@ import { defineUserConfig } from "vuepress";
 import { viteBundler } from "@vuepress/bundler-vite";
 import { registerComponentsPlugin } from "@vuepress/plugin-register-components";
 import { getDirname, path } from "@vuepress/utils";
-import { shikiPlugin } from "@vuepress/plugin-shiki";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import theme from "./theme.js";
@@ -43,26 +42,6 @@ export default defineUserConfig({
   theme,
 
   plugins: [
-    shikiPlugin({
-      theme: "dark-plus",
-      langs: [
-        "ts",
-        "py",
-        "yaml",
-        "r",
-        "cpp",
-        "rust",
-        "csharp",
-        "json",
-        "makefile",
-        "ps",
-        "vue",
-        "vue-html",
-        "md",
-        "bash",
-        "diff",
-      ],
-    }),
     registerComponentsPlugin({
       componentsDir: path.resolve(__dirname, "./components"),
     }),

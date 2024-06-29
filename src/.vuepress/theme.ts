@@ -10,7 +10,6 @@ export default hopeTheme({
     url: "https://TeddyHuang-00.github.io",
   },
 
-  // iconAssets: "iconfont",
   iconAssets: "iconify",
 
   logo: "/GitHub.png",
@@ -56,7 +55,6 @@ export default hopeTheme({
       // Zhihu: "https://example.com",
       // MrHope: ["https://mrhope.site", MR_HOPE_AVATAR],
     },
-    roundAvatar: true,
   },
 
   headerDepth: 2,
@@ -306,6 +304,27 @@ export default hopeTheme({
         "/zh/": ["zh-CN", "zh-TW", "zh"],
         "/en/": ["en-US", "en-UK", "en"],
       },
+    },
+
+    shiki: {
+      theme: "dark-plus",
+      langs: [
+        "ts",
+        "py",
+        "yaml",
+        "r",
+        "cpp",
+        "rust",
+        "csharp",
+        "json",
+        "makefile",
+        "ps",
+        "vue",
+        "vue-html",
+        "md",
+        "bash",
+        "diff",
+      ],
     },
   },
 
