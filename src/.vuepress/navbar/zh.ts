@@ -13,6 +13,11 @@ export const zhNavbar = navbar([
         link: "DevLog/",
       },
       {
+        text: "笔记",
+        icon: "material-symbols:book",
+        link: "Notes/",
+      },
+      {
         text: "随笔",
         icon: "material-symbols:edit-note",
         link: "Misc/",

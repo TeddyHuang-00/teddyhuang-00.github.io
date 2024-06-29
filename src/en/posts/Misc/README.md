@@ -1,10 +1,10 @@
 ---
-title: Random Notes
+title: Random Output
 icon: material-symbols:edit-note
 index: false
 article: false
 dir:
-  order: 2
+  order: 3
 ---
 
 <Catalog />

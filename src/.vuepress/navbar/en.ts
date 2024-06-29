@@ -13,6 +13,11 @@ export const enNavbar = navbar([
         link: "DevLog/",
       },
       {
+        text: "Study Note",
+        icon: "material-symbols:book",
+        link: "Notes/",
+      },
+      {
         text: "Rand Out",
         icon: "material-symbols:edit-note",
         link: "Misc/",
