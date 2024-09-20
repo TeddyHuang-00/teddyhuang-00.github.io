@@ -13,10 +13,10 @@
   "devDependencies": {
     "@vue/repl": "^4.1.1",
     "@vuepress/bundler-vite": "2.0.0-rc.15",
-    "@vuepress/plugin-docsearch": "2.0.0-rc.45",
-    "@vuepress/plugin-redirect": "2.0.0-rc.45",
+    "@vuepress/plugin-docsearch": "2.0.0-rc.46",
+    "@vuepress/plugin-redirect": "2.0.0-rc.46",
     "@vuepress/plugin-register-components": "2.0.0-rc.44",
-    "@vuepress/plugin-shiki": "2.0.0-rc.45",
+    "@vuepress/plugin-shiki": "2.0.0-rc.46",
     "autoprefixer": "^10.4.19",
     "chart.js": "^4.4.2",
     "dashjs": "^4.7.4",
