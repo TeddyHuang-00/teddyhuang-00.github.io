@@ -267,7 +267,7 @@ yarn add -D @vuepress/plugin-register-components@next
 ```ts {5,10-12}
 // ...
 import { registerComponentsPlugin } from "@vuepress/plugin-register-components";
-import { getDirname, path } from "@vuepress/utils";
+import { getDirname, path } from "vuepress/utils";
 // ...
 const __dirname = getDirname(import.meta.url);
 

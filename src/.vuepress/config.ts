@@ -1,7 +1,7 @@
 import { defineUserConfig } from "vuepress";
 import { viteBundler } from "@vuepress/bundler-vite";
 import { registerComponentsPlugin } from "@vuepress/plugin-register-components";
-import { getDirname, path } from "@vuepress/utils";
+import { getDirname, path } from "vuepress/utils";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import theme from "./theme.js";
