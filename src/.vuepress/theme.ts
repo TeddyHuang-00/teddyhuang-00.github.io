@@ -258,11 +258,15 @@ export default hopeTheme({
       lazyload: true,
     },
 
+    markdownTab: {
+      tabs: true,
+      codeTabs: true,
+    },
+
     mdEnhance: {
       align: true,
       attrs: true,
       chart: true,
-      codetabs: true,
       demo: true,
       echarts: true,
       flowchart: true,
@@ -273,7 +277,6 @@ export default hopeTheme({
       playground: {
         presets: ["ts", "vue"],
       },
-      revealJs: { plugins: ["highlight", "math", "search", "notes", "zoom"] },
       stylize: [
         {
           matcher: "Recommended",
@@ -289,7 +292,6 @@ export default hopeTheme({
       ],
       sub: true,
       sup: true,
-      tabs: true,
       vPre: true,
       vuePlayground: true,
     },
@@ -307,6 +309,10 @@ export default hopeTheme({
         "/zh/": ["zh-CN", "zh-TW", "zh"],
         "/en/": ["en-US", "en-UK", "en"],
       },
+    },
+
+    revealjs: {
+      plugins: ["highlight", "math", "search", "notes", "zoom"],
     },
 
     shiki: {
