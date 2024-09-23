@@ -14,13 +14,14 @@
     "@vue/repl": "^4.4.2",
     "@vuepress/bundler-vite": "2.0.0-rc.15",
     "@vuepress/plugin-docsearch": "2.0.0-rc.47",
-    "@vuepress/plugin-markdown-hint": "^2.0.0-rc.42",
-    "@vuepress/plugin-markdown-image": "^2.0.0-rc.30",
-    "@vuepress/plugin-markdown-math": "^2.0.0-rc.30",
-    "@vuepress/plugin-redirect": "2.0.0-rc.47",
+    "@vuepress/plugin-markdown-hint": "2.0.0-rc.47",
+    "@vuepress/plugin-markdown-image": "2.0.0-rc.47",
+    "@vuepress/plugin-markdown-math": "2.0.0-rc.49",
+    "@vuepress/plugin-markdown-tab": "^2.0.0-rc.47",
+    "@vuepress/plugin-redirect": "2.0.0-rc.51",
     "@vuepress/plugin-register-components": "2.0.0-rc.44",
+    "@vuepress/plugin-revealjs": "^2.0.0-rc.47",
     "@vuepress/plugin-shiki": "2.0.0-rc.47",
-    "@vuepress/utils": "^2.0.0-rc.2",
     "autoprefixer": "^10.4.20",
     "chart.js": "^4.4.4",
     "dashjs": "^4.7.4",
@@ -38,6 +39,6 @@
     "vidstack": "^1.12.11",
     "vue": "^3.5.8",
     "vuepress": "2.0.0-rc.15",
-    "vuepress-theme-hope": "2.0.0-rc.53"
+    "vuepress-theme-hope": "2.0.0-rc.55"
   }
 }
