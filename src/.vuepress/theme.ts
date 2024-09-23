@@ -251,6 +251,13 @@ export default hopeTheme({
       updatedTime: true,
     },
 
+    markdownImage: {
+      size: true,
+      mark: true,
+      figure: true,
+      lazyload: true,
+    },
+
     mdEnhance: {
       align: true,
       attrs: true,
@@ -258,13 +265,9 @@ export default hopeTheme({
       codetabs: true,
       demo: true,
       echarts: true,
-      figure: true,
       flowchart: true,
       gfm: true,
-      imgLazyload: true,
-      imgSize: true,
       include: true,
-      katex: true,
       mark: true,
       mermaid: true,
       playground: {
