@@ -319,6 +319,7 @@ export default hopeTheme({
       theme: "dark-plus",
       langs: [
         "ts",
+        "scss",
         "py",
         "yaml",
         "r",
