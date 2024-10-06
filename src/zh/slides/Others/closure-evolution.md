@@ -1,5 +1,5 @@
 ---
-layout: Slide
+layout: SlidePage
 title: 闭包网络演化
 date: 2023-03-17
 icon: material-symbols:hub

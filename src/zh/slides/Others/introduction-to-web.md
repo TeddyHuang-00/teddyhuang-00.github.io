@@ -1,5 +1,5 @@
 ---
-layout: Slide
+layout: SlidePage
 title: Web 基础与入门
 date: 2023-07-08
 icon: material-symbols:web

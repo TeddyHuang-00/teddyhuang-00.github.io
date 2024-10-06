@@ -1,5 +1,5 @@
 ---
-layout: Slide
+layout: SlidePage
 title: Vue Tailwind TypeScript 速成
 date: 2023-07-15
 icon: material-symbols:web

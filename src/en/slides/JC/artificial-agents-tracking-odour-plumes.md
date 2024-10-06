@@ -1,5 +1,5 @@
 ---
-layout: Slide
+layout: SlidePage
 title: Artificial agents tracking odour plumes
 date: 2023-03-23
 icon: material-symbols:slideshow

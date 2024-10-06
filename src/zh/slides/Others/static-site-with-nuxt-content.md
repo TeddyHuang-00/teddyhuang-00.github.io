@@ -1,5 +1,5 @@
 ---
-layout: Slide
+layout: SlidePage
 title: Nuxt Content 搭建静态网站
 date: 2023-07-16
 icon: material-symbols:web

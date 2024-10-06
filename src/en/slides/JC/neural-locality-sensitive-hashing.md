@@ -1,5 +1,5 @@
 ---
-layout: Slide
+layout: SlidePage
 title: Neural Locality Sensitive Hashing
 date: 2023-05-10
 icon: material-symbols:slideshow
