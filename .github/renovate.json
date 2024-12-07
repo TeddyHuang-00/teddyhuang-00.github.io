@@ -1,18 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", ":automergeAll"],
+  "extends": ["config:recommended", ":automergeAll"],
   "packageRules": [
     {
       "matchPackagePatterns": ["^@vuepress", "^vuepress$"],
       "followTag": "next"
-    },
-    {
-      "groupName": "vuepress-theme-hope",
-      "matchPackageNames": ["vuepress-theme-hope", "vuepress-plugin-redirect"]
-    },
-    {
-      "groupName": "@vuepress",
-      "matchPackagePatterns": ["^@vuepress", "^vuepress$"]
     }
   ]
 }
