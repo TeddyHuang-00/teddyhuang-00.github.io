@@ -110,6 +110,52 @@ export default hopeTheme({
     },
   },
 
+  markdown: {
+    // Markdown Tabs
+    tabs: true,
+    codeTabs: true,
+    // Markdown RevealJS
+    revealjs: {
+      plugins: ["highlight", "math", "search", "notes", "zoom"],
+    },
+    // Markdown Image
+    imgLazyload: true,
+    imgMark: true,
+    imgSize: true,
+    figure: true,
+    // Markdown Enhance
+    align: true,
+    attrs: true,
+    chartjs: true,
+    demo: true,
+    echarts: true,
+    flowchart: true,
+    gfm: true,
+    include: true,
+    mark: true,
+    mermaid: true,
+    playground: {
+      presets: ["ts", "vue"],
+    },
+    stylize: [
+      {
+        matcher: "Recommended",
+        replacer: ({ tag }) => {
+          if (tag === "em")
+            return {
+              tag: "Badge",
+              attrs: { type: "tip" },
+              content: "Recommended",
+            };
+        },
+      },
+    ],
+    sub: true,
+    sup: true,
+    vPre: true,
+    vuePlayground: true,
+  },
+
   navbarLayout: {
     start: ["Brand"],
     center: ["Links"],
@@ -251,68 +297,12 @@ export default hopeTheme({
       updatedTime: true,
     },
 
-    markdownImage: {
-      size: true,
-      mark: true,
-      figure: true,
-      lazyload: true,
-    },
-
-    markdownTab: {
-      tabs: true,
-      codeTabs: true,
-    },
-
-    mdEnhance: {
-      align: true,
-      attrs: true,
-      chart: true,
-      demo: true,
-      echarts: true,
-      flowchart: true,
-      gfm: true,
-      include: true,
-      mark: true,
-      mermaid: true,
-      playground: {
-        presets: ["ts", "vue"],
-      },
-      stylize: [
-        {
-          matcher: "Recommended",
-          replacer: ({ tag }) => {
-            if (tag === "em")
-              return {
-                tag: "Badge",
-                attrs: { type: "tip" },
-                content: "Recommended",
-              };
-          },
-        },
-      ],
-      sub: true,
-      sup: true,
-      vPre: true,
-      vuePlayground: true,
-    },
-
-    // prismjs: {
-    //   light: "one-dark",
-    //   dark: "one-dark",
-    // },
-    // Disable prism to use shiki
-    prismjs: false,
-
     redirect: {
       autoLocale: true,
       localeConfig: {
         "/zh/": ["zh-CN", "zh-TW", "zh"],
         "/en/": ["en-US", "en-UK", "en"],
       },
-    },
-
-    revealjs: {
-      plugins: ["highlight", "math", "search", "notes", "zoom"],
     },
 
     shiki: {
