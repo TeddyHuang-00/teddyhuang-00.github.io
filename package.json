@@ -21,7 +21,7 @@
     "@vuepress/plugin-redirect": "2.0.0-rc.65",
     "@vuepress/plugin-register-components": "2.0.0-rc.54",
     "@vuepress/plugin-revealjs": "2.0.0-rc.65",
-    "@vuepress/plugin-shiki": "2.0.0-rc.63",
+    "@vuepress/plugin-shiki": "2.0.0-rc.65",
     "autoprefixer": "^10.4.20",
     "chart.js": "^4.4.7",
     "dashjs": "^4.7.4",
