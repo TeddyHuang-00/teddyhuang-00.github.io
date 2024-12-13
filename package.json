@@ -16,7 +16,7 @@
     "@vuepress/plugin-docsearch": "2.0.0-rc.66",
     "@vuepress/plugin-markdown-hint": "2.0.0-rc.66",
     "@vuepress/plugin-markdown-image": "2.0.0-rc.66",
-    "@vuepress/plugin-markdown-math": "2.0.0-rc.65",
+    "@vuepress/plugin-markdown-math": "2.0.0-rc.66",
     "@vuepress/plugin-markdown-tab": "2.0.0-rc.65",
     "@vuepress/plugin-redirect": "2.0.0-rc.66",
     "@vuepress/plugin-register-components": "2.0.0-rc.54",
