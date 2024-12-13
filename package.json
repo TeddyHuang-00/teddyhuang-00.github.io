@@ -13,7 +13,7 @@
   "devDependencies": {
     "@vue/repl": "^4.4.2",
     "@vuepress/bundler-vite": "2.0.0-rc.19",
-    "@vuepress/plugin-docsearch": "2.0.0-rc.65",
+    "@vuepress/plugin-docsearch": "2.0.0-rc.66",
     "@vuepress/plugin-markdown-hint": "2.0.0-rc.65",
     "@vuepress/plugin-markdown-image": "2.0.0-rc.65",
     "@vuepress/plugin-markdown-math": "2.0.0-rc.65",
