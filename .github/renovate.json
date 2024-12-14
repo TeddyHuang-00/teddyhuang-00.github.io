@@ -1,11 +1,17 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":automergeAll"],
+  "extends": [
+    "config:recommended",
+    ":automergeAll"
+  ],
   "packageRules": [
     {
-      "matchPackagePatterns": ["/^@vuepress/", "/^vuepress$/"],
       "groupName": "VuePress",
-      "followTag": "next"
+      "followTag": "next",
+      "matchPackageNames": [
+        "//^@vuepress//",
+        "//^vuepress$//"
+      ]
     }
   ]
 }
