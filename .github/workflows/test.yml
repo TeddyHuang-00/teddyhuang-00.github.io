@@ -2,6 +2,8 @@ name: 测试
 
 on:
   push:
+    paths-ignore:
+      - ".github/renovate.json"
   workflow_dispatch:
 
 jobs:
