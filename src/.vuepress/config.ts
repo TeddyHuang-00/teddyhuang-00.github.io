@@ -27,6 +27,11 @@ export default defineUserConfig({
   }),
 
   locales: {
+    "/": {
+      lang: "zh-CN",
+      title: "楠的博客",
+      description: "WWW::CyberBase(NanHuang);",
+    },
     "/zh/": {
       lang: "zh-CN",
       title: "楠的博客",

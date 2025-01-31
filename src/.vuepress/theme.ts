@@ -10,8 +10,6 @@ export default hopeTheme({
     url: "https://TeddyHuang-00.github.io",
   },
 
-  iconAssets: "iconify",
-
   logo: "/GitHub.png",
 
   repo: "TeddyHuang-00/teddyhuang-00.github.io",
@@ -60,6 +58,31 @@ export default hopeTheme({
   headerDepth: 2,
 
   locales: {
+    /**
+     * Default locale config
+     */
+    "/": {
+      // navbar
+      navbar: zhNavbar,
+
+      // sidebar
+      sidebar: zhSidebar,
+
+      footer: "CC BY-NC-SA 4.0 协议 | 由 ❤️ 驱动",
+
+      displayFooter: true,
+
+      blog: {
+        description: "一个不专业的全栈开发者",
+        intro: "/zh/intro.html",
+      },
+
+      // page meta
+      metaLocales: {
+        editLink: "编辑此页",
+      },
+    },
+
     /**
      * Chinese locale config
      */
@@ -318,6 +341,10 @@ export default hopeTheme({
       createdTime: false,
       // 展示最后更新时间
       updatedTime: true,
+    },
+
+    icon: {
+      assets: "iconify",
     },
 
     redirect: {
