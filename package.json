@@ -24,7 +24,7 @@
     "@vuepress/plugin-shiki": "2.0.0-rc.76",
     "autoprefixer": "10.4.20",
     "chart.js": "4.4.7",
-    "dashjs": "4.7.4",
+    "dashjs": "5.0.0",
     "echarts": "5.6.0",
     "flowchart.ts": "3.0.1",
     "hls.js": "1.5.20",
