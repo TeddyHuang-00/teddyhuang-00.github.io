@@ -22,7 +22,7 @@
     "@vuepress/plugin-register-components": "2.0.0-rc.82",
     "@vuepress/plugin-revealjs": "2.0.0-rc.82",
     "@vuepress/plugin-shiki": "2.0.0-rc.82",
-    "autoprefixer": "10.4.20",
+    "autoprefixer": "10.4.21",
     "chart.js": "4.4.8",
     "dashjs": "5.0.0",
     "echarts": "5.6.0",
