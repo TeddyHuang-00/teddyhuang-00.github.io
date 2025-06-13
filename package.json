@@ -11,7 +11,7 @@
     "docs:update-package": "bunx vp-update"
   },
   "devDependencies": {
-    "@vue/repl": "4.5.1",
+    "@vue/repl": "4.6.1",
     "@vuepress/bundler-vite": "2.0.0-rc.23",
     "@vuepress/plugin-docsearch": "2.0.0-rc.108",
     "@vuepress/plugin-markdown-hint": "2.0.0-rc.108",
