@@ -23,7 +23,7 @@
     "@vuepress/plugin-revealjs": "2.0.0-rc.108",
     "@vuepress/plugin-shiki": "2.0.0-rc.108",
     "autoprefixer": "10.4.21",
-    "chart.js": "4.4.9",
+    "chart.js": "4.5.0",
     "dashjs": "5.0.3",
     "echarts": "5.6.0",
     "flowchart.ts": "3.0.1",
