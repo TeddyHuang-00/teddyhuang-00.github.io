@@ -18,8 +18,7 @@ export const transformerFileName = ({
   pre(node) {
     // Add CSS custom property to the node
     const fileNameOffset = style === "v1" ? "0.75rem" : "-0.75rem";
-    node.properties.style =
-      (node.properties.style || "") + `--file-name-offset: ${fileNameOffset};`;
+    node.properties.style = `${node.properties.style || ""}--file-name-offset: ${fileNameOffset};`;
 
     const raw = this.options.meta?.__raw?.split(" ");
 

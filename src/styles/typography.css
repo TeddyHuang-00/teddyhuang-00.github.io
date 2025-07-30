@@ -5,6 +5,21 @@
   .app-prose {
     @apply prose;
 
+    table {
+      th,
+      td {
+        @apply border border-border p-2;
+      }
+
+      th {
+        @apply py-1.5;
+      }
+
+      code {
+        @apply break-all sm:break-normal;
+      }
+    }
+
     h1,
     h2,
     h3,
@@ -49,21 +64,6 @@
 
     figcaption {
       @apply opacity-75;
-    }
-
-    table {
-      th,
-      td {
-        @apply border border-border p-2;
-      }
-
-      th {
-        @apply py-1.5;
-      }
-
-      code {
-        @apply break-all sm:break-normal;
-      }
     }
 
     code {
