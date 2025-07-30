@@ -5,6 +5,8 @@ import IconMoon from "@/assets/icons/IconMoon.svg";
 import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconX from "@/assets/icons/IconX.svg";
+import LogoDark from "@/assets/icons/LogoDark.svg";
+import LogoLight from "@/assets/icons/LogoLight.svg";
 import { SITE } from "@/config";
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
@@ -43,7 +45,12 @@ const isActive = (path: string) => {
         href="/"
         class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
       >
-        {SITE.title}
+        <LogoLight
+          class="absolute -translate-x-[25%] -translate-y-[45%] scale-35 dark:scale-0"
+        />
+        <LogoDark
+          class="absolute -translate-x-[25%] -translate-y-[45%] scale-0 dark:scale-35"
+        />
       </a>
       <nav
         id="nav-menu"

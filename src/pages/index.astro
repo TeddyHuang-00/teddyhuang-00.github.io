@@ -11,6 +11,7 @@ import Socials from "@/components/Socials.astro";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
 import Layout from "@/layouts/Layout.astro";
+import { Code } from "astro:components";
 import getSortedPosts from "@/utils/getSortedPosts";
 
 const posts = await getCollection("blog");
@@ -25,7 +26,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   <main id="main-content" data-layout="index">
     <section id="hero" class="pt-8 pb-6">
       <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Mingalaba
+        impl Blog for NanHuang;
       </h1>
       <a
         target="_blank"
@@ -76,7 +77,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
           <section id="featured" class="pt-12 pb-6">
             <h2 class="text-2xl font-semibold tracking-wide">Featured</h2>
             <ul>
-              {featuredPosts.map(data => (
+              {featuredPosts.map((data) => (
                 <Card variant="h3" {...data} />
               ))}
             </ul>

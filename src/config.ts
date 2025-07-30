@@ -1,10 +1,10 @@
 export const SITE = {
-  website: "https://teddyhuang-00.github.io/", // replace this with your deployed domain
-  author: "Nan Huang",
+  website: "https://teddyhuang-00.github.io/", // deployed domain
   profile: "https://teddyhuang-00.github.io/",
-  desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
-  title: "AstroPaper",
-  // ogImage: "astropaper-og.jpg",
+  author: "Nan Huang",
+  desc: "The personal blog of Nan Huang.",
+  title: "Nan's Blog",
+  ogImage: null,
   lightAndDarkMode: true,
   postPerIndex: 4,
   postPerPage: 4,
@@ -14,7 +14,7 @@ export const SITE = {
   editPost: {
     enabled: true,
     text: "Edit page",
-    url: "https://github.com/satnaing/astro-paper/edit/main/",
+    url: "https://github.com/teddyhuang-00/teddyhuang-00.github.io/edit/main/",
   },
   dynamicOgImage: true,
   dir: "ltr", // "rtl" | "auto"

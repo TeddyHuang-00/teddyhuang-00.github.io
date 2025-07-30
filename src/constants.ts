@@ -2,12 +2,13 @@ import type { Props } from "astro";
 import IconBrandX from "@/assets/icons/IconBrandX.svg";
 import IconFacebook from "@/assets/icons/IconFacebook.svg";
 import IconGitHub from "@/assets/icons/IconGitHub.svg";
-import IconLinkedin from "@/assets/icons/IconLinkedin.svg";
 import IconMail from "@/assets/icons/IconMail.svg";
+import IconBilibili from "src/assets/icons/IconBilibili.svg";
 import IconPinterest from "@/assets/icons/IconPinterest.svg";
 import IconTelegram from "@/assets/icons/IconTelegram.svg";
 import IconWhatsapp from "@/assets/icons/IconWhatsapp.svg";
 import { SITE } from "@/config";
+// import IconLinkedin from "@/assets/icons/IconLinkedin.svg";
 
 interface Social {
   name: string;
@@ -19,26 +20,32 @@ interface Social {
 export const SOCIALS: Social[] = [
   {
     name: "GitHub",
-    href: "https://github.com/satnaing/astro-paper",
-    linkTitle: `${SITE.title} on GitHub`,
+    href: "https://github.com/teddyhuang-00",
+    linkTitle: `${SITE.author} on GitHub`,
     icon: IconGitHub,
   },
   {
-    name: "X",
-    href: "https://x.com/username",
-    linkTitle: `${SITE.title} on X`,
-    icon: IconBrandX,
+    name: "Bilibili",
+    href: "https://space.bilibili.com/13229205",
+    linkTitle: `${SITE.author} on Bilibili`,
+    icon: IconBilibili,
   },
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/in/username/",
-    linkTitle: `${SITE.title} on LinkedIn`,
-    icon: IconLinkedin,
-  },
+  // {
+  //   name: "X",
+  //   href: "https://x.com/username",
+  //   linkTitle: `${SITE.title} on X`,
+  //   icon: IconBrandX,
+  // },
+  // {
+  //   name: "LinkedIn",
+  //   href: "https://www.linkedin.com/in/username/",
+  //   linkTitle: `${SITE.title} on LinkedIn`,
+  //   icon: IconLinkedin,
+  // },
   {
     name: "Mail",
-    href: "mailto:yourmail@gmail.com",
-    linkTitle: `Send an email to ${SITE.title}`,
+    href: "mailto:teddyhuangnan@gmail.com",
+    linkTitle: `Send an email to ${SITE.author}`,
     icon: IconMail,
   },
 ] as const;

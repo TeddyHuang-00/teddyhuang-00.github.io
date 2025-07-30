@@ -23,7 +23,7 @@ export default defineConfig({
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
-      themes: { light: "min-light", dark: "night-owl" },
+      themes: { light: "catppuccin-latte", dark: "catppuccin-mocha" },
       defaultColor: false,
       wrap: false,
       transformers: [
@@ -38,6 +38,16 @@ export default defineConfig({
     plugins: [tailwindcss()],
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
+    },
+    server: {
+      watch: {
+        ignored: [
+          "**/node_modules/**",
+          "**/dist/**",
+          "**/.jj/**",
+          "**/.git/**",
+        ],
+      },
     },
   },
   image: {
