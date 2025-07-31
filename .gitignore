@@ -24,5 +24,7 @@ pnpm-debug.log*
 .idea/
 
 # pagefind
-
 public/pagefind
+
+# Cache directories
+.cache/

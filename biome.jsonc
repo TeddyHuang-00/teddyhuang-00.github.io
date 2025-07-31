@@ -6,8 +6,10 @@
       "!**/.git",
       "!**/.jj",
       "!**/.astro",
+      "!**/.cache",
       "!**/node_modules",
-      "!**/dist"
+      "!**/dist",
+      "!**/pagefind"
     ]
   },
   "javascript": {

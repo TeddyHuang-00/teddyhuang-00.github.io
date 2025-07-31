@@ -6,6 +6,7 @@ import {
 } from "@shikijs/transformers";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
+import og from "astro-og";
 import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 import { SITE } from "./src/config";
@@ -18,6 +19,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => SITE.showArchives || !page.endsWith("/archives"),
     }),
+    og(),
   ],
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
@@ -35,7 +37,22 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+      {
+        name: "jsx-minimal",
+        config(config) {
+          config.esbuild ??= {};
+          config.define ??= {};
+
+          if (config.esbuild) {
+            config.esbuild.jsxFactory = "jsx";
+            config.esbuild.jsxFragment = "Fragment";
+            config.esbuild.jsxInject = `import {jsx, Fragment} from "@/utils/jsxMinimal.ts"`;
+          }
+        },
+      },
+    ],
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
     },
