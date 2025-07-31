@@ -9,23 +9,23 @@ FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
         (wget https://github.com/subframe7536/maple-font/releases/download/v{{FONT_VERSION}}/MapleMono-NF-CN-unhinted.zip -O {{FONT_CACHE_FILE}} && \
         unzip -o {{FONT_CACHE_FILE}} -d {{FONT_CACHE_DIR}})
 
-install:
-    @bun install
+@install:
+    bun install
 
 format:
-    bunx biome format
+    biome format
 
-check:
+check: install
     bunx astro check
-    bunx biome check
+    biome check
 
 lint:
-    bunx biome lint
+    biome lint
 
 fix-all:
-    bunx biome format --write
-    bunx biome check --write
-    bunx biome lint --write
+    biome format --write
+    biome check --write
+    biome lint --write
 
 build: install check font
     bunx astro build
@@ -35,8 +35,11 @@ build: install check font
 dev: install font
     bunx astro dev
 
-preview:
+preview: install
     bunx astro preview
 
-sync:
+sync: install
     bunx astro sync
+
+clean:
+    rm -rf dist public/pagefind node_modules .cache .astro
