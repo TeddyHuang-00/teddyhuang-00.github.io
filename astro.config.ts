@@ -1,3 +1,4 @@
+import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import {
   transformerNotationDiff,
@@ -22,6 +23,7 @@ export default defineConfig({
     }),
     icon({ iconDir: "src/assets/icons" }),
     og(),
+    react(),
   ],
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
@@ -39,22 +41,7 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [
-      tailwindcss(),
-      {
-        name: "jsx-minimal",
-        config(config) {
-          config.esbuild ??= {};
-          config.define ??= {};
-
-          if (config.esbuild) {
-            config.esbuild.jsxFactory = "jsx";
-            config.esbuild.jsxFragment = "Fragment";
-            config.esbuild.jsxInject = `import {jsx, Fragment} from "@/utils/jsxMinimal.ts"`;
-          }
-        },
-      },
-    ],
+    plugins: [tailwindcss()],
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
     },
