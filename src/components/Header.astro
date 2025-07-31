@@ -1,12 +1,5 @@
 ---
-import IconArchive from "@/assets/icons/IconArchive.svg";
-import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
-import IconMoon from "@/assets/icons/IconMoon.svg";
-import IconSearch from "@/assets/icons/IconSearch.svg";
-import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
-import IconX from "@/assets/icons/IconX.svg";
-import LogoDark from "@/assets/icons/LogoDark.svg";
-import LogoLight from "@/assets/icons/LogoLight.svg";
+import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
@@ -43,13 +36,15 @@ const isActive = (path: string) => {
     >
       <a
         href="/"
-        class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+        class="absolute p-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
       >
-        <LogoLight
-          class="absolute -translate-x-[25%] -translate-y-[45%] scale-35 dark:scale-0"
+        <Icon
+          name="LogoLight"
+          class="absolute sm:-translate-y-1/3 size-8 scale-100 dark:scale-0"
         />
-        <LogoDark
-          class="absolute -translate-x-[25%] -translate-y-[45%] scale-0 dark:scale-35"
+        <Icon
+          name="LogoDark"
+          class="absolute sm:-translate-y-1/3 size-8 scale-0 dark:scale-100"
         />
       </a>
       <nav
@@ -63,8 +58,8 @@ const isActive = (path: string) => {
           aria-expanded="false"
           aria-controls="menu-items"
         >
-          <IconX id="close-icon" class="hidden" />
-          <IconMenuDeep id="menu-icon" />
+          <Icon name="tabler:x" id="close-icon" class="hidden size-4" />
+          <Icon name="tabler:menu-deep" id="menu-icon" class="size-4" />
         </button>
         <ul
           id="menu-items"
@@ -104,7 +99,10 @@ const isActive = (path: string) => {
                   ariaLabel="archives"
                   title="Archives"
                 >
-                  <IconArchive class="hidden sm:inline-block" />
+                  <Icon
+                    name="tabler:archive"
+                    class="hidden size-6 sm:inline-block"
+                  />
                   <span class="sm:sr-only">Archives</span>
                 </LinkButton>
               </li>
@@ -120,7 +118,7 @@ const isActive = (path: string) => {
               ariaLabel="search"
               title="Search"
             >
-              <IconSearch />
+              <Icon name="tabler:search" class="size-6" />
               <span class="sr-only">Search</span>
             </LinkButton>
           </li>
@@ -134,8 +132,14 @@ const isActive = (path: string) => {
                   aria-label="auto"
                   aria-live="polite"
                 >
-                  <IconMoon class="absolute top-[50%] left-[50%] -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                  <IconSunHigh class="absolute top-[50%] left-[50%] -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+                  <Icon
+                    name="tabler:moon"
+                    class="absolute top-[50%] left-[50%] size-6 -translate-[50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
+                  />
+                  <Icon
+                    name="tabler:sun-high"
+                    class="absolute top-[50%] left-[50%] size-6 -translate-[50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
+                  />
                 </button>
               </li>
             )

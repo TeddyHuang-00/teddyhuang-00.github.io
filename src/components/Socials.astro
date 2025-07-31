@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { SOCIALS } from "@/constants";
 import LinkButton from "./LinkButton.astro";
 
@@ -17,7 +18,7 @@ const { centered = false } = Astro.props;
         class="p-2 hover:rotate-6 sm:p-1"
         title={social.linkTitle}
       >
-        <social.icon class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
+        <Icon name={social.iconName} class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
         <span class="sr-only">{social.linkTitle}</span>
       </LinkButton>
     ))

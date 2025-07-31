@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import IconEdit from "@/assets/icons/IconEdit.svg";
+import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
 
 export interface Props {
@@ -27,7 +27,7 @@ const showEditPost =
         className,
       ]}
     >
-      <IconEdit class="inline-block" />
+      <Icon name="tabler:edit" class="inline-block size-6" />
       <span>{SITE.editPost.text}</span>
     </a>
   )

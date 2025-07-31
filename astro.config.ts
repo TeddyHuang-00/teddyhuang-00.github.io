@@ -6,6 +6,7 @@ import {
 } from "@shikijs/transformers";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
+import icon from "astro-icon";
 import og from "astro-og";
 import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
@@ -19,6 +20,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => SITE.showArchives || !page.endsWith("/archives"),
     }),
+    icon({ iconDir: "src/assets/icons" }),
     og(),
   ],
   markdown: {

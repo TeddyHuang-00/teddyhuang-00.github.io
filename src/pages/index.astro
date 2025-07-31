@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
-import IconRss from "@/assets/icons/IconRss.svg";
+import { Icon } from "astro-icon/components";
 import Card from "@/components/Card.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
@@ -34,11 +33,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
         aria-label="rss feed"
         title="RSS Feed"
       >
-        <IconRss
-          width={20}
-          height={20}
-          class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
-        />
+        <Icon name="tabler:rss" class="size-8 rtl:-rotate-90 text-accent" />
         <span class="sr-only">RSS Feed</span>
       </a>
 
@@ -103,7 +98,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     <div class="my-8 text-center">
       <LinkButton href="/posts/">
         All Posts
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
+        <Icon name="tabler:arrow-right" class="inline-block rtl:-rotate-180" />
       </LinkButton>
     </div>
   </main>

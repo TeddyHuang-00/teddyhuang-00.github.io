@@ -1,5 +1,5 @@
 ---
-import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
+import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
 import LinkButton from "./LinkButton.astro";
 ---
@@ -12,7 +12,10 @@ import LinkButton from "./LinkButton.astro";
         href="/"
         class="focus-outline mt-8 mb-2 flex hover:text-foreground/75"
       >
-        <IconChevronLeft class="inline-block size-6 rtl:rotate-180" />
+        <Icon
+          name="tabler:chevron-left"
+          class="inline-block size-6 pb-1 rtl:rotate-180"
+        />
         <span>Go back</span>
       </LinkButton>
     </div>

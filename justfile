@@ -27,13 +27,15 @@ fix-all:
     biome check --write
     biome lint --write
 
+dev: install font
+    bunx astro dev
+
 build: install check font
     bunx astro build
     bunx pagefind --site dist
     cp -r dist/pagefind public/
 
-dev: install font
-    bunx astro dev
+clean-build: clean build
 
 preview: install
     bunx astro preview
