@@ -1,13 +1,14 @@
+import type { CollectionEntry } from "astro:content";
 import satori from "satori";
 import { SITE } from "@/config";
 import loadCustomFonts from "../loadCustomFont";
 import { seedRng } from "../randomNumber";
 
-const width = 1200;
-const height = 630;
-const mosaicSize = 15; // Size of each mosaic tile
+export const width = 1200;
+export const height = 630;
+export const mosaicSize = 15; // Size of each mosaic tile
 
-const generateMosaic = (string) => {
+export const generateMosaic = (string: string) => {
   const random = seedRng(string);
   const sample = () => (
     <span
@@ -44,7 +45,7 @@ const generateMosaic = (string) => {
   );
 };
 
-export default async (post) => {
+export default async (post: CollectionEntry<"blog">) => {
   return satori(
     <div
       style={{

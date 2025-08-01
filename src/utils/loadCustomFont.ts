@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import type { Font } from "satori";
 
 const fontCacheDir = join(process.cwd(), ".cache", "fonts");
 
@@ -12,9 +13,7 @@ async function loadCustomFont(fontPath: string): Promise<ArrayBuffer> {
   }
 }
 
-async function loadCustomFonts(): Promise<
-  Array<{ name: string; data: ArrayBuffer; weight: number; style: string }>
-> {
+async function loadCustomFonts(): Promise<Array<Font>> {
   const fontsConfig = [
     {
       name: "Maple Mono",
@@ -39,7 +38,7 @@ async function loadCustomFonts(): Promise<
   const fonts = await Promise.all(
     fontsConfig.map(async ({ name, path, weight, style }) => {
       const data = await loadCustomFont(path);
-      return { name, data, weight, style };
+      return { name, data, weight, style } as Font;
     })
   );
 

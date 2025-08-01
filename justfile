@@ -15,7 +15,7 @@ FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
 format:
     biome format
 
-check: install
+check: install sync
     bunx astro check
     biome check
 
