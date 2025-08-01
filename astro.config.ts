@@ -1,7 +1,6 @@
+import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -11,7 +10,9 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
 import icon from "astro-icon";
 import og from "astro-og";
+import rehypeKatex from "rehype-katex";
 import remarkCollapse from "remark-collapse";
+import remarkMath from "remark-math";
 import remarkToc from "remark-toc";
 import { SITE } from "./src/config";
 import { transformerFileName } from "./src/utils/transformers/fileName";
@@ -26,6 +27,7 @@ export default defineConfig({
     icon({ iconDir: "src/assets/icons" }),
     og(),
     react(),
+    mdx(),
   ],
   markdown: {
     remarkPlugins: [
