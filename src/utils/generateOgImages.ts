@@ -8,26 +8,26 @@ import {
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
 
-function svgBufferToPngBuffer(svg: string) {
+const svgBufferToPngBuffer = (svg: string) => {
   const resvg = new Resvg(svg);
   const pngData = resvg.render();
   return pngData.asPng();
-}
+};
 
-export async function generateOgImageForPost(post: CollectionEntry<"blog">) {
+export const generateOgImageForPost = async (post: CollectionEntry<"blog">) => {
   const cacheKey = await getPostOgCacheKey(post);
 
   return withOgImageCache(cacheKey, async () => {
     const svg = await postOgImage(post);
     return svgBufferToPngBuffer(svg);
   });
-}
+};
 
-export async function generateOgImageForSite() {
+export const generateOgImageForSite = async () => {
   const cacheKey = await getSiteOgCacheKey();
 
   return withOgImageCache(cacheKey, async () => {
     const svg = await siteOgImage();
     return svgBufferToPngBuffer(svg);
   });
-}
+};

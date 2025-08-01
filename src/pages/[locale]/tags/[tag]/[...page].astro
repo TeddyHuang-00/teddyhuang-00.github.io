@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPathsOptions } from "astro";
+import Card from "@/components/Card.astro";
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import Pagination from "@/components/Pagination.astro";
+import { SITE } from "@/config";
+import { useTranslations } from "@/i18n/utils";
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/layouts/Main.astro";
+import getPostsByTag from "@/utils/getPostsByTag";
+import getUniqueTags from "@/utils/getUniqueTags";
+
+export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
+  const posts = await getCollection("blog");
+  const locales = Object.keys(SITE.locales);
+
+  return locales.flatMap((locale) => {
+    const localePosts = posts.filter(({ data }) => data.locale === locale);
+    const tags = getUniqueTags(localePosts);
+
+    return tags.flatMap(({ tag, tagName }) => {
+      const tagPosts = getPostsByTag(localePosts, tag);
+
+      return paginate(tagPosts, {
+        params: { tag, locale: locale as keyof typeof SITE.locales },
+        props: { tagName },
+        pageSize: SITE.postPerPage,
+      });
+    });
+  });
+};
+
+const { tag, locale } = Astro.params;
+const { page, tagName } = Astro.props;
+
+const localeString = useTranslations(locale);
+---
+
+<Layout
+  title={`${localeString("tags.tag")}: ${tagName} | ${localeString("site.title")}`}
+>
+  <Header />
+  <Main
+    pageTitle={[`${localeString("tags.tag")}:`, `${tagName}`]}
+    titleTransition={tag}
+    pageDesc={localeString("tags.with-tag", { tag: tagName })}
+  >
+    <h1 slot="title" transition:name={tag}>
+      {`${localeString("tags.tag")}:${tag}`}
+    </h1>
+    <ul>
+      {page.data.map((data) => <Card {...data} />)}
+    </ul>
+  </Main>
+
+  <Pagination {page} />
+
+  <Footer noMarginTop={page.lastPage > 1} />
+</Layout>

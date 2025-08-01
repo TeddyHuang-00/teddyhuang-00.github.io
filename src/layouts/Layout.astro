@@ -1,10 +1,13 @@
 ---
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { ClientRouter } from "astro:transitions";
 import { SITE } from "@/config";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import "@/styles/global.css";
 
 export interface Props {
+  siteName?: string;
   title?: string;
   author?: string;
   profile?: string;
@@ -16,11 +19,15 @@ export interface Props {
   scrollSmooth?: boolean;
 }
 
+const locale = getLangFromUrl(Astro.url);
+const localeString = useTranslations(locale);
+
 const {
-  title = SITE.title,
-  author = SITE.author,
+  siteName = localeString("site.title"),
+  title = localeString("site.title"),
+  author = localeString("site.author"),
   profile = SITE.profile,
-  description = SITE.desc,
+  description = localeString("site.description"),
   ogImage = SITE.ogImage ? `/${SITE.ogImage}` : "/og.png",
   canonicalURL = new URL(Astro.url.pathname, Astro.url),
   pubDatetime,
@@ -50,7 +57,7 @@ const structuredData = {
 <!doctype html>
 <html
   dir={SITE.dir}
-  lang=`${SITE.lang ?? "en"}`
+  lang=`${locale}`
   class={`${scrollSmooth && "scroll-smooth"}`}
 >
   <head>
@@ -71,6 +78,7 @@ const structuredData = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:image" content={socialImageURL} />
 
     <!-- Article Published/Modified time -->
@@ -110,8 +118,8 @@ const structuredData = {
     <link
       rel="alternate"
       type="application/rss+xml"
-      title={SITE.title}
-      href={new URL("rss.xml", Astro.site)}
+      title={`${localeString("rss.feed")} | ${localeString("site.title")}`}
+      href={new URL(getRelativeLocaleUrl(locale, "/rss.xml"), Astro.site)}
     />
 
     <meta name="theme-color" content="" />
@@ -135,7 +143,7 @@ const structuredData = {
     <!-- KaTeX -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css"
+      href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"
     />
   </head>
   <body>

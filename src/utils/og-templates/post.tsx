@@ -1,6 +1,7 @@
 import type { CollectionEntry } from "astro:content";
 import satori from "satori";
-import { SITE } from "@/config";
+import type { SITE } from "@/config";
+import { useTranslations } from "@/i18n/utils";
 import loadCustomFonts from "../loadCustomFont";
 import { seedRng } from "../randomNumber";
 
@@ -46,6 +47,10 @@ export const generateMosaic = (string: string) => {
 };
 
 export default async (post: CollectionEntry<"blog">) => {
+  const localeString = useTranslations(
+    post.data.locale as keyof typeof SITE.locales
+  );
+  const siteTitle = localeString("site.title");
   return satori(
     <div
       style={{
@@ -57,7 +62,7 @@ export default async (post: CollectionEntry<"blog">) => {
         justifyContent: "center",
       }}
     >
-      {generateMosaic(post.data.title + post.data.author + SITE.title)}
+      {generateMosaic(post.data.title + post.data.author + siteTitle)}
 
       <div
         style={{
@@ -109,7 +114,7 @@ export default async (post: CollectionEntry<"blog">) => {
               by <span style={{ color: "transparent" }}>"</span>
               <span style={{ fontStyle: "italic" }}>{post.data.author}</span>
             </span>
-            <span style={{ fontWeight: "bold" }}>{SITE.title}</span>
+            <span style={{ fontWeight: "bold" }}>{siteTitle}</span>
           </div>
         </div>
       </div>

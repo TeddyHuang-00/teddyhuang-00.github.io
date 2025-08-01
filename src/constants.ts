@@ -1,5 +1,3 @@
-import { SITE } from "@/config";
-
 interface Social {
   name: string;
   href: string;
@@ -11,13 +9,13 @@ export const SOCIALS: Social[] = [
   {
     name: "GitHub",
     href: "https://github.com/teddyhuang-00",
-    linkTitle: `${SITE.author} on GitHub`,
+    linkTitle: "on",
     iconName: "tabler:brand-github",
   },
   {
     name: "Bilibili",
     href: "https://space.bilibili.com/13229205",
-    linkTitle: `${SITE.author} on Bilibili`,
+    linkTitle: "on",
     iconName: "tabler:brand-bilibili",
   },
   // {
@@ -35,7 +33,7 @@ export const SOCIALS: Social[] = [
   {
     name: "Mail",
     href: "mailto:teddyhuangnan@gmail.com",
-    linkTitle: `Send an email to ${SITE.author}`,
+    linkTitle: "via",
     iconName: "tabler:mail",
   },
 ] as const;
@@ -44,37 +42,37 @@ export const SHARE_LINKS: Social[] = [
   {
     name: "WhatsApp",
     href: "https://wa.me/?text=",
-    linkTitle: `Share this post via WhatsApp`,
+    linkTitle: "via",
     iconName: "tabler:brand-whatsapp",
   },
   {
     name: "Facebook",
     href: "https://www.facebook.com/sharer.php?u=",
-    linkTitle: `Share this post on Facebook`,
+    linkTitle: "on",
     iconName: "tabler:brand-facebook",
   },
   {
     name: "X",
     href: "https://x.com/intent/post?url=",
-    linkTitle: `Share this post on X`,
+    linkTitle: "on",
     iconName: "tabler:brand-x",
   },
   {
     name: "Telegram",
     href: "https://t.me/share/url?url=",
-    linkTitle: `Share this post via Telegram`,
+    linkTitle: "via",
     iconName: "tabler:brand-telegram",
   },
   {
     name: "Pinterest",
     href: "https://pinterest.com/pin/create/button/?url=",
-    linkTitle: `Share this post on Pinterest`,
+    linkTitle: "on",
     iconName: "tabler:brand-pinterest",
   },
   {
     name: "Mail",
     href: "mailto:?subject=See%20this%20post&body=",
-    linkTitle: `Share this post via email`,
+    linkTitle: "via",
     iconName: "tabler:mail",
   },
 ] as const;

@@ -4,16 +4,16 @@ import type { Font } from "satori";
 
 const fontCacheDir = join(process.cwd(), ".cache", "fonts");
 
-async function loadCustomFont(fontPath: string): Promise<ArrayBuffer> {
+const loadCustomFont = async (fontPath: string): Promise<ArrayBuffer> => {
   try {
     const fontBuffer = readFileSync(join(fontCacheDir, fontPath));
     return fontBuffer.buffer.slice(0) as ArrayBuffer;
   } catch (error) {
     throw new Error(`Failed to load custom font at ${fontPath}: ${error}`);
   }
-}
+};
 
-async function loadCustomFonts(): Promise<Array<Font>> {
+const loadCustomFonts = async (): Promise<Array<Font>> => {
   const fontsConfig = [
     {
       name: "Maple Mono",
@@ -43,6 +43,6 @@ async function loadCustomFonts(): Promise<Array<Font>> {
   );
 
   return fonts;
-}
+};
 
 export default loadCustomFonts;

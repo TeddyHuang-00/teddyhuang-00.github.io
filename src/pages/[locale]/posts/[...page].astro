@@ -6,23 +6,38 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import Pagination from "@/components/Pagination.astro";
 import { SITE } from "@/config";
+import { useTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/layouts/Main.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
-  return paginate(getSortedPosts(posts), { pageSize: SITE.postPerPage });
+  const locales = Object.keys(SITE.locales);
+
+  return locales.flatMap((locale) => {
+    const localePosts = posts.filter(({ data }) => data.locale === locale);
+    return paginate(getSortedPosts(localePosts), {
+      pageSize: SITE.postPerPage,
+      params: { locale: locale as keyof typeof SITE.locales },
+    });
+  });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
+const { locale } = Astro.params;
+
+const localeString = useTranslations(locale);
 ---
 
-<Layout title={`Posts | ${SITE.title}`}>
+<Layout title={`${localeString("nav.posts")} | ${localeString("site.title")}`}>
   <Header />
-  <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
+  <Main
+    pageTitle={localeString("nav.posts")}
+    pageDesc={localeString("posts.description")}
+  >
     <ul>
-      {page.data.map(data => <Card {...data} />)}
+      {page.data.map((data) => <Card {...data} />)}
     </ul>
   </Main>
 

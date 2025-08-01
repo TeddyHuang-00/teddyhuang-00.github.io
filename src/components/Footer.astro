@@ -1,4 +1,5 @@
 ---
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import Hr from "./Hr.astro";
 import Socials from "./Socials.astro";
 
@@ -9,6 +10,9 @@ export interface Props {
 }
 
 const { noMarginTop = false } = Astro.props;
+const locale = getLangFromUrl(Astro.url);
+const localeString = useTranslations(locale);
+const license = "CC BY-NC-SA 4.0";
 ---
 
 <footer class:list={["w-full", { "mt-auto": !noMarginTop }]}>
@@ -18,9 +22,18 @@ const { noMarginTop = false } = Astro.props;
   >
     <Socials centered />
     <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
-      <span>Copyright &#169; {currentYear}</span>
+      <span>
+        {
+          localeString("footer.copyright", {
+            year: currentYear.toString(),
+            author: localeString("site.author"),
+          })
+        }
+      </span>
       <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <span>All rights reserved.</span>
+      <span>
+        {localeString("footer.license", { license })}
+      </span>
     </div>
   </div>
 </footer>

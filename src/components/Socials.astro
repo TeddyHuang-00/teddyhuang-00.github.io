@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { SOCIALS } from "@/constants";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import LinkButton from "./LinkButton.astro";
 
 export interface Props {
@@ -8,19 +9,30 @@ export interface Props {
 }
 
 const { centered = false } = Astro.props;
+const locale = getLangFromUrl(Astro.url);
+const localeString = useTranslations(locale);
 ---
 
 <div class:list={["flex-wrap justify-center gap-1", { flex: centered }]}>
   {
-    SOCIALS.map((social) => (
-      <LinkButton
-        href={social.href}
-        class="p-2 hover:rotate-6 sm:p-1"
-        title={social.linkTitle}
-      >
-        <Icon name={social.iconName} class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110" />
-        <span class="sr-only">{social.linkTitle}</span>
-      </LinkButton>
-    ))
+    SOCIALS.map((social) => {
+      const linkText =
+        social.linkTitle === "on"
+          ? localeString("social.find-me-on", { social: social.name })
+          : localeString("social.contact-me-via", { social: social.name });
+      return (
+        <LinkButton
+          href={social.href}
+          class="p-2 hover:rotate-6 sm:p-1"
+          title={linkText}
+        >
+          <Icon
+            name={social.iconName}
+            class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"
+          />
+          <span class="sr-only">{linkText}</span>
+        </LinkButton>
+      );
+    })
   }
 </div>

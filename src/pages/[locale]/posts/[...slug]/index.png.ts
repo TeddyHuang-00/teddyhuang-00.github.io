@@ -4,7 +4,7 @@ import { SITE } from "@/config";
 import { generateOgImageForPost } from "@/utils/generateOgImages";
 import { getPath } from "@/utils/getPath";
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
   if (!SITE.dynamicOgImage) {
     return [];
   }
@@ -14,10 +14,13 @@ export async function getStaticPaths() {
   );
 
   return posts.map((post) => ({
-    params: { slug: getPath(post.id, post.filePath, false) },
+    params: {
+      slug: getPath(post.data.translationId, post.filePath, false),
+      locale: post.data.locale,
+    },
     props: post,
   }));
-}
+};
 
 export const GET: APIRoute = async ({ props }) => {
   if (!SITE.dynamicOgImage) {

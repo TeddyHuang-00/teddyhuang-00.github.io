@@ -1,18 +1,48 @@
 ---
 import "@pagefind/default-ui/css/ui.css";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import { SITE } from "@/config";
+import { useTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/layouts/Main.astro";
 
-const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
+export const getStaticPaths = async () => {
+  return Object.keys(SITE.locales).map((lang) => ({
+    params: { locale: lang as keyof typeof SITE.locales },
+  }));
+};
+
+const { locale } = Astro.params;
+const localeString = useTranslations(locale);
+
+const backUrl = SITE.showBackButton
+  ? `${Astro.url.pathname}`
+  : getRelativeLocaleUrl(locale, "/");
 ---
 
-<Layout title={`Search | ${SITE.title}`}>
+<Layout title={`${localeString("nav.search")} | ${localeString("site.title")}`}>
   <Header />
-  <Main pageTitle="Search" pageDesc="Search any article ...">
-    <div id="pagefind-search" transition:persist data-backurl={backUrl}></div>
+  <Main
+    pageTitle={localeString("nav.search")}
+    pageDesc={localeString("search.description")}
+  >
+    <div id="pagefind-search" transition:persist data-backurl={backUrl}>
+      {
+        import.meta.env.DEV && (
+          <div class="bg-muted/75 rounded p-4 space-y-4 mb-4">
+            <p>
+              <strong>DEV mode Warning! </strong>You need to build the project
+              at least once to see the search results during development.
+            </p>
+            <code class="block bg-black text-white px-2 py-1 rounded">
+              bun run build
+            </code>
+          </div>
+        )
+      }
+    </div>
   </Main>
   <Footer />
 </Layout>
@@ -26,28 +56,18 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
 
     const params = new URLSearchParams(window.location.search);
 
-    const onIdle = window.requestIdleCallback || (cb => setTimeout(cb, 1));
+    const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
 
     onIdle(async () => {
       // @ts-expect-error — Missing types for @pagefind/default-ui package.
       const { PagefindUI } = await import("@pagefind/default-ui");
-
-      // Display warning inn dev mode
-      if (import.meta.env.DEV) {
-        pageFindSearch.innerHTML = `
-            <div class="bg-muted/75 rounded p-4 space-y-4 mb-4">
-              <p><strong>DEV mode Warning! </strong>You need to build the project at least once to see the search results during development.</p>
-              <code class="block bg-black text-white px-2 py-1 rounded">bun run build</code>
-            </div>
-          `;
-      }
 
       // Init pagefind ui
       const search = new PagefindUI({
         element: "#pagefind-search",
         showSubResults: true,
         showImages: false,
-        processTerm: function (term: string) {
+        processTerm: (term: string) => {
           params.set("q", term); // Update the `q` parameter in the URL
           history.replaceState(history.state, "", "?" + params.toString()); // Push the new URL without reloading
 

@@ -1,6 +1,8 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import { SITE } from "@/config";
+import { getLangFromUrl } from "@/i18n/utils";
 
 interface StringTitleProp {
   pageTitle: string;
@@ -17,7 +19,10 @@ export type Props = StringTitleProp | ArrayTitleProp;
 
 const { props } = Astro;
 
-const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
+const locale = getLangFromUrl(Astro.url) as keyof typeof SITE.locales;
+const backUrl = SITE.showBackButton
+  ? Astro.url.pathname
+  : getRelativeLocaleUrl(locale, "/");
 ---
 
 <Breadcrumb />

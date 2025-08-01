@@ -1,42 +1,50 @@
 ---
 import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
 import Card from "@/components/Card.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import { SITE } from "@/config";
+import { useTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/layouts/Main.astro";
 import getPostsByGroupCondition from "@/utils/getPostsByGroupCondition";
 
+export const getStaticPaths = (async () => {
+  return Object.keys(SITE.locales).map((lang) => ({
+    params: { locale: lang as keyof typeof SITE.locales },
+  }));
+}) satisfies GetStaticPaths;
+
+const { locale } = Astro.params;
+const localeString = useTranslations(locale);
+
 // Redirect to 404 page if `showArchives` config is false
 if (!SITE.showArchives) {
-  return Astro.redirect("/404");
+  return Astro.redirect(getRelativeLocaleUrl(locale, "/404"));
 }
 
-const posts = await getCollection("blog", ({ data }) => !data.draft);
+const posts = await getCollection(
+  "blog",
+  ({ data }) => !data.draft && data.locale === locale
+);
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+const months = Array.from({ length: 12 }, (_, i) =>
+  localeString(`months.${i + 1}` as keyof typeof localeString)
+);
 ---
 
-<Layout title={`Archives | ${SITE.title}`}>
+<Layout
+  title={`${localeString("nav.archives")} | ${localeString("site.title")}`}
+>
   <Header />
-  <Main pageTitle="Archives" pageDesc="All the articles I've archived.">
+  <Main
+    pageTitle={localeString("nav.archives")}
+    pageDesc={localeString("archives.description")}
+  >
     {
       Object.entries(
-        getPostsByGroupCondition(posts, post =>
+        getPostsByGroupCondition(posts, (post) =>
           post.data.pubDatetime.getFullYear()
         )
       )
@@ -48,7 +56,7 @@ const months = [
             {Object.entries(
               getPostsByGroupCondition(
                 yearGroup,
-                post => post.data.pubDatetime.getMonth() + 1
+                (post) => post.data.pubDatetime.getMonth() + 1
               )
             )
               .sort(([monthA], [monthB]) => Number(monthB) - Number(monthA))
@@ -69,7 +77,7 @@ const months = [
                             new Date(a.data.pubDatetime).getTime() / 1000
                           )
                       )
-                      .map(data => (
+                      .map((data) => (
                         <Card {...data} />
                       ))}
                   </ul>

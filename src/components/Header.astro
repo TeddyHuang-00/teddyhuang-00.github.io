@@ -1,17 +1,22 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
 
 const { pathname } = Astro.url;
 
+const currentLang = getLangFromUrl(Astro.url);
+const localeString = useTranslations(currentLang);
 // Remove trailing slash from current pathname if exists
 const currentPath =
   pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
+const langAgnosticPath = currentPath.split("/").slice(2).join("/");
 
 const isActive = (path: string) => {
-  const currentPathArray = currentPath.split("/").filter((p) => p.trim());
+  const currentPathArray = langAgnosticPath.split("/").filter((p) => p.trim());
   const pathArray = path.split("/").filter((p) => p.trim());
 
   return currentPath === path || currentPathArray[0] === pathArray[0];
@@ -24,7 +29,7 @@ const isActive = (path: string) => {
     href="#main-content"
     class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
   >
-    Skip to content
+    {localeString("nav.skip-to-content")}
   </a>
   <div
     id="nav-container"
@@ -35,7 +40,9 @@ const isActive = (path: string) => {
       class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"
     >
       <a
-        href="/"
+        href={getRelativeLocaleUrl(currentLang, "/")}
+        aria-label={localeString("nav.home")}
+        title={localeString("nav.home")}
         class="absolute p-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
       >
         <Icon
@@ -54,7 +61,7 @@ const isActive = (path: string) => {
         <button
           id="menu-btn"
           class="focus-outline self-end p-2 sm:hidden"
-          aria-label="Open Menu"
+          aria-label={localeString("nav.open-menu")}
           aria-expanded="false"
           aria-controls="menu-items"
         >
@@ -71,64 +78,114 @@ const isActive = (path: string) => {
           ]}
         >
           <li class="col-span-2">
-            <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
-              Posts
+            <a
+              href={getRelativeLocaleUrl(currentLang, "/posts")}
+              class:list={{ "active-nav": isActive("/posts") }}
+            >
+              {localeString("nav.posts")}
             </a>
           </li>
           <li class="col-span-2">
-            <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
-              Tags
+            <a
+              href={getRelativeLocaleUrl(currentLang, "/tags")}
+              class:list={{ "active-nav": isActive("/tags") }}
+            >
+              {localeString("nav.tags")}
             </a>
           </li>
           <li class="col-span-2">
-            <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
-              About
+            <a
+              href={getRelativeLocaleUrl(currentLang, "/about")}
+              class:list={{ "active-nav": isActive("/about") }}
+            >
+              {localeString("nav.about")}
             </a>
           </li>
           {
             SITE.showArchives && (
               <li class="col-span-2">
                 <LinkButton
-                  href="/archives"
+                  href={getRelativeLocaleUrl(currentLang, "/archives")}
                   class:list={[
                     "focus-outline flex justify-center p-3 sm:p-1",
                     {
                       "active-nav [&>svg]:stroke-accent": isActive("/archives"),
                     },
                   ]}
-                  ariaLabel="archives"
-                  title="Archives"
+                  ariaLabel={localeString("nav.archives")}
+                  title={localeString("nav.archives")}
                 >
                   <Icon
                     name="tabler:archive"
                     class="hidden size-6 sm:inline-block"
                   />
-                  <span class="sm:sr-only">Archives</span>
+                  <span class="sm:sr-only">{localeString("nav.archives")}</span>
                 </LinkButton>
               </li>
             )
           }
           <li class="col-span-1 flex items-center justify-center">
             <LinkButton
-              href="/search"
+              href={getRelativeLocaleUrl(currentLang, "/search")}
               class:list={[
                 "focus-outline flex p-3 sm:p-1",
                 { "[&>svg]:stroke-accent": isActive("/search") },
               ]}
-              ariaLabel="search"
-              title="Search"
+              ariaLabel={localeString("nav.search")}
+              title={localeString("nav.search")}
             >
               <Icon name="tabler:search" class="size-6" />
-              <span class="sr-only">Search</span>
+              <span class="sr-only">{localeString("nav.search")}</span>
             </LinkButton>
           </li>
+          {
+            Object.keys(SITE.locales).length > 1 && (
+              <li class="col-span-1 flex items-center justify-center">
+                <div class="relative">
+                  <button
+                    id="lang-btn"
+                    class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent"
+                    title={localeString("nav.change-language")}
+                    aria-label={`${localeString("nav.current-language")}: ${SITE.locales[currentLang].label}`}
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <Icon
+                      name="tabler:language"
+                      class="absolute top-[50%] left-[50%] size-6 -translate-[50%] transition-all"
+                    />
+                  </button>
+                  <div
+                    id="lang-menu"
+                    class="absolute right-0 top-full z-50 mt-2 hidden min-w-max rounded-md border border-border bg-background p-1 shadow-lg backdrop-blur-lg"
+                  >
+                    {Object.entries(SITE.locales).map(([lang, { label }]) => (
+                      <a
+                        href={getRelativeLocaleUrl(lang, langAgnosticPath)}
+                        class:list={[
+                          "block rounded px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent",
+                          {
+                            "text-accent": currentLang === lang,
+                          },
+                        ]}
+                        title={`Switch to ${label}`}
+                        aria-label={`Switch to ${label}`}
+                      >
+                        {label}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </li>
+            )
+          }
           {
             SITE.lightAndDarkMode && (
               <li class="col-span-1 flex items-center justify-center">
                 <button
                   id="theme-btn"
                   class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent"
-                  title="Toggles light & dark"
+                  title={localeString("nav.toggle-theme")}
                   aria-label="auto"
                   aria-live="polite"
                 >
@@ -172,8 +229,48 @@ const isActive = (path: string) => {
     });
   }
 
+  function toggleLangMenu() {
+    const langBtn = document.querySelector("#lang-btn") as HTMLButtonElement;
+    const langMenu = document.querySelector("#lang-menu") as HTMLDivElement;
+
+    if (!langBtn || !langMenu) return;
+
+    langBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = langBtn.getAttribute("aria-expanded") === "true";
+
+      langBtn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+      langMenu.classList.toggle("hidden");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      const target = e.target as Node;
+      if (!langBtn.contains(target) && !langMenu.contains(target)) {
+        langBtn.setAttribute("aria-expanded", "false");
+        langMenu.classList.add("hidden");
+      }
+    });
+
+    // Close dropdown on Escape key
+    document.addEventListener("keydown", (e) => {
+      if (
+        (e.key === "Escape" || e.key === "Esc") &&
+        langBtn.getAttribute("aria-expanded") === "true"
+      ) {
+        langBtn.setAttribute("aria-expanded", "false");
+        langMenu.classList.add("hidden");
+        langBtn.focus();
+      }
+    });
+  }
+
   toggleNav();
+  toggleLangMenu();
 
   // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", toggleNav);
+  document.addEventListener("astro:after-swap", () => {
+    toggleNav();
+    toggleLangMenu();
+  });
 </script>

@@ -1,0 +1,48 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import { SITE } from "@/config";
+import { useTranslations } from "@/i18n/utils";
+import Layout from "@/layouts/Layout.astro";
+
+export interface Props {
+  post: CollectionEntry<"about">;
+}
+
+export const getStaticPaths = (async () => {
+  return Object.keys(SITE.locales).map((lang) => ({
+    params: { locale: lang as keyof typeof SITE.locales },
+  }));
+}) satisfies GetStaticPaths;
+
+const { locale } = Astro.params;
+
+const localeString = useTranslations(locale);
+
+const about = await getCollection(
+  "about",
+  ({ data }) => data.locale === locale
+);
+if (!about || about.length === 0) {
+  return Astro.redirect(getRelativeLocaleUrl(locale, "/404"));
+}
+const aboutPage = about[0];
+const { Content } = await render(aboutPage);
+---
+
+<Layout title={`${aboutPage?.data.title} | ${localeString("site.title")}`}>
+  <Header />
+  <Breadcrumb />
+  <main id="main-content">
+    <section id="about" class="app-prose mb-28 max-w-app prose-img:border-0">
+      <h1 class="text-2xl tracking-wider sm:text-3xl">
+        {aboutPage.data.title}
+      </h1>
+      <Content />
+    </section>
+  </main>
+  <Footer />
+</Layout>

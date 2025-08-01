@@ -1,12 +1,18 @@
 ---
+import { Icon } from "astro-icon/components";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import LinkButton from "@/components/LinkButton.astro";
-import { SITE } from "@/config";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
+
+const locale = getLangFromUrl(Astro.url);
+const localeString = useTranslations(locale);
 ---
 
-<Layout title={`404 Not Found | ${SITE.title}`}>
+<Layout
+  title={`${localeString("404.not-found")} | ${localeString("site.title")}`}
+>
   <Header />
 
   <main
@@ -16,12 +22,19 @@ import Layout from "@/layouts/Layout.astro";
     <div class="mb-14 flex flex-col items-center justify-center">
       <h1 class="text-9xl font-bold text-accent">404</h1>
       <span aria-hidden="true">¯\_(ツ)_/¯</span>
-      <p class="mt-4 text-2xl sm:text-3xl">Page Not Found</p>
+      <p class="mt-4 text-2xl sm:text-3xl">
+        {localeString("404.page-not-found")}
+      </p>
+      <p class="mt-4 text-lg sm:text-xl">
+        {localeString("404.description")}
+      </p>
       <LinkButton
         href="/"
         class="my-6 text-lg underline decoration-dashed underline-offset-8"
+        aria-label="Go to Home"
+        title="Go to Home"
       >
-        Go back home
+        <Icon name="tabler:home" class="inline-block size-12" />
       </LinkButton>
     </div>
   </main>

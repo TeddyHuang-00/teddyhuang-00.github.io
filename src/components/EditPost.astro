@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 export interface Props {
   hideEditPost?: CollectionEntry<"blog">["data"]["hideEditPost"];
@@ -10,6 +11,9 @@ export interface Props {
 }
 
 const { hideEditPost, post, class: className = "" } = Astro.props;
+
+const locale = getLangFromUrl(Astro.url);
+const localeString = useTranslations(locale);
 
 const href = `${SITE.editPost.url}${post.filePath}`;
 const showEditPost =
@@ -28,7 +32,7 @@ const showEditPost =
       ]}
     >
       <Icon name="tabler:edit" class="inline-block size-6" />
-      <span>{SITE.editPost.text}</span>
+      <span>{localeString("edit.this-page")}</span>
     </a>
   )
 }

@@ -2,7 +2,6 @@ import type { CollectionEntry } from "astro:content";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { SITE } from "@/config";
 import * as postFunction from "./post";
 import * as siteFunction from "./site";
 
@@ -19,7 +18,9 @@ const ensureCacheDir = async () => {
 /**
  * Generate a stable hash for content-based cache invalidation
  */
-async function generateHash(content: Record<string, unknown>): Promise<string> {
+const generateHash = async (
+  content: Record<string, unknown>
+): Promise<string> => {
   const stringifiedContent = {} as Record<string, string | number>;
   for (const key of Object.keys(content)) {
     // Stringify nested objects and functions
@@ -41,34 +42,35 @@ async function generateHash(content: Record<string, unknown>): Promise<string> {
   );
 
   return createHash("sha256").update(contentString).digest("hex").slice(0, 16);
-}
+};
 
 /**
  * Generate cache key for site OG image
  */
-export async function getSiteOgCacheKey(): Promise<string> {
+export const getSiteOgCacheKey = async (): Promise<string> => {
   const siteData = {
-    title: SITE.title,
-    author: SITE.author,
-    desc: SITE.desc,
     version: CACHE_VERSION,
+    // The following fields are commented out since they are not used in the current implementation, uncomment if they are included in the future
+    // title: SITE.title,
+    // author: SITE.author,
+    // desc: SITE.desc,
   };
   const contentHash = await generateHash(siteData);
   const functionHash = await generateHash(siteFunction);
   return `site-${contentHash}-${functionHash}`;
-}
+};
 
 /**
  * Generate cache key for post OG image
  */
-export async function getPostOgCacheKey(
+export const getPostOgCacheKey = async (
   post: CollectionEntry<"blog">
-): Promise<string> {
+): Promise<string> => {
   const postData = {
     version: CACHE_VERSION,
     title: post.data.title,
     author: post.data.author,
-    siteTitle: SITE.title,
+    locale: post.data.locale,
     // The following fields are commented out since they are not used in the current implementation, uncomment if they are included in the future
     // pubDatetime: post.data.pubDatetime?.toISOString(),
     // modDatetime: post.data.modDatetime?.toISOString(),
@@ -77,14 +79,14 @@ export async function getPostOgCacheKey(
   const contentHash = await generateHash(postData);
   const functionHash = await generateHash(postFunction);
   return `post-${contentHash}-${functionHash}`;
-}
+};
 
 /**
  * Get cached OG image if it exists and is valid
  */
-export async function getCachedOgImage(
+export const getCachedOgImage = async (
   cacheKey: string
-): Promise<Buffer | null> {
+): Promise<Buffer | null> => {
   try {
     const cacheFilePath = join(CACHE_DIR, `${cacheKey}.png`);
 
@@ -98,15 +100,15 @@ export async function getCachedOgImage(
     console.warn(`Failed to read cache: ${cacheKey}`, error);
     return null;
   }
-}
+};
 
 /**
  * Cache OG image buffer with content-based key
  */
-export async function setCachedOgImage(
+export const setCachedOgImage = async (
   cacheKey: string,
   imageBuffer: Buffer
-): Promise<void> {
+): Promise<void> => {
   try {
     await ensureCacheDir();
     const cacheFilePath = join(CACHE_DIR, `${cacheKey}.png`);
@@ -115,15 +117,15 @@ export async function setCachedOgImage(
   } catch (error) {
     console.error(`Failed to cache image: ${cacheKey}`, error);
   }
-}
+};
 
 /**
  * Wrapper function for cached OG image generation
  */
-export async function withOgImageCache<T>(
+export const withOgImageCache = async <T>(
   cacheKey: string,
   generator: () => Promise<T>
-): Promise<T> {
+): Promise<T> => {
   // Try to get from cache first
   const cached = await getCachedOgImage(cacheKey);
   if (cached) {
@@ -140,4 +142,4 @@ export async function withOgImageCache<T>(
   }
 
   return result;
-}
+};

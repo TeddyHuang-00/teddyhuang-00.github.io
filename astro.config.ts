@@ -20,6 +20,20 @@ import { transformerFileName } from "./src/utils/transformers/fileName";
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
+  i18n: {
+    locales: Object.entries(SITE.locales).map(([lang, { codes }]) => {
+      return {
+        path: lang,
+        codes: [...codes],
+      };
+    }),
+    defaultLocale: SITE.defaultLocale,
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: true,
+      fallbackType: "rewrite",
+    },
+  },
   integrations: [
     sitemap({
       filter: (page) => SITE.showArchives || !page.endsWith("/archives"),

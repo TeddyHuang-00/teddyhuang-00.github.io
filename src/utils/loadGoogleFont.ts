@@ -1,8 +1,8 @@
-async function loadGoogleFont(
+const loadGoogleFont = async (
   font: string,
   text: string,
   weight: number
-): Promise<ArrayBuffer> {
+): Promise<ArrayBuffer> => {
   const API = `https://fonts.googleapis.com/css2?family=${font}:wght@${weight}&text=${encodeURIComponent(text)}`;
 
   const css = await (
@@ -27,13 +27,13 @@ async function loadGoogleFont(
   }
 
   return res.arrayBuffer();
-}
+};
 
-async function loadGoogleFonts(
+const loadGoogleFonts = async (
   text: string
 ): Promise<
   Array<{ name: string; data: ArrayBuffer; weight: number; style: string }>
-> {
+> => {
   const fontsConfig = [
     {
       name: "IBM Plex Mono",
@@ -57,6 +57,6 @@ async function loadGoogleFonts(
   );
 
   return fonts;
-}
+};
 
 export default loadGoogleFonts;

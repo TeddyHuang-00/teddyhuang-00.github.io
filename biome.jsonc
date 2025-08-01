@@ -31,7 +31,8 @@
           },
           "correctness": {
             "noUnusedVariables": "off",
-            "noUnusedImports": "off"
+            "noUnusedImports": "off",
+            "useHookAtTopLevel": "off"
           }
         }
       }

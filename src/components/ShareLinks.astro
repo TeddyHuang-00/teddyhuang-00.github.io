@@ -1,29 +1,38 @@
 ---
 import { Icon } from "astro-icon/components";
 import { SHARE_LINKS } from "@/constants";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import LinkButton from "./LinkButton.astro";
 
 const URL = Astro.url;
+const locale = getLangFromUrl(URL);
+const localeString = useTranslations(locale);
 ---
 
 {
   SHARE_LINKS.length > 0 && (
     <div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start">
-      <span class="italic">Share this post on:</span>
+      <span class="italic">{localeString("share.this-post")}:</span>
       <div class="text-center">
-        {SHARE_LINKS.map((social) => (
-          <LinkButton
-            href={social.href + URL}
-            class="scale-90 p-2 hover:rotate-6 sm:p-1"
-            title={social.linkTitle}
-          >
-            <Icon
-              name={social.iconName}
-              class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"
-            />
-            <span class="sr-only">{social.linkTitle}</span>
-          </LinkButton>
-        ))}
+        {SHARE_LINKS.map((social) => {
+          const linkText =
+            social.linkTitle === "on"
+              ? localeString("share.this-post-on", { social: social.name })
+              : localeString("share.this-post-via", { social: social.name });
+          return (
+            <LinkButton
+              href={social.href + URL}
+              class="scale-90 p-2 hover:rotate-6 sm:p-1"
+              title={linkText}
+            >
+              <Icon
+                name={social.iconName}
+                class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"
+              />
+              <span class="sr-only">{linkText}</span>
+            </LinkButton>
+          );
+        })}
       </div>
     </div>
   )

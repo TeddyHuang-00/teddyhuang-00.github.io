@@ -1,5 +1,9 @@
 ---
 import { Icon } from "astro-icon/components";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const locale = getLangFromUrl(Astro.url);
+const localeString = useTranslations(locale);
 ---
 
 <div
@@ -29,7 +33,7 @@ import { Icon } from "astro-icon/components";
     />
     <span class="sr-only text-sm group-hover:text-accent md:not-sr-only">
       <Icon name="tabler:arrow-narrow-up" class="inline-block pb-0.5 size-6" />
-      Back To Top
+      {localeString("nav.back-to-top")}
     </span>
   </button>
 </div>

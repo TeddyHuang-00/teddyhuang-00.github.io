@@ -1,5 +1,7 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
+import { getLangFromUrl } from "@/i18n/utils";
 
 export interface Props {
   tag: string;
@@ -8,6 +10,7 @@ export interface Props {
 }
 
 const { tag, tagName, size = "sm" } = Astro.props;
+const locale = getLangFromUrl(Astro.url);
 ---
 
 <li
@@ -17,7 +20,7 @@ const { tag, tagName, size = "sm" } = Astro.props;
   ]}
 >
   <a
-    href={`/tags/${tag}/`}
+    href={getRelativeLocaleUrl(locale, `/tags/${tag}/`)}
     transition:name={tag}
     class:list={[
       "relative pe-2 text-lg underline decoration-dashed group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline",
