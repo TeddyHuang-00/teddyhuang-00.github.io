@@ -1,6 +1,8 @@
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -8,6 +10,7 @@ import {
 } from "@shikijs/transformers";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
+import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import og from "astro-og";
 import rehypeKatex from "rehype-katex";
@@ -35,13 +38,27 @@ export default defineConfig({
     },
   },
   integrations: [
+    react(),
+    icon({ iconDir: "src/assets/icons" }),
+    og(),
+    expressiveCode({
+      themes: ["catppuccin-mocha", "catppuccin-latte"],
+      useDarkModeMediaQuery: false,
+      // themeCssSelector: (theme) => `[data-theme="${theme.type}"] *`,
+      customizeTheme: (theme) => {
+        theme.name = theme.type;
+      },
+      defaultProps: {
+        // Allow re-collapsing sections
+        collapseStyle: "collapsible-auto",
+      },
+      useThemedSelectionColors: true,
+      plugins: [pluginCollapsibleSections(), pluginLineNumbers()],
+    }),
+    mdx(),
     sitemap({
       filter: (page) => SITE.showArchives || !page.endsWith("/archives"),
     }),
-    icon({ iconDir: "src/assets/icons" }),
-    og(),
-    react(),
-    mdx(),
   ],
   markdown: {
     remarkPlugins: [
