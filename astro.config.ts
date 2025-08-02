@@ -13,6 +13,7 @@ import { defineConfig, envField } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import og from "astro-og";
+import pagefind from "astro-pagefind";
 import rehypeKatex from "rehype-katex";
 import remarkCollapse from "remark-collapse";
 import remarkMath from "remark-math";
@@ -59,6 +60,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => SITE.showArchives || !page.endsWith("/archives"),
     }),
+    pagefind({}),
   ],
   markdown: {
     remarkPlugins: [

@@ -32,7 +32,6 @@ dev: install font
 
 build: install check font
     bunx astro build
-    bunx pagefind --site dist
     cp -r dist/pagefind public/
 
 clean-build: clean build
