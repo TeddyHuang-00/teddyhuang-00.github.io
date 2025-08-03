@@ -2,6 +2,7 @@
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { ClientRouter } from "astro:transitions";
+import { ThemeScript } from "astro-theme-toggle";
 import { SITE } from "@/config";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import "@/styles/global.css";
@@ -138,7 +139,8 @@ const structuredData = {
 
     <ClientRouter />
 
-    <script is:inline src="/toggle-theme.js"></script>
+    <!-- Theme toggle script (with ripple effect) -->
+    <ThemeScript />
 
     <!-- KaTeX -->
     <link
