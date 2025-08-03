@@ -23,6 +23,7 @@
     "@expressive-code/plugin-collapsible-sections": "^0.41.3",
     "@expressive-code/plugin-line-numbers": "^0.41.3",
     "@iconify-json/tabler": "^1.2.20",
+    "@playform/compress": "^0.2.0",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/vite": "^4.1.11",
     "@types/react": "^19.1.9",
@@ -44,7 +45,6 @@
     "remark-math": "^6.0.0",
     "remark-toc": "^9.0.0",
     "satori": "^0.16.2",
-    "sharp": "^0.34.3",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {

@@ -7,6 +7,7 @@ import {
 } from "@expressive-code/plugin-collapsible-sections";
 import { pluginFramesTexts } from "@expressive-code/plugin-frames";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+import playformCompress from "@playform/compress";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -86,6 +87,7 @@ export default defineConfig({
       filter: (page) => SITE.showArchives || !page.endsWith("/archives"),
     }),
     pagefind({}),
+    playformCompress(),
   ],
   markdown: {
     remarkPlugins: [
