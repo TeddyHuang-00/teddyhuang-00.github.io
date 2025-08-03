@@ -38,7 +38,7 @@ const backUrl = getRelativeLocaleUrl(locale, "/");
   <Header />
   <main id="main-content" data-backUrl={backUrl}>
     <section id="hero" class="pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
+      <h1 class="my-4 inline-block text-2xl font-bold sm:my-6 sm:text-4xl">
         impl Blog for NanHuang;
       </h1>
       <a
@@ -48,11 +48,16 @@ const backUrl = getRelativeLocaleUrl(locale, "/");
         aria-label={localeString("rss.feed")}
         title={localeString("rss.feed")}
       >
-        <Icon name="tabler:rss" class="size-8 rtl:-rotate-90 text-accent" />
+        <Icon
+          name="tabler:rss"
+          class="size-6 sm:size-8 rtl:-rotate-90 text-accent"
+        />
         <span class="sr-only">{localeString("rss.feed")}</span>
       </a>
 
-      <p>{localeString("site.description")}</p>
+      <p class="text-lg sm:text-2xl">
+        {localeString("site.description")}
+      </p>
 
       {
         // only display if at least one social link is enabled

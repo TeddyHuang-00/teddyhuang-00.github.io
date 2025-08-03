@@ -86,8 +86,13 @@ export default defineConfig({
     sitemap({
       filter: (page) => SITE.showArchives || !page.endsWith("/archives"),
     }),
-    pagefind({}),
-    playformCompress(),
+    pagefind(),
+    playformCompress({
+      Exclude: [
+        // ignore /dist/_astro/*.css as csso will mess up nested css selectors
+        (File: string) => /dist\/_astro\/.*\.css$/g.test(File),
+      ],
+    }),
   ],
   markdown: {
     remarkPlugins: [

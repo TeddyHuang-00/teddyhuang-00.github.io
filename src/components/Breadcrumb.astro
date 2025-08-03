@@ -1,5 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const locale = getLangFromUrl(Astro.url);
@@ -54,35 +55,42 @@ if (urlParts[0] === "about") {
 
 <nav class="mx-auto mt-8 mb-1 w-full max-w-app px-4" aria-label="breadcrumb">
   <ul
-    class="font-light [&>li]:inline [&>li:not(:last-child)>a]:hover:opacity-100"
+    class="font-light [&>li]:inline [&>li:not(:last-child)>a]:hover:opacity-100 flex items-center"
   >
     <li>
       <a href={getRelativeLocaleUrl(locale, "/")} class="opacity-80">
         {localeString("nav.home")}
       </a>
-      <span aria-hidden="true" class="opacity-80">&raquo;</span>
     </li>
     {
       breadcrumbList.map((breadcrumb, index) =>
         index + 1 === breadcrumbList.length ? (
           <li>
+            <Icon
+              aria-hidden="true"
+              name="tabler:chevron-right"
+              class="inline-block opacity-80 size-4"
+            />
             <span
               class:list={["capitalize opacity-75", { lowercase: index > 0 }]}
               aria-current="page"
             >
-              {/* make the last part lowercase in Home > Tags > some-tag */}
-              {decodeURIComponent(breadcrumb)}
+              {breadcrumb}
             </span>
           </li>
         ) : (
           <li>
+            <Icon
+              aria-hidden="true"
+              name="tabler:chevron-right"
+              class="inline-block opacity-80 size-4"
+            />
             <a
               href={getRelativeLocaleUrl(locale, `/${urlParts[index]}/`)}
-              class="capitalize opacity-70"
+              class="capitalize opacity-70 pr-1"
             >
               {breadcrumb}
             </a>
-            <span aria-hidden="true">&raquo;</span>
           </li>
         )
       )
