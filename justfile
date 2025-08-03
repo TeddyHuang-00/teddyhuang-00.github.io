@@ -1,4 +1,4 @@
-FONT_VERSION := "7.4"
+FONT_VERSION := "7.5"
 FONT_CACHE_DIR := ".cache" / "fonts"
 FONT_CACHE_FILE := FONT_CACHE_DIR / "MapleMono-v" + FONT_VERSION + ".zip"
 FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
