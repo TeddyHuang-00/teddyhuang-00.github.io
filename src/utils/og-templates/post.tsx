@@ -23,7 +23,8 @@ export const generateMosaic = (string: string) => {
         style={{
           width: "100%",
           height: "100%",
-          background: `hsl(${Math.floor(random() * 90) + 150}, 100%, ${Math.floor(random() * 50) + 50}%)`,
+          borderRadius: "2pt",
+          background: `hsl(${Math.floor(random() * 90) + 150}, 100%, ${Math.floor(random() * 50) + 10}%)`,
         }}
       />
     </span>
@@ -55,7 +56,7 @@ export default async (post: CollectionEntry<"blog">) => {
     <div
       style={{
         display: "flex",
-        background: "#fefbfb",
+        background: "#0e0b0b",
         width: "100%",
         height: "100%",
         alignItems: "center",
@@ -67,10 +68,10 @@ export default async (post: CollectionEntry<"blog">) => {
       <div
         style={{
           display: "flex",
-          background: "rgba(255, 255, 255, 0.9)",
-          border: "2px solid rgba(255, 255, 255, 0.3)",
+          background: "rgba(0, 0, 0, 0.9)",
+          border: "2px solid rgba(255, 255, 255, 0.1)",
           borderRadius: "16px",
-          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.2)",
           justifyContent: "center",
           margin: "2rem",
           width: "88%",
@@ -84,6 +85,8 @@ export default async (post: CollectionEntry<"blog">) => {
             margin: "20px",
             width: "90%",
             height: "90%",
+            color: "white",
+            fontFamily: "Maple Mono",
           }}
         >
           <p
@@ -93,7 +96,6 @@ export default async (post: CollectionEntry<"blog">) => {
               fontWeight: "bold",
               maxHeight: "84%",
               overflow: "hidden",
-              fontFamily: "Maple Mono",
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -107,7 +109,6 @@ export default async (post: CollectionEntry<"blog">) => {
               width: "100%",
               marginBottom: "8px",
               fontSize: 28,
-              fontFamily: "Maple Mono",
             }}
           >
             <span>
