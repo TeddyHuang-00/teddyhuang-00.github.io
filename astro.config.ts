@@ -1,7 +1,11 @@
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
+import {
+  pluginCollapsibleSections,
+  pluginCollapsibleSectionsTexts,
+} from "@expressive-code/plugin-collapsible-sections";
+import { pluginFramesTexts } from "@expressive-code/plugin-frames";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import {
   transformerNotationDiff,
@@ -20,6 +24,20 @@ import remarkMath from "remark-math";
 import remarkToc from "remark-toc";
 import { SITE } from "./src/config";
 import { transformerFileName } from "./src/utils/transformers/fileName";
+
+pluginFramesTexts.overrideTexts("en", {
+  copyButtonTooltip: "Copy code",
+});
+
+pluginFramesTexts.addLocale("zh", {
+  terminalWindowFallbackTitle: "终端窗口",
+  copyButtonTooltip: "复制代码",
+  copyButtonCopied: "已复制!",
+});
+
+pluginCollapsibleSectionsTexts.addLocale("zh", {
+  collapsedLines: "已折叠 {lineCount} 行",
+});
 
 // https://astro.build/config
 export default defineConfig({
@@ -52,6 +70,13 @@ export default defineConfig({
       defaultProps: {
         // Allow re-collapsing sections
         collapseStyle: "collapsible-auto",
+      },
+      getBlockLocale: ({ file }) => {
+        const fileName = file.path?.split("/").pop() || "";
+        const [, locale] = fileName.split(".");
+        return Object.keys(SITE.locales).includes(locale)
+          ? locale
+          : SITE.defaultLocale;
       },
       useThemedSelectionColors: true,
       plugins: [pluginCollapsibleSections(), pluginLineNumbers()],
