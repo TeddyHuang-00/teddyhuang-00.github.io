@@ -68,7 +68,7 @@ export default async () => {
       width,
       height,
       embedFont: true,
-      fonts: await loadCustomFonts(),
+      fonts: loadCustomFonts(),
     }
   );
 };

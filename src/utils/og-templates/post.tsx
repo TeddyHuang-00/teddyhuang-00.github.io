@@ -123,7 +123,7 @@ export default async (post: CollectionEntry<"blog">) => {
       width,
       height,
       embedFont: true,
-      fonts: await loadCustomFonts(),
+      fonts: loadCustomFonts(),
     }
   );
 };

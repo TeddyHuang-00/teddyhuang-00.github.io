@@ -4,7 +4,7 @@ import type { Font } from "satori";
 
 const fontCacheDir = join(process.cwd(), ".cache", "fonts");
 
-const loadCustomFont = async (fontPath: string): Promise<ArrayBuffer> => {
+const loadCustomFont = (fontPath: string): ArrayBuffer => {
   try {
     const fontBuffer = readFileSync(join(fontCacheDir, fontPath));
     return fontBuffer.buffer.slice(0) as ArrayBuffer;
@@ -13,7 +13,7 @@ const loadCustomFont = async (fontPath: string): Promise<ArrayBuffer> => {
   }
 };
 
-const loadCustomFonts = async (): Promise<Array<Font>> => {
+const loadCustomFonts = (): Array<Font> => {
   const fontsConfig = [
     {
       name: "Maple Mono",
@@ -35,14 +35,24 @@ const loadCustomFonts = async (): Promise<Array<Font>> => {
     },
   ];
 
-  const fonts = await Promise.all(
-    fontsConfig.map(async ({ name, path, weight, style }) => {
-      const data = await loadCustomFont(path);
-      return { name, data, weight, style } as Font;
-    })
-  );
+  const fonts = fontsConfig.map(({ name, path, weight, style }) => {
+    const data = loadCustomFont(path);
+    return { name, data, weight, style } as Font;
+  });
 
   return fonts;
+};
+
+export const getFontVersion = (): string => {
+  try {
+    const configPath = join(fontCacheDir, "config.json");
+    const config = JSON.parse(readFileSync(configPath, "utf-8"));
+    const family = config.family_name || "Maple Mono";
+    const version = config.version || "unknown";
+    return `${family} ${version}`;
+  } catch (error) {
+    throw new Error(`Failed to read font config: ${error}`);
+  }
 };
 
 export default loadCustomFonts;

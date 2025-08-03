@@ -2,6 +2,7 @@ import type { CollectionEntry } from "astro:content";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { getFontVersion } from "../loadCustomFont";
 import * as postFunction from "./post";
 import * as siteFunction from "./site";
 
@@ -51,6 +52,7 @@ export const getSiteOgCacheKey = async (): Promise<string> => {
   const siteData = {
     version: CACHE_VERSION,
     // The following fields are commented out since they are not used in the current implementation, uncomment if they are included in the future
+    // font: getFontVersion(),
     // title: SITE.title,
     // author: SITE.author,
     // desc: SITE.desc,
@@ -68,6 +70,7 @@ export const getPostOgCacheKey = async (
 ): Promise<string> => {
   const postData = {
     version: CACHE_VERSION,
+    font: getFontVersion(),
     title: post.data.title,
     author: post.data.author,
     locale: post.data.locale,
