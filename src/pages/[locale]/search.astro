@@ -28,7 +28,7 @@ const backUrl = SITE.showBackButton
     pageTitle={localeString("nav.search")}
     pageDesc={localeString("search.description")}
   >
-    <div transition:persist data-backurl={backUrl}>
+    <div transition:persist data-backUrl={backUrl}>
       {
         import.meta.env.DEV && (
           <div class="bg-muted/75 rounded p-4 space-y-4 mb-4">
