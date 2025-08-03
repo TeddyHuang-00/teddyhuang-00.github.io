@@ -50,7 +50,6 @@ jobs:
       - uses: oven-sh/setup-bun@v1
       - uses: biomejs/setup-biome@v2
       - uses: actions/cache@v4
-        id: custom-cache
         with:
           path: .cache
           key: ${{ runner.os }}-cache

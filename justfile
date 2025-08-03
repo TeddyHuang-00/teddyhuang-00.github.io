@@ -13,7 +13,7 @@ FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
         unzip -o {{FONT_CACHE_FILE}} -d {{FONT_CACHE_DIR}})
 
 @install:
-    bun install
+    bun install --frozen-lockfile
 
 format:
     biome format

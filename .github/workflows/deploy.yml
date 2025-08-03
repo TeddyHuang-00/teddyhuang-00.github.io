@@ -1,0 +1,61 @@
+name: Deploy to GitHub Pages
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  actions: read
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ".github/renovate.json"
+  workflow_dispatch:
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-n-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Just
+        uses: extractions/setup-just@v3
+
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Cache Build Artifacts
+        uses: actions/cache@v4
+        with:
+          path: .cache
+          key: ${{ runner.os }}-cache
+
+      - name: Build Documentation
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run: just build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Files
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "dist"
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

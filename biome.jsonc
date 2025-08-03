@@ -49,6 +49,17 @@
           }
         }
       }
+    },
+    {
+      "includes": ["**/*.css"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            // For Tailwind CSS
+            "noUnknownAtRules": "off"
+          }
+        }
+      }
     }
   ]
 }
