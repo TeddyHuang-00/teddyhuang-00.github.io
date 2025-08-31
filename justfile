@@ -14,7 +14,7 @@ FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
 @install:
     bun install --frozen-lockfile
 
-format:
+format: install
     biome format
     bun rustywind --check-formatted .
 
