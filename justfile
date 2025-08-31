@@ -16,7 +16,7 @@ FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
 
 format: install
     biome format
-    bun rustywind --check-formatted .
+    bun rustywind --check-formatted ./content ./src
 
 check: install sync
     bunx astro check
@@ -26,7 +26,7 @@ lint:
     biome lint
 
 fix-all:
-    bun rustywind --write .
+    bun rustywind --write ./content ./src
     biome format --write
     biome check --write
     biome lint --write
