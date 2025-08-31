@@ -9,6 +9,8 @@ draft: false
 description: 不会有人不喜欢 CI/CD，唯一阻碍我们的是懒。
 ---
 
+import { Aside } from "@/components/content/components";
+
 ## 为什么需要 CI/CD
 
 CI/CD 是持续集成（Continuous Integration）和持续交付（Continuous Delivery）的缩写，是一种软件开发实践，通过自动化的软件流程来构建、测试、发布软件。尽管我只是一个业余的开发者，但是也不免遇到这样的场景：
@@ -72,11 +74,13 @@ on:
   - 直接运行命令
   - 由于是在容器中运行，所以基本上可以运行任何命令
 
-::: tip 任务 v.s. 步骤
+<Aside type="tip">
+
+**任务 v.s. 步骤**
 
 任务 `job` 和步骤 `step` 的核心区别在于，每个任务都是在一个独立的虚拟环境中运行，因此天生具有可并行的特点，而步骤则是在同一个虚拟环境中运行，能够继承上一个步骤的结果，但必须串行执行。
 
-:::
+</Aside>
 
 更多语法以及示例可参考[官方文档](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)。
 
@@ -84,7 +88,7 @@ on:
 
 以下是一个简单的 GitHub Actions 配置文件
 
-```yaml
+```yaml title=".github/workflows/demo.yml"
 # 工作流名称
 name: GitHub Actions Demo
 
@@ -132,7 +136,7 @@ jobs:
 
 ### 自动构建并部署博客
 
-这是我最初使用 GitHub Actions 的场景，在有 push 时自动构建并部署，见此[工作流文件](https://github.com/TeddyHuang-00/teddyhuang-00.github.io/blob/main/.github/workflows/deploy-docs.yml)
+这是我最初使用 GitHub Actions 的场景，在有 push 时自动构建并部署，见此[工作流文件](https://github.com/TeddyHuang-00/teddyhuang-00.github.io/blob/main/.github/workflows/deploy.yml)
 
 ### 定时更新爬取 PKU 课程列表
 
