@@ -20,11 +20,8 @@ import icon from "astro-icon";
 import og from "astro-og";
 import pagefind from "astro-pagefind";
 import rehypeKatex from "rehype-katex";
-import remarkCollapse from "remark-collapse";
 import remarkMath from "remark-math";
-import remarkToc from "remark-toc";
 import { SITE } from "./src/config";
-import { transformerFileName } from "./src/utils/transformers/fileName";
 
 pluginFramesTexts.overrideTexts("en", {
   copyButtonTooltip: "Copy code",
@@ -95,11 +92,7 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [
-      remarkMath,
-      remarkToc,
-      [remarkCollapse, { test: "Table of contents" }],
-    ],
+    remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
@@ -107,7 +100,6 @@ export default defineConfig({
       defaultColor: false,
       wrap: false,
       transformers: [
-        transformerFileName({ style: "v2", hideDot: false }),
         transformerNotationHighlight(),
         transformerNotationWordHighlight(),
         transformerNotationDiff({ matchAlgorithm: "v3" }),
