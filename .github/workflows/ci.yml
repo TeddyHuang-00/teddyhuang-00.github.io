@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: extractions/setup-just@v3
-      - uses: oven-sh/setup-bun@v1
+      - uses: oven-sh/setup-bun@v2
       - uses: biomejs/setup-biome@v2
       - run: just format
 
@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: extractions/setup-just@v3
-      - uses: oven-sh/setup-bun@v1
+      - uses: oven-sh/setup-bun@v2
       - uses: biomejs/setup-biome@v2
       - run: just check
 
@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: extractions/setup-just@v3
-      - uses: oven-sh/setup-bun@v1
+      - uses: oven-sh/setup-bun@v2
       - uses: biomejs/setup-biome@v2
       - uses: actions/cache@v4
         with:
