@@ -25,13 +25,13 @@ const localeString = useTranslations(locale);
   >
     <span
       id="progress-indicator"
-      class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"
+      class="block absolute inset-0 bg-transparent rounded-full scale-110 md:hidden md:h-8 md:rounded-md -z-10 size-14"
     ></span>
     <Icon
       name="tabler:chevron-left"
-      class="inline-block size-6 rotate-90 md:hidden"
+      class="inline-block rotate-90 md:hidden size-6"
     />
-    <span class="sr-only text-sm group-hover:text-accent md:not-sr-only">
+    <span class="text-sm sr-only md:not-sr-only group-hover:text-accent">
       <Icon name="tabler:arrow-narrow-up" class="inline-block pb-0.5 size-6" />
       {localeString("nav.back-to-top")}
     </span>

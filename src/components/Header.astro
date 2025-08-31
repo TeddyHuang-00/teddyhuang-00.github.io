@@ -28,34 +28,34 @@ const isActive = (path: string) => {
   <a
     id="skip-to-content"
     href="#main-content"
-    class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
+    class="absolute -top-full z-50 py-2 px-3 transition-all focus:top-4 start-16 bg-background text-accent backdrop-blur-lg"
   >
     {localeString("nav.skip-to-content")}
   </a>
   <div
     id="nav-container"
-    class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row"
+    class="flex flex-col justify-between items-center mx-auto sm:flex-row max-w-app"
   >
     <div
       id="top-nav-wrap"
-      class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"
+      class="flex relative justify-between items-baseline p-4 w-full sm:items-center sm:py-6 bg-background"
     >
       <a
         href={getRelativeLocaleUrl(currentLang, "/")}
         aria-label={localeString("nav.home")}
         title={localeString("nav.home")}
-        class="absolute p-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+        class="absolute p-1 text-xl font-semibold leading-8 whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
       >
-        <Icon name="LogoLight" class="size-8 block dark:hidden" />
-        <Icon name="LogoDark" class="size-8 hidden dark:block" />
+        <Icon name="LogoLight" class="block dark:hidden size-8" />
+        <Icon name="LogoDark" class="hidden dark:block size-8" />
       </a>
       <nav
         id="nav-menu"
-        class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
+        class="flex flex-col items-center w-full sm:flex-row sm:justify-end sm:py-0 sm:space-x-4 sm:ms-2"
       >
         <button
           id="menu-btn"
-          class="focus-outline self-end p-2 sm:hidden"
+          class="self-end p-2 sm:hidden focus-outline"
           aria-label={localeString("nav.open-menu")}
           aria-expanded="false"
           aria-controls="menu-items"
@@ -112,14 +112,14 @@ const isActive = (path: string) => {
                 >
                   <Icon
                     name="tabler:archive"
-                    class="hidden size-6 sm:inline-block"
+                    class="hidden sm:inline-block size-6"
                   />
                   <span class="sm:sr-only">{localeString("nav.archives")}</span>
                 </LinkButton>
               </li>
             )
           }
-          <li class="col-span-1 flex items-center justify-center">
+          <li class="flex col-span-1 justify-center items-center">
             <LinkButton
               href={getRelativeLocaleUrl(currentLang, "/search")}
               class:list={[
@@ -137,7 +137,7 @@ const isActive = (path: string) => {
           </li>
           {
             Object.keys(SITE.locales).length > 1 && (
-              <li class="col-span-1 flex items-center justify-center relative">
+              <li class="flex relative col-span-1 justify-center items-center">
                 <a
                   href="#"
                   id="lang-btn"
@@ -151,7 +151,7 @@ const isActive = (path: string) => {
                 </a>
                 <div
                   id="lang-menu"
-                  class="absolute top-full z-50 mt-2 hidden min-w-max rounded-md border border-border bg-background p-1 shadow-lg backdrop-blur-lg"
+                  class="hidden absolute top-full z-50 p-1 mt-2 min-w-max rounded-md border shadow-lg border-border bg-background backdrop-blur-lg"
                 >
                   {Object.entries(SITE.locales).map(([lang, { label }]) => (
                     <a
@@ -174,7 +174,7 @@ const isActive = (path: string) => {
           }
           {
             SITE.lightAndDarkMode && (
-              <li class="col-span-1 flex items-center justify-center">
+              <li class="flex col-span-1 justify-center items-center">
                 <a href="#" class="relative p-3 sm:p-1">
                   <Toggle
                     tabindex={-1}
@@ -183,13 +183,13 @@ const isActive = (path: string) => {
                     <Fragment slot="icon-light">
                       <Icon
                         name="tabler:sun-high"
-                        class="size-6 block dark:hidden"
+                        class="block dark:hidden size-6"
                       />
                     </Fragment>
                     <Fragment slot="icon-dark">
                       <Icon
                         name="tabler:moon"
-                        class="size-6 hidden dark:block"
+                        class="hidden dark:block size-6"
                       />
                     </Fragment>
                   </Toggle>

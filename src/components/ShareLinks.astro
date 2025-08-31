@@ -11,7 +11,7 @@ const localeString = useTranslations(locale);
 
 {
   SHARE_LINKS.length > 0 && (
-    <div class="flex flex-none flex-col items-center justify-center gap-1 md:items-start">
+    <div class="flex flex-col flex-none gap-1 justify-center items-center md:items-start">
       <span class="italic">{localeString("share.this-post")}:</span>
       <div class="text-center">
         {SHARE_LINKS.map((social) => {
@@ -22,12 +22,12 @@ const localeString = useTranslations(locale);
           return (
             <LinkButton
               href={social.href + URL}
-              class="scale-90 p-2 hover:rotate-6 sm:p-1"
+              class="p-2 scale-90 sm:p-1 hover:rotate-6"
               title={linkText}
             >
               <Icon
                 name={social.iconName}
-                class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"
+                class="inline-block opacity-90 scale-125 stroke-current stroke-2 sm:scale-110 size-6 fill-transparent group-hover:fill-transparent"
               />
               <span class="sr-only">{linkText}</span>
             </LinkButton>

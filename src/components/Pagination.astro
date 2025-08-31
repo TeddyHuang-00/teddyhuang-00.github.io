@@ -16,7 +16,7 @@ const localeString = useTranslations(locale);
 
 {
   page.lastPage > 1 && (
-    <nav class="mt-auto mb-8 flex justify-center" aria-label="Pagination">
+    <nav class="flex justify-center mt-auto mb-8" aria-label="Pagination">
       <LinkButton
         disabled={!page.url.prev}
         href={page.url.prev as string}

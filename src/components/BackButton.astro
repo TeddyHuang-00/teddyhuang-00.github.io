@@ -11,15 +11,15 @@ const localeString = useTranslations(locale);
 
 {
   SITE.showBackButton && (
-    <div class="mx-auto flex w-full max-w-app items-center justify-start px-2">
+    <div class="flex justify-start items-center px-2 mx-auto w-full max-w-app">
       <LinkButton
         id="back-button"
         href={getRelativeLocaleUrl(locale, "/")}
-        class="focus-outline mt-8 mb-2 flex hover:text-foreground/75"
+        class="flex mt-8 mb-2 hover:text-foreground/75 focus-outline"
       >
         <Icon
           name="tabler:chevron-left"
-          class="inline-block size-6 pb-1 rtl:rotate-180"
+          class="inline-block pb-1 size-6 rtl:rotate-180"
         />
         <span>{localeString("nav.go-back")}</span>
       </LinkButton>
