@@ -7,89 +7,60 @@
  * Modified: 2025-08-30
  * Description: Customize UI
  */
-import { processSteps } from "./rehype-steps";
+import { parseHTML } from "linkedom";
 
 const content = await Astro.slots.render("default");
-const { html } = processSteps(content);
+const { document } = parseHTML(content);
+
+if (!document.childNodes) {
+  throw new Error(
+    "<Steps> component requires a single <ol> child element. But none was found."
+  );
+} else if (document.childNodes.length > 1) {
+  throw new Error(
+    "<Steps> component requires a single <ol> child element. But multiple were found."
+  );
+} else if (document.childNodes[0].nodeName !== "OL") {
+  throw new Error(
+    `<Steps> component requires a single <ol> child element. But found <${document.childNodes[0].nodeName.toLowerCase()}> instead.`
+  );
+} else {
+  const ol = document.childNodes[0] as HTMLElement;
+  ol.setAttribute("role", "list");
+  // We use this workaround to make both tailwind intellisense and rustywind work
+  const olClassList = ol.classList;
+  ol.className = "list-none ps-0";
+  ol.classList.add(...Array.from(olClassList));
+
+  const startIndex = ol.hasAttribute("start")
+    ? parseInt(ol.getAttribute("start") || "1", 10)
+    : 1;
+
+  const listItems = Array.from(ol.children).filter(
+    (child) => child.nodeName === "LI"
+  ) as HTMLElement[];
+
+  listItems.forEach((li, index) => {
+    const stepNumber = startIndex + index;
+
+    const bulletSpan = document.createElement("span");
+    bulletSpan.className =
+      "flex absolute left-0 -top-1 justify-center items-center w-8 h-8 text-xs font-semibold rounded-full border bg-muted text-foreground border-border";
+    bulletSpan.textContent = String(stepNumber);
+
+    const lineSpan = document.createElement("span");
+    lineSpan.className =
+      "absolute -bottom-2 left-4 top-10 w-px -translate-x-0.5 bg-border";
+
+    const liClassList = li.classList;
+    li.className = "relative pb-1 pl-12 min-h-12";
+    li.classList.add(...Array.from(liClassList));
+    li.insertBefore(bulletSpan, li.firstChild);
+    li.appendChild(lineSpan);
+  });
+}
+
+const html = document.documentElement.outerHTML;
 ---
 
 <Fragment set:html={html} />
-
-<style is:global>
-  .sl-steps {
-    /* Bullet size based on line-height (1.75 * 1rem = 1.75rem = 28px) */
-    --bullet-size: 2rem;
-    --bullet-margin: 0.5rem; /* 6px */
-
-    list-style: none;
-    padding-inline-start: 0;
-    counter-reset: steps-counter var(--sl-steps-start, 0);
-  }
-  /* Hide the connecting line on the last step */
-  /* .sl-steps > li:last-child::after {
-    display: none;
-  } */
-
-  /* Numbered bullet styling */
-  .sl-steps > li::before {
-    position: absolute;
-    top: 0;
-    inset-inline-start: 0;
-    font-size: 0.75rem;
-    line-height: calc(1 / 0.75);
-    font-weight: 600;
-    text-align: center;
-    border-radius: calc(infinity * 1px);
-    background-color: var(--color-muted);
-    color: var(--color-foreground);
-    border: 1px solid var(--color-border);
-    content: counter(steps-counter);
-    width: var(--bullet-size);
-    height: var(--bullet-size);
-    line-height: var(--bullet-size);
-  }
-
-  /* Vertical connecting line */
-  .sl-steps > li::after {
-    content: "";
-    position: absolute;
-    width: 1px;
-    background-color: var(--color-border);
-    top: calc(var(--bullet-size) + var(--bullet-margin));
-    bottom: calc(-1 * var(--bullet-margin));
-    /* Center the line: (bullet-size - 1px) / 2 */
-    inset-inline-start: calc((var(--bullet-size) - 1px) / 2);
-  }
-
-  .sl-steps > li + li {
-    margin-top: 0;
-  }
-
-  .sl-steps > li {
-    counter-increment: steps-counter;
-
-    position: relative;
-    padding-bottom: 1px;
-    padding-inline-start: calc(var(--bullet-size) + 1rem);
-    min-height: calc(var(--bullet-size) + var(--bullet-margin));
-  }
-
-  /* Vertical alignment for first child in each step */
-  @supports (--prop: 1lh) {
-    .sl-steps > li > :first-child {
-      --lh: 1lh;
-    }
-  }
-
-  .sl-steps > li > :first-child {
-    --lh: calc(1em * 1.75); /* Based on --sl-line-height: 1.75 */
-
-    --shift-y: calc(0.5 * (var(--bullet-size) - var(--lh)));
-    transform: translateY(var(--shift-y));
-    margin-bottom: var(--shift-y);
-  }
-
-  .sl-steps > li > :first-child:where(h1, h2, h3, h4, h5, h6) {
-    --lh: calc(1em * 1.2); /* Based on --sl-line-height-headings: 1.2 */
-  }
-</style>
