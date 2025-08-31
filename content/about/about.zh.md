@@ -1,34 +1,38 @@
 ---
-title: "关于"
+title: 你好 👋，我是黄楠（Theodore）
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+- 🖊 我拥有北京大学生物信息学学士学位。
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+- 🌱 目前正在攻读**计算机科学**博士学位。
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+- 🎓 我的研究方向包括**深度学习**（尤其是**大模型**）、**时间序列分析**以及**人工智能医疗**（**AI4healthcare**）。
 
-## Features
+- 🔍 担任 NeurIPS、ICLR、AISTATS 的**审稿人**，以及 AAAI、KDD 等多个会议的**外部审稿人**。
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+- 🛠 我也对各种领域充满兴趣，比如新技术与框架、计算理论、可视化、游戏开发等等。
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+- 💬 欢迎向我提问 **Python (Pytorch | Streamlit)** / **Rust (Burn)** / **Vue (Nuxt)** / **Typst** / **C++** 有关问题。
 
-and so much more.
+- 🏠 另外，欢迎访问我的 [**GitHub 主页**](https://teddyhuang-00.github.io/)。
 
-## Show your support
+- 📫 如何联系我：[**teddyhuangnan@gmail.com**](mailto:teddyhuangnan@gmail.com)。
 
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
-
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
-
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
-
-Kyay zuu! 🙏🏼
+<p>
+    <img align="left"
+         class="hidden dark:block"
+         src="https://raw.githubusercontent.com/TeddyHuang-00/github-stats/master/generated/overview.svg#gh-dark-mode-only"
+         alt="TeddyHuang-00 的 GitHub 总览数据" />
+    <img align="left"
+         class="block dark:hidden"
+         src="https://raw.githubusercontent.com/TeddyHuang-00/github-stats/master/generated/overview.svg#gh-light-mode-only"
+         alt="TeddyHuang-00 的 GitHub 总览数据" />
+    <img align="left"
+         class="hidden dark:block"
+         src="https://raw.githubusercontent.com/TeddyHuang-00/github-stats/master/generated/languages.svg#gh-dark-mode-only"
+         alt="TeddyHuang-00 最常使用语言" />
+    <img align="left"
+         class="block dark:hidden"
+         src="https://raw.githubusercontent.com/TeddyHuang-00/github-stats/master/generated/languages.svg#gh-light-mode-only"
+         alt="TeddyHuang-00 最常使用语言" />
+</p>
