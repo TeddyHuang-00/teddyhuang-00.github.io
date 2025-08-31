@@ -17,7 +17,7 @@ jobs:
     name: Code Format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: extractions/setup-just@v3
       - uses: biomejs/setup-biome@v2
       - run: just format
@@ -26,7 +26,7 @@ jobs:
     name: Code Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: extractions/setup-just@v3
       - uses: biomejs/setup-biome@v2
       - run: just lint
@@ -35,7 +35,7 @@ jobs:
     name: Code Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: extractions/setup-just@v3
       - uses: oven-sh/setup-bun@v1
       - uses: biomejs/setup-biome@v2
@@ -45,7 +45,7 @@ jobs:
     name: Build Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: extractions/setup-just@v3
       - uses: oven-sh/setup-bun@v1
       - uses: biomejs/setup-biome@v2
