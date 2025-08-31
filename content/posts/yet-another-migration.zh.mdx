@@ -1,0 +1,398 @@
+---
+title: 再次迁移博客站
+pubDatetime: 2025-08-30
+tags:
+  - Blog
+  - Web
+  - Astro
+  - Tailwind
+featured: true
+draft: false
+description: 又一次重写了博客站，我为什么要说又？
+---
+
+import { Aside, Badge, Steps } from "@/components/content/components";
+
+## 为什么又要重写
+
+如果你看过之前那篇[关于迁站的博客](../new-blog-site-using-vuepress)，就会发现上次重写居然~~只有一坤年~~已经过去两年有余了。
+
+说正经的，原因有很多，随便挑几条来说：
+
+- 之前的站点使用了 VuePress，虽然功能强大，但由于系统较为复杂，配置和定制化的成本较高。<Badge type="info" text="我懒得学"/>
+- 用的模板虽好，但仍然不够灵活，遇到 bug 也需要等待作者修复<Badge type="tip" text="Mr. Hope 是个非常棒的作者，值得信赖。"/>。
+- 构建时间还是太长了，~~虽然我经常写 Rust~~ 还是希望能更快一些，毕竟我这小博客也没多少内容。
+
+当然也有一些个人的原因，比如说：
+
+- 用 Nuxt Content 作为主要框架写过实验室的静态站点之后，对于静态站点的构建流程有了更深入的理解和认识。
+- 了解到了 Astro 的一些新特性，尤其是支持多种前端框架、快速构建等能力，感觉非常适合我的客制化站点需求。
+- 受一些优秀的博客（如 [Pak](https://blog.yixuan-wang.site/)、[Cruz Godar](https://cruzgodar.com/)）启发，想尝试极简风格的设计。
+- **手痒了，想搞点大项目折磨自己。**
+
+## 有何不同
+
+得益于优秀的 [AstroPaper](https://astro-paper.pages.dev/) 模板，整体开发的起步还算比较轻松。但从有重写想法到最终上线，还是经历了将近一个月的时间。这期间主要是针对一些细节进行打磨和优化，以及一些七零八落的改动。我就不一一列举了，讲讲主要大的变动。
+
+### 重新设计 OG 图
+
+<Aside type="info" title="Open Graph">
+
+[Open Graph 协议](https://ogp.me/)是用于在社交媒体上共享内容的元数据标准。包含标题、描述和图像等信息。
+
+OG 图会在社交平台（如微信、QQ、微博等）分享链接时作为预览图显示。
+
+</Aside>
+
+模板自带的 OG 图倒是也不错，但是不重新设计总觉得缺少了个人风格。
+
+在 AstroPaper 中，OG 图分为站点（site）和文章（post）两种模板。两者生成都依赖于 [Satori](https://github.com/vercel/satori)（悟り？），能够将 React 组件渲染为 SVG 图像，然后再由 [resvg](https://github.com/linebender/resvg) 进行处理，转化为 PNG 格式。这也就意味着，你可以充分利用 React，灵活设计 OG 图的样式和内容。
+
+<Aside type="caution">
+
+[Satori **不支持全部的 CSS 特性**](https://github.com/vercel/satori/issues/217)，比如背景模糊等，因此在设计 OG 图时需要考虑到这一点。
+
+</Aside>
+
+得益于此，我重新设计了 OG 图的样式和内容，虽然目前两者之间的风格差异较大，但单独来看我也比较满意了。
+
+- 站点：
+  ![站点 OG 图](https://teddyhuang-00.github.io/og.png)
+- 文章：
+  ![文章 OG 图](https://teddyhuang-00.github.io/zh/posts/personal-favorites/index.png)
+
+<Aside type="caution">
+
+使用部分效果（如渐变、阴影等），或者包含大量元素的复杂布局，生成图像的速度可能会明显下降，例如生成上述图像时速度分别为 10 秒每图和 1 秒每图。我对此的解决方案是加入缓存机制，避免重复渲染相同的图像。
+
+</Aside>
+
+### 添加 i18n 支持
+
+由于 AstroPaper 本身没有内置 i18n 支持，因此我需要手动集成相关功能。经过一番研究，最终选择一套最轻量化的方案。
+
+#### 针对界面 UI
+
+由于界面 UI 内容较为固定，同时也不需要太多动态变化，因此可以直接在代码中写死对应的翻译文本，具体实现如下：
+
+<Steps>
+
+1. 在 `src/i18n` 目录下创建多语言相关文件，用于存储不同语言的翻译文本
+
+   ```ts title="src/i18n/ui.ts" collapse={3-7,10-14}
+   export const ui = {
+     en: {
+       // Footer
+       "footer.copyright": "© {year} {author}",
+       "footer.license": "Licensed under {license}",
+
+       // ...
+     },
+     zh: {
+       // Footer
+       "footer.copyright": "© {year} {author}",
+       "footer.license": "采用 {license}",
+
+       // ...
+     },
+   } as const;
+   ```
+
+   以及辅助函数
+
+   ```ts title="src/i18n/utils.ts" {"从当前页面动态获取语言":4-5} {"获取翻译，带模板替换":10-11}
+   import { SITE } from "@/config";
+
+   import { ui } from "./ui";
+
+   export const getLangFromUrl = (url: URL) => {
+     const [, lang] = url.pathname.split("/");
+     if (lang in ui) return lang as keyof typeof ui;
+     return SITE.defaultLocale;
+   };
+
+   export const useTranslations = (lang: keyof typeof ui) => {
+     return (
+       key: keyof (typeof ui)[typeof SITE.defaultLocale],
+       replacements?: Record<string, string>
+     ) => {
+       const string = ui[lang][key] || ui[SITE.defaultLocale][key];
+       if (!replacements) return string;
+
+       return Object.entries(replacements).reduce(
+         ([str, _], [key, value]) => [str.replace(`{${key}}`, value), _],
+         [string, ""]
+       )[0];
+     };
+   };
+   ```
+
+2. 在各类组件中引入 i18n 功能，替换文本内容。
+
+   ```astro title="src/components/Footer.astro" collapse={3-12,18-24,37-39}
+   ---
+   import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+   import Hr from "./Hr.astro";
+   import Socials from "./Socials.astro";
+
+   const currentYear = new Date().getFullYear();
+
+   export interface Props {
+     noMarginTop?: boolean;
+   }
+
+   const { noMarginTop = false } = Astro.props;
+   const locale = getLangFromUrl(Astro.url);
+   const localeString = useTranslations(locale);
+   const license = "CC BY-NC-SA 4.0";
+   ---
+
+   <footer class:list={["w-full", { "mt-auto": !noMarginTop }]}>
+     <Hr noPadding />
+     <div
+       class="flex flex-col justify-between items-center py-6 sm:flex-row-reverse sm:py-4"
+     >
+       <Socials centered />
+       <div class="flex flex-col items-center my-2 whitespace-nowrap sm:flex-row">
+         <span>
+           {
+             localeString("footer.copyright", {
+               year: currentYear.toString(),
+               author: localeString("site.author"),
+             })
+           }
+         </span>
+         <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+         <span>
+           {localeString("footer.license", { license })}
+         </span>
+       </div>
+     </div>
+   </footer>
+   ```
+
+</Steps>
+
+#### 针对文章内容
+
+在之前的站点中，我们需要将不同语言的文章放入单独的文件夹。虽然结构上更为清晰，但我发现如此一来很难快速知道哪些文章缺少翻译。同时一些基于 frontmatter 设置语言的方法也需要一定手动维护，并且仍然有文件名冲突的问题。
+
+经过一番研究后，最终决定使用 [astro-loader-i18n](https://github.com/openscript/astro-i18n/tree/main/libs/astro-loader-i18n). 最大优势在于它能够自动根据文件名加载对应语言的文章，从而简化了多语言支持的实现。
+
+<Steps>
+
+1. 替换文章内容加载方式
+
+   ```diff lang="ts" title="src/content.config.ts" collapse={15-26,30-41}
+   import { defineCollection, z } from "astro:content";
+   -import { glob } from 'astro/loaders';
+   +import { extendI18nLoaderSchema, i18nLoader } from "astro-loader-i18n";
+   import { SITE } from "@/config";
+
+   export const BLOG_PATH = "content/posts";
+   export const ABOUT_PATH = "content/about";
+
+   const blog = defineCollection({
+   -  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${BLOG_PATH}` }),
+   +  loader: i18nLoader({ pattern: "**/[^_]*.{md,mdx}", base: `./${BLOG_PATH}` }),
+     schema: ({ image }) =>
+   +    extendI18nLoaderSchema(
+         z.object({
+           title: z.string(),
+           author: z.string().default(SITE.author),
+           pubDatetime: z.date(),
+           modDatetime: z.date().optional().nullable(),
+           featured: z.boolean().optional(),
+           draft: z.boolean().optional(),
+           tags: z.array(z.string()).default(["others"]),
+           ogImage: image().or(z.string()).optional(),
+           description: z.string(),
+           canonicalURL: z.string().optional(),
+           hideEditPost: z.boolean().optional(),
+           timezone: z.string().optional(),
+         })
+   +    ),
+   });
+
+   const about = defineCollection({
+   -  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${ABOUT_PATH}` }),
+   +  loader: i18nLoader({ pattern: "**/[^_]*.{md,mdx}", base: `./${ABOUT_PATH}` }),
+     schema: ({ image }) =>
+   +    extendI18nLoaderSchema(
+         z.object({
+           title: z.string(),
+           ogImage: image().or(z.string()).optional(),
+         })
+   +    ),
+   });
+
+   export const collections = { blog, about };
+   ```
+
+2. 重命名已有文章文件
+
+   在使用 i18nLoader 后，我们需要将已有文章文件重命名为符合 i18n 规范的格式。具体来说，我们需要将文件名中的语言标识符添加到文件名中，例如将中文的 `hello.md` 重命名为 `hello.zh.md`，对应英文的命名为 `hello.en.md`，额外的后缀不会出现在链接路径中。
+
+   <Aside type="caution">
+
+   需要注意所用的后缀与站点语言设置相匹配。如设置为 `zh-CN`，则应命名为 `hello.zh-CN.md`。
+
+   </Aside>
+
+</Steps>
+
+#### 站点配置
+
+除了前面提到的内容，我们还需要在站点配置中添加 i18n 相关的设置，以确保多语言功能正常工作。具体来说，我们需要进行以下修改：
+
+<Steps>
+
+1. 添加语言配置
+
+   ```ts title="src/config.ts" {3-7}
+   export const SITE = {
+     // ...
+     locales: {
+       en: { label: "English", codes: ["en", "en-US"] },
+       zh: { label: "中文", codes: ["zh", "zh-CN"] },
+     }, // supported locales
+     defaultLocale: "en", // default locale
+   } as const;
+   ```
+
+2. 修改 Astro i18n 配置
+
+   ```ts title="astro.config.ts" {7-20}
+   // ...
+   import { SITE } from "./src/config";
+
+   // https://astro.build/config
+   export default defineConfig({
+     site: SITE.website,
+     i18n: {
+       locales: Object.entries(SITE.locales).map(([lang, { codes }]) => {
+         return {
+           path: lang,
+           codes: [...codes],
+         };
+       }),
+       defaultLocale: SITE.defaultLocale,
+       routing: {
+         prefixDefaultLocale: true,
+         redirectToDefaultLocale: true,
+         fallbackType: "rewrite",
+       },
+     },
+     // ...
+   });
+   ```
+
+3. 将 `[locale]` 插入到 `src/pages` 路径中
+
+   如 `src/pages/index.astro` 需改为 `src/pages/[locale]/index.astro`。需要确保所有页面都遵循此结构。
+
+   <Aside type="caution">
+
+   请确保额外新增一个空的 `src/pages/index.astro` 文件，用于在访问根路径时进行重定向。
+
+   另外，404 页面也不需要放在 `[locale]` 目录下。
+
+   </Aside>
+
+4. 更新所有页面路由
+
+   我们需要为 `src/pages/[locale]/` 下的每个页面创建相应的路由，借此告诉 Astro 有哪些页面需要渲染。
+
+   以 `src/pages/[locale]/about.astro` 为例：
+
+   ```astro collapse={36-48} {3,8,15-19,21,23,25-31}
+   ---
+   import { type CollectionEntry, getCollection, render } from "astro:content";
+   import type { GetStaticPaths } from "astro";
+   import Breadcrumb from "@/components/Breadcrumb.astro";
+   import Footer from "@/components/Footer.astro";
+   import Header from "@/components/Header.astro";
+   import { SITE } from "@/config";
+   import { useTranslations } from "@/i18n/utils";
+   import Layout from "@/layouts/Layout.astro";
+
+   export interface Props {
+     post: CollectionEntry<"about">;
+   }
+
+   export const getStaticPaths = (async () => {
+     return Object.keys(SITE.locales).map((lang) => ({
+       params: { locale: lang as keyof typeof SITE.locales },
+     }));
+   }) satisfies GetStaticPaths;
+
+   const { locale } = Astro.params;
+
+   const localeString = useTranslations(locale);
+
+   const about = await getCollection(
+     "about",
+     ({ data }) => data.locale === locale
+   );
+   if (!about || about.length === 0) {
+     return Astro.redirect(getRelativeLocaleUrl(locale, "/404"));
+   }
+   const aboutPage = about[0];
+   const { Content } = await render(aboutPage);
+   ---
+
+   <Layout title={`${aboutPage?.data.title} | ${localeString("site.title")}`}>
+     <Header />
+     <Breadcrumb />
+     <main id="main-content">
+       <section id="about" class="mb-28 app-prose max-w-app prose-img:border-0">
+         <h1 class="text-2xl tracking-wider sm:text-3xl">
+           {aboutPage.data.title}
+         </h1>
+         <Content />
+       </section>
+     </main>
+     <Footer />
+   </Layout>
+   ```
+
+   <Aside type="tip">
+
+   `GetStaticPaths` 用于生成静态页面的路径。你可以在函数中进行更多自定义，例如根据当前路径语言过滤可见的文章列表。
+
+   所有出现在 `GetStaticPaths` 中的参数组合都将会被有效的路径，因此你可以强制 Astro 生成某些特定语言的页面。
+
+   </Aside>
+
+</Steps>
+
+### 新增/替换组件
+
+#### Expressive Code
+
+[Expressive Code](https://expressive-code.com/) 是一个用于代码高亮的工具，支持多种编程语言和主题，并且功能丰富。如上看到的代码块，支持内容标记、块高亮、行号、折叠、代码复制等功能。
+
+#### MDX
+
+[MDX](https://mdxjs.com/) 是一种将 Markdown 和 JSX 结合在一起的格式，允许你在 Markdown 中使用组件。如果想要在 Markdown 中使用自定义组件，就可以使用 MDX 格式。Astro 框架本身也提供了官方的 MDX 支持，因此仅需添加相应的依赖并进行简单配置即可。
+
+#### 文章目录
+
+Astro Paper 使用 [remark-toc](https://github.com/remarkjs/remark-toc) 插件自动生成文章目录，但是需要在文章中手动插入一个特定的二级标题。不仅难以调整样式，也不方便支持多语言。
+
+所幸 Astro content 的 `render` 函数本身就会返回一个所有标题的列表，包含标题的层级、链接以及文本，因此可以直接在文章模板中手搓一个文章目录，这样既不需要手动插入标题，也能方便地支持多语言。
+
+#### 现成解决方案
+
+Astro Paper 中自己手搓了很多功能，包括实现页面搜索的 `pagefind`、图标组件、主题色切换、后处理压缩等，这些功能实际上都有现成的解决方案可供使用，比如：
+
+- [Astro Pagefind](https://github.com/shishkin/astro-pagefind)
+- [Astro Icon](https://github.com/natemoo-re/astro-icon)
+- [Astro Theme Toggle](https://github.com/ocavue/astro-theme-toggle)
+- [Playform Compress](https://github.com/PlayForm/Compress)
+
+我更倾向于直接使用这些现成的 Astro 集成包，能够大大简化开发，减少维护的工作量。
+
+## 总结
+
+经过一番折腾，就是目前你所看到的高度魔改版 Astro Paper。
