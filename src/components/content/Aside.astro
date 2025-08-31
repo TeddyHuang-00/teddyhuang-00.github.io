@@ -1,0 +1,60 @@
+---
+import { Icon } from "astro-icon/components";
+
+const BoxTypes = ["tip", "info", "important", "caution", "danger"] as const;
+type BoxType = (typeof BoxTypes)[number];
+
+export interface Props {
+  type?: BoxType;
+  class?: string;
+}
+
+const { type = "tip", class: className = "" } = Astro.props;
+
+if (!BoxTypes.includes(type)) {
+  throw new Error(`Invalid box type: ${type}`);
+}
+
+const typeConfig: Record<BoxType, { icon: string; color: string }> = {
+  tip: {
+    icon: "tabler:bulb",
+    color:
+      "border-blue-500 bg-blue-500/10 [&>:first-child]:text-blue-600 dark:[&>:first-child]:text-blue-400",
+  },
+  info: {
+    icon: "tabler:info-circle",
+    color:
+      "border-green-500 bg-green-500/10 [&>:first-child]:text-green-600 dark:[&>:first-child]:text-green-400",
+  },
+  important: {
+    icon: "tabler:exclamation-circle",
+    color:
+      "border-purple-500 bg-purple-500/10 [&>:first-child]:text-purple-600 dark:[&>:first-child]:text-purple-400",
+  },
+  caution: {
+    icon: "tabler:alert-triangle",
+    color:
+      "border-orange-500 bg-orange-500/10 [&>:first-child]:text-orange-600 dark:[&>:first-child]:text-orange-400",
+  },
+  danger: {
+    icon: "tabler:alert-octagon",
+    color:
+      "border-red-500 bg-red-500/10 [&>:first-child]:text-red-600 dark:[&>:first-child]:text-red-400",
+  },
+};
+---
+
+<div
+  class:list={[
+    "my-2 rounded-md border-l-4 p-4",
+    typeConfig[type].color,
+    className,
+  ]}
+>
+  <div class="font-semibold capitalize mb-2">
+    <Icon name={typeConfig[type].icon} />
+  </div>
+  <div class="prose prose-sm max-w-none dark:prose-invert [&>:last-child]:mb-0">
+    <slot />
+  </div>
+</div>

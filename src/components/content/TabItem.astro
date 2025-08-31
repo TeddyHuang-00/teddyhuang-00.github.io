@@ -1,0 +1,26 @@
+---
+/*
+ * Copyright (c) 2023, Astro contributors.
+ * SPDX-License-Identifier: MIT.
+ *
+ * File: TabItem.astro
+ * Modified: 2025-08-30
+ * Description: Customize UI
+ */
+import { TabItemTagname } from "./rehype-tabs";
+
+interface Props {
+  icon?: string;
+  label: string;
+}
+
+const { icon, label } = Astro.props;
+
+if (!label) {
+  throw new Error("Missing prop `label` on `<TabItem>` component.");
+}
+---
+
+<TabItemTagname data-label={label} data-icon={icon}>
+  <slot />
+</TabItemTagname>
