@@ -44,7 +44,7 @@
     "remark-collapse": "^0.1.2",
     "remark-math": "^6.0.0",
     "remark-toc": "^9.0.0",
-    "satori": "^0.16.2",
+    "satori": "^0.18.0",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
