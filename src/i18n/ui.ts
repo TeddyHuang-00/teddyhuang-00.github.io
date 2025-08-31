@@ -40,6 +40,7 @@ export const ui = {
     "nav.back-to-top": "Back to Top",
     "nav.next-post": "Next Post",
     "nav.prev-post": "Previous Post",
+    "nav.table-of-contents": "Table of Contents",
 
     // Footer
     "footer.copyright": "© {year} {author}",
@@ -117,6 +118,7 @@ export const ui = {
     "nav.back-to-top": "返回顶部",
     "nav.next-post": "下一篇",
     "nav.prev-post": "上一篇",
+    "nav.table-of-contents": "目录",
 
     // Footer
     "footer.copyright": "© {year} {author}",

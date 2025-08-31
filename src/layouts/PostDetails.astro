@@ -39,7 +39,7 @@ const {
 const locale = getLangFromUrl(Astro.url);
 const localeString = useTranslations(locale);
 
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 
 let ogImageUrl: string | undefined;
 
@@ -121,6 +121,41 @@ const nextPost =
       </span>
       <EditPost {hideEditPost} {post} class="max-sm:hidden" />
     </div>
+
+    {
+      headings.length > 0 && (
+        <aside>
+          <details class="px-4 py-2 rounded-md border border-border w-fit">
+            <summary class="font-semibold">
+              {localeString("nav.table-of-contents")}
+            </summary>
+            <ul class="pl-6">
+              {headings
+                .filter((heading) => heading.depth > 1 && heading.depth < 5)
+                .map((heading) => (
+                  <li
+                    class:list={[
+                      {
+                        "pl-0": heading.depth === 2,
+                        "pl-4": heading.depth === 3,
+                        "pl-8": heading.depth === 4,
+                      },
+                    ]}
+                  >
+                    <a
+                      href={`#${heading.slug}`}
+                      class="block py-1 text-sm text-foreground hover:text-accent"
+                    >
+                      {heading.text}
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </details>
+        </aside>
+      )
+    }
+
     <article
       id="article"
       class="mx-auto mt-8 app-prose max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
