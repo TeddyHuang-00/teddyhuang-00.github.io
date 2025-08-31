@@ -32,7 +32,7 @@
         "remark-collapse": "^0.1.2",
         "remark-math": "^6.0.0",
         "remark-toc": "^9.0.0",
-        "satori": "^0.16.2",
+        "satori": "^0.18.0",
         "tailwindcss": "^4.1.11",
       },
       "devDependencies": {
@@ -1294,7 +1294,7 @@
 
     "sass-formatter": ["sass-formatter@0.7.9", "", { "dependencies": { "suf-log": "^2.5.3" } }, "sha512-CWZ8XiSim+fJVG0cFLStwDvft1VI7uvXdCNJYXhDvowiv+DsbD1nXLiQ4zrE5UBvj5DWZJ93cwN0NX5PMsr1Pw=="],
 
-    "satori": ["satori@0.16.2", "", { "dependencies": { "@shuding/opentype.js": "1.4.0-beta.0", "css-background-parser": "^0.1.0", "css-box-shadow": "1.0.0-3", "css-gradient-parser": "^0.0.17", "css-to-react-native": "^3.0.0", "emoji-regex-xs": "^2.0.1", "escape-html": "^1.0.3", "linebreak": "^1.1.0", "parse-css-color": "^0.2.1", "postcss-value-parser": "^4.2.0", "yoga-layout": "^3.2.1" } }, "sha512-tORnR2UZ1cB9N81WDjx5ZC4ToPmkybnJWyR8N1OC/z+5kWZcG1mcLssJ5WLNBj1lNr2igIFW0bIiugCxRKL/jQ=="],
+    "satori": ["satori@0.18.1", "", { "dependencies": { "@shuding/opentype.js": "1.4.0-beta.0", "css-background-parser": "^0.1.0", "css-box-shadow": "1.0.0-3", "css-gradient-parser": "^0.0.17", "css-to-react-native": "^3.0.0", "emoji-regex-xs": "^2.0.1", "escape-html": "^1.0.3", "linebreak": "^1.1.0", "parse-css-color": "^0.2.1", "postcss-value-parser": "^4.2.0", "yoga-layout": "^3.2.1" } }, "sha512-TQvguO82qSvLlknlAT1D661+KFsiiiYUHgbRxMjAlHNjUyqAcY9LcDqUpt/yM9LEjlxwuvlru616JVcv8YYTUA=="],
 
     "sax": ["sax@1.4.1", "", {}, "sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg=="],
 
