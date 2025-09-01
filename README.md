@@ -13,7 +13,7 @@ Visit [teddyhuang-00.github.io](https://teddyhuang-00.github.io) to see the webs
 
 ## License
 
-The code base of this project is licensed under the [MIT License](LICENSE), while the content of the website is licensed under the [CC BY-NC-SA 4.0 License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+The code base of this project is licensed under the [MIT License](LICENSE), while the content of the website is licensed under the [CC BY-NC-SA 4.0 License](./content/LICENSE).
 
 ## Acknowledgements
 
