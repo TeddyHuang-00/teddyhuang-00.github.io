@@ -4,6 +4,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
+import Comments from "@/components/Comments";
 import Datetime from "@/components/Datetime.astro";
 import EditPost from "@/components/EditPost.astro";
 import Footer from "@/components/Footer.astro";
@@ -220,6 +221,13 @@ const nextPost =
         )
       }
     </div>
+
+    <Comments
+      client:only="react"
+      lang={locale}
+      lightTheme="light_protanopia"
+      darkTheme="transparent_dark"
+    />
   </main>
   <Footer />
 </Layout>
