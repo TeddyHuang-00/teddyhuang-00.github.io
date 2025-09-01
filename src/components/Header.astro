@@ -164,6 +164,7 @@ const isActive = (path: string) => {
                       ]}
                       title={`Switch to ${label}`}
                       aria-label={`Switch to ${label}`}
+                      data-lang={lang}
                     >
                       {label}
                     </a>
@@ -258,6 +259,17 @@ const isActive = (path: string) => {
         langMenu.classList.add("hidden");
         langBtn.focus();
       }
+    });
+
+    // Handle language switch and localStorage update
+    const langLinks = langMenu.querySelectorAll("a[data-lang]");
+    langLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const langCode = (e.target as HTMLAnchorElement).getAttribute("data-lang");
+        if (langCode) {
+          localStorage.setItem("locale", langCode);
+        }
+      });
     });
   }
 

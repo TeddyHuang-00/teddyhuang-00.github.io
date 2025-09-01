@@ -1,5 +1,57 @@
 ---
-// This file is only a placeholder for the default locale.
-// It will be redirected to the default locale.
-// The actual content is in the [locale]/index.astro file.
+import { SITE } from "@/config";
+
+const supportedLocales = Object.keys(
+  SITE.locales
+) as (keyof typeof SITE.locales)[];
+const defaultLocale = SITE.defaultLocale as keyof typeof SITE.locales;
 ---
+
+<html>
+  <astro-redirect
+    data-supported-locales={supportedLocales.join(",")}
+    data-default-locale={defaultLocale}
+  >
+    <p>Hold on a moment... It shouldn't take long.</p>
+  </astro-redirect>
+
+  <script>
+    class AstroRedirect extends HTMLElement {
+      connectedCallback() {
+        const getPreferredLocale = () => {
+          // Read supported locales and default locale from attributes
+          const supportedLocales =
+            this.dataset.supportedLocales?.split(",") || [];
+          const defaultLocale = this.dataset.defaultLocale || "en";
+
+          // Try to get preferred locale from local storage
+          const storedLocale = localStorage.getItem("locale");
+          if (storedLocale) {
+            return storedLocale;
+          }
+
+          // Try to get user preferred locale from browser settings
+          const userLocales = navigator.languages;
+          for (const locale of userLocales) {
+            const lang = locale.slice(0, 2);
+            if (supportedLocales.includes(lang)) {
+              return lang;
+            }
+          }
+
+          // If no preferred locale is found, return the default locale
+          return defaultLocale;
+        };
+
+        const preferredLocale = getPreferredLocale();
+
+        // Immediately redirect to the preferred locale
+        window.location.href = `/${preferredLocale}`;
+      }
+    }
+
+    customElements.define("astro-redirect", AstroRedirect);
+  </script>
+
+
+</html>

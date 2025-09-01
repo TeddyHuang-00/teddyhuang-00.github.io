@@ -50,7 +50,7 @@ export default defineConfig({
     defaultLocale: SITE.defaultLocale,
     routing: {
       prefixDefaultLocale: true,
-      redirectToDefaultLocale: true,
+      redirectToDefaultLocale: false,
       fallbackType: "rewrite",
     },
   },
