@@ -11,7 +11,7 @@ export const ui = {
     "social.links": "Social Links",
     "social.find-me-on": "Find me on {social}",
     "social.contact-me-via": "Contact me via {social}",
-    "rss.feed": "SSR Feed",
+    "rss.feed": "RSS Feed",
     "share.this-post": "Share this post",
     "share.this-post-on": "Share this post on {social}",
     "share.this-post-via": "Share this post via {social}",
@@ -86,7 +86,7 @@ export const ui = {
     "edit.this-page": "编辑此页",
 
     // Socials
-    "rss.feed": "SSR 订阅源",
+    "rss.feed": "RSS 订阅源",
     "social.links": "社交链接",
     "social.find-me-on": "在 {social} 上找到我",
     "social.contact-me-via": "通过 {social} 联系我",
