@@ -1,23 +1,9 @@
-import type { GiscusProps } from "@giscus/react";
-
 interface Social {
   name: string;
   href: string;
   linkTitle: string;
   iconName: string;
 }
-
-export const GISCUS: GiscusProps = {
-  repo: "TeddyHuang-00/teddyhuang-00.github.io",
-  repoId: "R_kgDOIIxzaw",
-  category: "Announcements",
-  categoryId: "DIC_kwDOIIxza84CR07z",
-  mapping: "pathname",
-  reactionsEnabled: "0",
-  emitMetadata: "0",
-  inputPosition: "bottom",
-  loading: "lazy",
-};
 
 export const SOCIALS: Social[] = [
   {

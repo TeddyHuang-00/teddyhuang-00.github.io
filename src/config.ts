@@ -1,3 +1,5 @@
+import type { GiscusProps } from "@giscus/react";
+
 export const SITE = {
   website: "https://teddyhuang-00.github.io/", // deployed domain
   profile: "https://teddyhuang-00.github.io/",
@@ -24,3 +26,15 @@ export const SITE = {
   defaultLocale: "en", // default locale
   timezone: "America/New_York", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 } as const;
+
+export const GISCUS: GiscusProps = {
+  repo: "TeddyHuang-00/teddyhuang-00.github.io",
+  repoId: "R_kgDOIIxzaw",
+  category: "Announcements",
+  categoryId: "DIC_kwDOIIxza84CR07z",
+  mapping: "pathname",
+  reactionsEnabled: "1",
+  emitMetadata: "0",
+  inputPosition: "top",
+  loading: "eager",
+};

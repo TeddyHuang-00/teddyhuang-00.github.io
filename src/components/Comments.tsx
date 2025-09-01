@@ -1,7 +1,6 @@
 import Giscus, { type Theme } from "@giscus/react";
 import { useEffect, useState } from "react";
-import type { SITE } from "@/config";
-import { GISCUS } from "@/constants";
+import { GISCUS, type SITE } from "@/config";
 
 interface CommentsProps {
   lightTheme?: Theme;
