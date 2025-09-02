@@ -1,6 +1,6 @@
 CACHE_DIR := ".cache"
 OG_CACHE_DIR := CACHE_DIR / "og-images"
-FONT_VERSION := "7.5"
+FONT_VERSION := "7.6"
 FONT_CACHE_DIR := CACHE_DIR / "fonts"
 FONT_CACHE_FILE := FONT_CACHE_DIR / "MapleMono-v" + FONT_VERSION + ".zip"
 FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
