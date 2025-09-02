@@ -1,0 +1,24 @@
+---
+title: LeetCode 1707. 与数组中元素的最大异或值
+pubDatetime: 2025-08-30
+tags:
+  - LeetCode
+featured: false
+draft: false
+description: 一个很有意思的题目
+---
+
+import { Aside } from "@/components/content/components";
+
+## 题目描述
+
+给定一个非负整数数组 $$nums$$，以及另一个二元数组 $$queries$$，其中 $$queries_i = (x_i, m_i)$$。
+对于每个查询，要求返回 $$nums$$ 中所有不大于 $$m_i$$ 的元素与 $$x_i$$ 的最大异或值，即 $$\max_{y \le m_i, \forall y \in nums} \{x_i \oplus y\}$$。
+
+## 思考过程
+
+### 暴力解：显然不可取
+
+### 优化 1：排序 + 二分查找
+
+### 优化 2：前缀树 + 查询排序

@@ -21,7 +21,7 @@ format: install
     biome format
     bun rustywind --check-formatted ./content ./src
 
-check: install sync
+check: install 
     bunx astro check
     biome check
 
