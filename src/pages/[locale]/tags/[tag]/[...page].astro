@@ -43,11 +43,10 @@ const localeString = useTranslations(locale);
 >
   <Header />
   <Main
-    pageTitle={[`${localeString("tags.tag")}:`, `${tagName}`]}
-    titleTransition={tag}
+    pageTitle={`${localeString("tags.tag")}: ${tagName}`}
     pageDesc={localeString("tags.with-tag", { tag: tagName })}
   >
-    <h1 slot="title" transition:name={tag}>
+    <h1 slot="title">
       {`${localeString("tags.tag")}:${tag}`}
     </h1>
     <ul>

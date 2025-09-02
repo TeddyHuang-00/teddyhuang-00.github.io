@@ -9,15 +9,9 @@ interface StringTitleProp {
   pageDesc?: string;
 }
 
-interface ArrayTitleProp {
-  pageTitle: [string, string];
-  titleTransition: string;
-  pageDesc?: string;
-}
+export type Props = StringTitleProp;
 
-export type Props = StringTitleProp | ArrayTitleProp;
-
-const { props } = Astro;
+const { pageTitle, pageDesc } = Astro.props;
 
 const locale = getLangFromUrl(Astro.url) as keyof typeof SITE.locales;
 const backUrl = SITE.showBackButton
@@ -31,19 +25,8 @@ const backUrl = SITE.showBackButton
   id="main-content"
   class="px-4 pb-4 mx-auto w-full max-w-app"
 >
-  {
-    "titleTransition" in props ? (
-      <h1 class="text-2xl font-semibold sm:text-3xl">
-        {props.pageTitle[0]}
-        <span transition:name={props.titleTransition}>
-          {props.pageTitle[1]}
-        </span>
-      </h1>
-    ) : (
-      <h1 class="text-2xl font-semibold sm:text-3xl">{props.pageTitle}</h1>
-    )
-  }
-  <p class="mt-2 mb-6 italic">{props.pageDesc}</p>
+  <h1 class="text-2xl font-semibold sm:text-3xl">{pageTitle}</h1>
+  <p class="mt-2 mb-6 italic">{pageDesc}</p>
   <slot />
 </main>
 
