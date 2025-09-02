@@ -37,11 +37,24 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
-      - name: Cache Build Artifacts
+      - name: Get font version
+        id: font-version
+        run: just font-version >> $GITHUB_OUTPUT
+
+      - name: Cache Font
         uses: actions/cache@v4
         with:
-          path: .cache
-          key: ${{ runner.os }}-cache
+          path: .cache/fonts
+          key: cache-font-${{ steps.font-version.outputs.font-version }}
+
+      - name: Cache OG Images
+        uses: actions/cache@v4
+        with:
+          path: .cache/og-images
+          key: cache-og-${{ steps.font-version.outputs.font-version }}-${{ hashFiles('/src/utils/og-templates') }}-${{ hashFiles('/content/**/*') }}
+          # In case of cache miss, restore if only the content changed
+          restore-keys: |
+            cache-og-${{ steps.font-version.outputs.font-version }}-${{ hashFiles('/src/utils/og-templates') }}-
 
       - name: Build Documentation
         env:

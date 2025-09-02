@@ -11,6 +11,9 @@ FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
         (wget https://github.com/subframe7536/maple-font/releases/download/v{{ FONT_VERSION }}/MapleMono-NF-CN-unhinted.zip -O {{ FONT_CACHE_FILE }} && \
         unzip -o {{ FONT_CACHE_FILE }} -d {{ FONT_CACHE_DIR }})
 
+@font-version:
+    echo "font-version={{ FONT_VERSION }}"
+
 @install:
     bun install --frozen-lockfile
 
