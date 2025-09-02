@@ -53,7 +53,7 @@
     "rustywind": "0.24.3",
     "satori": "0.18.0",
     "tailwindcss": "4.1.11",
-    "typescript": "5.8.3"
+    "typescript": "5.9.2"
   },
   "trustedDependencies": [
     "@tailwindcss/oxide",
