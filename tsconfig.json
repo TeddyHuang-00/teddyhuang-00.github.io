@@ -9,5 +9,8 @@
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
+  },
+  "mdx": {
+    "plugins": ["remark-math"]
   }
 }
