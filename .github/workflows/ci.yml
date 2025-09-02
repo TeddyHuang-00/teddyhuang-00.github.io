@@ -10,6 +10,7 @@ on:
       - edited
       - synchronize
       - reopened
+  merge_group:
   workflow_call:
 
 jobs:
