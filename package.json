@@ -51,7 +51,7 @@
     "rehype-katex": "7.0.1",
     "remark-math": "6.0.0",
     "rustywind": "0.24.3",
-    "satori": "0.18.0",
+    "satori": "0.18.2",
     "tailwindcss": "4.1.11",
     "typescript": "5.9.2"
   },
