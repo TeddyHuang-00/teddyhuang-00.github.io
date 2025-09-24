@@ -28,7 +28,7 @@
     "@playform/compress": "0.2.0",
     "@resvg/resvg-js": "2.6.2",
     "@shikijs/transformers": "3.13.0",
-    "@tailwindcss/typography": "0.5.18",
+    "@tailwindcss/typography": "0.5.19",
     "@tailwindcss/vite": "4.1.13",
     "@types/lodash.kebabcase": "4.1.9",
     "@types/react": "19.1.13",
