@@ -31,7 +31,7 @@
     "@tailwindcss/typography": "0.5.19",
     "@tailwindcss/vite": "4.1.13",
     "@types/lodash.kebabcase": "4.1.9",
-    "@types/react": "19.1.13",
+    "@types/react": "19.1.14",
     "@types/react-dom": "19.1.9",
     "astro": "5.14.1",
     "astro-expressive-code": "0.41.3",
