@@ -1,4 +1,4 @@
-@plugin '@tailwindcss/typography';
+@plugin "@tailwindcss/typography";
 
 @layer base {
   /* ===== Override default Tailwind Typography styles ===== */

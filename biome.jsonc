@@ -20,6 +20,11 @@
   "formatter": {
     "indentStyle": "space"
   },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "overrides": [
     {
       "includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
@@ -46,17 +51,6 @@
           },
           "complexity": {
             "noBannedTypes": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["**/*.css"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            // For Tailwind CSS
-            "noUnknownAtRules": "off"
           }
         }
       }
