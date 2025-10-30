@@ -33,7 +33,7 @@
     "@types/lodash.kebabcase": "4.1.9",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
-    "astro": "5.15.2",
+    "astro": "5.15.3",
     "astro-expressive-code": "0.41.3",
     "astro-icon": "1.1.5",
     "astro-loader-i18n": "0.9.1",
