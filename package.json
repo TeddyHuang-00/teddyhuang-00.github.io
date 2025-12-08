@@ -42,7 +42,7 @@
     "astro-theme-toggle": "0.8.0",
     "dayjs": "1.11.19",
     "globals": "16.5.0",
-    "katex": "0.16.26",
+    "katex": "0.16.27",
     "linkedom": "0.18.12",
     "lodash.kebabcase": "4.1.1",
     "react": "19.2.1",
