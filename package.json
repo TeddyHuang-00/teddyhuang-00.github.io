@@ -27,7 +27,7 @@
     "@iconify-json/tabler": "1.2.23",
     "@playform/compress": "0.2.0",
     "@resvg/resvg-js": "2.6.2",
-    "@shikijs/transformers": "3.18.0",
+    "@shikijs/transformers": "3.20.0",
     "@tailwindcss/typography": "0.5.19",
     "@tailwindcss/vite": "4.1.18",
     "@types/lodash.kebabcase": "4.1.9",
