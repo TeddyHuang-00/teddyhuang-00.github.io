@@ -53,11 +53,11 @@ jobs:
       - uses: biomejs/setup-biome@v2
       - id: font-version
         run: just font-version >> $GITHUB_OUTPUT
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: .cache/fonts
           key: cache-font-${{ steps.font-version.outputs.font-version }}
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: .cache/og-images
           key: cache-og-${{ steps.font-version.outputs.font-version }}-${{ hashFiles('src/utils/og-templates/*.*') }}-${{ hashFiles('content/**/*.*') }}
