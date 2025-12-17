@@ -13,7 +13,7 @@
         "@expressive-code/plugin-collapsible-sections": "0.41.5",
         "@expressive-code/plugin-line-numbers": "0.41.5",
         "@giscus/react": "3.1.0",
-        "@iconify-json/tabler": "1.2.23",
+        "@iconify-json/tabler": "1.2.24",
         "@playform/compress": "0.2.0",
         "@resvg/resvg-js": "2.6.2",
         "@shikijs/transformers": "3.20.0",
@@ -205,7 +205,7 @@
 
     "@giscus/react": ["@giscus/react@3.1.0", "", { "dependencies": { "giscus": "^1.6.0" }, "peerDependencies": { "react": "^16 || ^17 || ^18 || ^19", "react-dom": "^16 || ^17 || ^18 || ^19" } }, "sha512-0TCO2TvL43+oOdyVVGHDItwxD1UMKP2ZYpT6gXmhFOqfAJtZxTzJ9hkn34iAF/b6YzyJ4Um89QIt9z/ajmAEeg=="],
 
-    "@iconify-json/tabler": ["@iconify-json/tabler@1.2.23", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-Knb8ykgMwB5uSoqrDv1xIdJYM03OP06OXjN6QvGXaTNtdHkW9ciKA+aftz6lwM2jwJA+bsUWeDzLBlPt2uJm4w=="],
+    "@iconify-json/tabler": ["@iconify-json/tabler@1.2.24", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-W1GIC36ckaQvr0fpQeyqC62HWyF3/r0yjJHtCByZmxA3qTMqLv0wJDdz/BffnmoCMulaBbxgjbTptFfKyn5e/g=="],
 
     "@iconify/tools": ["@iconify/tools@4.1.2", "", { "dependencies": { "@iconify/types": "^2.0.0", "@iconify/utils": "^2.3.0", "@types/tar": "^6.1.13", "axios": "^1.8.3", "cheerio": "1.0.0", "domhandler": "^5.0.3", "extract-zip": "^2.0.1", "local-pkg": "^0.5.1", "pathe": "^1.1.2", "svgo": "^3.3.2", "tar": "^6.2.1" } }, "sha512-q6NzLQYEN9zkDfcyBqD3vItHcZw97w/s++3H3TBxUORr57EfHxj6tOW6fyufDjMq+Vl56WXWaPx1csBPYlI5CA=="],
 
