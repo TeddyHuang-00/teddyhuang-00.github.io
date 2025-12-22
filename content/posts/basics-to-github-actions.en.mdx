@@ -1,0 +1,141 @@
+---
+title: First Look at GitHub Actions
+pubDatetime: 2023-05-02
+tags:
+  - GitHub
+  - CI/CD
+featured: false
+draft: false
+description: No one dislikes CI/CD; the only thing holding us back is laziness.
+---
+
+import { Aside } from "@/components/content/components";
+
+## Why We Need CI/CD
+
+CI/CD stands for Continuous Integration and Continuous Delivery. It's a software development practice that automates the processes of building, testing, and releasing software. Even as a hobbyist developer, I often encounter scenarios like these:
+
+- The previous blog site of mine originally required me to build it locally and then upload it to GitHub for deployment. Waiting for the build to complete before uploading was not only tedious but also prone to errors due to network issues.
+- You write a simple web scraping script and want it to run regularly, but either you don't have a server or can't be bothered to set up a cron job.
+- You write a cross-platform program or library that requires the corresponding environment to build (like an .exe for Windows, a .so library for Linux, or a .dmg for macOS), but you don't have all those environments at hand.
+- Or, more commonly, you write a simple Python package and want to automatically run tests after each push, or automatically build and upload it to PyPI when the version number is updated.
+
+These kinds of needs are perfectly suited for CI/CD to solve. With GitHub Actions, we can perform continuous integration and continuous delivery directly on GitHub, without needing to set up our own servers or configure cron tasks.
+
+## The Core Idea of GitHub Actions
+
+The core idea of GitHub Actions is: **Event-Driven**. It's like adding a series of hooks to your repository. When a specific event is triggered, a corresponding action, a.k.a. a workflow, is executed.
+
+### Triggering Events
+
+GitHub Actions supports a wide variety of events, which can be broadly categorized into several groups:
+
+- Source Code Changes
+  - `push`
+  - `pull_request`
+  - `create`
+  - `delete`
+  - etc., events related to source code or version management.
+- Repository Status
+  - `issue`
+  - `discussion`
+  - `project`
+  - etc., events related to the GitHub platform.
+- Others
+  - Manual: `workflow_dispatch`
+  - Scheduled: `schedule`
+  - Called by another workflow: `workflow_call`
+  - and other events.
+
+For specific definitions and usage, refer to the [official documentation](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run). Multiple trigger events can be combined freely. They are defined in the configuration file like this:
+
+```yaml title=".github/workflows/your-workflow.yml"
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+```
+
+### Jobs and Steps
+
+When an event is triggered, it executes corresponding jobs. Each job is identified by its ID and can be configured with different permissions and environments. Dependencies between jobs can be defined using the `needs` keyword. Each job consists of several steps, and each step can also have its own environment. Of course, both jobs and steps can be conditionally controlled using simple logic.
+
+Here, the two core operations for running jobs and steps are:
+
+- Reuse `uses`
+  - Call an existing action.
+  - Can be from the GitHub Marketplace.
+  - Or point to a path of your own workflow file.
+  - Parameters are passed via `with`.
+- Custom `run`
+  - Run a command directly.
+  - Since it runs in a container, essentially any command can be executed.
+
+<Aside type="tip" title="Job vs. Step">
+
+The key difference between a **job** and a **step** is that each job runs in an independent virtual environment, making them inherently parallelizable. Steps, however, run within the same virtual environment as part of a job, can inherit results from the previous step, but must execute sequentially.
+
+</Aside>
+
+For more syntax and examples, please refer to the [official documentation](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions).
+
+## GitHub Actions in Practice
+
+Here is a simple GitHub Actions configuration file:
+
+```yaml title=".github/workflows/demo.yml"
+# Workflow name
+name: GitHub Actions Demo
+
+# Trigger conditions
+on:
+  # Trigger on push
+  push:
+    branches:
+      - main
+  # Trigger on pull request
+  pull_request:
+    branches:
+      - main
+  # Manual trigger
+  workflow_dispatch:
+  # Scheduled trigger
+  schedule:
+    # Daily at 00:00 UTC
+    - cron: "0 0 * * *"
+
+# Jobs
+jobs:
+  # Job ID
+  build:
+    # Runtime environment
+    runs-on: ubuntu-latest
+
+    # Job steps
+    steps:
+      # Checkout code (using a reusable action)
+      - uses: actions/checkout@v3
+
+      # Run a command (command line)
+      - name: Run a one-line script
+        run: echo Hello GitHub Actions
+
+      # Run commands (multi-line)
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+```
+
+## Real-World Examples
+
+### Automatically Build and Deploy a Blog
+
+This was my initial use case for GitHub Actions: automatically building and deploying the site on push. See the [workflow file](https://github.com/TeddyHuang-00/teddyhuang-00.github.io/blob/main/.github/workflows/deploy.yml).
+
+### Scheduled Update for Scraping PKU Course List
+
+During a holiday break, I adapted a previous web scraping script. I set up a scheduled task and configured it to automatically publish the results to [Releases](https://github.com/TeddyHuang-00/PKU-Course-List/releases). See the [workflow file](https://github.com/TeddyHuang-00/PKU-Course-List/blob/main/.github/workflows/scrape-dean.yml).
