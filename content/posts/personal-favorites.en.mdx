@@ -1,0 +1,762 @@
+---
+title: Personal Favorite Projects
+pubDatetime: 2023-04-08
+modDatetime: 2025-12-24
+tags:
+  - CLI
+  - Editor
+  - DevTools
+  - Font
+  - Git
+  - PackageManager
+  - PDF
+  - Productivity
+  - Python
+  - Rust
+  - Shell
+  - Streamlit
+  - Tailwind
+  - Terminal
+  - Tools
+  - TUI
+  - Typst
+  - VCS
+  - Vue
+  - Vuepress
+  - Web
+featured: true
+draft: false
+description: A collection of my personally favorite projects, for future reference. Updated from time to time.
+---
+
+import { Aside, Badge, Ruby } from "@/components/content/components";
+
+## Package Managers
+
+### homebrew
+
+<Aside type="info">
+
+- Homepage: [brew.sh](https://brew.sh/)
+- GitHub Repository: [homebrew/brew](https://github.com/homebrew/brew)
+
+</Aside>
+
+Needless to say, this is the unrivaled package manager on macOS and has become the standard on the platform. It now also officially integrates Linuxbrew, making it usable on Linux.
+
+> I believe a major pain point for Ubuntu is that its apt repositories can be slow to update; Debian, which prioritizes stability, is even worse. Therefore, if you want to use software of a newer version, you often have to compile and install it yourself, which is very unfriendly for general users.
+> Homebrew, maintained by the community, can solve this problem well, making it easy to install the latest versions of software.
+> The only current regret is the temporary lack of support for installing GUI applications (corresponding to cask on macOS).
+
+> Other similar tools like [MPR](https://www.makedeb.org/) might also be worth a try, but I haven't tried it yet. Moreover, Homebrew works on both Linux and macOS, so I still prefer it.
+
+### paru
+
+<Aside type="info">
+
+- GitHub Repository: [Morganamilo/paru](https://github.com/Morganamilo/paru)
+
+</Aside>
+
+A convenient package manager for quick access to the AUR (Arch User Repository). It supports installing packages from the AUR and provides a very convenient command-line interface.
+Its functionality is similar to `yay`, but its command-line options are closer to `pacman`, making it easy to follow `pacman` tutorials by simply replacing `pacman` with `paru`.
+
+> This is also my package manager of choice on Arch Linux; it's very handy to use.
+> Plus, it's written in the ~~divine~~ Rust language, how can one say no?
+
+> ~~I use Arch BTW.~~
+
+### uv
+
+<Aside type="info">
+
+- GitHub Repository: [astral-sh/uv](https://github.com/astral-sh/uv)
+
+</Aside>
+
+An all-in-one Python tool written in Rust, featuring Python version management, virtual environments, pip package management, project dependency management, and more.
+It also supports functionality similar to `pipx`, allowing direct installation and execution of Python packages.
+
+- For Python version management, it can not only fully detect Python versions in your system but also conveniently download precompiled Python versions (also supports on-demand installation, so you don't have to install first before using).
+- For virtual environments, it replaces `virtualenv` and `venv`, offering simpler and more consistent commands.
+- For pip packages, `uv` provides commands similar to `pip`, making it easy to install and manage Python packages.
+  It also has better version resolution, avoiding dependency conflicts. (When encountering ~~uncivilized~~ packages that don't adhere to [Semantic Versioning](https://semver.org/), you can also manually override dependency versions.)
+- For project dependency management, `uv` offers functionality similar to `poetry` and `conda`, helping you manage project dependencies in `pyproject.toml` and generate `uv.lock` to lock dependency versions, facilitating reproducibility across different environments. ~~(Mom no longer has to worry about unclean pip package uninstallation.)~~
+
+> While `uv` might not be considered a full-fledged package manager, given its comprehensive management capabilities for the Python ecosystem, I'm still placing it in this category.
+
+> To make a bold statement, `uv` should become the standard tool for the Python ecosystem.
+> If you haven't used `uv`, don't call yourself a Python developer. 😈
+
+## Command Line Interface
+
+### fish
+
+<Aside type="info">
+
+- Homepage: [fishshell.com](https://fishshell.com/)
+- GitHub Repository: [fish-shell/fish-shell](https://github.com/fish-shell/fish-shell)
+
+</Aside>
+
+A user-friendly command-line shell that provides many modern features by default, such as syntax highlighting, autocompletion, and command suggestions.
+Its syntax is also more concise and understandable than traditional shells, adding many powerful built-in functions, making scripts written in it highly readable.
+
+> This is currently my main shell. I haven't encountered a situation yet where `fish` couldn't solve a problem or solve it poorly, necessitating a switch back to `xonsh` or `bash`.
+
+> Compared to `xonsh`, although `fish` doesn't support Python syntax, its built-in functions and features are sufficient for most needs.
+
+> One current area of dissatisfaction is that `fish`'s plugin ecosystem is relatively weak.
+> There seem to be two plugin systems: `fisher` and `oh-my-fish`, without a unified standard yet.
+> However, [`fisher`](https://github.com/jorgebucaran/fisher) shows promising development momentum, is compatible with `oh-my-fish` plugins, and holds good prospects for the future.
+
+### xonsh <Badge type="caution" text="No longer recommended" />
+
+<Aside type="info">
+
+- Homepage: [xon.sh](https://xon.sh/)
+- GitHub Repository: [xonsh/xonsh](https://github.com/xonsh/xonsh)
+
+</Aside>
+
+A cross-platform, Python-based shell, summarized by four main points:
+
+1.  Can use shell.
+2.  Can use Python.
+3.  Can use Python within the shell.
+4.  Can use shell within Python.
+
+Thus, it allows easy interaction between Python and shell, and you can also use Python libraries, making it very suitable for simple automation, debugging, etc.
+~~Moreover, community activity and support have been steadily increasing over the years, making it one of the future mainstream shells.~~
+
+> ~~This was also my main shell; if given the choice, I would definitely use it.~~ It is no longer my main shell.
+
+> After using it for four years, I feel the ecosystem is still not mature enough, community contribution growth is slow, and compatibility with mainstream tools like `screen` and `tmux` needs improvement.
+> Therefore, I recommend [`fish`](#fish) as an equally good alternative.
+
+### starship
+
+<Aside type="info">
+
+- Homepage: [starship.rs](https://starship.rs/)
+- GitHub Repository: [starship/starship](https://github.com/starship/starship)
+
+</Aside>
+
+A cross-shell command prompt that supports many customization options, allowing configuration according to your preferences and needs.
+It now officially supports [xonsh](#xonsh), and there are many community-provided themes available for direct use.
+
+Being written in Rust, it's extremely fast.
+Its features are also quite rich, offering support for Git repositories in the current directory, version detection for various programming language projects, and more.
+Just use it; it's the right choice.
+
+### Carapace
+
+<Aside type="info">
+
+- Homepage: [carapace.sh](https://carapace.sh/)
+- GitHub Repository: [carapace-sh/carapace](https://github.com/carapace-sh/carapace)
+
+</Aside>
+
+A powerful autocompletion framework that can act as a bridge to use completion scripts written for different shells, while its binary itself also includes completions for many common commands (you can manually disable them to use local completions).
+
+> Magnificent, no need for further explanation! It's basically ready to use out of the box and has high compatibility with `fish` (partly thanks to `fish`'s own excellent completion framework design).
+
+> Occasionally, you might encounter inaccurate command option completions, usually due to incomplete built-in completion information.
+> Typically, you just need to disable the completion for that specific command and use the completions provided by `fish` or other shells.
+
+## Terminal
+
+### Ghostty
+
+<Aside type="info">
+
+- Homepage: [ghostty.dev](https://ghostty.dev/)
+- GitHub Repository: [ghostty-org/ghostty](https://github.com/ghostty-org/ghostty)
+
+</Aside>
+
+The long-awaited Ghostty was finally released during Christmas 2024.
+Performance-wise, it doesn't pursue extreme performance like `Alacritty` but focuses more on user experience and customizability while achieving almost imperceptible latency.
+
+> The biggest pain point with terminals I've used before was that they were either inadequate in various ways (naming `kitty`, I don't understand why anyone would recommend it), lacked certain features (`Alacritty` still doesn't support ligatures, image protocols, etc.), had ugly UI (🤡 `WezTerm`), or lacked cross-platform support (`iTerm2`: Only 🍎 can do).
+
+> Ghostty currently meets all my needs, being cross-platform while striving to use native platform components.
+> Although I haven't rigorously tested its responsiveness, from my subjective experience, it's very smooth: compared to `Alacritty`, whether cold-starting or character input, there's no perceivable difference.
+
+### tmux
+
+<Aside type="info">
+
+- GitHub Repository: [tmux/tmux](https://github.com/tmux/tmux)
+
+</Aside>
+
+A powerful terminal multiplexer that allows managing multiple sessions and windows within a single terminal window.
+It also has a rich plugin system; you can easily manage various plugins via [Tmux Plugin Manager (tpm)](https://github.com/tmux-plugins/tpm) to extend functionality.
+
+> Objectively speaking, `tmux` has a steeper learning curve than `screen`, but once mastered, it can greatly improve work efficiency.
+
+> `tmux` effectively solves issues that long plagued me in `screen`, especially regarding character support, color support, viewing and copying history, etc.
+> Furthermore, with plugins, `tmux` can achieve more custom functionality, such as automatically saving session states, restoring previous sessions, etc. Even after a reboot, you don't have to worry about losing your sessions.
+
+## Command Line Tools
+
+### vhs
+
+<Aside type="info">
+
+- GitHub Repository: [charmbracelet/vhs](https://github.com/charmbracelet/vhs)
+
+</Aside>
+
+A command-line recording tool that uses a very simple syntax to write scripts controlling operations, easily generating visually appealing GIFs.
+
+Because it's script-controlled, it's perfect for demonstrating command-line tools and can also serve as a testing tool for them.
+
+### glow
+
+<Aside type="info">
+
+- GitHub Repository: [charmbracelet/glow](https://github.com/charmbracelet/glow)
+
+</Aside>
+
+A command-line Markdown reader that supports multiple themes, allowing you to read Markdown files directly in the terminal.
+
+> Like [vhs](#vhs) above, this is also developed by [Charm Bracelet](https://charm.sh/), making it a very useful and aesthetically pleasing <Badge text="this matters a lot" type="info" /> tool.
+
+### typos-cli
+
+<Aside type="info">
+
+- GitHub Repository: [crate-ci/typos](https://github.com/crate-ci/typos)
+
+</Aside>
+
+Always worried about spelling mistakes in your documents or code? `typos-cli` can immediately help you check and correct them, and it can even fix them automatically. Very convenient.
+
+It even has a GitHub Action to automatically check for spelling errors in your repositories.
+
+### tldr
+
+<Aside type="info">
+
+- Homepage: [tldr.sh](https://tldr.sh/)
+- GitHub Repository: [tldr-pages/tldr](https://github.com/tldr-pages/tldr)
+
+</Aside>
+
+Can't remember the usage of various common commands? No problem, `tldr` it, and you'll know!
+
+A community-maintained documentation library contains usage examples for many common commands, viewable directly in the terminal. It's very handy.
+It saves you the trouble of memorizing commands and avoids constantly consulting the manual for examples.
+
+> You can also try the Rust version, [`tealdeer`](https://github.com/tealdeer-rs/tealdeer), which has the same functionality but is faster, offers more configuration options, and supports custom styles.
+
+### btop++
+
+<Aside type="info">
+
+- GitHub Repository: [aristocratos/btop](https://github.com/aristocratos/btop)
+
+</Aside>
+
+Another alternative to the `top` command, with basic functionality and interface appearance consistent with `bpytop`.
+However, `btop++` offers improvements in both performance and stability.
+
+### bpytop <Badge type="caution" text="No longer recommended" />
+
+<Aside type="info">
+
+- GitHub Repository: [aristocratos/bpytop](https://github.com/aristocratos/bpytop)
+
+</Aside>
+
+A more modern `top` command that supports multiple themes and can directly display various system resource usage information in the terminal, such as CPU, memory, network, disk, and process information.
+
+> Being written in Python, it has certain performance drawbacks and some bugs (like memory usage calculation). The same author's [btop++](#btop) is more recommended.
+
+### bat
+
+<Aside type="info">
+
+- GitHub Repository: [sharkdp/bat](https://github.com/sharkdp/bat)
+
+</Aside>
+
+A more modern `cat` command, supporting syntax highlighting, line numbers, Git diff integration, etc.
+
+### delta
+
+<Aside type="info">
+
+- Homepage: [dandavison.github.io/delta/](https://dandavison.github.io/delta)
+- GitHub Repository: [dandavison/delta](https://github.com/dandavison/delta)
+
+</Aside>
+
+A better-looking `diff` command that supports syntax highlighting, line numbers, folder comparison, and more. It can also emulate the output styles of `diff-highlight` and `diff-so-fancy`.
+
+> For aesthetics enthusiasts, I strongly recommend using `delta` as the default diff display tool for `git` and `jj`.
+
+### icdiff
+
+<Aside type="info">
+
+- GitHub Repository: [jeffkaufman/icdiff](https://github.com/jeffkaufman/icdiff)
+
+</Aside>
+
+A colored `diff` command that can display differences directly in the terminal.
+It also supports viewing changes in Git repositories via `git icdiff`.
+
+### logo-ls
+
+<Aside type="info">
+
+- GitHub Repository: [Yash-Handa/logo-ls](https://github.com/Yash-Handa/logo-ls) <Badge text="Original author no longer maintains" type="caution" />
+- A continuously maintained fork: [canta2899/logo-ls](https://github.com/canta2899/logo-ls)
+
+</Aside>
+
+An `ls` command with icons that displays file and folder icons directly in the terminal.
+
+> The fork maintained by canta2899 has made many adjustments, such as adding numerous icons and adopting the latest Nerd Font v3, so I recommend using this fork.
+
+> Although not yet available in the official repositories of various distributions, the author recently updated the installation script to directly fetch precompiled binaries, eliminating the need for manual compilation and installation. Very convenient.
+
+### fastfetch
+
+<Aside type="info">
+
+- GitHub Repository: [fastfetch-cli/fastfetch](https://github.com/fastfetch-cli/fastfetch)
+
+</Aside>
+
+A faster alternative to `neofetch` that displays system information and ASCII art in the terminal, also supporting more features and configuration options.
+
+> Since `neofetch` is no longer maintained, `fastfetch` is a good alternative.
+> Moreover, `fastfetch` is available in the official repositories of many distributions, making installation very convenient.
+
+## Version Control
+
+### Jujutsu (jj)
+
+<Aside type="info">
+
+- Homepage: [jj-vcs.github.io](https://jj-vcs.github.io/jj/latest/)
+- GitHub Repository: [jj-vcs/jj](https://github.com/jj-vcs/jj)
+
+</Aside>
+
+An emerging version control system that currently uses `git` as its backend, making it compatible with projects already managed by `git`.
+
+Its brilliance lies in its design philosophy, which is more centered around commits rather than branches like `git`.
+
+- **No staging area**: All changes become part of the current commit directly, and commits are no longer required to have a description; they can serve as snapshots for "staging."
+  All commit nodes form a tree structure, with a fixed, immutable empty node as the root.
+- **No branches**: Replaced by bookmarks.
+  Bookmarks can be moved to any commit at any time. The path from the root to that commit constitutes a branch history compatible with Git.
+- **Highly mutable commit nodes**: You can enter any specific commit at any time, view or modify its content, or change its description.
+- **Highly mutable history**: You can also modify the commit history structure at any time, moving a subtree, reordering nodes, or discarding unwanted nodes.
+- **Simple conflict resolution**: If conflicts arise due to modifying history or rebasing, the system automatically detects affected commits and prompts you to resolve them.
+  You only need to modify the conflicting commit.
+- **Compatibility with remote `git` repositories**: Supports interaction with remote `git` repositories for pushing and pulling code.
+  However, to avoid force pushes, commit history nodes corresponding to the remote repository are marked as immutable to prevent accidental modification.
+
+> <Ruby rb="呪術" rt="じゅじゅつ" /> or
+> <Ruby rb="柔術" rt="じゅうじゅつ" />? That is the question.
+
+> It's still under active development, but I personally believe it's already suitable for production use.
+
+> Thanks to its completely different design philosophy from `git`, you no longer need to struggle to name every commit and can quickly test minor changes without creating a new branch.
+> Modifying commit history and descriptions is also much more intuitive compared to `git`.
+
+### jjui
+
+<Aside type="info">
+
+- Homepage: [idursun.github.io/jjui](https://idursun.github.io/jjui/)
+- GitHub Repository: [idursun/jjui](https://github.com/idursun/jjui)
+
+</Aside>
+
+A TUI-based graphical interface for `jj` that makes it easy to view and manage `jj` repositories.
+
+> It effectively addresses the issue of forgetting `jj` commands while providing a very intuitive view of the repository's status and history.
+> Without exaggeration, it reduces the learning curve for `jj` by an order of magnitude.
+
+> If you're considering trying `jj`, be sure to pair it with `jjui`.
+
+### tig
+
+<Aside type="info">
+
+- GitHub Repository: [jonas/tig](https://github.com/jonas/tig)
+
+</Aside>
+
+A command-line Git client that allows you to view Git repository status, branch graphs, commit history, file diffs, etc., directly in the terminal.
+
+### gitui
+
+<Aside type="info">
+
+- GitHub Repository: [extrawurst/gitui](https://github.com/extrawurst/gitui)
+
+</Aside>
+
+Another command-line Git client, written in Rust and supporting multiple platforms.
+It offers quite rich functionality while reducing memory usage and startup time (compared to tig and lazygit).
+Its key bindings are also relatively more intuitive.
+
+## Editors
+
+### VSCode
+
+<Aside type="info">
+
+- Homepage: [code.visualstudio.com](https://code.visualstudio.com/)
+- GitHub Repository: [microsoft/vscode](https://github.com/microsoft/vscode)
+
+</Aside>
+
+A very lightweight editor with an extremely powerful plugin system that can meet various needs. It's undoubtedly the top choice.
+
+> How good is it? Except for VSCode, I don't need any other editor to complete all my work. <Badge text="Of course, video editing/web browsing doesn't count" type="caution" />
+
+### Cursor <Badge text="No longer recommended" type="caution" />
+
+<Aside type="info">
+
+- Homepage: [cursor.so](https://cursor.so/)
+- GitHub Repository: [getcursor/cursor](https://github.com/getcursor/cursor)
+
+</Aside>
+
+A very promising newcomer, primarily focused on AI-assisted features like GPT-4 generation, chatting about code, and debugging. It uses a newer model than GitHub Copilot, giving it an edge in both generation speed and quality.
+
+> Although still under active development, it recently became a shell for VSCode, gaining access to its vast plugin ecosystem. This instantly propelled it into the first tier, making it worth continued attention.
+
+> Due to the emergence of various AI programming tools, Cursor's pricing strategy has been constantly adjusted, offering less usage for the same price point. It has gradually fallen behind various first-party tools and other solutions like using one's own APIs coupled with VSCode extensions, and is therefore no longer recommended.
+
+### SpaceVim <Badge text="AstroNvim is more recommended" type="tip" />
+
+<Aside type="info">
+
+- Homepage: [spacevim.org](https://spacevim.org/)
+- GitHub Repository: [SpaceVim/SpaceVim](https://github.com/SpaceVim/SpaceVim)
+
+</Aside>
+
+An editor based on Vim or NeoVim <Badge text="Recommended" type="tip" />. If you, like me, are unwilling to tinker with Vim configurations and prefer an editor with relatively simple setup but without sacrificing functionality, then you can try SpaceVim.
+
+> **Modularity** is its biggest advantage. You can enable or disable modules with just a few lines of configuration and even customize module settings.
+> The interface is also nice, with multiple themes to choose from.
+> It's excellent as a temporary replacement for graphical editors or as a main editor.
+
+> If you want a more streamlined, out-of-the-box configuration, you could also try [Helix](https://github.com/helix-editor/helix), which might suit you.
+
+### AstroNvim
+
+<Aside type="info">
+
+- Homepage: [astronvim.com](https://astronvim.com/)
+- GitHub Repository: [AstroNvim/AstroNvim](https://github.com/AstroNvim/AstroNvim)
+
+</Aside>
+
+An editor based on NeoVim.
+Compared to SpaceVim, AstroNvim places greater emphasis on **extensibility** and **ease of use**.
+For users seeking an out-of-the-box experience, [AstroCommunity](https://github.com/AstroNvim/AstroCommunity) provides many pre-configured plugin "packs" that can be quickly activated by modifying a single line of configuration.
+It also supports plugin management via lazy.nvim, making it relatively convenient to add plugins not provided by AstroCommunity.
+
+> AstroNvim is more suitable for users with some understanding of Vim/NeoVim, as it focuses more on extensibility and thus requires some configuration to unleash its full potential.
+> However, the tutorials it provides, along with the extensive community plugin "packs" that often eliminate the need for manual configuration, do their best to lower the entry barrier.
+
+> Recently, AstroNvim launched a [community plugin page](https://astronvim.github.io/astrocommunity/), where users can directly search and browse plugins within the documentation, greatly facilitating their use.
+
+### Warp <Badge text="No longer recommended" type="caution" />
+
+<Aside type="info">
+
+- Homepage: [warp.dev](https://warp.dev/)
+- GitHub Repository: [warpdotdev/warp](https://github.com/warpdotdev/Warp)
+
+</Aside>
+
+Who says a terminal can't be an editor? Warp is just that; not only can it be used as a terminal, but it also allows convenient editing of multi-line commands like an editor.
+It supports command chunking, making it easy to trace history or output.
+It also offers AI-assisted features, generating commands based on natural language. Very convenient.
+
+> After several updates, it finally achieved cross-platform support.
+> However, given that various large language models have now released their own command-line tools, I feel Warp's competitive edge is somewhat limited in the current landscape.
+
+### CodeEdit <Badge type="caution" text="No longer recommended" />
+
+<Aside type="info">
+
+- Homepage: [codeedit.app](https://codeedit.app/)
+- GitHub Repository: [CodeEditApp/CodeEdit](https://github.com/CodeEditApp/CodeEdit)
+
+</Aside>
+
+An editor aiming to replicate Xcode but be lighter and support multiple languages.
+It strives to provide developers with an editor similar to Xcode but more universal.
+
+> As someone who has followed this project almost since its inception, I was very excited, but the development pace is painfully slow.
+> Moreover, compared to creating a "usable" editor, the team seems more focused on achieving a "more authentic" UI. Thus, the current experience is essentially an empty shell, with a long way to go before fulfilling its ambitious promises.
+
+> During a period in the winter break, internal team discord even led to a split, resulting in a similar project, [AuroraEditor](https://github.com/AuroraEditor/AuroraEditor), whose development pace briefly surpassed CodeEdit's and was the first to release an installable version. However, they later merged back.
+
+> Additionally, the Swift language itself ties it to Apple's ecosystem, which I think limits CodeEdit's prospects. However, it's not impossible that it could one day become a very good editor on macOS, but that requires patience, a lot of patience.
+
+## Web
+
+### marimo
+
+<Aside type="info">
+
+- Homepage: [marimo.io](https://marimo.io/)
+- GitHub Repository: [marimo-team/marimo](https://github.com/marimo-team/marimo)
+
+</Aside>
+
+A framework somewhere between Jupyter Notebook and Streamlit. Its primary function is as a notebook (similar to Jupyter Notebook) but also supports converting notebooks into web applications (similar to Streamlit).
+
+Its strength lies in its unique handling of variable dependencies, automatically maintaining a Directed Acyclic Graph (DAG) for you.
+All non-private variables, functions, classes, etc., within a cell are exported, and any used non-local variables are tracked.
+When an upstream cell changes, it automatically updates all downstream cells that depend on it, achieving reactivity and high performance.
+
+> This means you don't have to manually run certain cells like in Jupyter Notebook to avoid repeating time-consuming operations.
+> Nor do you need to re-run all code like in Streamlit to update the page.
+
+> Although not specifically a framework for web applications, there isn't a more suitable category for it at the moment, so I'm placing it here for now.
+
+### Streamlit
+
+<Aside type="info">
+
+- Homepage: [streamlit.io](https://streamlit.io/)
+- GitHub Repository: [streamlit/streamlit](https://github.com/streamlit/streamlit)
+
+</Aside>
+
+A very user-friendly Python web framework for quickly building web applications.
+Rich APIs make it easy to implement various features like plotting, file upload/download, table display, etc.
+
+> It offers many possibilities, and its third-party component ecosystem is also rich, meeting various needs.
+> It's very convenient for building simple single-page applications or quickly showcasing data.
+> Importantly, there's a community cloud server available for free use. You can deploy directly to the cloud, with unlimited deployments for public repositories <Badge text="Salute, everyone!" type="info" />. Very convenient.
+
+### Nuxt
+
+<Aside type="info">
+
+- Homepage: [nuxtjs.org](https://nuxtjs.org/)
+- GitHub Repository: [nuxt/nuxt](https://github.com/nuxt/nuxt)
+
+</Aside>
+
+Similar to what Next.js is to React, the Nuxt framework greatly enhances the Vue.js development experience, adding many practical features like auto-imports, file-based routing, code splitting, multiple rendering modes, etc.
+It also has many excellent official and community plugins available. Additionally, for plugins that only support Vue, they can still be used normally.
+
+> In summary, Nuxt is already a quite mature and feature-rich framework suitable for projects of various scales.
+> If you're already familiar with Vue syntax, learning Nuxt isn't difficult, and you can get up to speed quickly.
+> Excellent documentation and community support are also major advantages of Nuxt, making it an excellent choice as the primary framework for web development.
+
+### Vue 3
+
+<Aside type="info">
+
+- Homepage: [vuejs.org](https://vuejs.org/)
+- GitHub Repository: [vuejs/core](https://github.com/vuejs/core)
+
+</Aside>
+
+A mainstream front-end framework; no need to say more, its star count on GitHub speaks for itself.
+
+> A good ecosystem, rich plugins, and Vue 3's Composition API make it an excellent framework. At least in my view, Vue 3 has surpassed React to become the preferred framework for front-end development.
+
+### VuePress 2 <Badge text="Nuxt Content is more recommended" type="tip" />
+
+<Aside type="info">
+
+- Homepage: [v2.vuepress.vuejs.org](https://v2.vuepress.vuejs.org/)
+- GitHub Repository: [vuepress/vuepress-next](https://github.com/vuepress/vuepress-next)
+
+</Aside>
+
+A static site generator based on Vue 3, supporting Markdown. It makes writing documentation or blogs very convenient and also supports Vue components for easily implementing various features.
+
+> Although still in beta, it's already quite stable, and no major changes are anticipated. Therefore, it can already be used in production.
+
+> For static site generation, I personally recommend using [Nuxt Content](https://content.nuxtjs.org/) with Nuxt, which offers more flexibility and better performance, while offering more rendering modes to choose from.
+
+### Tailwind CSS
+
+<Aside type="info">
+
+- Homepage: [tailwindcss.com](https://tailwindcss.com/)
+- GitHub Repository: [tailwindlabs/tailwindcss](https://github.com/tailwindlabs/tailwindcss)
+
+</Aside>
+
+An extremely useful atomic CSS framework that allows you to write almost no CSS lines. It automatically generates CSS based on configuration and usage, ensuring no redundant CSS code. Very user-friendly.
+
+> Using Tailwind CSS also eliminates the hassle of naming classes and worrying about CSS style conflicts.
+> With auto-completion provided by editors, writing CSS styles becomes very convenient. For beginners like me, it not only allows quick onboarding but also helps avoid many low-level mistakes. By understanding the implementation behind its utility classes, one can further learn CSS knowledge.
+
+> Additionally, there are communities like [tailwind components](https://tailwindcomponents.com/) that contribute a vast number of component designs, which can be directly used. Very convenient.
+
+## Slides
+
+### Touying
+
+<Aside type="info">
+
+- Homepage: [touying-typ.github.io](https://touying-typ.github.io/)
+- GitHub Repository: [touying-typ/touying](https://github.com/touying-typ/touying)
+
+</Aside>
+
+A slide generator based on Typst, similar to Beamer for $\LaTeX$.
+
+- Compared to Beamer, Touying relies on Typst, which not only has concise syntax but is also very easy to learn, with a low learning curve.
+- Compared to other Typst-based slide frameworks (like polyux), Touying offers more complete functionality, better syntax support, and includes several aesthetically pleasing themes.
+  Touying is also compatible with other commonly used Typst libraries, allowing for rapid extension of its functionality, rivaling Microsoft PowerPoint.
+
+> Personally, after using Touying, I've never touched other frameworks.
+
+### Slidev
+
+<Aside type="info">
+
+- Homepage: [sli.dev](https://sli.dev/)
+- GitHub Repository: [slidevjs/slidev](https://github.com/slidevjs/slidev)
+
+</Aside>
+
+A slide generator based on Vue 3, using Markdown to write slides. It also supports Vue components, making it easy to implement various features.
+The generated slides are very clean and aesthetically pleasing, and the built-in features meet most needs.
+
+> As the project is still under development, there are some imperfections. However, development is quite active, so it might be good to wait a bit for it to become more stable before using it extensively.
+
+> Personally, the Windi CSS and/or Uno CSS used by Slidev differ somewhat syntactically from Tailwind CSS, which isn't very intuitive for me.
+> More importantly, its Markdown syntax format uses front matter blocks within the text, which most formatting tools do not support. Therefore, during use, I occasionally encounter errors caused by inadvertently formatting the document.
+> Additionally, it's not particularly lightweight ~~, so I currently use the Reveal.js integration provided by the [Hope theme](https://github.com/vuepress-theme-hope/vuepress-theme-hope) for writing slides~~.
+> However, if you don't want to set up a full website just to write slides <Badge text="Cooking the whole feast for the dressing" type="info" />, then Slidev itself is also a good choice.
+
+## Documents
+
+### Typst
+
+<Aside type="info">
+
+- Homepage: [typst.app](https://typst.app/)
+- GitHub Repository: [typst/typst](https://github.com/typst/typst)
+
+</Aside>
+
+A modern typesetting system with powerful capabilities comparable to $\LaTeX$, yet with concise syntax.
+It includes various functions for rich functional extension and even supports simple scripting, allowing you to write custom rules.
+
+> If I had to name one thing I dislike most about $\LaTeX$, it's the complexity of its syntax.
+> Typst is not only powerful with concise syntax but also benefits from the efficiency of its Rust compiler core. Typst compiles PDFs very quickly; generating from scratch takes barely a moment. Moreover, it offers incremental compilation for real-time preview, rivaling the WYSIWYG experience of Microsoft Word and Markdown.
+
+> If you prefer not to install locally, you can also use the online editor to write documents, still enjoying top-tier experiences like auto-completion and real-time preview. <Badge text="Fully meets my expectations for a modern typesetting system" type="info" />
+
+> A potentially controversial point might be that its math formula syntax adopts its own system rather than heavily borrowing from $\LaTeX$ syntax. This might make migration from $\LaTeX$ less smooth for some and is a point of criticism.
+> However, I believe this is subjective. The benefit is that it keeps Typst's syntax simpler. Moreover, with the help of auto-completion features in VSCode extensions, this doesn't seem like a major issue. The learning cost for this new syntax is far outweighed by its benefits; it's very worthwhile.
+
+> The rapidly growing community ecosystem around Typst (like this [awesome list](https://github.com/qjcg/awesome-typst)) reflects its ability to continually attract new users, which is one reason I'm very optimistic about it.
+
+### Zathura
+
+<Aside type="info">
+
+- Homepage: [pwmt.org/projects/zathura](https://pwmt.org/projects/zathura/)
+- GitLab Repository: [pwmt/zathura](https://git.pwmt.org/pwmt/zathura)
+
+</Aside>
+
+A very lightweight PDF reader that supports multiple plugins. <Badge text="Down with Acrobat!" type="info" />
+
+> Supports Vim keybindings and is command-line friendly, making it perfect for Vim users.
+
+> Supports color configuration, allowing you to recolor documents according to your preferences. No more worrying about eye strain from staring at bright white PDFs.
+
+> Its drawbacks might be the lack of some advanced features like annotations and markups, but it's sufficient for general reading needs.
+
+### Skim
+
+<Aside type="info">
+
+- Homepage: [skim-app.sourceforge.io](https://skim-app.sourceforge.io/)
+- SourceForge Project: [skim-app](https://sourceforge.net/projects/skim-app)
+
+</Aside>
+
+A lightweight PDF reader on macOS focused on providing efficient document browsing.
+It supports many practical features like notes and highlights, slide show mode, syncing (LaTeX, SyncTeX, PDFSync), etc.
+
+TL;DR: **Clean interface**, **Feature-rich**, **Fast startup**, **Free and open source**.
+
+> No further introduction needed. Adobe Acrobat Reader, just learn from it; there's no end to learning.
+
+## Graphics
+
+### Inkscape
+
+<Aside type="info">
+
+- Homepage: [inkscape.org](https://inkscape.org/)
+- GitHub Repository: [inkscape/inkscape](https://github.com/inkscape/inkscape)
+
+</Aside>
+
+A very useful vector graphics editor supporting import and export of multiple formats, including SVG and PDF.
+
+> Inkscape is not just a replacement for Adobe Illustrator; it has some features Illustrator lacks, like correctly rendering missing fonts when importing PDFs.
+>
+> For users accustomed to Adobe Illustrator, the learning curve for Inkscape might be steeper.
+> Many keybindings <Badge text="even after selecting the Illustrator keymap" type="info" /> and functional layouts are different. However, once you overcome this hurdle, Inkscape is also a very powerful tool.
+
+### draw.io
+
+<Aside type="info">
+
+- Homepage: [www.drawio.com](https://www.drawio.com/)
+- GitHub Repository: [jgraph/drawio](https://github.com/jgraph/drawio)
+
+</Aside>
+
+An online vector graphics editor with a clean, intuitive interface and powerful functionality.
+It comes with many templates and shape libraries, allowing quick onboarding and meeting most drawing needs.
+It also supports export in multiple formats, including SVG and PDF.
+
+Most importantly, it has always been **free**. Compared to some tools that charge or even require subscriptions, it's incredibly generous.
+
+> Excellent for drawing flowcharts and architecture diagrams.
+> It also supports rendering $\LaTeX$ math syntax, making it easy to insert complex mathematical expressions while drawing.
+
+> Not sure why I forgot about it before; without it, I wouldn't know how to create illustrations for papers.
+
+## Fonts
+
+### Maple
+
+<Aside type="info">
+
+- Homepage: [font.subf.dev](https://font.subf.dev/)
+- GitHub Repository: [subframe7536/maple-font](https://github.com/subframe7536/maple-font)
+
+</Aside>
+
+A monospaced font with CJK characters, a 2:1 width ratio between Chinese and English, rounded corners, suitable character width, and includes features like Nerd Fonts and ligatures.
+
+> The overall design is excellent, with a relatively complete character set, beautiful English italics and ligatures, making it very comfortable to view. It's highly suitable for editors and terminals.
+
+> Although it can also be used for everyday reading, extended use might cause visual fatigue. <Badge type="info" text="To maintain the 2:1 width ratio, Chinese character spacing is slightly larger" />
