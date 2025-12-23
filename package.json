@@ -24,7 +24,7 @@
     "@expressive-code/plugin-collapsible-sections": "0.41.5",
     "@expressive-code/plugin-line-numbers": "0.41.5",
     "@giscus/react": "3.1.0",
-    "@iconify-json/tabler": "1.2.24",
+    "@iconify-json/tabler": "1.2.25",
     "@playform/compress": "0.2.0",
     "@resvg/resvg-js": "2.6.2",
     "@shikijs/transformers": "3.20.0",
