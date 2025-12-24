@@ -1,0 +1,431 @@
+---
+title: Migrating the Blog Site Again
+pubDatetime: 2025-08-30
+tags:
+  - Blog
+  - Web
+  - Astro
+  - Tailwind
+featured: true
+draft: false
+description: I've rewritten the blog site yet again. Why do I say "yet again"?
+---
+
+import { Aside, Badge, Steps } from "@/components/content/components";
+
+## Why Rewrite Again
+
+If you've read the previous blog post about [migrating the site](../new-blog-site-using-vuepress), you'll find that the last rewrite was ~~just one Kun year~~ actually over two years ago.
+
+To be serious, there are many reasons. Let me list a few:
+
+- The previous site used VuePress. While powerful, its complex system made configuration and customization costly. <Badge type="info" text="I couldn't be bothered to learn"/>
+- The template was good, but still not flexible enough. Encountering bugs meant waiting for the author to fix them <Badge type="tip" text="Mr. Hope is an excellent and trustworthy author."/>.
+- The build time was still too long. ~~Even though I often write Rust,~~ I hoped for something faster, especially since my little blog doesn't have much content.
+
+Of course, there are also some personal reasons:
+
+- After using Nuxt Content as the main framework for the lab's static site, I gained a deeper understanding of the static site build process.
+- I learned about some new features of Astro, especially its support for multiple frontend frameworks and fast builds, which seemed perfect for my customized site needs.
+- Inspired by some excellent blogs (like [Pak](https://blog.yixuan-wang.site/) and [Cruz Godar](https://cruzgodar.com/)), I wanted to try a minimalist design style.
+- **I had the itch to code and wanted to tackle a big project to torment myself.**
+
+## What's Different
+
+Thanks to the excellent [AstroPaper](https://astro-paper.pages.dev/) template, getting started with development was relatively smooth.
+However, from the initial idea to rewrite to the final launch, it took nearly a month.
+This time was mainly spent polishing and optimizing details, along with various scattered changes.
+I won't list them all, but let me briefly cover the main modifications.
+
+### Redesigning OG Images
+
+<Aside type="info" title="Open Graph">
+
+The [Open Graph protocol](https://ogp.me/) is a metadata standard for sharing content on social media.
+It includes information like title, description, and images.
+
+OG images are displayed as preview images when links are shared on social platforms (like X, LinkedIn, Slack, etc.).
+
+</Aside>
+
+The OG images included with the template weren't bad, but not redesigning them felt like a lack of personal style.
+
+In AstroPaper, OG images are divided into two templates: site and post.
+Both rely on [Satori](https://github.com/vercel/satori) (悟り?) for generation, which can render React components into SVG images.
+These are then processed by [resvg](https://github.com/linebender/resvg) and converted to PNG format.
+This means you can fully leverage React to flexibly design the style and content of OG images.
+
+<Aside type="caution">
+
+[Satori **does not support all CSS features**](https://github.com/vercel/satori/issues/217), such as backdrop blur, so this needs to be considered when designing OG images.
+
+</Aside>
+
+Thanks to this, I redesigned the style and content of the OG images. Although the styles between the two aren't perfectly unified yet, I'm quite satisfied with each individually.
+
+- Site:
+  ![Site OG Image](https://teddyhuang-00.github.io/og.png)
+- Post:
+  ![Post OG Image](https://teddyhuang-00.github.io/en/posts/personal-favorites/index.png)
+
+<Aside type="caution">
+
+Using certain effects (like gradients, shadows, etc.) or complex layouts with many elements can significantly slow down image generation.
+For example, generating the images above took about 10 seconds and 1 second per image, respectively.
+My solution was to add a caching mechanism to avoid re-rendering identical images.
+
+</Aside>
+
+### Adding i18n Support
+
+Since AstroPaper doesn't have built-in i18n support, I needed to manually integrate the relevant functionality.
+After some research, I chose the most lightweight solution.
+
+#### For UI Interface
+
+Since the UI content is relatively fixed and doesn't require much dynamic change, translation texts can be hardcoded directly. The implementation is as follows:
+
+<Steps>
+
+1. Create multilingual files under the `src/i18n` directory to store translation texts for different languages
+
+   ```ts title="src/i18n/ui.ts" collapse={3-7,10-14}
+   export const ui = {
+     en: {
+       // Footer
+       "footer.copyright": "© {year} {author}",
+       "footer.license": "Licensed under {license}",
+
+       // ...
+     },
+     zh: {
+       // Footer
+       "footer.copyright": "© {year} {author}",
+       "footer.license": "采用 {license}",
+
+       // ...
+     },
+   } as const;
+   ```
+
+   And helper functions
+
+   ```ts title="src/i18n/utils.ts" {"Get language from current page URL":4-5} {"Get translation with template replacement":10-11}
+   import { SITE } from "@/config";
+
+   import { ui } from "./ui";
+
+   export const getLangFromUrl = (url: URL) => {
+     const [, lang] = url.pathname.split("/");
+     if (lang in ui) return lang as keyof typeof ui;
+     return SITE.defaultLocale;
+   };
+
+   export const useTranslations = (lang: keyof typeof ui) => {
+     return (
+       key: keyof (typeof ui)[typeof SITE.defaultLocale],
+       replacements?: Record<string, string>
+     ) => {
+       const string = ui[lang][key] || ui[SITE.defaultLocale][key];
+       if (!replacements) return string;
+
+       return Object.entries(replacements).reduce(
+         ([str, _], [key, value]) => [str.replace(`{${key}}`, value), _],
+         [string, ""]
+       )[0];
+     };
+   };
+   ```
+
+2. Integrate i18n functionality into various components to replace text content.
+
+   ```astro title="src/components/Footer.astro" collapse={3-12,18-24,37-39}
+   ---
+   import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+   import Hr from "./Hr.astro";
+   import Socials from "./Socials.astro";
+
+   const currentYear = new Date().getFullYear();
+
+   export interface Props {
+     noMarginTop?: boolean;
+   }
+
+   const { noMarginTop = false } = Astro.props;
+   const locale = getLangFromUrl(Astro.url);
+   const localeString = useTranslations(locale);
+   const license = "CC BY-NC-SA 4.0";
+   ---
+
+   <footer class:list={["w-full", { "mt-auto": !noMarginTop }]}>
+     <Hr noPadding />
+     <div
+       class="flex flex-col justify-between items-center py-6 sm:flex-row-reverse sm:py-4"
+     >
+       <Socials centered />
+       <div class="flex flex-col items-center my-2 whitespace-nowrap sm:flex-row">
+         <span>
+           {
+             localeString("footer.copyright", {
+               year: currentYear.toString(),
+               author: localeString("site.author"),
+             })
+           }
+         </span>
+         <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+         <span>
+           {localeString("footer.license", { license })}
+         </span>
+       </div>
+     </div>
+   </footer>
+   ```
+
+</Steps>
+
+#### For Blog Post Content
+
+In the previous site, we needed to place posts of different languages into separate folders.
+While this structure was clearer, I found it difficult to quickly see which posts lacked translations.
+Also, some methods based on setting the language in frontmatter required manual maintenance and still had filename conflicts.
+
+After some research, I decided to use [astro-loader-i18n](https://github.com/openscript/astro-i18n/tree/main/libs/astro-loader-i18n).
+Its biggest advantage is that it can automatically load posts in the corresponding language based on filenames, simplifying the implementation of multilingual support.
+
+<Steps>
+
+1. Change the method for loading post content
+
+   ```diff lang="ts" title="src/content.config.ts" collapse={15-26,30-41}
+   import { defineCollection, z } from "astro:content";
+   -import { glob } from 'astro/loaders';
+   +import { extendI18nLoaderSchema, i18nLoader } from "astro-loader-i18n";
+   import { SITE } from "@/config";
+
+   export const BLOG_PATH = "content/posts";
+   export const ABOUT_PATH = "content/about";
+
+   const blog = defineCollection({
+   -  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${BLOG_PATH}` }),
+   +  loader: i18nLoader({ pattern: "**/[^_]*.{md,mdx}", base: `./${BLOG_PATH}` }),
+     schema: ({ image }) =>
+   +    extendI18nLoaderSchema(
+         z.object({
+           title: z.string(),
+           author: z.string().default(SITE.author),
+           pubDatetime: z.date(),
+           modDatetime: z.date().optional().nullable(),
+           featured: z.boolean().optional(),
+           draft: z.boolean().optional(),
+           tags: z.array(z.string()).default(["others"]),
+           ogImage: image().or(z.string()).optional(),
+           description: z.string(),
+           canonicalURL: z.string().optional(),
+           hideEditPost: z.boolean().optional(),
+           timezone: z.string().optional(),
+         })
+   +    ),
+   });
+
+   const about = defineCollection({
+   -  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${ABOUT_PATH}` }),
+   +  loader: i18nLoader({ pattern: "**/[^_]*.{md,mdx}", base: `./${ABOUT_PATH}` }),
+     schema: ({ image }) =>
+   +    extendI18nLoaderSchema(
+         z.object({
+           title: z.string(),
+           ogImage: image().or(z.string()).optional(),
+         })
+   +    ),
+   });
+
+   export const collections = { blog, about };
+   ```
+
+2. Rename existing post files
+
+   After using i18nLoader, we need to rename existing post files to follow the i18n naming convention.
+   Specifically, we need to add the language identifier to the filename.
+   For example, rename the Chinese `hello.md` to `hello.zh.md`, and the corresponding English file to `hello.en.md`. The extra suffix does not appear in the link path.
+
+   <Aside type="caution">
+
+   Note that the suffix used must match the site's language settings.
+   If set to `zh-CN`, then name the file `hello.zh-CN.md`.
+
+   </Aside>
+
+</Steps>
+
+#### Site Configuration
+
+In addition to the above, we need to add i18n-related settings to the site configuration to ensure multilingual functionality works properly.
+Specifically, we need to make the following modifications:
+
+<Steps>
+
+1. Add language configuration
+
+   ```ts title="src/config.ts" {3-7}
+   export const SITE = {
+     // ...
+     locales: {
+       en: { label: "English", codes: ["en", "en-US"] },
+       zh: { label: "中文", codes: ["zh", "zh-CN"] },
+     }, // supported locales
+     defaultLocale: "en", // default locale
+   } as const;
+   ```
+
+2. Modify Astro i18n configuration
+
+   ```ts title="astro.config.ts" {7-20}
+   // ...
+   import { SITE } from "./src/config";
+
+   // https://astro.build/config
+   export default defineConfig({
+     site: SITE.website,
+     i18n: {
+       locales: Object.entries(SITE.locales).map(([lang, { codes }]) => {
+         return {
+           path: lang,
+           codes: [...codes],
+         };
+       }),
+       defaultLocale: SITE.defaultLocale,
+       routing: {
+         prefixDefaultLocale: true,
+         redirectToDefaultLocale: true,
+         fallbackType: "rewrite",
+       },
+     },
+     // ...
+   });
+   ```
+
+3. Insert `[locale]` into the `src/pages` path
+
+   For example, `src/pages/index.astro` needs to be changed to `src/pages/[locale]/index.astro`. Ensure all pages follow this structure.
+
+   <Aside type="caution">
+
+   Also, create an empty `src/pages/index.astro` file for redirecting when accessing the root path.
+
+   Additionally, the 404 page does not need to be placed under the `[locale]` directory.
+
+   </Aside>
+
+4. Update all page routes
+
+   We need to create corresponding routes for each page under `src/pages/[locale]/`, telling Astro which pages to render.
+
+   Take `src/pages/[locale]/about.astro` as an example:
+
+   ```astro collapse={36-48} {3,8,15-19,21,23,25-31}
+   ---
+   import { type CollectionEntry, getCollection, render } from "astro:content";
+   import type { GetStaticPaths } from "astro";
+   import Breadcrumb from "@/components/Breadcrumb.astro";
+   import Footer from "@/components/Footer.astro";
+   import Header from "@/components/Header.astro";
+   import { SITE } from "@/config";
+   import { useTranslations } from "@/i18n/utils";
+   import Layout from "@/layouts/Layout.astro";
+
+   export interface Props {
+     post: CollectionEntry<"about">;
+   }
+
+   export const getStaticPaths = (async () => {
+     return Object.keys(SITE.locales).map((lang) => ({
+       params: { locale: lang as keyof typeof SITE.locales },
+     }));
+   }) satisfies GetStaticPaths;
+
+   const { locale } = Astro.params;
+
+   const localeString = useTranslations(locale);
+
+   const about = await getCollection(
+     "about",
+     ({ data }) => data.locale === locale
+   );
+   if (!about || about.length === 0) {
+     return Astro.redirect(getRelativeLocaleUrl(locale, "/404"));
+   }
+   const aboutPage = about[0];
+   const { Content } = await render(aboutPage);
+   ---
+
+   <Layout title={`${aboutPage?.data.title} | ${localeString("site.title")}`}>
+     <Header />
+     <Breadcrumb />
+     <main id="main-content">
+       <section id="about" class="mb-28 app-prose max-w-app prose-img:border-0">
+         <h1 class="text-2xl tracking-wider sm:text-3xl">
+           {aboutPage.data.title}
+         </h1>
+         <Content />
+       </section>
+     </main>
+     <Footer />
+   </Layout>
+   ```
+
+   <Aside type="tip">
+
+   `GetStaticPaths` is used to generate paths for static pages.
+   You can do more customization within the function, such as filtering the visible post list based on the current path's language.
+
+   All parameter combinations that appear in `GetStaticPaths` will become valid paths, so you can force Astro to generate pages for specific languages.
+
+   </Aside>
+
+</Steps>
+
+### Added/Replaced Components
+
+#### Expressive Code
+
+[Expressive Code](https://expressive-code.com/) is a tool for code highlighting, supporting multiple programming languages and themes with rich features.
+As seen in the code blocks above, it supports content markers, block highlighting, line numbers, folding, code copying, and more.
+
+#### MDX
+
+[MDX](https://mdxjs.com/) is a format that combines Markdown and JSX, allowing you to use components within Markdown.
+If you want to use custom components in Markdown, you can use the MDX format.
+The Astro framework provides official MDX support, so it only requires adding the relevant dependencies and simple configuration.
+
+#### Table of Contents
+
+AstroPaper uses the [remark-toc](https://github.com/remarkjs/remark-toc) plugin to automatically generate a table of contents, but it requires manually inserting a specific second-level heading within the post.
+Not only is it difficult to adjust the style, but it's also inconvenient to support multiple languages.
+
+Fortunately, the `render` function from Astro content returns a list of all headings, including their level, link, and text.
+Therefore, we can manually create a table of contents directly in the post template. This eliminates the need for manual heading insertion and easily supports multiple languages.
+
+#### Existing Solutions
+
+AstroPaper implements many features from scratch, including `pagefind` for page search, icon components, theme switching, and post-processing compression.
+These features actually have existing solutions available, such as:
+
+- [Astro Pagefind](https://github.com/shishkin/astro-pagefind)
+- [Astro Icon](https://github.com/natemoo-re/astro-icon)
+- [Astro Theme Toggle](https://github.com/ocavue/astro-theme-toggle)
+- [Playform Compress](https://github.com/PlayForm/Compress)
+
+I prefer to use these existing Astro integration packages directly, as they greatly simplify development and reduce maintenance workload.
+
+## Summary
+
+After all this tinkering, what you see now is a highly customized version of AstroPaper.
+Some features are still missing, but that can be left as a weekend project for my future self.
+Previously written posts will also be gradually migrated and adapted.
+
+Finally, the classic question: what's the cost?
+Clearly, compared to the previous version, although the build time has seen real improvement, the current Astro-based site is a system several times more complex.
+Compatibility with multiple frameworks means more choices, and it means there might not be a single, universal optimal solution.
+Lastly, although Astro's ecosystem is also developing, writing blog sites <Badge type="danger" text="To be blunt, writing content-driven static sites"/> is a relatively niche need after all. Therefore, future requirements will likely still need to be implemented ourselves.
+
+But I had fun coding, so who cares about the rest? Thank you for taking the time to read my ramblings.
