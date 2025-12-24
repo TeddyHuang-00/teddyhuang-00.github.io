@@ -1,0 +1,671 @@
+---
+title: Migrating to a New Blog
+pubDatetime: 2023-03-17
+tags:
+  - Blog
+  - Web
+  - Vuepress
+  - Vue
+  - Tailwind
+  - CI/CD
+  - GitHub
+featured: false
+draft: false
+description: Rebuilding a personal blog with Vuepress 2 + Tailwind CSS
+---
+
+import {
+  Aside,
+  Badge,
+  Steps,
+  Tabs,
+  TabItem,
+} from "@/components/content/components";
+
+<Aside type="caution" title="Outdated Content">
+
+Many parts of this article are based on outdated versions of dependencies, so some details may no longer be applicable. Please refer to the official documentation of the respective tools for the latest information.
+
+</Aside>
+
+## Why Rebuild?
+
+As mentioned before, my previous blog was built with Pelican, primarily using Python Jinja2 syntax as templates to generate content. The advantage of this approach was leveraging Python's powerful features, but the downside was also clear: it required reinventing many wheels, and writing CSS was quite time-consuming. Therefore, I decided to switch to Vuepress 2 + TypeScript + Tailwind CSS as the new blog framework.
+
+## Using Vuepress Theme Hope
+
+The [Hope theme](https://theme-hope.vuejs.press/) is built on Vuepress 2 and comes with a large number of handy components. It also provides a nice blog site style. Compared to some other themes, its development and update activity are relatively high, so I chose this theme as a starting point.
+
+### Creating the Project
+
+I'm not a professional front-end developer, so I've always been a bit fuzzy about Node.js package managers. I use the default [npm](https://www.npmjs.com/) to manage dependencies. You can also use [pnpm](https://pnpm.io/)<Badge text="officially recommended" type="tip" /> or [yarn](https://yarnpkg.com/) for installation.
+
+<Aside type="caution">
+
+Instructions related to all Node.js package managers have only been tested with npm. If there are discrepancies with other tools, please refer to the official documentation or leave a comment/issue below this article.
+
+</Aside>
+
+<Tabs syncKey="shell">
+  <TabItem label="npm">
+
+    ```shell
+    npm init vuepress-theme-hope [dir]
+    ```
+
+  </TabItem>
+  <TabItem label="pnpm">
+
+    ```shell
+    pnpm create vuepress-theme-hope [dir]
+    ```
+
+  </TabItem>
+  <TabItem label="yarn">
+
+    ```shell
+    yarn create vuepress-theme-hope [dir]
+    ```
+
+  </TabItem>
+</Tabs>
+
+<Aside type="tip">
+
+`[dir]` should be the name of your blog site's root directory, but this doesn't affect subsequent development and deployment.
+
+</Aside>
+
+### Starting the Development Server
+
+After following the command-line interactive prompts to set up the site name, author, open-source license, etc., the project will be created. You can see the `package.json` file in the directory contains some preset commands:
+
+```json title="package.json"
+"scripts": {
+  // Build the project
+  "docs:build": "vuepress build src",
+  // Clear the cache and start the development server
+  "docs:clean-dev": "vuepress dev src --clean-cache",
+  // Start the development server
+  "docs:dev": "vuepress dev src",
+  // Upgrade Vuepress and the Hope theme
+  "docs:update-package": "npx vp-update"
+},
+```
+
+With this, we can enter the project directory and start the development server.
+
+<Tabs syncKey="shell">
+
+  <TabItem label="npm">
+
+    ```shell
+    cd [dir]
+    npm run docs:dev
+    ```
+
+  </TabItem>
+
+  <TabItem label="pnpm">
+
+    ```shell
+    cd [dir]
+    pnpm run docs:dev
+    ```
+
+  </TabItem>
+
+  <TabItem label="yarn">
+
+    ```shell
+    cd [dir]
+    yarn docs:dev
+    ```
+
+  </TabItem>
+
+</Tabs>
+
+### Writing Content
+
+The generated `src` directory should look something like this:
+
+```shellsession showLineNumbers=false {14,18}
+src/
+├── .vuepress
+│   ├── config.ts
+│   ├── navbar/
+│   ├── public/
+│   ├── sidebar/
+│   ├── styles/
+│   └── theme.ts
+├── README.md
+├── zh/
+│   ├── README.md
+│   ├── intro.md
+│   ├── demo/
+│   ├── posts/
+│   └── slide.md
+├── intro.md
+├── demo/
+├── posts/
+└── slide.md
+```
+
+The `/posts/` and `/zh/posts/` directories are for storing blog articles. Of course, you can also create other directories or subdirectories to store content of different categories. Articles are written in Markdown format. For supported Markdown syntax, see the [theme documentation](https://theme-hope.vuejs.press/guide/get-started/markdown.html). In addition to basic syntax support, there are many [built-in enhanced features](https://theme-hope.vuejs.press/guide/markdown/intro.html) available, which won't be detailed here.
+
+### Default Language
+
+Since I wanted the default site language to be Chinese, the main adjustments needed were for `locales` and path-related configurations:
+
+<Steps>
+
+1. File Structure
+
+   Move the contents from `/zh/` to the `/` directory, then delete the `/zh/` directory. The corresponding content originally in the root directory was moved in advance to the `/en/` directory.
+
+2. Theme Configuration
+
+   The theme-related configuration file is located at `/src/.vuepress/theme.ts`. Here you can also configure basic theme information, built-in feature options, plugins, etc.
+
+   The path configurations in `locales` need to be adjusted.
+
+   ```ts title="src/.vuepress/theme.ts"
+   export default hopeTheme({
+     // ...
+     locales: {
+       "/": {
+         navbar: zhNavbar,
+         sidebar: zhSidebar,
+         // ...
+       },
+
+       "/en/": {
+         navbar: enNavbar,
+         sidebar: enSidebar,
+         // ...
+       },
+     },
+     // ...
+   });
+   ```
+
+3. Site Configuration
+
+   The main site configuration file is located at `/src/.vuepress/config.ts`, encompassing the site's basic information, theme configuration, plugin configuration, Markdown configuration, etc.
+
+   Similarly, the path configurations in `locales` need to be adjusted.
+
+   ```ts title="src/.vuepress/config.ts"
+   export default defineUserConfig({
+     // ...
+     locales: {
+       "/": {
+         lang: "zh-CN",
+         // ...
+       },
+       "/en/": {
+         lang: "en-US",
+         // ...
+       },
+     },
+     // ...
+   });
+   ```
+
+4. Navbar and Sidebar
+
+   Navbar configuration is located at `/src/.vuepress/navbar/`, and sidebar configuration is at `/src/.vuepress/sidebar/`. Both contain three files: `index.ts`, `zh.ts`, and `en.ts`, serving as the index, Chinese, and English configurations respectively. We just need to adjust the path configurations in `zh.ts` and `en.ts`.
+
+   Taking `navbar/en.ts` as an example:
+
+   ```ts title="src/.vuepress/navbar/en.ts"
+   export const enNavbar = navbar([
+     "/en/",
+     {
+       // ...
+       prefix: "/en/posts/",
+       children: [
+         // ...
+       ],
+     },
+   ]);
+   ```
+
+</Steps>
+
+## Custom Components
+
+### Writing Components
+
+Thanks to Vuepress's powerful features, we can use Vue components in Markdown, allowing us to insert custom content into articles. For example, if I wanted to bring back the browser-mimicking decoration container from the old site, I could write a simple Single-File Component (SFC) using Vue. The component path doesn't have special requirements, but here we follow some conventions and place it in the `/src/.vuepress/components/` directory. Create a new file `BrowserMockup.vue` and fill it with a simple template:
+
+```vue-html title="BrowserMockup.vue"
+<template>
+  <div>
+    <slot></slot>
+  </div>
+</template>
+
+<script setup lang="ts"></script>
+
+<style scoped></style>
+```
+
+### Registering Components
+
+At this point, the component is not yet registered in the project. We will use the official plugin [@vuepress/plugin-register-components@next](https://v2.vuepress.vuejs.org/reference/plugin/register-components.html) to register our custom components for Vuepress:
+
+<Tabs syncKey="shell">
+
+  <TabItem label="npm">
+
+    ```shell
+    npm install -D @vuepress/plugin-register-components@next
+    ```
+
+  </TabItem>
+
+  <TabItem label="pnpm">
+
+    ```shell
+    pnpm add -D @vuepress/plugin-register-components@next
+    ```
+
+  </TabItem>
+
+  <TabItem label="yarn">
+
+    ```shell
+    yarn add -D @vuepress/plugin-register-components@next
+    ```
+
+  </TabItem>
+
+</Tabs>
+
+After installation, we need to register it in `/src/.vuepress/config.ts`.
+
+<Aside type="info">
+
+Here we use Vuepress's built-in functionality to get the path and specify `componentsDir` to set the component directory to `/src/.vuepress/components`. This way, all Vue files in this directory will be registered as global components, making them easy to use later.
+
+</Aside>
+
+```ts title="src/.vuepress/config.ts" {5,10-12}
+// ...
+import { registerComponentsPlugin } from "@vuepress/plugin-register-components";
+import { getDirname, path } from "vuepress/utils";
+// ...
+const __dirname = getDirname(import.meta.url);
+
+export default defineUserConfig({
+  // ...
+  plugins: [
+    registerComponentsPlugin({
+      componentsDir: path.resolve(__dirname, "./components"),
+    }),
+    // ...
+  ],
+  // ...
+});
+```
+
+After completing the registration, we can use the `<BrowserMockup>` tag in Markdown to use this component.
+
+```vue-html title="example.md"
+<BrowserMockup>
+  <img src="image-path" alt="alternative-text" />
+</BrowserMockup>
+```
+
+## Tailwind Support
+
+Since the Hope theme itself is not developed with Tailwind CSS, we need to configure Tailwind CSS support ourselves. This way, we can conveniently use Tailwind's utility classes when writing our own components, without struggling to come up with names or worrying about bundle size.
+
+### Installing the Tailwind Toolchain
+
+Following the guidance in the [Tailwind CSS official documentation](https://tailwindcss.com/docs/guides/vue-3-vite), we first need to install some dependencies and initialize the Tailwind CSS configuration file.
+
+<Tabs syncKey="shell">
+
+  <TabItem label="npm">
+
+    ```shell
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+    ```
+
+  </TabItem>
+
+  <TabItem label="pnpm">
+
+    ```shell
+    pnpm add -D tailwindcss postcss autoprefixer
+    pnpx tailwindcss init -p
+    ```
+
+  </TabItem>
+
+  <TabItem label="yarn">
+
+    ```shell
+    yarn add -D tailwindcss postcss autoprefixer
+    yarn tailwindcss init -p
+    ```
+
+  </TabItem>
+
+</Tabs>
+
+### Configuring Tailwind
+
+After running the above commands, you should see two files in the project root directory: `tailwind.config.cjs` and `postcss.config.cjs`, which are the configuration files for Tailwind CSS and PostCSS, respectively. We need to add some additional configuration to `tailwind.config.cjs` to facilitate using Tailwind CSS in Vue.
+
+```js title="tailwind.config.cjs" {6-7,11,18-25,29-31}
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    // Since folders starting with . cannot be matched by wildcards
+    // we need to manually specify their paths
+    "./src/.vuepress/**/*.{vue,ts,js,jsx,tsx,md,html}",
+    "./src/**/*.{vue,ts,js,jsx,tsx,md,html}",
+  ],
+  corePlugins: {
+    // Disable preflight to prevent overriding existing styles
+    preflight: false,
+  },
+  theme: {
+    extend: {
+      colors: {
+        // The following color variables are from the Hope theme
+        // Add them for use in Tailwind
+        "theme-color": "var(--theme-color)",
+        "bg-primary": "var(--bg-color)",
+        "bg-secondary": "var(--bg-color-secondary)",
+        "bg-tertiary": "var(--bg-color-tertiary)",
+        "border-color": "var(--border-color)",
+        "box-shadow": "var(--box-shadow)",
+        "text-color": "var(--text-color)",
+        "card-shadow": "var(--card-shadow)",
+      },
+      screens: {
+        // Adjust some responsive breakpoints based on the Hope theme configuration
+        sm: "720px",
+        lg: "960px",
+        xl: "1440px",
+      },
+    },
+  },
+  plugins: [],
+};
+```
+
+To be able to use Tailwind CSS globally, we need to import it in the theme styles. Add the following content to `/src/.vuepress/styles/index.scss`:
+
+```scss title="src/.vuepress/styles/index.scss"
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+### Configuring PostCSS
+
+The final step is to ensure Vuepress correctly uses PostCSS during the build process so that Tailwind CSS works properly. We need to add the following content to `/src/.vuepress/config.ts`:
+
+```ts title="src/.vuepress/config.ts" {8-16}
+import { defineUserConfig, viteBundler } from "vuepress";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
+// ...
+
+export default defineUserConfig({
+  // ...
+  bundler: viteBundler({
+    viteOptions: {
+      css: {
+        postcss: {
+          plugins: [tailwindcss, autoprefixer],
+        },
+      },
+    },
+  }),
+  // ...
+});
+```
+
+At this point, we can happily use Tailwind CSS in documents, local components, and more.
+
+## Deploying to GitHub Pages
+
+The most important step, of course, is making our site accessible to others. Here we choose to use GitHub Pages because it's free and requires almost no additional configuration.
+
+### Preparing the Repository
+
+To deploy the site to the root path of `.github.io`, we need to create a repository with the same name as the GitHub username<Badge text="can also be all lowercase" type="info"/>. For example, if the GitHub username is `MeteorGuy`, then a repository named `meteorguy.github.io` needs to be created.
+
+For convenience in subsequent operations, it's best to set the repository to track the remote branch:
+
+```shell
+git remote add origin git@github.com:TeddyHuang-00/teddyhuang-00.github.io.git
+```
+
+<Aside type="tip">
+
+Replace the path with your own repository URL.
+
+</Aside>
+
+### Publishing Methods
+
+There are usually several ways to deploy to GitHub Pages. You can:
+
+- Choose the `docs` folder under the source branch as the site root directory
+- Choose the root directory of the source branch as the site root directory
+- Choose to use a specific GitHub Actions workflow for deployment
+
+Specific options can be changed in the repository's `Settings` -> `Pages`. Here we use the third method, using GitHub Actions for deployment. This allows for a customizable publishing process with high flexibility.
+
+### Configuring GitHub Actions
+
+GitHub Actions is a CI/CD service provided by GitHub that can automatically run scripts in a GitHub repository to achieve functions like automated deployment. Here I kept two deployment methods: one is automatic deployment (automatically building when there is a push update to the main branch), and the other is manual deployment (building locally and then deploying). Both methods have their pros and cons. Automatic deployment is more beginner-friendly, so I recommend using it.
+
+<Tabs syncKey="deploy">
+
+<TabItem label="Automatic Deployment">
+
+Although the Hope theme already provides a GitHub Actions workflow, because it retains all build history, it pollutes the site repository, causing the git history to expand infinitely. Therefore, I chose to modify it based on the original, deploying the build results directly, thus avoiding the pollution issue.
+
+First, we need to create a `.github/workflows/deploy.yml` file in the repository's root directory with the following content:
+
+```yml title=".github/workflows/deploy.yml"
+# Workflow name
+name: Deploy Documentation
+
+# Ensure permissions to access the repository and GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Trigger condition: only when there is a push to the main branch
+on:
+  push:
+    branches:
+      # Make sure this is the branch name you are using
+      - main
+  # Allows you to manually trigger deployment
+  workflow_dispatch:
+
+# Limit concurrency to prevent multiple identical workflows from running simultaneously
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-n-deploy:
+    # Environment required for deployment to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # If your documentation requires Git submodules, uncomment the next line
+          # submodules: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Documentation
+        env:
+          NODE_OPTIONS: --max_old_space_size=8192
+        run: |-
+          npm run docs:build
+          > src/.vuepress/dist/.nojekyll
+
+      # This step is to facilitate our use of a Makefile
+      # for some post-processing tasks. You can delete this step if not needed.
+      - name: Make Tasks
+        run: |
+          make
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+
+      - name: Upload Files
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: "src/.vuepress/dist"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+```
+
+In the above workflow, we also set a step to run Makefile tasks. This is for convenience in performing some post-processing tasks after the build is complete. Even if you don't need this step, I recommend keeping it temporarily for future needs. Correspondingly, we also need to create a `Makefile` file in the repository's root directory with the following content:
+
+```makefile title="Makefile"
+.PHONY: post-process
+
+post-process:
+	@echo "Hello from Makefile!"
+```
+
+The specific tasks part can be configured according to your needs. If not needed, keep the target task empty.
+
+At this point, you can use GitHub Actions to automatically build and deploy.
+
+</TabItem>
+
+<TabItem label="Manual Deployment">
+
+Because I previously didn't like CI/CD based on GitHub Actions, feeling it was slower, I chose to build locally and then force-push the built files as an orphan branch (without history) to the remote `gh-pages` branch <Badge text="prevents polluting the git repository" type="tip"/>, and then use GitHub Actions to directly deploy the contents under the `gh-pages` branch to GitHub Pages.
+
+Vuepress's default build output directory is `/src/.vuepress/dist`. Therefore, to use GitHub Actions, you need to add a `.github/workflows/deploy.yml` file in this directory. You can choose to place the entire `.github` folder in the `/src/.vuepress/public` folder, so it will be copied to the build output directory during the build. The `deploy.yml` file content is as follows:
+
+```yaml title="src/.vuepress/public/.github/workflows/deploy.yml"
+# Simple workflow to deploy static content to Pages
+name: Deploy static content to Pages
+
+on:
+  # Triggered when there is a push to the gh-pages branch
+  push:
+    branches:
+      - gh-pages
+
+  # Allows manual triggering
+  workflow_dispatch:
+
+# Permissions to access GITHUB_TOKEN for deploying to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent workflow at most
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Upload Files
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload the entire directory
+          path: "."
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+```
+
+Finally, we just need to create a new `Makefile` file in the root directory for building locally and automatically pushing to the `gh-pages` branch:
+
+```make title="Makefile" {11}
+.PHONY: github clean build
+
+github: clean build
+	@echo "======================================================"
+	@echo "deploying to github"
+	cd src/.vuepress/dist && \
+	git init && \
+	git add -A && \
+	git commit -m 'deploy at $(shell date)' && \
+	git branch -m local-build && \
+	git push -f git@github.com:TeddyHuang-00/teddyhuang-00.github.io.git local-build:gh-pages
+
+clean:
+	@echo "======================================================"
+	@echo "cleaning up output directory"
+	- rm -rf src/.vuepress/dist
+
+build:
+	@echo "======================================================"
+	@echo "building site"
+	npm run docs:build
+```
+
+<Aside type="tip">
+
+You need to set the path in the last line to your own repository URL.
+
+</Aside>
+
+This way, after debugging locally to your satisfaction, you can complete the deployment with one command:
+
+```shell
+make github
+# or
+make
+```
+
+</TabItem>
+
+</Tabs>
+
+## Conclusion
+
+At this point, we have completed the setup of a personal blog based on Vuepress. Some parts indeed took me a lot of time, but overall, given the theme features and ecosystem support gained, it's worth it.
+
+If you found this article helpful, feel free to give it a thumbs up or leave your thoughts in the comments. Have a pleasant day!
