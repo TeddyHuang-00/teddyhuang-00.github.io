@@ -1,0 +1,247 @@
+---
+title: Python 编程奇技
+pubDatetime: 2022-11-15
+tags:
+  - Python
+featured: false
+draft: false
+description: 一些有用但主要没什么用的 Python 技巧。
+---
+
+import { Aside, Tabs, TabItem } from "@/components/content/components";
+
+## 管道操作符
+
+### 参考范例
+
+你是否怀念亲爱的管道操作符，比如在其他语言中常见的那样...
+
+<Tabs syncKey="lang">
+  <TabItem label="Shell">
+
+    ```sh
+    cat file.txt | grep "hello" | wc -l
+    ```
+
+  </TabItem>
+  <TabItem label="R">
+
+    ```r
+    iris %>% filter(Species == "setosa") %>% select(Sepal.Length, Sepal.Width)
+    ```
+
+  </TabItem>
+  <TabItem label="Haskell">
+
+    ```hs
+    import Data.Function ((&))
+
+    [1, 2, 3, 4, 5] & filter odd & map (*2) & sum
+    ```
+
+  </TabItem>
+</Tabs>
+
+其实你也可以在 Python 中拥有它！
+
+### 实现代码
+
+```py
+from functools import update_wrapper
+from typing import Any
+from collections.abc import Callable
+
+
+class Pipeline:
+    def __init__(self, func: Callable | None = None) -> None:
+        if func is not None:
+            update_wrapper(self, func)
+            self.funcs: list[Callable] = [func]
+        else:
+            self.funcs: list[Callable] = []
+
+    def __call__(self, *args: Any, **kwds: Any) -> Any:
+        """
+        self(*) => self.funcs[0](self.funcs[1](self.funcs[2](...)))
+        """
+        if len(self.funcs) == 0:
+            return None
+        res = self.funcs[-1](*args, **kwds)
+        for func in reversed(self.funcs[:-1]):
+            try:
+                res = func(res)
+            except Exception as e:
+                print(f"执行 {func} （参数 {res}）时遇到错误:")
+                raise e
+        return res
+
+    def __add__(self, func: Callable | "Pipeline") -> "Pipeline":
+        """
+        (f + g)(*) => f(g(*))
+        """
+        res = Pipeline()
+        res.funcs += self.funcs
+        if isinstance(func, Pipeline):
+            res.funcs += func.funcs
+        elif callable(func):
+            res.funcs.append(func)
+        else:
+            raise TypeError(f"不支持的类型 {type(func)}")
+        return res
+
+    def __radd__(self, func: Callable | "Pipeline") -> "Pipeline":
+        res = Pipeline()
+        if isinstance(func, Pipeline):
+            res.funcs += func.funcs
+        elif callable(func):
+            res.funcs.append(func)
+        else:
+            raise TypeError(f"不支持的类型 {type(func)}")
+        res.funcs += self.funcs
+        return res
+
+    def __or__(self, func: Callable | "Pipeline"):
+        """
+        * | f | g => g(f(*))
+        """
+        return func + self
+
+    def __ror__(self, func: Callable | "Pipeline" | Any):
+        if isinstance(func, Callable) or isinstance(func, Pipeline):
+            return self + func
+        else:
+            return self(func)
+
+
+@Pipeline
+def foo(a: int) -> list[int]:
+    return list(range(a))
+
+
+@Pipeline
+def bar(b: list[int]) -> int:
+    return max(b)
+
+
+# Python 中的管道操作符？！！！
+if __name__ == "__main__":
+    func = bar + foo
+    print(func(10))  # 9
+    print(10 | foo | bar)  # 9
+```
+
+### 工作原理
+
+解决方案很简单：
+
+- 定义一个函数装饰器，其内部保存原始函数（`self.funcs` 是一个可调用对象列表）
+- 在操作至少一个此类函数时（例如管道操作符 `|`，在 Python 中视为 `or` 运算，或者像 `f+g <=> f(g(.))` 这样将两个函数“相加”），生成一个新函数
+- 当调用此函数时，它会依次执行所有嵌套的函数
+- 添加一些收尾工作，就大功告成了！
+
+<Aside type="tip" title="更好的类型提示">
+  查看[王奕轩的这个项目](https://apfel.yixuan-wang.site)，它为类似的管道操作符实现提供了更好的类型提示。
+</Aside>
+
+## 多语句 Lambda 表达式
+
+### 参考范例
+
+多语句 lambda 表达式在很多语言中都受支持，例如：
+
+<Tabs syncKey="lang">
+  <TabItem label="C++">
+
+    ```cpp
+    auto func = [](auto a, auto b)
+    {
+        a++;
+        b++;
+        return a + b;
+    };
+    ```
+
+  </TabItem>
+  <TabItem label="C#">
+
+    ```cs
+    var func = (int a, int b) =>
+    {
+        a++;
+        b++;
+        return a + b;
+    };
+    ```
+
+  </TabItem>
+  <TabItem label="Go">
+
+    ```go
+    func := func(a int, b int) int {
+        a++
+        b++
+        return a + b
+    }
+    ```
+
+  </TabItem>
+  <TabItem label="TypeScript">
+
+    ```ts
+    const func = (a: number, b: number): number => {
+      a++;
+      b++;
+      return a + b;
+    };
+    ```
+
+  </TabItem>
+  <TabItem label="JavaScript">
+
+    ```js
+    const func = (a, b) => {
+      a++;
+      b++;
+      return a + b;
+    };
+    ```
+
+  </TabItem>
+  <TabItem label="Rust">
+
+    ```rs
+    let func = |mut a: i32, mut b: i32| -> i32 {
+        a += 1;
+        b += 1;
+        a + b
+    };
+    ```
+
+  </TabItem>
+</Tabs>
+
+等等！Python 呢？
+
+```py
+func = lambda a, b: a + b
+```
+
+看起来 Python 只支持单语句 lambda 表达式……是吗？
+
+逗你的啦，你也可以拥有它！
+
+### 实现代码
+
+```py
+func = lambda a, b: (
+    a := a + 1,
+    b := b + 1,
+    a + b,
+)[-1]
+```
+
+### 工作原理
+
+在 Python 中，元组的求值是顺序执行的，因此你可以使用元组来模拟多语句 lambda 表达式的行为，其中返回值可以通过元素的索引来指定。
+
+注意，为了在元组中赋值，你需要使用 Python 3.8 引入的海象操作符 `:=`。它会将值赋给左侧的变量，并返回右侧的值，类似于 C/C++ 和许多其他语言中 `=` 的默认行为。

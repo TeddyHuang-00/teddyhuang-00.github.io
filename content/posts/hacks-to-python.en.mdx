@@ -1,0 +1,248 @@
+---
+title: Hacks to Python
+pubDatetime: 2022-11-15
+tags:
+  - Python
+featured: false
+draft: false
+description: Some useful but mainly useless tricks to use in Python.
+---
+
+import { Aside, Tabs, TabItem } from "@/components/content/components";
+
+## Pipeline operator
+
+### Models
+
+Miss your dear and dear pipeline operator in ...
+
+<Tabs syncKey="lang">
+  <TabItem label="Shell">
+
+    ```sh
+    cat file.txt | grep "hello" | wc -l
+    ```
+
+  </TabItem>
+  <TabItem label="R">
+
+    ```r
+    iris %>% filter(Species == "setosa") %>% select(Sepal.Length, Sepal.Width)
+    ```
+
+  </TabItem>
+  <TabItem label="Haskell">
+
+    ```hs
+    import Data.Function ((&))
+
+    [1, 2, 3, 4, 5] & filter odd & map (*2) & sum
+    ```
+
+  </TabItem>
+</Tabs>
+
+Well, you can have it in Python too!
+
+### Implementation
+
+```py
+from functools import update_wrapper
+from typing import Any
+from collections.abc import Callable
+
+
+class Pipeline:
+    def __init__(self, func: Callable | None = None) -> None:
+        if func is not None:
+            update_wrapper(self, func)
+            self.funcs: list[Callable] = [func]
+        else:
+            self.funcs: list[Callable] = []
+
+    def __call__(self, *args: Any, **kwds: Any) -> Any:
+        """
+        self(*) => self.funcs[0](self.funcs[1](self.funcs[2](...)))
+        """
+        if len(self.funcs) == 0:
+            return None
+        res = self.funcs[-1](*args, **kwds)
+        for func in reversed(self.funcs[:-1]):
+            try:
+                res = func(res)
+            except Exception as e:
+                print(f"Error encountered when executing {func} with parameter {res}:")
+                raise e
+        return res
+
+    def __add__(self, func: Callable | "Pipeline") -> "Pipeline":
+        """
+        (f + g)(*) => f(g(*))
+        """
+        res = Pipeline()
+        res.funcs += self.funcs
+        if isinstance(func, Pipeline):
+            res.funcs += func.funcs
+        elif callable(func):
+            res.funcs.append(func)
+        else:
+            raise TypeError(f"Unsupported type {type(func)}")
+        return res
+
+    def __radd__(self, func: Callable | "Pipeline") -> "Pipeline":
+        res = Pipeline()
+        if isinstance(func, Pipeline):
+            res.funcs += func.funcs
+        elif callable(func):
+            res.funcs.append(func)
+        else:
+            raise TypeError(f"Unsupported type {type(func)}")
+        res.funcs += self.funcs
+        return res
+
+    def __or__(self, func: Callable | "Pipeline"):
+        """
+        * | f | g => g(f(*))
+        """
+        return func + self
+
+    def __ror__(self, func: Callable | "Pipeline" | Any):
+        if isinstance(func, Callable) or isinstance(func, Pipeline):
+            return self + func
+        else:
+            return self(func)
+
+
+@Pipeline
+def foo(a: int) -> list[int]:
+    return list(range(a))
+
+
+@Pipeline
+def bar(b: list[int]) -> int:
+    return max(b)
+
+
+# Pipeline in Python???!!!
+if __name__ == "__main__":
+    func = bar + foo
+    print(func(10))  # 9
+    print(10 | foo | bar)  # 9
+```
+
+### How it works
+
+The solution is simple:
+
+- Define a wrapper function that keeps the original functions inside (`self.funcs` is a list of callables)
+- Generate a new function upon operating at least one such function (e.g. pipeline operator `|` which is seen as `or` operation in Python, or _adding_ two functions together like `f+g <=> f(g(.))`)
+- When calling such function, it will sequentially execute all the nested functions
+- Add some finishing touches, and you are good to go!
+
+<Aside type="tip" title="Better type hinting">
+  Check out this [project of Yixuan Wang](https://apfel.yixuan-wang.site) that
+  provides better type hinting for similar pipeline operator implementation.
+</Aside>
+
+## Multi-statement lambda expression
+
+### Models
+
+Multi-statement lambda expressions are commonly supported in other languages, such as:
+
+<Tabs syncKey="lang">
+  <TabItem label="C++">
+
+    ```cpp
+    auto func = [](auto a, auto b)
+    {
+        a++;
+        b++;
+        return a + b;
+    };
+    ```
+
+  </TabItem>
+  <TabItem label="C#">
+
+    ```cs
+    var func = (int a, int b) =>
+    {
+        a++;
+        b++;
+        return a + b;
+    };
+    ```
+
+  </TabItem>
+  <TabItem label="Go">
+
+    ```go
+    func := func(a int, b int) int {
+        a++
+        b++
+        return a + b
+    }
+    ```
+
+  </TabItem>
+  <TabItem label="TypeScript">
+
+    ```ts
+    const func = (a: number, b: number): number => {
+      a++;
+      b++;
+      return a + b;
+    };
+    ```
+
+  </TabItem>
+  <TabItem label="JavaScript">
+
+    ```js
+    const func = (a, b) => {
+      a++;
+      b++;
+      return a + b;
+    };
+    ```
+
+  </TabItem>
+  <TabItem label="Rust">
+
+    ```rs
+    let func = |mut a: i32, mut b: i32| -> i32 {
+        a += 1;
+        b += 1;
+        a + b
+    };
+    ```
+
+  </TabItem>
+</Tabs>
+
+But wait! What about Python?
+
+```py
+func = lambda a, b: a + b
+```
+
+Seems like Python only supports single-statement lambda expression... or is it?
+
+Well, you can have it too!
+
+### Implementation
+
+```py
+func = lambda a, b: (
+    a := a + 1,
+    b := b + 1,
+    a + b,
+)[-1]
+```
+
+### How it works
+
+Well, in python, the evaluation of a tuple is done sequentially, so you can use a tuple to mimic the behavior of a multi-statement lambda expression, where the return value could be specified by the index of element.
+
+Note that in order to assign values in a tuple, you will need to use the walrus operator `:=` introduced in Python 3.8. It will assign the value to the variable on the left, and return the value on the right, similar to the default behavior of `=` in C/C++ and many other languages.
