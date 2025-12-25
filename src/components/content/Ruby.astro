@@ -2,12 +2,13 @@
 export interface Props {
   rb: string;
   rt: string;
+  split?: string;
 }
 
-const { rb, rt } = Astro.props;
+const { rb, rt, split = " " } = Astro.props;
 
-const rbs = rb.split("|");
-const rts = rt.split("|");
+const rbs = rb.split(split);
+const rts = rt.split(split);
 
 if (rbs.length !== rts.length) {
   const length = Math.max(rbs.length, rts.length);
@@ -24,14 +25,8 @@ const pairs = rbs.map((rb, i) => ({ rb, rt: rts[i] }));
 
 <ruby class="text-inherit">
   {
-    pairs.map(({ rb, rt }, i) => (
-      <>
-        <rb>{rb}</rb>
-        <rp>(</rp>
-        <rt>{rt}</rt>
-        <rp>)</rp>
-        {i < pairs.length - 1 && " "}
-      </>
+    pairs.map(({ rb, rt }, _) => (
+      <><rb>{rb}<rp>(<rt>{rt}<rp>)</>
     ))
   }
 </ruby>
