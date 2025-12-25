@@ -1,0 +1,279 @@
+---
+title: Convergence Analysis of Gradient Descent
+pubDatetime: 2023-11-06
+tags:
+  - Math
+  - Algorithm
+featured: false
+draft: false
+description: Some notes on learning convex optimization.
+---
+
+import { Aside } from "@/components/content/components";
+
+## Prerequisites
+
+### Lipschitz Continuity
+
+A function $f: \mathbb{R}^n \rightarrow \mathbb{R}^m$ is said to be Lipschitz continuous ($L$-continuous) if and only if there exists $\exists L > 0$ such that for all $\forall x, y \in \mathbb{R}^n$, we have
+
+$$
+\|f(x) - f(y)\| \le L \|x - y\|
+$$
+
+### Lipschitz Smoothness
+
+Similarly, $f: \mathbb{R}^n \rightarrow \mathbb{R}^m$ is said to be Lipschitz smooth ($L$-smooth) if and only if there exists $\exists L > 0$ such that for all $\forall x, y \in \mathbb{R}^n$, we have
+
+$$
+\|\nabla f(x) - \nabla f(y)\| \le L \|x - y\|
+$$
+
+### Convex Function
+
+A function $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is a convex function if and only if for all $\forall x, y \in \mathbb{R}^n$ and for all $\forall \lambda \in [0, 1]$, the following holds:
+
+$$
+f(\lambda x + (1 - \lambda) y) \le \lambda f(x) + (1 - \lambda) f(y) \\
+\Leftrightarrow f(y) \ge f(x) + \nabla f(x)^T (y - x) \\
+\Leftrightarrow \nabla^2 f(x) \succcurlyeq 0
+$$
+
+<Aside type="info" title="Note">
+
+For a matrix $A \in \mathbb{R}^{n\times n}$ and for all $\forall x \in \mathbb{R}^n$:
+
+- If $x^T A x \ge 0$, then $A$ is called a positive semi-definite matrix (p.s.d. matrix), denoted as $A \succcurlyeq 0$.
+- If $x^T A x > 0$, then $A$ is called a positive definite matrix (p.d. matrix), denoted as $A \succ 0$.
+
+From the perspective of eigenvalues, for all eigenvalues $\lambda_i, \forall i=1,\cdots,n$ of $A$:
+
+- $A \succcurlyeq 0$ is equivalent to $\lambda_i \ge 0$.
+- $A \succ 0$ is equivalent to $\lambda_i > 0$.
+
+</Aside>
+
+### Strongly Convex Function
+
+A function $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is strongly convex if and only if there exists $\exists \mu > 0$ such that for all $\forall x, y \in \mathbb{R}^n$ and for all $\forall \lambda \in [0, 1]$, the following holds:
+
+$$
+f(\lambda x + (1 - \lambda) y) \le \lambda f(x) + (1 - \lambda) f(y) - \frac{\mu}{2} \lambda (1 - \lambda) \|x - y\|^2 \\
+\Leftrightarrow f(y) \ge f(x) + \nabla f(x)^T (y - x) + \frac{\mu}{2} \|x - y\|^2 \\
+\Leftrightarrow \nabla^2 f(x) \succcurlyeq \mu I
+$$
+
+### Gradient Descent
+
+Gradient descent is an iterative algorithm. Here we only consider its simplest form, which requires the function $f$ to be at least Lipschitz smooth. Then we have
+
+$$
+f(x_{k+1}) \le f(x_k) + \nabla f(x_k)^T (x_{k+1} - x_k) + \frac{L}{2} \|x_{k+1} - x_k\|^2
+$$
+
+Thus, even though $f$ might not be a quadratic function, the iteration process of gradient descent can be viewed as operating on the quadratic function $f(x_k) + \nabla f(x_k)^T (x - x_k) + \frac{L}{2} \|x - x_k\|^2$. Therefore, the objective function being minimized is
+
+$$
+q_{x_k}(x) = f(x_k) + \nabla f(x_k)^T (x - x_k) + \frac{L}{2} \|x - x_k\|^2 \approx f(x)
+$$
+
+To minimize the quadratic function $q_{x_k}(x)$, we simply set its gradient to zero:
+
+$$
+\nabla q_{x_k}(x) = \nabla f(x_k) + L (x - x_k) \xlongequal{!} 0 \\
+\Rightarrow x_{k+1} = x = x_k - \frac{1}{L} \nabla f(x_k)
+$$
+
+Here, $-\nabla f(x_k)$ is the descent direction, and $\frac{1}{L}$ is the step size, denoted as $\alpha$. From this, we can also derive
+
+$$
+\begin{align*}
+  f(x_{k+1}) \le & f(x_k) + \nabla f(x_k)^T (x_{k+1} - x_k) + \frac{L}{2} \|x_{k+1} - x_k\|^2 \\
+  = & f(x_k) - \frac{1}{L} \|\nabla f(x_k)\|^2 + \frac{1}{2L} \|\nabla f(x_k)\|^2 \\
+  = & f(x_k) - \frac{1}{2L} \|\nabla f(x_k)\|^2
+\end{align*}
+$$
+
+<Aside type="info" title="Newton's Method">
+
+Besides gradient descent, we can also use Newton's method for optimization. To solve $h(x)=0$, we can define $g(x)=x-\alpha h(x)$, where $\alpha>0$ is a scaling factor. Then we can iterate as follows:
+
+$$
+x_{k+1} = g(x_k)
+$$
+
+When the iteration converges, we have
+
+$$
+x_* = g(x_*) = x_* - \alpha h(x_*) \\
+\Rightarrow h(x_*) = 0
+$$
+
+</Aside>
+
+### Convergence Criteria
+
+Assume that $x_*\in\Omega$ in the domain is the minimizer of $f$, with the corresponding function value $f(x_*) = f_*$. Then for any $\forall\varepsilon > 0$:
+
+1. If $f(x)-f_* \le\varepsilon$, then $x$ is called an $\varepsilon$-optimal point.
+2. If $\|\nabla f(x)\| \le\varepsilon$, then $x$ is called an $\varepsilon$-critical point.
+
+## Convergence Analysis
+
+In the previous derivation, we obtained the step size $\alpha = \frac{1}{L}$ for gradient descent applied to Lipschitz smooth functions. Therefore, the following analysis is based on this step size. It should be noted that, both in practical applications and theoretical analysis, for functions that are not only smooth but also convex, there exist better step sizes that lead to faster convergence. However, their derivation is more complex. Here we only consider the simplest case.
+
+### Lipschitz Smooth Functions
+
+For a Lipschitz smooth function $f$, we have
+
+$$
+\begin{align*}
+  f(x+\alpha d) \le & f(x) + \alpha\nabla f(x)^Td + \frac{L}{2}\alpha^2\|d\|^2 \\
+  \Rightarrow f(x_{k+1}) \le & f(x_k) - \frac{1}{2L}\|\nabla f(x_k)\|^2 \\
+  \Rightarrow f(x_T) \le & f(x_0) - \frac{1}{2L}\sum_{k=0}^{T-1}\|\nabla f(x_k)\|^2 \\
+  \Rightarrow \sum_{k=0}^{T-1}\|\nabla f(x_k)\|^2 \le & 2L\left(f(x_0) - f(x_T)\right) \\
+  \le & 2L\left(f(x_0) - f_*\right) \\
+  \Rightarrow \min_{0\le k\le T-1}\|\nabla f(x_k)\|^2 \le & \frac{2L}{T}\left(f(x_0) - f_*\right) \\
+  \Rightarrow \min_{0\le k\le T-1}\|\nabla f(x_k)\| \le & \sqrt{\frac{2L}{T}\left(f(x_0) - f_*\right)}
+\end{align*}
+$$
+
+Thus, to achieve an $\varepsilon$-critical point, the number of iterations required must satisfy
+
+$$
+\begin{align*}
+  \sqrt{\frac{2L}{T}\left(f(x_0) - f_*\right)} \le & \varepsilon \\
+  \Rightarrow T \ge & \frac{2L}{\varepsilon^2}\left(f(x_0) - f_*\right)
+\end{align*}
+$$
+
+Therefore, the required time complexity is $O\left(\frac{1}{\varepsilon^2}\right)$, which corresponds to sublinear convergence.
+
+<Aside type="important" title="Rate of Convergence">
+
+For a sequence $\{a_n\}$, if $\lim_{n\to\infty}a_n\to0$ and we have
+
+$$
+\lim_{n\to\infty}\frac{a_{n+1}}{a_n} = \rho
+$$
+
+1. If $\rho=0$, then $\{a_n\}$ is said to converge superlinearly.
+2. If $\rho\in(0,1)$, then $\{a_n\}$ is said to converge linearly.
+3. If $\rho=1$, then $\{a_n\}$ is said to converge sublinearly.
+
+</Aside>
+
+### Lipschitz Smooth + Convex Function
+
+For a convex function $f$, we have
+
+$$
+\begin{align*}
+  f(y) \ge & f(x) + \nabla f(x)^T(y - x) \\
+  \text{Let} \begin{cases}
+    y=x_*\\
+    x=x_k
+  \end{cases} \Rightarrow f_* \ge & f(x_k) + \nabla f(x_k)^T(x_* - x_k) \\
+  \Rightarrow f(x_k) \le & f_* + \nabla f(x_k)^T(x_k - x_*)
+\end{align*}
+$$
+
+Combining with the inequality for Lipschitz smooth functions $f(x_{k+1}) \le f(x_k)-\frac{1}{2L}\left\|\nabla f(x_k)\right\|^2$, and substituting, we get
+
+$$
+f(x_{k+1}) \le f_* + \nabla f(x_k)^T(x_k - x_*) - \frac{1}{2L}\left\|\nabla f(x_k)\right\|^2
+$$
+
+Furthermore,
+
+$$
+\begin{align*}
+  \left\|\nabla f(x_k)\right\|^2 = & L^2\left\|x_{k+1} - x_k\right\|^2 \\
+  = & L^2 \left(\left\|x_{k+1} - x_*\right\|^2 + \left\|x_k - x_*\right\|^2 - 2 \left<x_{k+1}-x_*,x_k-x_*\right>\right) \\
+  = & L^2 \left(\left\|x_{k+1} - x_*\right\|^2 + \left\|x_k - x_*\right\|^2 - 2 \left<x_k-\frac{1}{L}\nabla f(x_k)-x_*,x_k-x_*\right>\right) \\
+  = & L^2 \left(\left\|x_{k+1} - x_*\right\|^2 - \left\|x_k - x_*\right\|^2 + \frac{2}{L} \left<\nabla f(x_k),x_k-x_*\right>\right) \\
+  = & L^2 \left(\left\|x_{k+1} - x_*\right\|^2 - \left\|x_k - x_*\right\|^2 + \frac{2}{L} \nabla f(x_k)^T(x_k-x_*)\right) \\
+\end{align*}
+$$
+
+Substituting into the inequality above yields
+
+$$
+\begin{align*}
+  f(x_{k+1}) \le & f_* + \nabla f(x_k)^T(x_k - x_*) \\
+  & - \frac{L}{2}\left(\left\|x_{k+1} - x_*\right\|^2 - \left\|x_k - x_*\right\|^2 + \frac{2}{L} \nabla f(x_k)^T(x_k-x_*)\right) \\
+  = & f_* - \frac{L}{2}\left(\left\|x_{k+1} - x_*\right\|^2 - \left\|x_k - x_*\right\|^2\right) \\
+  \Rightarrow \sum_{k=0}^{T-1}f(x_{k+1}) \le & Tf_* - \frac{L}{2}\left(\left\|x_T - x_*\right\|^2 - \left\|x_0 - x_*\right\|^2\right) \\
+  \le & Tf_* + \frac{L}{2}\left\|x_0 - x_*\right\|^2
+\end{align*}
+$$
+
+Since for each step we have $f(x_{k+1}) \le f(x_k)-\frac{1}{2L}\left\|\nabla f(x_k)\right\|^2$, it follows that $\forall k=0,\cdots,T-1,\quad f(x_T)<f(x_k)$. Therefore,
+
+$$
+\begin{align*}
+  T f(x_T) \le & T f_* + \frac{L}{2}\left\|x_0 - x_*\right\|^2 \\
+  \Rightarrow f(x_T) - f_* \le & \frac{L}{2T}\left\|x_0 - x_*\right\|^2 \\
+\end{align*}
+$$
+
+To achieve an $\varepsilon$-optimal point, the number of iterations required must satisfy
+
+$$
+\begin{align*}
+  \frac{L}{2T}\left\|x_0 - x_*\right\|^2 \le & \varepsilon \\
+  \Rightarrow T \ge & \frac{L}{2\varepsilon}\left\|x_0 - x_*\right\|^2
+\end{align*}
+$$
+
+Thus, the required time complexity is $O\left(\frac{1}{\varepsilon}\right)$, which is still sublinear convergence.
+
+### Lipschitz Smooth + Strongly Convex Function
+
+For a strongly convex function $f$, we have
+
+$$
+\begin{align*}
+  f(y) \ge & f(x) + \nabla f(x)^T(y - x) + \frac{\mu}{2}\|y - x\|^2 \\
+  \text{Let} \begin{cases}
+    y=x_*\\
+    y-x=-\frac{\nabla f(x)}{\mu}
+  \end{cases} \Rightarrow f_* \ge & f(x) - \frac{1}{\mu}\left\|\nabla f(x)\right\|^2 + \frac{\mu}{2}\cdot\frac{1}{\mu^2}\left\|\nabla f(x)\right\|^2 \\
+  = & f(x) - \frac{1}{2\mu}\left\|\nabla f(x)\right\|^2 \\
+  \Rightarrow f(x)-f_* \le & \frac{1}{2\mu}\left\|\nabla f(x)\right\|^2
+\end{align*}
+$$
+
+Combining with the inequality for Lipschitz smooth functions $f(x_{k+1}) \le f(x_k)-\frac{1}{2L}\left\|\nabla f(x_k)\right\|^2$, and substituting, we obtain
+
+$$
+\begin{align*}
+  f(x_{k+1}) \le & f(x_k) - \frac{2\mu}{2L}\left(f(x_k)-f_*\right) \\
+  \Rightarrow f(x_{k+1})-f_* \le & f(x_k)-f_* - \frac{\mu}{L}\left(f(x_k)-f_*\right) \\
+  = & \left(1-\frac{\mu}{L}\right)\left(f(x_k)-f_*\right) \\
+  \Rightarrow f(x_T)-f_* \le & \left(1-\frac{\mu}{L}\right)^T\left(f(x_0)-f_*\right)
+\end{align*}
+$$
+
+To achieve an $\varepsilon$-optimal point, the number of iterations required must satisfy
+
+$$
+\begin{align*}
+  \left(1-\frac{\mu}{L}\right)^T\left(f(x_0)-f_*\right) \le & \varepsilon \\
+  \Rightarrow \frac{f(x_0)-f_*}{\varepsilon} \le & \left(1-\frac{\mu}{L}\right)^{-T} \\
+  \Rightarrow \log\frac{f(x_0)-f_*}{\varepsilon} \le & T\underbrace{\log\frac{1}{1-\frac{\mu}{L}}}_{\approx \frac{\mu}{L}} \\
+  \Rightarrow T \ge & \frac{L}{\mu}\log\frac{f(x_0)-f_*}{\varepsilon}
+\end{align*}
+$$
+
+Therefore, the required time complexity is $O\left(\log\frac{1}{\varepsilon}\right)$, which corresponds to linear convergence.
+
+## Miscellaneous Notes
+
+Midterm season is incredibly busy. There are many things I want to write about, but I don't even have time to write code for the project I'm currently working on, let alone these topics. I can only jot down what might be most useful for now and leave the rest for later.
+
+There is much more to convex optimization, including accelerated gradient descent algorithms, stochastic gradient descent algorithms, constrained optimization, and so on. These are all very interesting topics. Of course, conducting convergence analysis for them can be quite challenging. I'll write about them when I get the chance. ~~Most likely they are too difficult, so I won't.~~
+
+## References
+
+- Wright, S., & Recht, B. (2022). Optimization for Data Analysis. Cambridge: Cambridge University Press. doi:[10.1017/9781009004282](https://doi.org/10.1017/9781009004282)
