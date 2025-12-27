@@ -1,6 +1,6 @@
 CACHE_DIR := ".cache"
 OG_CACHE_DIR := CACHE_DIR / "og-images"
-FONT_VERSION := "7.6"
+FONT_VERSION := "7.9"
 FONT_CACHE_DIR := CACHE_DIR / "fonts"
 FONT_CACHE_FILE := FONT_CACHE_DIR / "MapleMono-v" + FONT_VERSION + ".zip"
 FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
@@ -21,7 +21,7 @@ format: install
     biome format
     bun rustywind --check-formatted ./content ./src
 
-check: install 
+check: install
     bunx astro check
     biome check
 
