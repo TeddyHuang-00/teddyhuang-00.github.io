@@ -1,0 +1,47 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  name: string;
+  description: string;
+  avatar?: string;
+  link?: string;
+}
+const { name, description, avatar, link } = Astro.props;
+const Wrapper = link ? "a" : "div";
+const wrapperProps = link
+  ? {
+      href: link,
+      target: "_blank",
+      rel: "noopener noreferrer",
+    }
+  : {};
+---
+
+<Wrapper
+  {...wrapperProps}
+  class="flex items-center p-4 space-x-4 rounded-lg border border-border"
+>
+  {
+    avatar ? (
+      <Image
+        src={avatar}
+        alt={`${name} avatar`}
+        class="object-cover w-16 h-16 rounded-full"
+        width={256}
+        height={256}
+      />
+    ) : (
+      <div class="flex justify-center items-center w-16 h-16 rounded-full bg-muted">
+        <Icon name="tabler:user" class="size-8 text-foreground" />
+      </div>
+    )
+  }
+  <div class="flex-1">
+    <h3 class="text-lg font-semibold">
+      {name}
+    </h3>
+    <p class="text-foreground">{description}</p>
+  </div>
+</Wrapper>
