@@ -3,6 +3,7 @@ title: 你好 👋，我是黄楠（Theodore）
 ---
 
 import { Friend } from "@/components/content/components";
+import { Image } from "astro:assets";
 
 export const image_source =
   "https://raw.githubusercontent.com/TeddyHuang-00/github-stats/master/generated";
@@ -55,25 +56,29 @@ export const friends = [
 - 📫 如何联系我：[**teddyhuangnan@gmail.com**](mailto:teddyhuangnan@gmail.com)。
 
 <p class="flex flex-row flex-wrap justify-between">
-  <img
+  <Image
     class="hidden dark:block"
     src={image_overview + dark_mode}
     alt="TeddyHuang-00 的 GitHub 总览数据"
+    inferSize={true}
   />
-  <img
+  <Image
     class="block dark:hidden"
     src={image_overview + light_mode}
     alt="TeddyHuang-00 的 GitHub 总览数据"
+    inferSize={true}
   />
-  <img
+  <Image
     class="hidden dark:block"
     src={image_languages + dark_mode}
     alt="TeddyHuang-00 最常使用语言"
+    inferSize={true}
   />
-  <img
+  <Image
     class="block dark:hidden"
     src={image_languages + light_mode}
     alt="TeddyHuang-00 最常使用语言"
+    inferSize={true}
   />
 </p>
 

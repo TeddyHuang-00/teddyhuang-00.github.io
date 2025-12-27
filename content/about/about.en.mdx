@@ -3,6 +3,7 @@ title: Hi 👋, I'm Nan Huang (Theodore)
 ---
 
 import { Friend } from "@/components/content/components";
+import { Image } from "astro:assets";
 
 export const image_source =
   "https://raw.githubusercontent.com/TeddyHuang-00/github-stats/master/generated";
@@ -55,25 +56,29 @@ export const friends = [
 - 📫 How to reach me [**teddyhuangnan@gmail.com**](mailto:teddyhuangnan@gmail.com).
 
 <p class="flex flex-row flex-wrap justify-between">
-  <img
+  <Image
     class="hidden dark:block"
     src={image_overview + dark_mode}
     alt="TeddyHuang-00's GitHub overview stats"
+    inferSize={true}
   />
-  <img
+  <Image
     class="block dark:hidden"
     src={image_overview + light_mode}
     alt="TeddyHuang-00's GitHub overview stats"
+    inferSize={true}
   />
-  <img
+  <Image
     class="hidden dark:block"
     src={image_languages + dark_mode}
     alt="TeddyHuang-00's most used languages"
+    inferSize={true}
   />
-  <img
+  <Image
     class="block dark:hidden"
     src={image_languages + light_mode}
     alt="TeddyHuang-00's most used languages"
+    inferSize={true}
   />
 </p>
 
