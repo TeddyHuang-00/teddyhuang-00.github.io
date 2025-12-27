@@ -2,12 +2,41 @@
 title: Hi 👋, I'm Nan Huang (Theodore)
 ---
 
+import { Friend } from "@/components/content/components";
+
 export const image_source =
   "https://raw.githubusercontent.com/TeddyHuang-00/github-stats/master/generated";
 export const image_overview = `${image_source}/overview.svg`;
 export const image_languages = `${image_source}/languages.svg`;
 export const dark_mode = "#gh-dark-mode-only";
 export const light_mode = "#gh-light-mode-only";
+
+export const friends = [
+  {
+    name: "Huiwen Zheng",
+    description: "Inclusion advocator and fiancée",
+    link: "https://HuiwenZheng-Ariel.github.io/",
+    avatar: "https://github.com/HuiwenZheng-Ariel.png?size=256",
+  },
+  {
+    name: "Yixuan Wang",
+    description: "A linguist who is (very) good at programming",
+    link: "https://blog.yixuan-wang.site/",
+    avatar: "https://github.com/Yixuan-Wang.png?size=256",
+  },
+  {
+    name: "wr786",
+    description: "An excellent coder loving life",
+    link: "https://wr786.github.io/",
+    avatar: "https://github.com/wr786.png?size=256",
+  },
+  {
+    name: "BicPotato",
+    description: "In memory of a tinker enthusiast",
+    link: "https://github.com/bic-potato/",
+    avatar: "https://github.com/bic-potato.png?size=256",
+  },
+];
 
 - 🖊 I hold a bachelor's degree in bioinformatics from Peking University.
 
@@ -47,3 +76,13 @@ export const light_mode = "#gh-light-mode-only";
     alt="TeddyHuang-00's most used languages"
   />
 </p>
+
+---
+
+## I guess you might also be interested in:
+
+<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+  {friends.map((friend) => (
+    <Friend {...friend} />
+  ))}
+</div>
