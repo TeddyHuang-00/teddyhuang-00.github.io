@@ -7,10 +7,6 @@ import { Image } from "astro:assets";
 
 export const image_source =
   "https://raw.githubusercontent.com/TeddyHuang-00/github-stats/master/generated";
-export const image_overview = `${image_source}/overview.svg`;
-export const image_languages = `${image_source}/languages.svg`;
-export const dark_mode = "#gh-dark-mode-only";
-export const light_mode = "#gh-light-mode-only";
 
 export const friends = [
   {
@@ -56,34 +52,29 @@ export const friends = [
 - 📫 如何联系我：[**teddyhuangnan@gmail.com**](mailto:teddyhuangnan@gmail.com)。
 
 <p class="flex flex-row flex-wrap justify-between">
-  <Image
-    class="hidden dark:block"
-    src={image_overview + dark_mode}
-    alt="TeddyHuang-00 的 GitHub 总览数据"
-    width={360}
-    height={210}
-  />
-  <Image
-    class="block dark:hidden"
-    src={image_overview + light_mode}
-    alt="TeddyHuang-00 的 GitHub 总览数据"
-    width={360}
-    height={210}
-  />
-  <Image
-    class="hidden dark:block"
-    src={image_languages + dark_mode}
-    alt="TeddyHuang-00 最常使用语言"
-    width={360}
-    height={210}
-  />
-  <Image
-    class="block dark:hidden"
-    src={image_languages + light_mode}
-    alt="TeddyHuang-00 最常使用语言"
-    width={360}
-    height={210}
-  />
+  {[
+    {
+      src: `${image_source}/overview.svg`,
+      alt: "TeddyHuang-00 的 GitHub 总览数据",
+    },
+    {
+      src: `${image_source}/languages.svg`,
+      alt: "TeddyHuang-00 最常使用语言",
+    },
+  ].map(({ src, alt }) =>
+    [
+      { suffix: "#gh-dark-mode-only", className: "hidden dark:block" },
+      { suffix: "#gh-light-mode-only", className: "block dark:hidden" },
+    ].map(({ suffix, className }) => (
+      <Image
+        class={className}
+        src={src + suffix}
+        alt={alt}
+        width={360}
+        height={210}
+      />
+    ))
+  )}
 </p>
 
 ---
