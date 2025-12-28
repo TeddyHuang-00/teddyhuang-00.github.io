@@ -33,7 +33,9 @@ const notThemed = lightSvg === darkSvg;
 
 {
   notThemed ? (
-    <Fragment set:html={lightSvg} />
+    <figure>
+      <Fragment set:html={lightSvg} />
+    </figure>
   ) : (
     <>
       <figure class="block dark:hidden">
@@ -48,6 +50,6 @@ const notThemed = lightSvg === darkSvg;
 
 <style is:global>
   .typst-doc {
-    @apply mx-auto;
+    @apply mx-auto max-w-full;
   }
 </style>
