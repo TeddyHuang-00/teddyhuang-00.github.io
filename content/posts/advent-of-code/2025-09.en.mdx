@@ -1,0 +1,210 @@
+---
+title: Advent of Code 2025 - Day 9 Solution
+pubDatetime: 2026-01-04T13:30:00+08:00
+tags:
+  - Advent of Code
+  - AoC 2025
+  - Algorithm
+  - Rust
+featured: false
+draft: false
+description: Finding the largest rectangle entirely inside a polygon in grid space
+---
+
+import { Aside, Badge, Typst } from "@/components/content/components";
+import { Icon } from "astro-icon/components";
+
+## Problem Description
+
+Given a simple polygon (non self-intersecting) in grid space, with each edge axis-aligned (parallel to either the x-axis or y-axis). Find the largest rectangle, defined by any two polygon vertices as opposite corners, that lies **entirely** within the polygon's interior. <Badge type="info" text="This is Part Two; Part One is much simpler so not elaborated here." />
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/problem.typ"
+  caption="(Left) Problem input, the polygon vertex coordinates; (Right) Illustration of valid and invalid rectangles formed by choosing any two vertices as opposite corners"
+/>
+
+As shown above, the polygon is defined by a sequence of vertices (left figure). Choosing any two vertices as opposite corners yields many possible rectangles. In the right figure, the green rectangle lies entirely within the polygon, while the red rectangle is partially outside. Our task is to find the largest area rectangle among all valid ones.
+
+## Thought Process
+
+### Just Checking Key Points?
+
+In Part One, we already implemented functionality to find all rectangles. Naturally, collision detection comes to mind. A simple approach would be to sample points inside the rectangle and check if they are inside the polygon. To check if a point is inside a shape, a classic method is the ray casting algorithm[^1]. The core idea is to cast a ray from the point in any direction and count intersections with the shape's boundary; an odd count means the point is inside, even means outside. For example:
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/ray-casting.typ"
+  caption="The ray casting algorithm efficiently tests if a point is inside an arbitrary shape"
+/>
+
+<Aside type="caution" title="Why not enumerate all grid points?">
+
+Even for a regular, grid-aligned polygon like in this problem, we cannot practically check every single grid point inside the rectangle for being inside the polygon. The shape's size is unknown and could be very large, causing the number of points to check to grow rapidly, severely impacting performance.
+
+</Aside>
+
+Thus, a natural thought arises: perhaps we only need to check a few key points of the rectangle? Like its four corners, or the corners plus the center? However, this approach is insufficient for this problem. A counterexample easily arises:
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/center-n-corner.typ"
+  caption="Checking the rectangle center and its four corners is insufficient to guarantee the entire rectangle's validity"
+/>
+
+In the left rectangle above, the center and all four corners are inside the polygon, yet parts of the rectangle's edges extend outside the polygon's boundary. In fact, arbitrarily adding more key points, like edge midpoints, still cannot guarantee the rectangle's validity because there could still be parts of the rectangle outside the polygon. Therefore, checking a fixed set of key points cannot ensure the entire rectangle's validity.
+
+### Enumerating Intersections with All Edges
+
+Although not explicitly stated, the polygon is non self-intersecting (the left case in the figure below). This implies a property: the polygon's "exterior" is connected. More formally:
+
+The polygon partitions the 2D plane into "interior" (valid region) and "exterior" (invalid region). Let $\mathcal{S}$ be the set of all points exterior to the polygon. $\mathcal{S}$ is connected if and only if for any two points $\forall A, B \in \mathcal{S}$, there exists a path $\exists P \subset \mathcal{S}$ such that the starting point $P_0$ is $A$ and the ending point $P_n$ is $B$. Intuitively, this means the polygon does not create isolated enclosures, as shown on the left below.
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/connectivity.typ"
+  caption="(Left) Self-intersection makes the exterior disconnected; (Right) Property of rectangle boundaries derivable from connectivity"
+/>
+
+Therefore, if any part of a rectangle lies outside the polygon, then due to connectivity, there must exist a path, with every point on it outside the polygon, starting from some point $A$ inside the rectangle and ending at some necessarily existing point $B$ outside the rectangle, as shown on the right above. This path connects the interior and exterior of the rectangle. By simple topology, it must intersect the rectangle's boundary at some point. That is, at least one point on one of the rectangle's edges lies outside the polygon.
+
+Based on this, we could instead try to enumerate all points on the rectangle's edges and check if any are outside the polygon to determine if the rectangle is partially outside.
+
+<Aside type="caution" title="Performance Consideration">
+
+This method improves efficiency significantly compared to checking every grid point, reducing complexity from $O(mn)$ to $O(m+n)$, where $m$ and $n$ are the rectangle's width and height. However, for this problem, the rectangle could still be very large, leading to too many points to check and severely impacting performance. Thus, we need to find a more efficient solution.
+
+</Aside>
+
+### A Step Back
+
+To further improve algorithm efficiency, let's try a different perspective: what are the fundamental conditions that make a rectangle invalid? We can identify the following scenarios:
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/invalid-rectangles.typ"
+  caption="(Left) Fully inside: valid; (Middle) Partially inside: invalid; (Right) Fully outside: invalid"
+/>
+
+It's easy to see that the vast majority of invalid cases are caused by the "partially inside" scenario (middle), while the "fully outside" case can be handled separately later. For the "partially inside" case, we can observe that one edge of the rectangle must intersect an edge of the polygon. More strictly, if **a rectangle's edge intersects a polygon edge perpendicular to it**, and **the intersection point is not at a vertex of either the rectangle or the polygon**, then **the rectangle must be partially outside the polygon**. A less formal but intuitive proof is that each polygon edge divides space into interior (valid) and exterior (invalid). When a polygon edge "pierces" the rectangle, the rectangle necessarily straddles the valid/invalid regions defined by that edge, meaning part of it is outside, as illustrated below:
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/edge-intersection.typ"
+  caption="When 'pierced' by a polygon edge, the rectangle must span both valid and invalid regions"
+/>
+
+Is this enough? Don't we still have the "fully outside" case? Actually, for this specific problem input, we don't need to handle it separately. We can observe that the input polygon resembles a circle with a thin rectangle subtracted from it (see figure below). Therefore, the largest possible "fully outside" rectangle would be this thin rectangle itself, whose area is obviously smaller than the area of the largest valid rectangle we can find. So, we only need to focus on the "partially inside" case.
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/input.typ"
+  caption="The actual input polygon shape resembles a circle with a rectangle carved out"
+/>
+
+<Aside type="tip" title="Handling Rectangles Fully Outside the Polygon">
+
+In general, there might be cases where a "fully outside" rectangle's area is larger than any valid rectangle's area. Then we would need to handle this case.
+
+In fact, this only requires an additional check: test if the rectangle's center point is inside the polygon, because if a rectangle is fully outside the polygon, its center must also be outside. We can use the ray casting algorithm mentioned earlier for this check. The rest of the logic remains the same.
+
+</Aside>
+
+Based on the above analysis, we can design the following algorithm:
+
+1.  Enumerate all rectangles formed by any two vertices.
+2.  For each rectangle, enumerate its four edges.
+3.  For each rectangle edge, enumerate all perpendicular polygon edges. Check if they intersect, and the intersection point is not at a vertex of either shape (the piercing condition).
+4.  If such an intersection exists, the rectangle is invalid; skip it.
+5.  Otherwise, the rectangle is valid. Calculate its area and update the maximum area.
+
+<Aside type="info" title="Determining Piercing">
+
+Here we omit the detailed explanation of the piercing condition and why we don't need to consider intersections at vertices. This is left as an exercise for the reader. Hint: consider two cases separately: **intersection at a rectangle vertex** and **intersection at a polygon vertex**.
+
+</Aside>
+
+With this, our algorithm's complexity no longer depends on the shape's size, but only on the number of polygon vertices, greatly improving efficiency.
+
+## Core Algorithm Implementation
+
+```rust title="day09/src/main.rs" {"Enumerate all horizontal and vertical polygon edges":13-20} {"Check if edges strictly intersect":33-44} {"Filter valid rectangles and calculate area":62-69}
+struct Puzzle {
+    nodes: Array2<i64>,
+}
+
+type Edge = (usize, usize);
+
+impl Puzzle {
+    fn measure(&self, i: usize, j: usize) -> u64 {
+        (&self.nodes.row(i) - &self.nodes.row(j))
+            .mapv(|v| v.unsigned_abs() + 1)
+            .product()
+    }
+
+    fn get_edges(&self) -> (Vec<Edge>, Vec<Edge>) {
+        let n = self.nodes.nrows();
+        (0..n)
+            .into_par_iter()
+            .map(|i| (i, (i + 1) % n))
+            .partition(|&(i, j)| self.nodes[[i, 0]] == self.nodes[[j, 0]])
+    }
+
+    fn intersect_edge(
+        &self,
+        xs: (i64, i64),
+        ys: (i64, i64),
+        edges: &[Edge],
+        transpose: bool,
+    ) -> bool {
+        let (x1, x2) = xs;
+        let (x1, x2) = (x1.min(x2), x1.max(x2));
+        let (y1, y2) = ys;
+        let (y1, y2) = (y1.min(y2), y1.max(y2));
+
+        edges.into_par_iter().any(|&(i, j)| {
+            let i = self.nodes.row(i);
+            let j = self.nodes.row(j);
+            let (ex1, ex2, ey) = if transpose {
+                (i[1].min(j[1]), i[1].max(j[1]), j[0])
+            } else {
+                (i[0].min(j[0]), i[0].max(j[0]), i[1])
+            };
+
+            ey > y1 && ey < y2 && ex1 < x2 && ex2 > x1
+        })
+    }
+}
+
+impl Solution for Puzzle {
+    fn part2(&self) -> String {
+        let (vertical_edges, horizontal_edges) = self.get_edges();
+
+        (0..self.nodes.nrows())
+            .into_par_iter()
+            .flat_map_iter(|i| {
+                (i + 1..self.nodes.nrows())
+                    .map(|j| (i, j))
+                    .collect::<Vec<_>>()
+            })
+            .filter_map(|(i, j)| {
+                let (px1, py1) = (self.nodes[[i, 0]], self.nodes[[j, 1]]);
+                let (px2, py2) = (self.nodes[[j, 0]], self.nodes[[i, 1]]);
+
+                if !self.intersect_edge((px1, px2), (py1, py2), &horizontal_edges, false)
+                    && !self.intersect_edge((py1, py2), (px1, px2), &vertical_edges, true)
+                {
+                    Some(self.measure(i, j))
+                } else {
+                    None
+                }
+            })
+            .max()
+            .unwrap_or_else(|| unreachable!("Must have at least one pair of nodes"))
+            .to_string()
+    }
+}
+```
+
+## Summary
+
+The complete code can be found [here](https://github.com/TeddyHuang-00/AoC2025/blob/main/day09/src/main.rs).
+
+Although the problem itself is not overly complex, by re-examining and analyzing the problem, we found a more elegant and efficient solution. This highlights the importance of understanding a problem's essence in algorithm design.
+
+## References
+
+[^1]: https://en.wikipedia.org/wiki/Point_in_polygon

@@ -1,0 +1,210 @@
+---
+title: Advent of Code 2025 - 第9天题解
+pubDatetime: 2026-01-04T13:30:00+08:00
+tags:
+  - Advent of Code
+  - AoC 2025
+  - Algorithm
+  - Rust
+featured: false
+draft: false
+description: 查找格点空间中完全位于多边形内的最大矩形
+---
+
+import { Aside, Badge, Typst } from "@/components/content/components";
+import { Icon } from "astro-icon/components";
+
+## 核心任务描述
+
+给定一个格点空间中的简单多边形（不自交），确保每条边都与坐标轴平行或垂直。试找出由任意两个多边形顶点作为对角所构成的矩形中，最大的**完全**位于多边形内部的矩形面积。<Badge type="info" text="此为第二部分任务，第一部分任务较为简单，不在此赘述。" />
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/problem.typ"
+  caption="（左）问题输入，多边形的顶点坐标；（右）选取任意两个顶点作为对角，所构成的合法与非法矩形示意"
+/>
+
+如上图所示，多边形由若干顶点构成（左图），任选两个顶点作为对角，可以构成多个矩形。右图中绿色矩形完全位于多边形内部，红色矩形则部分位于多边形外部。我们需要做的就是找出所有合法矩形中面积最大的一个。
+
+## 思考过程
+
+### 只用检查关键点？
+
+在第一部分中，我们已经实现了找出所有矩形的功能。那么很自然的，我们就会联想到碰撞检测，一个比较简单的做法为在一个形状内采样散点，然后检查这些点是否在另一个形状内部。为了检验每个点是否在一个形状内部，一个经典的方法是射线投射算法（ray casting algorithm）[^1]，其核心思想是从某个方向发出一条射线，统计与形状边界的交点数量，若为奇数则在内部，偶数则在外部。比如下图所示：
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/ray-casting.typ"
+  caption="使用射线投射算法可以高效检验某点是否在任意形状内部"
+/>
+
+<Aside type="caution" title="为何不能穷举所有格点？">
+
+即便是像本题中这样规则、格点内的多边形，我们也无法穷举检查每一个格点是否在多边形内部，因为形状的大小是未知的，可能非常大，从而导致需要检查的点的数量迅速增长，进而严重影响性能。
+
+</Aside>
+
+那么很自然的，我们会想到，或许我们只需要检查矩形的几个关键点就够了？比如矩形的四个顶点，或者四个顶点加上中心点？然而，这样的做法在本题中并不适用。因为很容易出现如下情况：
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/center-n-corner.typ"
+  caption="计算矩形中心点与四个顶点的合法性不足以确定整个矩形的合法性"
+/>
+
+在上图中，左侧矩形的中心点与四个顶点均在多边形内部，但矩形的边缘部分却超出了多边形的范围。事实上，如果我们只是随意增加一些关键点，比如每条边的中点，依然无法保证矩形的合法性，因为仍然可能存在矩形的某些部分超出多边形范围的情况。因此，仅仅检查几个固定数量的关键点并不能确保整个矩形的合法性。
+
+### 枚举所有边的交点
+
+尽管题目并未明确说明，但是多边形不会自交（下图左侧的情况），因此我们可以导出一个性质：多边形的“外部”是连通的。稍微正式一些，可以给出如下定义：
+
+多边形将二维平面划分为“内部”（合法区域）与“外部”（非法区域）。记 $\mathcal{S}$ 为所有多边形外部的点的集合，则 $\mathcal{S}$ 是连通的，当且仅当对于任意两点 $\forall A, B \in \mathcal{S}$，存在一条在 $\mathcal{S}$ 上的路径 $\exists P \subset \mathcal{S}$，使得起点 $P_0$ 为 $A$，终点 $P_n$ 为 $B$。直观地理解，即不存在多边形包围出一块区域的情况，如下图左侧所示。
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/connectivity.typ"
+  caption="（左）多边形自交会导致外部不连通；（右）连通性可导出的矩形边界性质"
+/>
+
+因此，如果一个矩形内任意一部分在多边形外部，那么由于连通性，一定存在一条路径，路径上处处在多边形外部，从矩形内的某一点 $A$ 出发，最终到达必然存在的矩形外部某一点 $B$，如上图右侧所示。而这条路径连通了矩形的内外部，因此由简单的拓扑学可知，其必然经过矩形的边界上的某一点，即矩形的某条边上至少存在一点在多边形外部。
+
+基于此，我们可以改为尝试枚举矩形的所有边上的点，根据这些点是否位于多边形外部来判断矩形是否有部分在多边形外部。
+
+<Aside type="caution" title="性能考量">
+
+这种方法相较于检测每个格点的合法性，效率有了显著提升，从 $O(mn)$ 降低到了 $O(m+n)$，其中 $m$ 和 $n$ 分别为矩形的宽度和高度。但即便如此，在本题中仍然可能因为矩形过大而导致需要检测的点数量过多，从而严重影响性能。因此，我们需要寻找更高效的解法。
+
+</Aside>
+
+### 退一步看问题
+
+为了进一步改进算法效率，我们可以尝试换一个角度来看这个问题，找出最基础的性质来解决这个问题：有哪些情况会导致一个矩形不合法？我们可以找出以下一些情形：
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/invalid-rectangles.typ"
+  caption="（左）完全内部：合法；（中）不完全内部：非法；（右）完全外部：非法"
+/>
+
+不难发现，绝大多数不合法的情况都是由“不完全内部”（中）这种情况引起的，而“完全外部”这种情况我们则稍后单独讨论。对于“不完全内部”的情况，我们可以观察到，矩形的某条边必然与多边形的某条边相交。更严格一点来说，如果**矩形的某一条边和与其垂直的多边形的边有交点**，且**交点不位于矩形或多边形的顶点上**，那么**矩形必然有部分在多边形外部**。一个不那么严谨但是非常直观的证明是，由于多边形的每一条边都划分了空间的内部（合法）与外部（非法），当多边形的某条边“刺穿”了矩形时，矩形必然跨越了这条边所划分的合法与非法区域。此时矩形必然有部分在多边形外部，即如下图所示：
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/edge-intersection.typ"
+  caption="当被多边形的某条边“刺穿”时，矩形一定跨越了合法与非法区域"
+/>
+
+这就够了吗？我们不是还有一个完全位于多边形外部的情况吗？事实上，在这个特定的题目中，我们并不需要单独处理这种情况。因为我们不难发现，题目的输入构成的多边形近似于一个被减去一个狭长矩形的圆形（见下图），因此能构成的最大的“完全外部”的矩形即为这个狭长矩形本身，而这个矩形的面积显然小于能构成的最大合法矩形面积。因此，我们只需要关注“不完全内部”的情况即可。
+
+<Typst
+  filePath="src/assets/images/aoc/2025/09/input.typ"
+  caption="实际输入的多边形形状接近一个被挖去一个矩形的圆形"
+/>
+
+<Aside type="tip" title="处理完全位于多边形外部的情况">
+
+在一般情况下，可能会存在“完全外部”的矩形面积大于合法矩形面积的情况，此时就需要处理这种情况了。
+
+事实上，这也只需要增加一个检测中心点是否在多边形内部的步骤即可，因为如果一个矩形完全位于多边形外部，那么其中心点必然也在多边形外部。我们可以使用前面提到的射线投射算法来完成这个检测，其余部分的逻辑与之前相同。
+
+</Aside>
+
+基于上述分析，我们可以设计出如下的算法：
+
+1. 枚举所有由两个顶点构成的矩形；
+2. 对于每个矩形，枚举其四条边；
+3. 对于每条边，枚举所有与其垂直的多边形的边，检查是否有交点，且交点不位于矩形或多边形的顶点上（刺穿条件）；
+4. 如果存在这样的交点，则该矩形不合法，跳过；
+5. 否则，该矩形合法，计算面积并更新最大面积。
+
+<Aside type="info" title="判断刺穿">
+
+此处我们略过了对于刺穿条件的具体说明，并未解释为何不需要考虑交点位于矩形或多边形顶点上的情况。这将作为一个练习留给读者自行思考。提示：可以分为两种情况讨论，**交点位于矩形顶点上**与**交点位于多边形顶点上**。
+
+</Aside>
+
+如此一来，我们的算法复杂度不再随形状的大小而变化，而仅与多边形的顶点数量有关，从而大大提升了算法的效率。
+
+## 核心算法实现
+
+```rust title="day09/src/main.rs" {"枚举所有水平和竖直的多边形边":13-20} {"检查边是否严格相交":33-44} {"过滤合法矩形并计算面积":62-69}
+struct Puzzle {
+    nodes: Array2<i64>,
+}
+
+type Edge = (usize, usize);
+
+impl Puzzle {
+    fn measure(&self, i: usize, j: usize) -> u64 {
+        (&self.nodes.row(i) - &self.nodes.row(j))
+            .mapv(|v| v.unsigned_abs() + 1)
+            .product()
+    }
+
+    fn get_edges(&self) -> (Vec<Edge>, Vec<Edge>) {
+        let n = self.nodes.nrows();
+        (0..n)
+            .into_par_iter()
+            .map(|i| (i, (i + 1) % n))
+            .partition(|&(i, j)| self.nodes[[i, 0]] == self.nodes[[j, 0]])
+    }
+
+    fn intersect_edge(
+        &self,
+        xs: (i64, i64),
+        ys: (i64, i64),
+        edges: &[Edge],
+        transpose: bool,
+    ) -> bool {
+        let (x1, x2) = xs;
+        let (x1, x2) = (x1.min(x2), x1.max(x2));
+        let (y1, y2) = ys;
+        let (y1, y2) = (y1.min(y2), y1.max(y2));
+
+        edges.into_par_iter().any(|&(i, j)| {
+            let i = self.nodes.row(i);
+            let j = self.nodes.row(j);
+            let (ex1, ex2, ey) = if transpose {
+                (i[1].min(j[1]), i[1].max(j[1]), j[0])
+            } else {
+                (i[0].min(j[0]), i[0].max(j[0]), i[1])
+            };
+
+            ey > y1 && ey < y2 && ex1 < x2 && ex2 > x1
+        })
+    }
+}
+
+impl Solution for Puzzle {
+    fn part2(&self) -> String {
+        let (vertical_edges, horizontal_edges) = self.get_edges();
+
+        (0..self.nodes.nrows())
+            .into_par_iter()
+            .flat_map_iter(|i| {
+                (i + 1..self.nodes.nrows())
+                    .map(|j| (i, j))
+                    .collect::<Vec<_>>()
+            })
+            .filter_map(|(i, j)| {
+                let (px1, py1) = (self.nodes[[i, 0]], self.nodes[[j, 1]]);
+                let (px2, py2) = (self.nodes[[j, 0]], self.nodes[[i, 1]]);
+
+                if !self.intersect_edge((px1, px2), (py1, py2), &horizontal_edges, false)
+                    && !self.intersect_edge((py1, py2), (px1, px2), &vertical_edges, true)
+                {
+                    Some(self.measure(i, j))
+                } else {
+                    None
+                }
+            })
+            .max()
+            .unwrap_or_else(|| unreachable!("Must have at least one pair of nodes"))
+            .to_string()
+    }
+}
+```
+
+## 总结
+
+完整代码见[此处](https://github.com/TeddyHuang-00/AoC2025/blob/main/day09/src/main.rs)。
+
+尽管这道题目本身并不复杂，但通过对问题的重新审视与分析，我们得以找到一个更优雅且高效的解法。这也体现了在算法设计中，理解问题本质的重要性。
+
+## 参考资料
+
+[^1]: https://zh.wikipedia.org/wiki/多边形内的点
