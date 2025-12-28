@@ -5,5 +5,6 @@ import Ruby from "./Ruby.astro";
 import Steps from "./Steps.astro";
 import TabItem from "./TabItem.astro";
 import Tabs from "./Tabs.astro";
+import Typst from "./Typst.astro";
 
-export { Aside, Badge, Friend, Ruby, Steps, TabItem, Tabs };
+export { Aside, Badge, Friend, Ruby, Steps, TabItem, Tabs, Typst };

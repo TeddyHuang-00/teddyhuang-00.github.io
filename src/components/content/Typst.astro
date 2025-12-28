@@ -1,0 +1,53 @@
+---
+import { NodeCompiler } from "@myriaddreamin/typst-ts-node-compiler";
+
+export interface Props {
+  filePath: string;
+  workspace?: string;
+  fontPaths?: string[];
+}
+
+const {
+  filePath,
+  workspace = "src/assets/images",
+  fontPaths = [".cache/fonts"],
+} = Astro.props;
+const compiler = NodeCompiler.create({
+  workspace,
+  fontArgs: [{ fontPaths }],
+});
+const lightSvg = compiler.svg({
+  mainFilePath: filePath,
+  inputs: {
+    theme: "light",
+  },
+});
+const darkSvg = compiler.svg({
+  mainFilePath: filePath,
+  inputs: {
+    theme: "dark",
+  },
+});
+const notThemed = lightSvg === darkSvg;
+---
+
+{
+  notThemed ? (
+    <Fragment set:html={lightSvg} />
+  ) : (
+    <>
+      <figure class="block dark:hidden">
+        <Fragment set:html={lightSvg} />
+      </figure>
+      <figure class="hidden dark:block">
+        <Fragment set:html={darkSvg} />
+      </figure>
+    </>
+  )
+}
+
+<style is:global>
+  .typst-doc {
+    @apply mx-auto;
+  }
+</style>
