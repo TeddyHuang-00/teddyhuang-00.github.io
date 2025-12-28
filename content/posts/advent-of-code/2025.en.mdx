@@ -1,0 +1,32 @@
+---
+title: Advent of Code 2025 - Summary
+pubDatetime: 2025-12-28T12:00:00+08:00
+tags:
+  - Advent of Code
+  - AoC 2025
+  - Algorithm
+  - Rust
+featured: false
+draft: false
+description: A summary and review of Advent of Code 2025
+---
+
+import { Badge } from "@/components/content/components";
+
+In case you're ~~new to the internet~~ unaware, the format of Advent of Code (AoC) for 2025 has seen some changes, with key points including:
+
+1.  The challenge duration was halved from the original 25 days to a total of 12 days. The format for each day remains unchanged, still consisting of two parts, with a small problem in each part.
+2.  The global leaderboard has been removed, replaced by private leaderboards only. You can still form groups with friends and compete for rankings within your group.
+
+Although the number of problems has significantly decreased, the overall quality remains high. Similar to previous years, it covers a wide range of applications of algorithms and data structures.
+
+Of course, there are also some less satisfactory aspects. For example, the design of the problem examples feels less refined than before:
+
+- For Day 11, the example input could have been shared between the two parts, but in reality, separate example inputs were written for each part. This required writing additional test code to verify the correctness of the solution, or manually modifying the example input for reuse.
+- Day 12 was even more perplexing. Despite the problem description and example input describing an NP-complete problem, the actual solution in the end turned out to be a simple single conditional check, requiring no algorithm at all. This design was rather puzzling.
+
+Nevertheless, AoC remains my most anticipated programming event at the end of each year. This year, I once again used Rust<Badge type="tip" text="Nice!" /> to complete all the problems. I made some adjustments to the project organization compared to last year, making it more aligned with Rust project conventions, and the overall experience was very enjoyable. All my solution code is open-source. You are welcome to visit my [GitHub repository](https://github.com/TeddyHuang-00/AoC2025) for critique.
+
+In the coming time, I will also select some particularly interesting problems or solutions that I find worth sharing for individual analysis and explanation. Stay tuned.
+
+Finally, Happy New Year to everyone, and happy coding!
