@@ -5,12 +5,14 @@ export interface Props {
   filePath: string;
   workspace?: string;
   fontPaths?: string[];
+  caption?: string;
 }
 
 const {
   filePath,
   workspace = "src/assets/images",
   fontPaths = [".cache/fonts"],
+  caption,
 } = Astro.props;
 const compiler = NodeCompiler.create({
   workspace,
@@ -35,14 +37,17 @@ const notThemed = lightSvg === darkSvg;
   notThemed ? (
     <figure>
       <Fragment set:html={lightSvg} />
+      {caption && <figcaption class="text-center">{caption}</figcaption>}
     </figure>
   ) : (
     <>
       <figure class="block dark:hidden">
         <Fragment set:html={lightSvg} />
+        {caption && <figcaption class="text-center">{caption}</figcaption>}
       </figure>
       <figure class="hidden dark:block">
         <Fragment set:html={darkSvg} />
+        {caption && <figcaption class="text-center">{caption}</figcaption>}
       </figure>
     </>
   )
