@@ -1,4 +1,5 @@
 ---
+import fs from "node:fs";
 import { NodeCompiler } from "@myriaddreamin/typst-ts-node-compiler";
 
 export interface Props {
@@ -14,6 +15,13 @@ const {
   fontPaths = [".cache/fonts"],
   caption,
 } = Astro.props;
+if (!filePath.endsWith(".typ")) {
+  throw new Error("Typst component only supports .typ files");
+}
+if (!fs.existsSync(filePath)) {
+  throw new Error(`Typst file not found: ${filePath}`);
+}
+
 const compiler = NodeCompiler.create({
   workspace,
   fontArgs: [{ fontPaths }],
