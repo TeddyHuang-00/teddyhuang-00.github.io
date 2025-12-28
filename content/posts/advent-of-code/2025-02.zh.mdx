@@ -161,55 +161,63 @@ $$
 对此我们不难发现，如果一个数字的两种分法 $k_1$ 和 $k_2$ 满足 $k_1$ 是 $k_2$ 的因数，那么较长的分法就会重复计算较短的分法所生成的数字。即：对于一个给定的总位数 $L$，其因数 $k$ 对应的分法，会包含所有那些由 $k$ 的因数（记为 $d$）所对应的分法生成的数字（其中 $d$ 也是 $L$ 的因数）。这也引出了一个核心的去重思路：对每个 $L$，只考虑那些“重复次数 $r$ 为质数”的分法，然后将所有结果相加。因为任何合数 $r$ 的重复模式，都可以拆分为更小的质数次重复，从而被包含在质数 $r$ 的计数中。在算法上，我们可以拆解为两步：
 
 1. 找出 $L$ 的所有质因数，记为 $r_1, r_2, \ldots, r_m$，分别计算以 $r_i$ 作为重复次数对应的结果。
-2. 使用容斥原理，去除重复计算的部分。由于质数之间互质，唯一的可能重叠计算部分即为长度为 $1$ 的片段，因此我们只需从总和中减去长度为 $1$ 的部分即可。
+2. 使用容斥原理[^1]，去除重复计算的部分。由于质数之间互质，唯一的可能重叠计算部分即为长度为 $1$ 的片段，因此我们只需从总和中减去长度为 $1$ 的部分即可。
 
 如此一来，我们不仅确保了结果的正确性，还保持了较高的计算效率。
 
 ## 核心算法实现
 
-```rust title="day02/src/main.rs" {"提取所有质因数":1-21} {"高斯求和":41-42} {"找出数字位数范围": 50-51,66-67} {"容斥原理去重": 77-81}
-///
-fn prime_factors(mut n: u32) -> Vec<u32> {
-    let mut factors = BTreeSet::new();
-    while n.is_multiple_of(2) {
-        factors.insert(2);
-        n /= 2;
-    }
-    let mut divisor = 3;
-    while divisor * divisor <= n {
-        while n.is_multiple_of(divisor) {
-            factors.insert(divisor);
-            n /= divisor;
-        }
-        divisor += 2;
-    }
-    if n > 1 {
-        factors.insert(n);
-    }
+```rust title="day02/src/main.rs" {"提取所有质因数":8-28} {"高斯求和":48-49} {"找出数字位数范围": 58-59,74-75} {"容斥原理去重": 85-89}
+type Range = (u64, u64);
 
-    factors.into_iter().collect()
+struct Puzzle {
+    ranges: Vec<Range>,
 }
 
-fn get_sum_invalid_ids(range: Range, n: u32, repeat: u32) -> u64 {
-    // The pattern repeats every k = n / repeat digits
-    let k = n / repeat;
-    // Calculate the lower and upper bounds for n-digit numbers with the given
-    // pattern
-    let upper = 10u64.pow(n) - 1;
-    let base = upper / (10u64.pow(k) - 1);
-    let lower = 10u64.pow(k - 1) * base;
-    // Get the overlap between the given range and (lower, upper)
-    let (start, end) = range;
-    let start = start.max(lower);
-    let end = end.min(upper);
-    // Convert back to the base range
-    let start = start.div_ceil(base);
-    let end = end / base;
-    if start > end {
-        return 0;
-    }
+impl Puzzle {
 
-    (end - start + 1) * (start + end) / 2 * base
+  fn prime_factors(mut n: u32) -> Vec<u32> {
+      let mut factors = BTreeSet::new();
+      while n.is_multiple_of(2) {
+          factors.insert(2);
+          n /= 2;
+      }
+      let mut divisor = 3;
+      while divisor * divisor <= n {
+          while n.is_multiple_of(divisor) {
+              factors.insert(divisor);
+              n /= divisor;
+          }
+          divisor += 2;
+      }
+      if n > 1 {
+          factors.insert(n);
+      }
+
+      factors.into_iter().collect()
+  }
+
+  fn get_sum_invalid_ids(range: Range, n: u32, repeat: u32) -> u64 {
+      // The pattern repeats every k = n / repeat digits
+      let k = n / repeat;
+      // Calculate the lower and upper bounds for n-digit numbers with the given
+      // pattern
+      let upper = 10u64.pow(n) - 1;
+      let base = upper / (10u64.pow(k) - 1);
+      let lower = 10u64.pow(k - 1) * base;
+      // Get the overlap between the given range and (lower, upper)
+      let (start, end) = range;
+      let start = start.max(lower);
+      let end = end.min(upper);
+      // Convert back to the base range
+      let start = start.div_ceil(base);
+      let end = end / base;
+      if start > end {
+          return 0;
+      }
+
+      (end - start + 1) * (start + end) / 2 * base
+  }
 }
 
 impl Solution for Puzzle {
@@ -264,3 +272,7 @@ impl Solution for Puzzle {
 完整代码见[此处](https://github.com/TeddyHuang-00/AoC2025/blob/main/day02/src/main.rs)。
 
 通过对题目的深入分析与数学方法的应用，我们成功地将问题从一个需要遍历大量数字的任务，转化为一个高效的计算问题。利用数字的结构特性和容斥原理，我们不仅提高了算法的效率，还避免了复杂的判断逻辑。虽然题目本身并不复杂，但是优化过程却是十分有趣。
+
+## 参考资料
+
+[^1]: https://zh.wikipedia.org/wiki/排容原理

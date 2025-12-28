@@ -163,55 +163,63 @@ We can observe that if two segmentation $k_1$ and $k_2$ for the same total lengt
 This leads to a core deduplication idea: for each $L$, only consider segmentation where the repeat count $r$ (where $r = L/k$) is a prime number, then sum all results. Because any repeating pattern with a composite repeat count $r$ can be decomposed into smaller repeats with prime counts, and thus would already be included in the counts for prime $r$. Algorithmically, we can break this down into two steps:
 
 1. Find all prime factors of $L$, denoted $r_1, r_2, \ldots, r_m$. Calculate the results corresponding to using each $r_i$ as the repeat count.
-2. Use the inclusion-exclusion principle to remove overlapping counts. Since prime numbers are co-prime, the only possible overlap is the pattern where the segment length is $1$ (_i.e._, all digits identical). Therefore, we only need to subtract the contribution from the segment length $1$ pattern from the total sum.
+2. Use the inclusion-exclusion principle[^1] to remove overlapping counts. Since prime numbers are co-prime, the only possible overlap is the pattern where the segment length is $1$ (_i.e._, all digits identical). Therefore, we only need to subtract the contribution from the segment length $1$ pattern from the total sum.
 
 This approach not only ensures correctness but also maintains high computational efficiency.
 
 ## Core Algorithm Implementation
 
-```rust title="day02/src/main.rs" {"Extract all prime factors":1-21} {"Gaussian Summation":41-42} {"Find digit range": 50-51,66-67} {"In/Exclusion deduplication": 77-81}
-///
-fn prime_factors(mut n: u32) -> Vec<u32> {
-    let mut factors = BTreeSet::new();
-    while n.is_multiple_of(2) {
-        factors.insert(2);
-        n /= 2;
-    }
-    let mut divisor = 3;
-    while divisor * divisor <= n {
-        while n.is_multiple_of(divisor) {
-            factors.insert(divisor);
-            n /= divisor;
-        }
-        divisor += 2;
-    }
-    if n > 1 {
-        factors.insert(n);
-    }
+```rust title="day02/src/main.rs" {"Extract all prime factors":8-28} {"Gaussian Summation":48-49} {"Find digit range": 58-59,74-75} {"In/Exclusion deduplication": 85-89}
+type Range = (u64, u64);
 
-    factors.into_iter().collect()
+struct Puzzle {
+    ranges: Vec<Range>,
 }
 
-fn get_sum_invalid_ids(range: Range, n: u32, repeat: u32) -> u64 {
-    // The pattern repeats every k = n / repeat digits
-    let k = n / repeat;
-    // Calculate the lower and upper bounds for n-digit numbers with the given
-    // pattern
-    let upper = 10u64.pow(n) - 1;
-    let base = upper / (10u64.pow(k) - 1);
-    let lower = 10u64.pow(k - 1) * base;
-    // Get the overlap between the given range and (lower, upper)
-    let (start, end) = range;
-    let start = start.max(lower);
-    let end = end.min(upper);
-    // Convert back to the base range
-    let start = start.div_ceil(base);
-    let end = end / base;
-    if start > end {
-        return 0;
-    }
+impl Puzzle {
 
-    (end - start + 1) * (start + end) / 2 * base
+  fn prime_factors(mut n: u32) -> Vec<u32> {
+      let mut factors = BTreeSet::new();
+      while n.is_multiple_of(2) {
+          factors.insert(2);
+          n /= 2;
+      }
+      let mut divisor = 3;
+      while divisor * divisor <= n {
+          while n.is_multiple_of(divisor) {
+              factors.insert(divisor);
+              n /= divisor;
+          }
+          divisor += 2;
+      }
+      if n > 1 {
+          factors.insert(n);
+      }
+
+      factors.into_iter().collect()
+  }
+
+  fn get_sum_invalid_ids(range: Range, n: u32, repeat: u32) -> u64 {
+      // The pattern repeats every k = n / repeat digits
+      let k = n / repeat;
+      // Calculate the lower and upper bounds for n-digit numbers with the given
+      // pattern
+      let upper = 10u64.pow(n) - 1;
+      let base = upper / (10u64.pow(k) - 1);
+      let lower = 10u64.pow(k - 1) * base;
+      // Get the overlap between the given range and (lower, upper)
+      let (start, end) = range;
+      let start = start.max(lower);
+      let end = end.min(upper);
+      // Convert back to the base range
+      let start = start.div_ceil(base);
+      let end = end / base;
+      if start > end {
+          return 0;
+      }
+
+      (end - start + 1) * (start + end) / 2 * base
+  }
 }
 
 impl Solution for Puzzle {
@@ -266,3 +274,7 @@ impl Solution for Puzzle {
 The complete code can be found [here](https://github.com/TeddyHuang-00/AoC2025/blob/main/day02/src/main.rs).
 
 Through in-depth analysis of the problem and the application of mathematical methods, we successfully transformed the task from one requiring iteration over a large number of candidates into an efficient computation problem. By leveraging the structural properties of numbers and the inclusion-exclusion principle, we not only improved algorithmic efficiency but also avoided complex conditional logic. Although the problem itself is not overly complex, the optimization process proved to be quite interesting.
+
+## References
+
+[^1]: https://en.wikipedia.org/wiki/Inclusion–exclusion_principle
