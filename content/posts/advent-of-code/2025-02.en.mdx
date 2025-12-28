@@ -1,0 +1,268 @@
+---
+title: Advent of Code 2025 - Day 2 Solution
+pubDatetime: 2025-12-28T15:30:00+08:00
+tags:
+  - Advent of Code
+  - AoC 2025
+  - Algorithm
+  - Rust
+featured: false
+draft: false
+description: Find numbers formed by concatenating multiple identical digit segments
+---
+
+import { Aside } from "@/components/content/components";
+import { Icon } from "astro-icon/components";
+
+export const Yes = () => (
+  <Icon
+    name="tabler:check"
+    class="mx-auto text-emerald-600 dark:text-emerald-500"
+  />
+);
+
+export const No = () => (
+  <Icon name="tabler:x" class="mx-auto text-red-600 dark:text-red-500" />
+);
+
+## Core Problem Description
+
+Given a range of numbers, find all numbers within that range that are formed by concatenating multiple identical digit segments. For Part 1, we only need to find numbers formed by exactly two identical segments. For Part 2, we need to find numbers formed by any number of identical segments (at least two).
+
+| Number | Meets Part 1 Requirement | Meets Part 2 Requirement | Explanation                                  |
+| :----: | :----------------------: | :----------------------: | :------------------------------------------- |
+| 123123 |         <Yes />          |         <Yes />          | Formed by two "123" segments                 |
+| 121212 |          <No />          |         <Yes />          | Formed by three "12" segments                |
+|  1234  |          <No />          |          <No />          | No repeated segment                          |
+|  1111  |         <Yes />          |         <Yes />          | Can be seen as two "11" or four "1" segments |
+
+## Thought Process
+
+### String-based Approach
+
+The problem itself is not difficult. The simplest approach is to use string operations to determine if a number is composed of repeated segments. Specifically:
+
+1. Convert the number to a string `s`.
+2. Iterate over possible segment lengths `k`, from `1` to `s.len() / 2`.
+3. For each segment length, check if the string length is divisible by `k`.
+4. If divisible, extract the first segment `part = &s[0..k]`, and check if `s` equals `part` repeated the appropriate number of times.
+5. If a matching segment is found, the number is valid.
+
+While this method is simple and intuitive, its time complexity is high, especially when dealing with large number ranges.
+
+### Mathematical Approach
+
+Starting with Part 1's requirement, consider how to mathematically determine if a number is formed by two identical segments.
+
+Take the number `123123` as an example. We can express it as:
+
+$$
+\begin{aligned}
+  123123 = & 123 \times 10^3 + 123 \\
+         = & 123 \times (10^3 + 1) \\
+         = & 123 \times 1001
+\end{aligned}
+$$
+
+We can observe that for any even-length number, if it is formed by two identical $k$-digit segments, then it can be written in the form $part \times (10^{k} + 1)$, where $k$ is the length of $part$. Let's denote $10^{k} + 1$ as $base$. The problem then reduces to checking if a number $x$ is divisible by $base$.
+
+Based on this analysis, we can design the following algorithm:
+
+1. For an even-length number $x$, calculate its length $L$.
+2. Compute $k = L / 2$, and then $base = 10^{k} + 1$.
+3. Check if $x$ is divisible by $base$.
+4. If the condition is met, $x$ is valid.
+
+This method has lower time complexity, as we only need one division operation per number. However, we still need to iterate over all numbers in the given range.
+
+### Reverse Thinking - Generation Method
+
+Since we need to find all valid numbers, let's think in reverse: directly generate these numbers instead of checking each number individually. For Part 1, we can generate all valid numbers with the following steps:
+
+1. For a specific total digit length $L$, compute $k = L / 2$.
+2. Compute $base = 10^{k} + 1$.
+3. Iterate over all possible segment values $part$. If $part \times base$ falls within the given range, add it to the result set.
+
+<Aside type="caution" title="Range Constraints">
+
+Caution is needed: $part$ must be constrained to ensure it is a $k$-digit number, preventing the generation of invalid numbers.
+
+For example, when using $1001$ as the $base$, $10$ cannot be used as $part$ (the generated $10010$ would be invalid); similarly, $1234$ is also invalid.
+
+We need to restrict $part$ to the range $part \in [10^{k-1}, 10^{k})$, which exactly fills $k$ digits.
+
+</Aside>
+
+Going further, since the final requirement is the sum of all valid numbers, we can directly calculate this sum using the Gaussian summation formula without explicitly generating each number. The algorithm thus becomes:
+
+1. For the given number range $[low, high]$ and each possible even total digit length $L$, compute $k = L / 2$, $base = 10^{k} + 1$, $left = 10^{k-1}$ and $right = 10^{k} - 1$.
+2. Calculate the starting and ending values for $part$: $start = \max\left(\left\lceil \frac{low}{base} \right\rceil, left\right)$ and $end = \min\left(\left\lfloor \frac{high}{base} \right\rfloor, right\right)$.
+3. Use the Gaussian summation formula to calculate the sum of $part$ values, then multiply by $base$ to get the final sum.
+
+This way, the time complexity is dramatically reduced. We no longer need to iterate over each number but can directly compute the result. The complexity drops from approximately $O(N)$ to $O(\log N)$ (nearly linear with the number of digits, $\log_{10} N$).
+
+### Generalizing to Any Number of Segments
+
+Building on the foundation from Part 1, we can attempt to generalize to Part 2, finding numbers formed by any number (at least two) of identical segments. For example, the number `121212` can be expressed as:
+
+$$
+\begin{aligned}
+  121212 = & 12 \times 10^4 + 12 \times 10^2 + 12 \\
+         = & 12 \times (10^4 + 10^2 + 10^0)
+\end{aligned}
+$$
+
+We can see that this essentially requires modifying the previously fixed $base$. For a number formed by $r$ identical segments, each of length $k$, we can define $base$ as:
+
+$$
+\begin{aligned}
+  base = & \sum_{i=0}^{r-1} 10^{i \cdot k} \\
+       = & \frac{10^{r \cdot k} - 1}{10^{k} - 1} \\
+       = & \frac{10^{L} - 1}{10^{k} - 1}
+\end{aligned}
+$$
+
+Thus, a valid number can be expressed as:
+
+$$
+n = part \times \frac{10^{L} - 1}{10^{k} - 1}
+$$
+
+Based on this, we can design the following algorithm:
+
+1. For the given number range $[low, high]$ and each possible total digit length $L$, find all possible values for $k$ (where $k$ must be a divisor of $L$ and $k < L$).
+2. For each $k$, compute $r = L / k$ and $base = \frac{10^{L} - 1}{10^{k} - 1}$.
+3. Calculate the starting and ending values for $part$: $start = \max\left(\left\lceil \frac{low}{base} \right\rceil, left\right)$ and $end = \min\left(\left\lfloor \frac{high}{base} \right\rfloor, right\right)$, where $left = 10^{k-1}$, $right = 10^{k} - 1$.
+4. Use the Gaussian summation formula to calculate the sum of $part$ values, then multiply by $base$ to get the partial sum for this $(L, k)$ pair.
+
+But is this correct? Let's think. Consider the number $666666$:
+
+$$
+\begin{aligned}
+  k = 1 & \Rightarrow part = 6, r = 6 \\
+  k = 2 & \Rightarrow part = 66, r = 3 \\
+  k = 3 & \Rightarrow part = 666, r = 2
+\end{aligned}
+$$
+
+Similarly, for $12121212$:
+
+$$
+\begin{aligned}
+  k = 2 & \Rightarrow part = 12, r = 4 \\
+  k = 4 & \Rightarrow part = 1212, r = 2
+\end{aligned}
+$$
+
+A problem arises: the same number would be counted multiple times, leading to an incorrect sum. We need to ensure each number is counted only once.
+
+Which numbers are counted multiple times? Precisely those numbers that can be formed using shorter segments. For example, $666666$ can be seen as formed from segment length $1$, so it gets counted again for segment lengths $2$ and $3$. Similarly, $12121212$ is counted for both segment lengths $2$ and $4$.
+
+We can observe that if two segmentation $k_1$ and $k_2$ for the same total length $L$ satisfy $k_1$ being a divisor of $k_2$, then the segmentation with the longer segment length will include numbers generated by the segmentation with the shorter segment length. More formally: for a given total digit count $L$, the segmentation corresponding to a divisor $k$ will include all numbers generated by segmentation corresponding to divisors $d$ of $k$ (where $d$ is also a divisor of $L$).
+
+This leads to a core deduplication idea: for each $L$, only consider segmentation where the repeat count $r$ (where $r = L/k$) is a prime number, then sum all results. Because any repeating pattern with a composite repeat count $r$ can be decomposed into smaller repeats with prime counts, and thus would already be included in the counts for prime $r$. Algorithmically, we can break this down into two steps:
+
+1. Find all prime factors of $L$, denoted $r_1, r_2, \ldots, r_m$. Calculate the results corresponding to using each $r_i$ as the repeat count.
+2. Use the inclusion-exclusion principle to remove overlapping counts. Since prime numbers are co-prime, the only possible overlap is the pattern where the segment length is $1$ (_i.e._, all digits identical). Therefore, we only need to subtract the contribution from the segment length $1$ pattern from the total sum.
+
+This approach not only ensures correctness but also maintains high computational efficiency.
+
+## Core Algorithm Implementation
+
+```rust title="day02/src/main.rs" {"Extract all prime factors":1-21} {"Gaussian Summation":41-42} {"Find digit range": 50-51,66-67} {"In/Exclusion deduplication": 77-81}
+///
+fn prime_factors(mut n: u32) -> Vec<u32> {
+    let mut factors = BTreeSet::new();
+    while n.is_multiple_of(2) {
+        factors.insert(2);
+        n /= 2;
+    }
+    let mut divisor = 3;
+    while divisor * divisor <= n {
+        while n.is_multiple_of(divisor) {
+            factors.insert(divisor);
+            n /= divisor;
+        }
+        divisor += 2;
+    }
+    if n > 1 {
+        factors.insert(n);
+    }
+
+    factors.into_iter().collect()
+}
+
+fn get_sum_invalid_ids(range: Range, n: u32, repeat: u32) -> u64 {
+    // The pattern repeats every k = n / repeat digits
+    let k = n / repeat;
+    // Calculate the lower and upper bounds for n-digit numbers with the given
+    // pattern
+    let upper = 10u64.pow(n) - 1;
+    let base = upper / (10u64.pow(k) - 1);
+    let lower = 10u64.pow(k - 1) * base;
+    // Get the overlap between the given range and (lower, upper)
+    let (start, end) = range;
+    let start = start.max(lower);
+    let end = end.min(upper);
+    // Convert back to the base range
+    let start = start.div_ceil(base);
+    let end = end / base;
+    if start > end {
+        return 0;
+    }
+
+    (end - start + 1) * (start + end) / 2 * base
+}
+
+impl Solution for Puzzle {
+    fn part1(&self) -> String {
+        self.ranges
+            .par_iter()
+            .map(|&(start, end)| {
+                let min_n = start.ilog10() + 1;
+                let max_n = end.ilog10() + 1;
+
+                (min_n..=max_n)
+                    .filter(|n| n % 2 == 0)
+                    .map(|n| Self::get_sum_invalid_ids((start, end), n, 2))
+                    .sum::<u64>()
+            })
+            .sum::<u64>()
+            .to_string()
+    }
+
+    fn part2(&self) -> String {
+        self.ranges
+            .par_iter()
+            .map(|&(start, end)| {
+                let min_n = start.ilog10() + 1;
+                let max_n = end.ilog10() + 1;
+
+                (min_n..=max_n)
+                    .filter(|&n| n > 1)
+                    .map(|n| {
+                        // Sum of all repeating digits (e.g., 1111, 2222, ..., 9999 for n=4)
+                        let all_same = Self::get_sum_invalid_ids((start, end), n, n);
+                        // Get all patterns with smaller, prime repeat factors
+                        Self::prime_factors(n).into_iter().filter(|&k| k < n).fold(
+                            all_same,
+                            |mut sum, k| {
+                                sum += Self::get_sum_invalid_ids((start, end), n, k);
+                                sum -= all_same;
+                                sum
+                            },
+                        )
+                    })
+                    .sum::<u64>()
+            })
+            .sum::<u64>()
+            .to_string()
+    }
+}
+```
+
+## Summary
+
+The complete code can be found [here](https://github.com/TeddyHuang-00/AoC2025/blob/main/day02/src/main.rs).
+
+Through in-depth analysis of the problem and the application of mathematical methods, we successfully transformed the task from one requiring iteration over a large number of candidates into an efficient computation problem. By leveraging the structural properties of numbers and the inclusion-exclusion principle, we not only improved algorithmic efficiency but also avoided complex conditional logic. Although the problem itself is not overly complex, the optimization process proved to be quite interesting.
