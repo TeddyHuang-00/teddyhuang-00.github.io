@@ -17,16 +17,22 @@
   ),
 )
 
-// A style definition for typst images.
-//
-// MUST USE.
-#let typst-image = content => context {
+// Get the color palette based on the current theme (light or dark).
+#let get-theme-palette = () => {
   let theme = sys.inputs.at("theme", default: "light")
   if not ("dark", "light").contains(theme) {
     theme = "light"
   }
+  site-colors.at(theme)
+}
+
+// A style definition for typst images.
+//
+// MUST USE.
+#let typst-image = content => {
+  let palette = get-theme-palette()
   set page(width: auto, height: auto, margin: 10pt)
-  set text(size: 20pt, fill: site-colors.at(theme).foreground)
+  set text(size: 20pt, fill: palette.foreground)
 
   content
 }
