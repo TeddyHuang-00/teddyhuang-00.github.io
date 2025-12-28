@@ -1,3 +1,5 @@
+#import "@preview/catppuccin:1.0.1": catppuccin, flavors
+
 // Color definitions for light and dark themes.
 // Use if the image needs to adapt to different themes.
 #let site-colors = (
@@ -17,13 +19,33 @@
   ),
 )
 
-// Get the color palette based on the current theme (light or dark).
-#let get-theme-palette = () => {
+// Get the current theme (light or dark).
+#let get-theme = () => {
   let theme = sys.inputs.at("theme", default: "light")
   if not ("dark", "light").contains(theme) {
     theme = "light"
   }
-  site-colors.at(theme)
+  theme
+}
+
+// Get the color palette based on the current theme (light or dark).
+#let get-theme-palette = () => {
+  let theme = get-theme()
+  let catppuccin-flavor = if theme == "dark" {
+    flavors.mocha
+  } else {
+    flavors.latte
+  }
+  (
+    site-colors.at(theme)
+      + catppuccin-flavor
+        .colors
+        .keys()
+        .fold((:), (acc, k) => {
+          acc.insert(k, catppuccin-flavor.colors.at(k).rgb)
+          acc
+        })
+  )
 }
 
 // A style definition for typst images.
