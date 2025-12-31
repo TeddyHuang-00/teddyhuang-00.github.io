@@ -25,7 +25,7 @@
     "@expressive-code/plugin-line-numbers": "0.41.5",
     "@giscus/react": "3.1.0",
     "@iconify-json/tabler": "1.2.26",
-    "@myriaddreamin/typst-ts-node-compiler": "0.7.0-rc1",
+    "@myriaddreamin/typst-ts-node-compiler": "0.7.0-rc2",
     "@playform/compress": "0.2.0",
     "@resvg/resvg-js": "2.6.2",
     "@shikijs/transformers": "3.20.0",
