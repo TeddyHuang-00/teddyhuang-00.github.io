@@ -48,7 +48,10 @@ const textHash = createHash("md5").update(text).digest("hex");
 ---
 
 <button
-  class="inline-flex relative gap-2 items-center group cursor-help focus-outline"
+  class:list={[
+    "inline-flex relative gap-2 items-center group cursor-help focus-outline",
+    className,
+  ]}
   aria-describedby={`desc-tooltip-${textHash}`}
 >
   <Icon
