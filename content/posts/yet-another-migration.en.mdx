@@ -12,6 +12,7 @@ description: I've rewritten the blog site yet again. Why do I say "yet again"?
 ---
 
 import { Aside, Badge, Steps } from "@/components/content/components";
+import { Image } from "astro:assets";
 
 ## Why Rewrite Again
 
@@ -64,9 +65,19 @@ This means you can fully leverage React to flexibly design the style and content
 Thanks to this, I redesigned the style and content of the OG images. Although the styles between the two aren't perfectly unified yet, I'm quite satisfied with each individually.
 
 - Site:
-  ![Site OG Image](https://teddyhuang-00.github.io/og.png)
+  <Image
+    src="https://teddyhuang-00.github.io/og.png"
+    alt="Site OG Image"
+    width={1200}
+    height={630}
+  />
 - Post:
-  ![Post OG Image](https://teddyhuang-00.github.io/en/posts/personal-favorites/index.png)
+  <Image
+    src="https://teddyhuang-00.github.io/en/posts/personal-favorites/index.png"
+    alt="Post OG Image"
+    width={1200}
+    height={630}
+  />
 
 <Aside type="caution">
 

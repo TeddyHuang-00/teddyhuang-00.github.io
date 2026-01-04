@@ -12,6 +12,7 @@ description: 又一次重写了博客站，我为什么要说又？
 ---
 
 import { Aside, Badge, Steps } from "@/components/content/components";
+import { Image } from "astro:assets";
 
 ## 为什么又要重写
 
@@ -64,9 +65,19 @@ OG 图会在社交平台（如微信、QQ、微博等）分享链接时作为预
 得益于此，我重新设计了 OG 图的样式和内容，虽然目前两者之间的风格没有很统一，但单独来看我也比较满意了。
 
 - 站点：
-  ![站点 OG 图](https://teddyhuang-00.github.io/og.png)
+  <Image
+    src="https://teddyhuang-00.github.io/og.png"
+    alt="站点 OG 图"
+    width={1200}
+    height={630}
+  />
 - 文章：
-  ![文章 OG 图](https://teddyhuang-00.github.io/zh/posts/personal-favorites/index.png)
+  <Image
+    src="https://teddyhuang-00.github.io/zh/posts/personal-favorites/index.png"
+    alt="文章 OG 图"
+    width={1200}
+    height={630}
+  />
 
 <Aside type="caution">
 
