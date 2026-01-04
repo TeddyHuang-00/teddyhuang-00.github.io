@@ -122,12 +122,13 @@ const nextPost =
 
     {
       headings.length > 0 && (
-        <aside>
-          <details class="py-2 px-4 rounded-md border border-border w-fit">
-            <summary class="font-semibold">
+        <aside class="relative xl:h-0 xl:w-full xl:sticky xl:top-1/4 xl:-mx-6 list-none">
+          <div class="py-2 px-2 rounded-md border border-border hidden xl:block w-fit xl:-translate-x-full max-h-[50vh] overflow-y-auto">
+            <h2 class="font-semibold">
               {localeString("nav.table-of-contents")}
-            </summary>
-            <ul class="pl-6">
+            </h2>
+
+            <nav>
               {headings
                 .filter((heading) => heading.depth > 1 && heading.depth < 5)
                 .map((heading) => (
@@ -148,7 +149,38 @@ const nextPost =
                     </a>
                   </li>
                 ))}
-            </ul>
+            </nav>
+          </div>
+
+          <details class="py-2 px-4 rounded-md border border-border xl:hidden">
+            <summary class="cursor-pointer font-semibold flex items-center justify-between">
+              {localeString("nav.table-of-contents")}
+              <span class="text-sm text-foreground">▾</span>
+            </summary>
+            <nav>
+              <ul class="pl-6">
+                {headings
+                  .filter((heading) => heading.depth > 1 && heading.depth < 5)
+                  .map((heading) => (
+                    <li
+                      class:list={[
+                        {
+                          "pl-0": heading.depth === 2,
+                          "pl-4": heading.depth === 3,
+                          "pl-8": heading.depth === 4,
+                        },
+                      ]}
+                    >
+                      <a
+                        href={`#${heading.slug}`}
+                        class="block py-1 text-sm text-foreground hover:text-accent"
+                      >
+                        {heading.text}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </nav>
           </details>
         </aside>
       )
