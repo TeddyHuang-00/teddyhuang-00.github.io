@@ -18,10 +18,12 @@ import { Icon } from "astro-icon/components";
 
 Given a simple polygon (non self-intersecting) in grid space, with each edge axis-aligned (parallel to either the x-axis or y-axis). Find the largest rectangle, defined by any two polygon vertices as opposite corners, that lies **entirely** within the polygon's interior. <Badge type="info" text="This is Part Two; Part One is much simpler so not elaborated here." />
 
-<Typst
-  filePath="src/assets/images/aoc/2025/09/problem.typ"
-  caption="(Left) Problem input, the polygon vertex coordinates; (Right) Illustration of valid and invalid rectangles formed by choosing any two vertices as opposite corners"
-/>
+<Typst filePath="src/assets/images/aoc/2025/09/problem.typ">
+
+_(Left)_ Problem input, the polygon vertex coordinates\
+_(Right)_ Illustration of valid and invalid rectangles formed by choosing any two vertices as opposite corners
+
+</Typst>
 
 As shown above, the polygon is defined by a sequence of vertices (left figure). Choosing any two vertices as opposite corners yields many possible rectangles. In the right figure, the green rectangle lies entirely within the polygon, while the red rectangle is partially outside. Our task is to find the largest area rectangle among all valid ones.
 
@@ -31,10 +33,11 @@ As shown above, the polygon is defined by a sequence of vertices (left figure). 
 
 In Part One, we already implemented functionality to find all rectangles. Naturally, collision detection comes to mind. A simple approach would be to sample points inside the rectangle and check if they are inside the polygon. To check if a point is inside a shape, a classic method is the ray casting algorithm[^1]. The core idea is to cast a ray from the point in any direction and count intersections with the shape's boundary; an odd count means the point is inside, even means outside. For example:
 
-<Typst
-  filePath="src/assets/images/aoc/2025/09/ray-casting.typ"
-  caption="The ray casting algorithm efficiently tests if a point is inside an arbitrary shape"
-/>
+<Typst filePath="src/assets/images/aoc/2025/09/ray-casting.typ">
+
+The ray casting algorithm efficiently tests if a point is inside an arbitrary shape
+
+</Typst>
 
 <Aside type="caution" title="Why not enumerate all grid points?">
 
@@ -44,10 +47,11 @@ Even for a regular, grid-aligned polygon like in this problem, we cannot practic
 
 Thus, a natural thought arises: perhaps we only need to check a few key points of the rectangle? Like its four corners, or the corners plus the center? However, this approach is insufficient for this problem. A counterexample easily arises:
 
-<Typst
-  filePath="src/assets/images/aoc/2025/09/center-n-corner.typ"
-  caption="Checking the rectangle center and its four corners is insufficient to guarantee the entire rectangle's validity"
-/>
+<Typst filePath="src/assets/images/aoc/2025/09/center-n-corner.typ">
+
+Checking the rectangle center and its four corners is insufficient to guarantee the entire rectangle's validity
+
+</Typst>
 
 In the left rectangle above, the center and all four corners are inside the polygon, yet parts of the rectangle's edges extend outside the polygon's boundary. In fact, arbitrarily adding more key points, like edge midpoints, still cannot guarantee the rectangle's validity because there could still be parts of the rectangle outside the polygon. Therefore, checking a fixed set of key points cannot ensure the entire rectangle's validity.
 
@@ -57,10 +61,12 @@ Although not explicitly stated, the polygon is non self-intersecting (the left c
 
 The polygon partitions the 2D plane into "interior" (valid region) and "exterior" (invalid region). Let $\mathcal{S}$ be the set of all points exterior to the polygon. $\mathcal{S}$ is connected if and only if for any two points $\forall A, B \in \mathcal{S}$, there exists a path $\exists P \subset \mathcal{S}$ such that the starting point $P_0$ is $A$ and the ending point $P_n$ is $B$. Intuitively, this means the polygon does not create isolated enclosures, as shown on the left below.
 
-<Typst
-  filePath="src/assets/images/aoc/2025/09/connectivity.typ"
-  caption="(Left) Self-intersection makes the exterior disconnected; (Right) Property of rectangle boundaries derivable from connectivity"
-/>
+<Typst filePath="src/assets/images/aoc/2025/09/connectivity.typ">
+
+_(Left)_ Self-intersection makes the exterior disconnected\
+_(Right)_ Property of rectangle boundaries derivable from connectivity
+
+</Typst>
 
 Therefore, if any part of a rectangle lies outside the polygon, then due to connectivity, there must exist a path, with every point on it outside the polygon, starting from some point $A$ inside the rectangle and ending at some necessarily existing point $B$ outside the rectangle, as shown on the right above. This path connects the interior and exterior of the rectangle. By simple topology, it must intersect the rectangle's boundary at some point. That is, at least one point on one of the rectangle's edges lies outside the polygon.
 
@@ -76,24 +82,29 @@ This method improves efficiency significantly compared to checking every grid po
 
 To further improve algorithm efficiency, let's try a different perspective: what are the fundamental conditions that make a rectangle invalid? We can identify the following scenarios:
 
-<Typst
-  filePath="src/assets/images/aoc/2025/09/invalid-rectangles.typ"
-  caption="(Left) Fully inside: valid; (Middle) Partially inside: invalid; (Right) Fully outside: invalid"
-/>
+<Typst filePath="src/assets/images/aoc/2025/09/invalid-rectangles.typ">
+
+_(Left)_ **Fully inside**: valid\
+_(Middle)_ **Partially inside**: invalid\
+_(Right)_ **Fully outside**: invalid
+
+</Typst>
 
 It's easy to see that the vast majority of invalid cases are caused by the "partially inside" scenario (middle), while the "fully outside" case can be handled separately later. For the "partially inside" case, we can observe that one edge of the rectangle must intersect an edge of the polygon. More strictly, if **a rectangle's edge intersects a polygon edge perpendicular to it**, and **the intersection point is not at a vertex of either the rectangle or the polygon**, then **the rectangle must be partially outside the polygon**. A less formal but intuitive proof is that each polygon edge divides space into interior (valid) and exterior (invalid). When a polygon edge "pierces" the rectangle, the rectangle necessarily straddles the valid/invalid regions defined by that edge, meaning part of it is outside, as illustrated below:
 
-<Typst
-  filePath="src/assets/images/aoc/2025/09/edge-intersection.typ"
-  caption="When 'pierced' by a polygon edge, the rectangle must span both valid and invalid regions"
-/>
+<Typst filePath="src/assets/images/aoc/2025/09/edge-intersection.typ">
+
+When "pierced" by a polygon edge, the rectangle must span both valid and invalid regions
+
+</Typst>
 
 Is this enough? Don't we still have the "fully outside" case? Actually, for this specific problem input, we don't need to handle it separately. We can observe that the input polygon resembles a circle with a thin rectangle subtracted from it (see figure below). Therefore, the largest possible "fully outside" rectangle would be this thin rectangle itself, whose area is obviously smaller than the area of the largest valid rectangle we can find. So, we only need to focus on the "partially inside" case.
 
-<Typst
-  filePath="src/assets/images/aoc/2025/09/input.typ"
-  caption="The actual input polygon shape resembles a circle with a rectangle carved out"
-/>
+<Typst filePath="src/assets/images/aoc/2025/09/input.typ">
+
+The actual input polygon shape resembles a circle with a rectangle carved out
+
+</Typst>
 
 <Aside type="tip" title="Handling Rectangles Fully Outside the Polygon">
 

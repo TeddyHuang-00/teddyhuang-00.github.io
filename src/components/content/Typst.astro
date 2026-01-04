@@ -6,14 +6,12 @@ export interface Props {
   filePath: string;
   workspace?: string;
   fontPaths?: string[];
-  caption?: string;
 }
 
 const {
   filePath,
   workspace = "src/assets/images",
   fontPaths = [".cache/fonts"],
-  caption,
 } = Astro.props;
 if (!filePath.endsWith(".typ")) {
   throw new Error("Typst component only supports .typ files");
@@ -45,17 +43,29 @@ const notThemed = lightSvg === darkSvg;
   notThemed ? (
     <figure>
       <Fragment set:html={lightSvg} />
-      {caption && <figcaption class="text-center">{caption}</figcaption>}
+      {Astro.slots.has("default") && (
+        <figcaption class="text-center">
+          <slot />
+        </figcaption>
+      )}
     </figure>
   ) : (
     <>
       <figure class="block dark:hidden">
         <Fragment set:html={lightSvg} />
-        {caption && <figcaption class="text-center">{caption}</figcaption>}
+        {Astro.slots.has("default") && (
+          <figcaption class="text-center">
+            <slot />
+          </figcaption>
+        )}
       </figure>
       <figure class="hidden dark:block">
         <Fragment set:html={darkSvg} />
-        {caption && <figcaption class="text-center">{caption}</figcaption>}
+        {Astro.slots.has("default") && (
+          <figcaption class="text-center">
+            <slot />
+          </figcaption>
+        )}
       </figure>
     </>
   )
