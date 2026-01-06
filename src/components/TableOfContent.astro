@@ -1,0 +1,82 @@
+---
+import type { MarkdownHeading } from "astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+export interface Props {
+  headings: MarkdownHeading[];
+  filterSlugs?: string[];
+}
+
+const { headings, filterSlugs = ["footnote-label"] } = Astro.props;
+
+// Filter headings first to suppress noise
+const filteredHeadings = headings.filter(
+  (heading) =>
+    heading.depth > 1 &&
+    heading.depth < 5 &&
+    filterSlugs.indexOf(heading.slug) === -1
+);
+
+const locale = getLangFromUrl(Astro.url);
+const localeString = useTranslations(locale);
+---
+
+{
+  filteredHeadings.length > 0 && (
+    <aside class="relative list-none xl:sticky xl:top-1/4 xl:-mx-6 xl:w-full xl:h-0">
+      <div class="hidden overflow-y-auto py-2 px-2 rounded-md border xl:block xl:-translate-x-full border-border w-fit max-w-[calc(50vw-400px)] max-h-[50vh]">
+        <h2 class="font-semibold">{localeString("nav.table-of-contents")}</h2>
+
+        <nav>
+          {filteredHeadings.map((heading) => (
+            <li
+              class:list={[
+                {
+                  "pl-0": heading.depth === 2,
+                  "pl-4": heading.depth === 3,
+                  "pl-8": heading.depth === 4,
+                },
+              ]}
+            >
+              <a
+                href={`#${heading.slug}`}
+                class="block py-1 text-sm text-foreground hover:text-accent"
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </nav>
+      </div>
+
+      <details class="py-2 px-4 rounded-md border xl:hidden border-border">
+        <summary class="flex justify-between items-center font-semibold cursor-pointer">
+          {localeString("nav.table-of-contents")}
+          <span class="text-sm text-foreground">▾</span>
+        </summary>
+        <nav>
+          <ul class="pl-6">
+            {filteredHeadings.map((heading) => (
+              <li
+                class:list={[
+                  {
+                    "pl-0": heading.depth === 2,
+                    "pl-4": heading.depth === 3,
+                    "pl-8": heading.depth === 4,
+                  },
+                ]}
+              >
+                <a
+                  href={`#${heading.slug}`}
+                  class="block py-1 text-sm text-foreground hover:text-accent"
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+    </aside>
+  )
+}

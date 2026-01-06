@@ -10,6 +10,7 @@ import EditPost from "@/components/EditPost.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import ShareLinks from "@/components/ShareLinks.astro";
+import TableOfContent from "@/components/TableOfContent.astro";
 import Tag from "@/components/Tag.astro";
 import { SITE } from "@/config";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
@@ -120,71 +121,7 @@ const nextPost =
       <EditPost {hideEditPost} {post} class="max-sm:hidden" />
     </div>
 
-    {
-      headings.length > 0 && (
-        <aside class="relative list-none xl:sticky xl:top-1/4 xl:-mx-6 xl:w-full xl:h-0">
-          <div class="hidden overflow-y-auto py-2 px-2 rounded-md border xl:block xl:-translate-x-full border-border w-fit max-w-[calc(50vw-400px)] max-h-[50vh]">
-            <h2 class="font-semibold">
-              {localeString("nav.table-of-contents")}
-            </h2>
-
-            <nav>
-              {headings
-                .filter((heading) => heading.depth > 1 && heading.depth < 5)
-                .map((heading) => (
-                  <li
-                    class:list={[
-                      {
-                        "pl-0": heading.depth === 2,
-                        "pl-4": heading.depth === 3,
-                        "pl-8": heading.depth === 4,
-                      },
-                    ]}
-                  >
-                    <a
-                      href={`#${heading.slug}`}
-                      class="block py-1 text-sm text-foreground hover:text-accent"
-                    >
-                      {heading.text}
-                    </a>
-                  </li>
-                ))}
-            </nav>
-          </div>
-
-          <details class="py-2 px-4 rounded-md border xl:hidden border-border">
-            <summary class="flex justify-between items-center font-semibold cursor-pointer">
-              {localeString("nav.table-of-contents")}
-              <span class="text-sm text-foreground">▾</span>
-            </summary>
-            <nav>
-              <ul class="pl-6">
-                {headings
-                  .filter((heading) => heading.depth > 1 && heading.depth < 5)
-                  .map((heading) => (
-                    <li
-                      class:list={[
-                        {
-                          "pl-0": heading.depth === 2,
-                          "pl-4": heading.depth === 3,
-                          "pl-8": heading.depth === 4,
-                        },
-                      ]}
-                    >
-                      <a
-                        href={`#${heading.slug}`}
-                        class="block py-1 text-sm text-foreground hover:text-accent"
-                      >
-                        {heading.text}
-                      </a>
-                    </li>
-                  ))}
-              </ul>
-            </nav>
-          </details>
-        </aside>
-      )
-    }
+    <TableOfContent {headings} />
 
     <article
       id="article"
