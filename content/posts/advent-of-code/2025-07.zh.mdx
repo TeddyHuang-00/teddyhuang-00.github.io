@@ -1,0 +1,261 @@
+---
+title: Advent of Code 2025 - 第7天题解
+pubDatetime: 2026-01-09T23:00:00+08:00
+tags:
+  - Advent of Code
+  - AoC 2025
+  - Algorithm
+  - Rust
+featured: false
+draft: false
+description: 动态规划遍历树
+---
+
+import { Aside, Typst } from "@/components/content/components";
+import { Icon } from "astro-icon/components";
+
+## 核心任务描述
+
+给定一个矩阵空间，其中首行中某点为起始，其余空间内分布着若干分流器。从起始点开始向下射出一条光线，光线会在遇到分流器时分成两条，分别从分流器的左侧和右侧继续向下传播。试计算：
+
+1. 光线会经过的分流器总数；
+2. 光线会经过的不同路径总数。
+
+<Typst filePath="src/assets/images/aoc/2025/07/problem.typ">
+
+**问题示意图**\
+圆点表示起始点，三角形表示分流器，其中绿色三角形表示光线经过的分流器，红色三角形表示光线未经过的分流器，白色线条为光线路径
+
+</Typst>
+
+## 思考过程
+
+### 模拟法
+
+最直观的思路是模拟光线的传播过程。最简单的想法是，我们可以维护一个光线坐标集合 `beams`，初始时仅包含起始点坐标 `(0, 0)`。然后我们不断迭代 `beams` 中的每个光线坐标：
+
+- 如果超出矩阵边界，则将其从 `beams` 中移除；
+- 如果是空白，则将光线坐标下移一格；
+- 如果是分流器，则将其从 `beams` 中移除，并向左侧和右侧各添加一个新的光线坐标。同时将经过的分流器坐标加入一个 `visited` 集合中。
+
+重复上述过程，直到 `beams` 为空。最终，`visited` 集合的大小即为光线经过的分流器总数，而我们可以通过记录每次添加到 `beams` 中的光线坐标来计算不同路径总数。
+
+<Aside type="caution" title="性能问题">
+
+这种方法直接且易于实现，但是有几个问题：
+
+1. 可能带有大量重复计算，尤其是在分流器较多的情况下，光线的传播可能会反复经过相同的路径，导致计算量呈指数级增长；
+2. 需要维护大量的光线坐标，内存消耗较大。
+3. 当空间纵向按比例增大时，算法会花费更多的时间在步骤 2 上，因为大部分光线会在空白区域中直线下移。这部分计算实际上是没有意义的，并不改变最终结果。
+
+更需要注意的是，模拟法在处理第二问时，可能会遇到路径总数过大的问题，导致需要存储的路径数量超出内存限制。
+
+</Aside>
+
+### 预计算捷径
+
+针对上述问题，我们可以从解决步骤 2 产生的无效计算入手。显而易见，所有光线在经过空白格点时，都会继续前进直到遇到以下两种情况之一：
+
+1. 遇到分流器；
+2. 超出矩阵边界。
+
+因此，只要分流器的分布或者矩阵大小没有发生改变，那么所有格点位置的行动轨迹也是唯一确定的。因此，我们实际上可以预先计算出每个格子到达下一个分流器或边界外所需经过的格子数，并将其存储在一个二维数组 `shortcut` 中。具体计算方法为：
+
+1. 从矩阵底部开始，逐行向上遍历每个格子；
+2. 如果当前格子是分流器或者超出边界，则 `shortcut[i][j] = 0`；
+3. 否则，`shortcut[i][j] = shortcut[i + 1][j] + 1`。如果 `i + 1` 超出边界，则 `shortcut[i][j] = 1`。
+
+<Aside type="info" title="并行化计算">
+
+不难发现，由于每个格子的 `shortcut` 值仅依赖于其下方格子的值，因此我们可以将每一列的计算任务并行进行，从而大幅提高预计算的效率。如下所示：
+
+```rust title="预计算捷径示例" {"并行处理每一列":2-4}
+let mut shortcut = Array2::zeros((grid.nrows(), grid.ncols()));
+
+Zip::from(shortcut.lanes_mut(Axis(0)))
+    .and(grid.lanes(Axis(0)))
+    .par_for_each(|mut shortpass, lane| {
+        let mut next_splitter = 0;
+        for (s, c) in shortpass.iter_mut().zip(lane.iter()).rev() {
+            match c {
+                Grid::Splitter => next_splitter = 0,
+                _ => next_splitter += 1,
+            }
+            *s = next_splitter;
+        }
+    });
+```
+
+</Aside>
+
+通过预计算，我们可以得到如下所示的捷径：
+
+<Typst filePath="src/assets/images/aoc/2025/07/precomputation.typ">
+
+**预计算捷径**\
+热力图中每个格子的颜色和数字表示捷径长度，即到达下一个分流器或边界外所需经过的格子数
+
+</Typst>
+
+这样一来，在模拟光线传播时，我们只需根据当前光线坐标查表获取预计算的捷径长度，直接将光线坐标下移相应的格子数，从而跳过大量无效计算。
+
+在此基础上，由于在此改动后光线仅会出现在一些固定位置（起点、分流器或边界外），我们可以进一步解决第二问中路径总数过大的问题。具体来说，这将转化为一个动态规划问题。记经过每个光线坐标 $(x, y)$ 的路径总数为 $S_{x,y}$，那么经过该点的路径总数则为来自其上方（$y' < y$）左侧和右侧分流器的路径总数之和：
+
+$$
+S_{x,y} = \sum_{y' < y} (\delta_{x-1,y'} \cdot S_{x-1,y'} + \delta_{x+1,y'} \cdot S_{x+1,y'}) \\
+\text{其中 }\delta_{x,y} = \begin{cases}
+1, & (x,y)\text{ 是分流器} \\
+0, & \text{反之}
+\end{cases}
+$$
+
+因此，我们可以以坐标为键，经过该点的路径总数为值，在按照分流器高度进行遍历时，使用这些键值对来记录动态规划的数值 $S$。每当我们从 `frontier` 中取出一个光线坐标时，我们检查其下一步的位置：
+
+- 如果是边界外，则该光线已经结束，将其路径总数累加到最终结果中；
+- 如果是分流器，则将其路径总数分别累加到下一坐标左侧和右侧的新光线坐标中。
+
+一个可用的实现如下所示：
+
+```rust title="动态规划路径计数示例" {"存储坐标和路径总数": 4-5} {"光线超出边界，加入计数即可": 11-13} {"遇到分流器时检查边界并更新计数": 15-24}
+let width = self.shortcut.ncols();
+let height = self.shortcut.nrows();
+let mut count = 0usize;
+
+let mut frontier = vec![(self.start, 1)];
+while !frontier.is_empty() {
+    let mut next_layer = BTreeMap::new();
+    for ((r, c), n) in frontier {
+        let nr = r + self.shortcut[[r, c]];
+        if nr >= height {
+
+            count += n;
+            continue;
+        }
+
+        [-1, 1]
+            .iter()
+            .filter_map(|&side| {
+                let nc = c.wrapping_add_signed(side);
+                (nc < width).then_some((nr, nc))
+            })
+            .for_each(|pos| {
+                next_layer.entry(pos).and_modify(|e| *e += n).or_insert(n);
+            });
+    }
+    frontier = next_layer.into_iter().collect();
+}
+count.to_string()
+```
+
+### 状态压缩动态规划
+
+既然我们想到了使用动态规划来计算路径，我们不妨带着这个思路退一步分析这个问题。我们在模拟法的视角下再回顾上述的状态转移方程：
+
+$$
+S_{x,y} = \begin{cases}
+S_{x,y-1} + \delta_{x-1, y-1} \cdot S_{x-1,y-1} + \delta_{x+1,y-1} \cdot S_{x+1,y-1}, & (x,y)\text{ 是空白} \\
+0, & (x,y)\text{ 是分流器} \\
+\end{cases}
+$$
+
+我们把上式中 $(x,y)$ 处是空白的转移方程单独画出来，如下所示：
+
+<Typst filePath="src/assets/images/aoc/2025/07/transition.typ">
+
+**状态转移**\
+每个状态仅取决于上一行的三个状态，虚线表示该路径可能不存在。每一行中各个状态之间不存在依赖关系。
+
+</Typst>
+
+不难发现，由于每一行中的各个状态之间不存在依赖关系，因此我们实际上并不需要以二维坐标来存储状态，而是可以仅使用一维数组来存储当前行的状态，也就是我们所熟知的**状态压缩**动态规划。具体来说，我们可以使用一个一维数组 `dp` 来存储当前行的状态，初始时 `dp[start] = 1`，其余位置为 `0`。然后我们逐行遍历矩阵，对于每个格子 `i`：
+
+- 如果是分流器，则将 `next[i]` 置为 `0`；
+- 如果是空白，则按照上述转移方程更新 `next[i]` 的值。
+
+完成一行的更新后，将 `next` 赋值给 `dp`，继续处理下一行。最后，`dp` 数组中所有位置的和即为路径总数。
+
+实际上，观察输入可知，同一行的分流器之间至少间隔一个空格，因此不会互相影响。借此我们完全可以将两个分支步骤中判断是否为分流器的逻辑整合到一起，即：
+
+- 逐行遍历矩阵，对于每个格子 `i`：
+   - 如果是分流器，则将 `dp[i]` 加到相邻格子 `i-1` 和 `i+1` 上，并将 `dp[i]` 置为 `0`；
+   - 如果是空白，则不需要做任何操作；
+
+这样一来，我们就实际上不需要处理任何空白格子，故而可以直接跳过它们，从而进一步提升算法效率。实际上，这完全等效于：
+
+- 按行遍历矩阵中的每个分流器格子 `i`，将 `dp[i]` 加到相邻格子 `i-1` 和 `i+1` 上，并将 `dp[i]` 置为 `0`；
+
+在这个最优化的版本中，我们甚至避免了预计算捷径，这部分相当于被隐式地整合到了状态压缩动态规划的过程中。同时不需要维护复杂的数据结构，因此算法效率得到了极大的提升，对于本题的输入规模而言，计算时间分别得到了约数十倍和近千倍的提升（$134 \mu s \Rightarrow 3.83 \mu s$ 和 $1.76 ms \Rightarrow 3.41 \mu s$）。
+
+<Aside type="tip" title="坦白">
+
+说句实话，我在实现这个版本时，完全没有意识到这是状态压缩动态规划，直到事后回头看代码才发现的……
+
+以上推导过程纯属事后诸葛亮，仅为了让读者更好地理解这一优化思路。顿悟时刻并非本文的重点，望读者见谅。
+
+</Aside>
+
+## 核心算法实现
+
+<Aside type="caution" title="代码片段说明">
+
+以下代码片段省略了输入解析等部分，而将分流器坐标排序的逻辑也一并省略，仅保留了核心算法实现部分，完整代码见文末链接。
+
+</Aside>
+
+```rust title="day07/src/main.rs" {"记录是否有光线经过": 3-4} {"更新计数": 11} {"分流器分发光线": 13-19,35-44} {"记录有多少光线经过": 27-28} {"没有光线则跳过处理": 32-33}
+impl Solution for Puzzle {
+    fn part1(&self) -> String {
+
+        let mut beams = vec![false; self.width];
+        beams[self.start.1] = true;
+        let (_, count) =
+            self.splitters
+                .iter()
+                .fold((beams, 0), |(mut beams, mut count), &(_, c)| {
+                    if beams[c] {
+                        count += 1;
+
+                        beams[c] = false;
+                        if let Some(v) = beams.get_mut(c.wrapping_add_signed(-1)) {
+                            *v = true;
+                        }
+                        if let Some(v) = beams.get_mut(c + 1) {
+                            *v = true;
+                        }
+                    }
+                    (beams, count)
+                });
+        count.to_string()
+    }
+
+    fn part2(&self) -> String {
+
+        let mut beams = vec![0; self.width];
+        beams[self.start.1] = 1;
+        let beams = self.splitters.iter().fold(beams, |mut beams, &(_, c)| {
+            match beams[c] {
+
+                0 => beams,
+
+                cnt => {
+                    if let Some(v) = beams.get_mut(c.wrapping_add_signed(-1)) {
+                        *v += cnt;
+                    }
+                    if let Some(v) = beams.get_mut(c + 1) {
+                        *v += cnt;
+                    }
+                    beams[c] = 0;
+                    beams
+                }
+            }
+        });
+        beams.into_iter().sum::<u64>().to_string()
+    }
+}
+```
+
+## 总结
+
+完整代码见[此处](https://github.com/TeddyHuang-00/AoC2025/blob/main/day07/src/main.rs)。
+
+这道题本身并不困难，即便是使用模拟法，通过一些小优化也能在合理时间内完成计算。但这题的两种优化思路都非常有趣：预计算捷径的想法在很多经典算法中都有应用，尤其是在模式匹配等领域；而状态压缩则是动态规划中常用的技巧之一。本题并不类似于经典的动态规划问题那样直观，但通过分析状态转移，我们仍然能够将其转化为状态压缩动态规划，从而大幅提升算法效率。这种分析思路在将来的算法设计中也会非常有用。

@@ -1,0 +1,261 @@
+---
+title: Advent of Code 2025 - Day 7 Solution
+pubDatetime: 2026-01-09T23:00:00+08:00
+tags:
+  - Advent of Code
+  - AoC 2025
+  - Algorithm
+  - Rust
+featured: false
+draft: false
+description: Dynamic Programming Traversing the Tree
+---
+
+import { Aside, Typst } from "@/components/content/components";
+import { Icon } from "astro-icon/components";
+
+## Core Problem Description
+
+Given a matrix space where a point in the top row is the starting position, and the rest of the space contains several splitters. A beam of light is emitted downward from the starting point. When the beam encounters a splitter, it divides into two beams, which continue propagating downward from the left and right sides of the splitter, respectively. Calculate:
+
+1. The total number of splitters the light beam will pass through.
+2. The total number of distinct paths the light beam will take.
+
+<Typst filePath="src/assets/images/aoc/2025/07/problem.typ">
+
+**Problem Diagram**\
+The circle represents the starting point, triangles represent splitters. Green triangles indicate splitters the light passes through, red triangles indicate splitters the light does not pass through, and white lines represent the light paths.
+
+</Typst>
+
+## Thought Process
+
+### Simulation Method
+
+The most intuitive approach is to simulate the propagation of the light beam. The simplest idea is to maintain a set of beam coordinates `beams`, initially containing only the starting point coordinate `(0, 0)`. Then we iteratively process each beam coordinate in `beams`:
+
+- If outside the matrix boundaries, remove it from `beams`.
+- If on an empty cell, move the beam down one cell.
+- If on a splitter, remove it from `beams`, and add new beam coordinates to the left and right respectively. Also, add the splitter's coordinate to a `visited` set.
+
+Repeat the above process until `beams` is empty. Finally, the size of the `visited` set is the total number of splitters the light passes through. The number of distinct paths can be calculated by recording the beam coordinates added to `beams` each time.
+
+<Aside type="caution" title="Performance Issues">
+
+This method is straightforward and easy to implement, but has several issues:
+
+1. It may involve a large amount of redundant calculation, especially with many splitters. Beam propagation might repeatedly traverse the same paths, leading to exponential growth in computation.
+2. It requires maintaining a large number of beam coordinates, consuming significant memory.
+3. As the vertical size of the space increases proportionally, the algorithm spends more time on step 2, as most beams travel straight down through empty areas. This computation is essentially meaningless and does not affect the final result.
+
+More importantly, for the second part of the problem, the simulation method may encounter issues with an excessively large number of paths, potentially exceeding memory limits.
+
+</Aside>
+
+### Precomputing Shortcuts
+
+To address the above problems, we can start by tackling the inefficiency from step 2. It's evident that all beams, when passing through empty grid cells, will continue forward until one of two conditions is met:
+
+1. Encountering a splitter.
+2. Exiting the matrix boundaries.
+
+Therefore, as long as the distribution of splitters or the matrix size does not change, the trajectory from any given cell is uniquely determined. Thus, we can precompute the number of cells each position needs to traverse to reach the next splitter or exit, storing it in a 2D array `shortcut`. The specific calculation method is:
+
+1. Traverse each cell from the bottom of the matrix upwards, row by row.
+2. If the current cell is a splitter or outside the boundary, then `shortcut[i][j] = 0`.
+3. Otherwise, `shortcut[i][j] = shortcut[i + 1][j] + 1`. If `i + 1` is out of bounds, then `shortcut[i][j] = 1`.
+
+<Aside type="info" title="Parallel Computation">
+
+It's easy to see that since the `shortcut` value for each cell depends only on the cell directly below it, the computation for each column can be parallelized, significantly improving the efficiency of the precomputation. As shown below:
+
+```rust title="Precomputing Shortcuts Example" {"Parallel processing for each column":2-4}
+let mut shortcut = Array2::zeros((grid.nrows(), grid.ncols()));
+
+Zip::from(shortcut.lanes_mut(Axis(0)))
+    .and(grid.lanes(Axis(0)))
+    .par_for_each(|mut shortpass, lane| {
+        let mut next_splitter = 0;
+        for (s, c) in shortpass.iter_mut().zip(lane.iter()).rev() {
+            match c {
+                Grid::Splitter => next_splitter = 0,
+                _ => next_splitter += 1,
+            }
+            *s = next_splitter;
+        }
+    });
+```
+
+</Aside>
+
+Through precomputation, we obtain shortcuts as shown below:
+
+<Typst filePath="src/assets/images/aoc/2025/07/precomputation.typ">
+
+**Precomputed Shortcuts**\
+The color and number in each cell of the heatmap represent the shortcut length, _i.e._, the number of cells to traverse to reach the next splitter or exit.
+
+</Typst>
+
+In this way, when simulating beam propagation, we only need to look up the precomputed shortcut length based on the current beam coordinate, directly moving the beam downward by that number of cells, thereby skipping a large amount of redundant computation.
+
+Building on this, since beams will only appear at fixed positions (start point, splitters, or outside the boundary), we can further address the issue of an excessively large number of paths for the second part. Specifically, this transforms into a dynamic programming problem. Let $S_{x,y}$ denote the total number of paths passing through coordinate $(x, y)$. Then the total number of paths through that point is the sum of paths coming from the left and right splitters above it ($y' < y$):
+
+$$
+S_{x,y} = \sum_{y' < y} (\delta_{x-1,y'} \cdot S_{x-1,y'} + \delta_{x+1,y'} \cdot S_{x+1,y'}) \\
+\text{where }\delta_{x,y} = \begin{cases}
+1, & (x,y)\text{ is a splitter} \\
+0, & \text{otherwise}
+\end{cases}
+$$
+
+Therefore, we can use coordinates as keys and the number of paths passing through them as values, recording the dynamic programming values $S$ while iterating over splitters by their row. Each time we take a beam coordinate from `frontier`, we check its next position:
+
+- If it's outside the boundary, the beam has terminated; accumulate its path count to the final result.
+- If it's a splitter, distribute its path count to new beam coordinates to its left and right, respectively.
+
+A viable implementation is as follows:
+
+```rust title="Dynamic Programming Path Count Example" {"Store coordinate and path count": 4-5} {"Beam out of bounds, just add count": 11-13} {"Check bounds and update counts at splitter": 15-24}
+let width = self.shortcut.ncols();
+let height = self.shortcut.nrows();
+let mut count = 0usize;
+
+let mut frontier = vec![(self.start, 1)];
+while !frontier.is_empty() {
+    let mut next_layer = BTreeMap::new();
+    for ((r, c), n) in frontier {
+        let nr = r + self.shortcut[[r, c]];
+        if nr >= height {
+
+            count += n;
+            continue;
+        }
+
+        [-1, 1]
+            .iter()
+            .filter_map(|&side| {
+                let nc = c.wrapping_add_signed(side);
+                (nc < width).then_some((nr, nc))
+            })
+            .for_each(|pos| {
+                next_layer.entry(pos).and_modify(|e| *e += n).or_insert(n);
+            });
+    }
+    frontier = next_layer.into_iter().collect();
+}
+count.to_string()
+```
+
+### State Compression Dynamic Programming
+
+Since we've considered using dynamic programming to calculate paths, let's take this view a step back. Let's revisit the state transition equation from the perspective of the simulation method:
+
+$$
+S_{x,y} = \begin{cases}
+S_{x,y-1} + \delta_{x-1, y-1} \cdot S_{x-1,y-1} + \delta_{x+1,y-1} \cdot S_{x+1,y-1}, & (x,y)\text{ is empty} \\
+0, & (x,y)\text{ is a splitter} \\
+\end{cases}
+$$
+
+Let's visualize the transition equation for the case where $(x,y)$ is an empty cell separately, as shown below:
+
+<Typst filePath="src/assets/images/aoc/2025/07/transition.typ">
+
+**State Transition**\
+Each state depends only on three states from the row above. Dashed lines indicate the path may not exist. States within the same row have no dependencies on each other.
+
+</Typst>
+
+It's clear that since states within the same row have no dependencies, we don't actually need to store states using two-dimensional coordinates. We can instead use a one-dimensional array to store the states of the current row, _a.k.a._ **state compression** dynamic programming. Specifically, we can use a 1D array `dp` to store the states of the current row, initialized with `dp[start] = 1` and `0` elsewhere. Then we traverse the matrix row by row. For each cell `i`:
+
+- If it's a splitter, set `next[i]` to `0`.
+- If it's empty, update `next[i]` according to the transition equation above.
+
+After updating a row, assign `next` to `dp` and continue with the next row. Finally, the sum of all positions in the `dp` array is the total number of paths.
+
+In fact, observing the input reveals that splitters in the same row are separated by at least one empty cell, so they don't interfere with each other. This allows us to integrate the logic for checking if a cell is a splitter from the two branching steps:
+
+- Traverse the matrix row by row. For each cell `i`:
+   - If it's a splitter, add `dp[i]` to the adjacent cells `i-1` and `i+1`, and set `dp[i]` to `0`.
+   - If it's empty, no action is needed.
+
+In this way, we completely avoid processing empty cells, further improving algorithm efficiency. This is effectively equivalent to:
+
+- Traverse each splitter cell `i` in the matrix by row, add `dp[i]` to the adjacent cells `i-1` and `i+1`, and set `dp[i]` to `0`.
+
+In this optimized version, we even avoid precomputing shortcuts, as this part is implicitly integrated into the state compression dynamic programming process. It also doesn't require maintaining complex data structures, leading to a significant performance boost. For the given problem's input scale, computation times improved by approximately tens to nearly a thousand times (from $134 \mu s$ to $3.83 \mu s$ and from $1.76 ms$ to $3.41 \mu s$).
+
+<Aside type="tip" title="Confession">
+
+To be honest, when implementing this version, I didn't realize it was state compression dynamic programming until I looked back at the code afterward…
+
+The derivation above is purely a post hoc rationalization to help readers better understand this optimization approach. The "Aha!" moment is not the focus of this article; please excuse the author.
+
+</Aside>
+
+## Core Algorithm Implementation
+
+<Aside type="caution" title="Code Snippet Note">
+
+The following code snippets omit input parsing and other parts. The logic for sorting splitter coordinates is also omitted. Only the core algorithm implementation is retained. The full code is available at the link at the end.
+
+</Aside>
+
+```rust title="day07/src/main.rs" {"Record if beam passes through": 3-4} {"Update count": 11} {"Distributes beams": 13-19,35-44} {"Record how many beams pass through": 27-28} {"Skip processing if no beams": 32-33}
+impl Solution for Puzzle {
+    fn part1(&self) -> String {
+
+        let mut beams = vec![false; self.width];
+        beams[self.start.1] = true;
+        let (_, count) =
+            self.splitters
+                .iter()
+                .fold((beams, 0), |(mut beams, mut count), &(_, c)| {
+                    if beams[c] {
+                        count += 1;
+
+                        beams[c] = false;
+                        if let Some(v) = beams.get_mut(c.wrapping_add_signed(-1)) {
+                            *v = true;
+                        }
+                        if let Some(v) = beams.get_mut(c + 1) {
+                            *v = true;
+                        }
+                    }
+                    (beams, count)
+                });
+        count.to_string()
+    }
+
+    fn part2(&self) -> String {
+
+        let mut beams = vec![0; self.width];
+        beams[self.start.1] = 1;
+        let beams = self.splitters.iter().fold(beams, |mut beams, &(_, c)| {
+            match beams[c] {
+
+                0 => beams,
+
+                cnt => {
+                    if let Some(v) = beams.get_mut(c.wrapping_add_signed(-1)) {
+                        *v += cnt;
+                    }
+                    if let Some(v) = beams.get_mut(c + 1) {
+                        *v += cnt;
+                    }
+                    beams[c] = 0;
+                    beams
+                }
+            }
+        });
+        beams.into_iter().sum::<u64>().to_string()
+    }
+}
+```
+
+## Summary
+
+The complete code is available [here](https://github.com/TeddyHuang-00/AoC2025/blob/main/day07/src/main.rs).
+
+This problem itself is not difficult; even using the simulation method with some minor optimizations can complete the calculation within a reasonable time. However, the two optimization approaches for this problem are both very interesting: the idea of precomputing shortcuts is used in many classic algorithms, especially in areas like pattern matching; state compression is a common technique in dynamic programming. This problem is not as intuitively similar to classic DP problems, but by analyzing state transitions, we can still transform it into state compression dynamic programming, greatly improving algorithmic efficiency. This analytical approach can be very useful in future algorithm design.
