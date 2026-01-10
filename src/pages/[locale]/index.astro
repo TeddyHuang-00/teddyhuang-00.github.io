@@ -43,7 +43,7 @@ const backUrl = getRelativeLocaleUrl(locale, "/");
       </h1>
       <a
         target="_blank"
-        href={getRelativeLocaleUrl(locale, "/rss.xml")}
+        href={getRelativeLocaleUrl(locale, "/rss.xml").replace(/\/$/, "")}
         class="inline-block"
         aria-label={localeString("rss.feed")}
         title={localeString("rss.feed")}
