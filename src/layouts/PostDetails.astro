@@ -57,7 +57,7 @@ if (!ogImageUrl && SITE.dynamicOgImage) {
   ogImageUrl = getRelativeLocaleUrl(
     locale,
     `${getPath(post.data.translationId, post.filePath)}/index.png`
-  );
+  ).replace(/\/$/, "");
 }
 
 // Resolve OG image URL (or fallback to SITE.ogImage / default `og.png`)
