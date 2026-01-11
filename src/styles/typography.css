@@ -89,10 +89,10 @@
     pre {
       @apply focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-dashed;
     }
-  }
 
-  /* ===== KaTeX Styles ===== */
-  .app-prose .katex-display {
-    @apply text-foreground max-w-full overflow-x-auto;
+    /* ===== KaTeX Styles ===== */
+    .katex-display {
+      @apply overflow-x-auto overflow-y-hidden py-0.5 max-w-full text-foreground;
+    }
   }
 }
