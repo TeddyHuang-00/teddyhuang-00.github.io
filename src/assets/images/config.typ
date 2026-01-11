@@ -1,4 +1,5 @@
-#import "@preview/catppuccin:1.0.1": catppuccin, flavors
+#import "dependencies.typ": catppuccin
+#import catppuccin: catppuccin, flavors
 
 // Color definitions for light and dark themes.
 // Use if the image needs to adapt to different themes.

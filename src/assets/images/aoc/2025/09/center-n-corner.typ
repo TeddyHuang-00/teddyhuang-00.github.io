@@ -1,5 +1,5 @@
 #import "../../../config.typ": *
-#import "@preview/cetz:0.4.2"
+#import "../../../dependencies.typ": cetz
 
 #show: typst-image
 #let palette = get-theme-palette()
