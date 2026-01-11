@@ -174,11 +174,20 @@ It's clear that since states within the same row have no dependencies, we don't 
 
 After updating a row, assign `next` to `dp` and continue with the next row. Finally, the sum of all positions in the `dp` array is the total number of paths.
 
-In fact, observing the input reveals that splitters in the same row are separated by at least one empty cell, so they don't interfere with each other. This allows us to integrate the logic for checking if a cell is a splitter from the two branching steps:
+In fact, observing the input reveals that splitters in the same row are separated by at least one empty cell, so they don't interfere with each other. This allows us to integrate the logic for checking if a cell is a splitter from the two branching steps, which can be represented as:
+
+<Typst filePath="src/assets/images/aoc/2025/07/transition-independent.typ">
+
+**State Transition (Independent Branches)**\
+The state transition of each splitter is independent of others, dashed lines indicate paths implied by in-place modification.
+
+</Typst>
+
+Based on this, we can further simplify the state transition process:
 
 - Traverse the matrix row by row. For each cell `i`:
-   - If it's a splitter, add `dp[i]` to the adjacent cells `i-1` and `i+1`, and set `dp[i]` to `0`.
-   - If it's empty, no action is needed.
+  - If it's a splitter, add `dp[i]` to the adjacent cells `i-1` and `i+1`, and set `dp[i]` to `0`.
+  - If it's empty, no action is needed.
 
 In this way, we completely avoid processing empty cells, further improving algorithm efficiency. This is effectively equivalent to:
 
