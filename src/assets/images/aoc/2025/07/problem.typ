@@ -16,9 +16,8 @@
 #let splitters = (
   space
     .enumerate()
-    .fold((), (acc, x) => (
-      acc
-        + x.at(1).enumerate().filter(cell => cell.at(1) == "^" or cell.at(1) == "+").map(cell => (x.at(0), cell.at(0)))
+    .fold((), (acc, (x, row)) => (
+      acc + row.enumerate().filter(((_, cell)) => cell == "^" or cell == "+").map(((idx, _)) => (x, idx))
     ))
 )
 

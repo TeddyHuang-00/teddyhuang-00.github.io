@@ -20,13 +20,13 @@
   line(..example, close: true, fill: palette.text.transparentize(70%), stroke: 3pt)
   example.map(pos => circle(pos, radius: 0.15, fill: palette.text, stroke: none)).flatten()
 
-  rect(..corners.chunks(2).map(s => s.at(0)), fill: palette.red.transparentize(30%), stroke: (
+  rect(..corners.chunks(2).map(((v, _)) => v), fill: palette.red.transparentize(30%), stroke: (
     paint: palette.red,
     thickness: 3pt,
   ))
   intersections("i", {
-    line(..corners.chunks(2).map(s => s.at(0)), stroke: (dash: "dashed"))
-    line(..corners.chunks(2).map(s => s.at(1)), stroke: (dash: "dashed"))
+    line(..corners.chunks(2).map(((v, _)) => v), stroke: (dash: "dashed"))
+    line(..corners.chunks(2).map(((_, v)) => v), stroke: (dash: "dashed"))
   })
   circle("i.0", radius: 0.2, fill: palette.green, stroke: none)
   corners.map(pos => circle(pos, radius: 0.2, fill: palette.green, stroke: none)).flatten()

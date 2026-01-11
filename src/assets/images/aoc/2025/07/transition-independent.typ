@@ -26,17 +26,13 @@
     ($S'_(x-2)$, $S'_(x-1)$, $S'_(x)$, $S'_(x+1)$, $S'_(x+2)$),
   )
     .enumerate()
-    .map(ir => {
-      let (i, row) = ir
-      row
-        .enumerate()
-        .map(jt => {
-          let (j, t) = jt
-          let (x, y) = (j + 0.5, 1 - i + 0.5)
-          hide(rect((x - 0.4, y - 0.2), (x + 0.4, y + 0.2), name: "x" + str(i) + "y" + str(j)))
-          content((x, y), t)
-        })
-    })
+    .map(((i, row)) => row
+      .enumerate()
+      .map(((j, t)) => {
+        let (x, y) = (j + 0.5, 1 - i + 0.5)
+        hide(rect((x - 0.4, y - 0.2), (x + 0.4, y + 0.2), name: "x" + str(i) + "y" + str(j)))
+        content((x, y), t)
+      }))
     .flatten()
 
   range(2)
