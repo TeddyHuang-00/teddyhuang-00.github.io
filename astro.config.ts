@@ -8,11 +8,6 @@ import {
 import { pluginFramesTexts } from "@expressive-code/plugin-frames";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import playformCompress from "@playform/compress";
-import {
-  transformerNotationDiff,
-  transformerNotationHighlight,
-  transformerNotationWordHighlight,
-} from "@shikijs/transformers";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
 import expressiveCode from "astro-expressive-code";
@@ -94,17 +89,8 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
-    shikiConfig: {
-      // For more themes, visit https://shiki.style/themes
-      themes: { light: "catppuccin-latte", dark: "catppuccin-mocha" },
-      defaultColor: false,
-      wrap: false,
-      transformers: [
-        transformerNotationHighlight(),
-        transformerNotationWordHighlight(),
-        transformerNotationDiff({ matchAlgorithm: "v3" }),
-      ],
-    },
+    // Prefer to handle syntax highlighting in expressive code
+    syntaxHighlight: false,
   },
   vite: {
     plugins: [tailwindcss()],

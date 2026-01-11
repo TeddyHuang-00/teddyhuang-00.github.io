@@ -28,7 +28,6 @@
     "@myriaddreamin/typst-ts-node-compiler": "0.7.0-rc2",
     "@playform/compress": "0.2.1",
     "@resvg/resvg-js": "2.6.2",
-    "@shikijs/transformers": "3.21.0",
     "@tailwindcss/typography": "0.5.19",
     "@tailwindcss/vite": "4.1.18",
     "@types/lodash.kebabcase": "4.1.9",
