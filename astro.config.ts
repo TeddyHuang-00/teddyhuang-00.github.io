@@ -88,7 +88,16 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
+    rehypePlugins: [
+      [
+        rehypeKatex,
+        {
+          // biome-ignore lint/suspicious/noExplicitAny: We don't need to type this properly as they will not be used.
+          strict: (errorCode: string, ..._: any[]) =>
+            errorCode === "newLineInDisplayMode" ? false : "warn",
+        },
+      ],
+    ],
     // Prefer to handle syntax highlighting in expressive code
     syntaxHighlight: false,
   },
