@@ -20,6 +20,7 @@ FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
 format: install
     biome format
     bun rustywind --check-formatted ./content ./src
+    bun rustywind --check-formatted --custom-regex "@apply ([_a-zA\.-Z0-9\s\-:\[\]]+?);" ./src
 
 check: install
     bunx astro check
@@ -30,6 +31,7 @@ lint:
 
 fix-all:
     bun rustywind --write ./content ./src
+    bun rustywind --write --custom-regex "@apply ([_a-zA\.-Z0-9\s\-:\[\]]+?);" ./src
     biome format --write
     biome check --write
     biome lint --write

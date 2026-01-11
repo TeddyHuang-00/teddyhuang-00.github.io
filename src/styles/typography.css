@@ -8,7 +8,7 @@
     table {
       th,
       td {
-        @apply border border-border p-2;
+        @apply p-2 border border-border;
       }
 
       th {
@@ -43,7 +43,7 @@
     }
 
     a {
-      @apply wrap-break-word text-foreground decoration-dashed underline-offset-4 hover:text-accent focus-visible:no-underline;
+      @apply focus-visible:no-underline wrap-break-word text-foreground decoration-dashed underline-offset-4 hover:text-accent;
     }
 
     ul {
@@ -67,7 +67,7 @@
     }
 
     code {
-      @apply rounded bg-muted/75 p-1 wrap-break-word text-foreground before:content-none after:content-none;
+      @apply p-1 rounded bg-muted/75 wrap-break-word text-foreground before:content-none after:content-none;
     }
 
     .astro-code code {
@@ -75,7 +75,7 @@
     }
 
     blockquote {
-      @apply border-s-accent/80 wrap-break-word opacity-80;
+      @apply opacity-80 border-s-accent/80 wrap-break-word;
     }
 
     details {
