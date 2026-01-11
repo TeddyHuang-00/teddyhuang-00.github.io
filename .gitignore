@@ -28,3 +28,6 @@ public/pagefind
 
 # Cache directories
 .cache/
+
+# Typst generated files
+public/assets/generated

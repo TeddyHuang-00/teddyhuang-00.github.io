@@ -50,7 +50,7 @@ sync: install
     bunx astro sync
 
 clean:
-    rm -rf dist public/pagefind node_modules .astro
+    rm -rf dist public/pagefind public/assets/generated node_modules .astro
 
 cache-clean-og:
     rm -rf {{ OG_CACHE_DIR }}

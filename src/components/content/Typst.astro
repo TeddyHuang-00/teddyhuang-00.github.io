@@ -1,6 +1,6 @@
 ---
 import fs from "node:fs";
-import { NodeCompiler } from "@myriaddreamin/typst-ts-node-compiler";
+import { processTypstFile } from "@/utils/generateTypstSvg";
 
 export interface Props {
   filePath: string;
@@ -20,29 +20,28 @@ if (!fs.existsSync(filePath)) {
   throw new Error(`Typst file not found: ${filePath}`);
 }
 
-const compiler = NodeCompiler.create({
+// Generate the unique slug/filename base
+// We replace slashes with dashes to create a flat filename structure in dist
+// This ensures "diagrams/arch.typ" becomes "diagrams-arch"
+const slug = filePath
+  .replace(workspace, "")
+  .replace(/\.typ$/, "")
+  .replace(/\//g, " ")
+  .trim()
+  .replace(/\s+/g, "-");
+
+const { light, dark } = processTypstFile({
+  filePath,
+  slug,
   workspace,
-  fontArgs: [{ fontPaths }],
+  fontPaths,
 });
-const lightSvg = compiler.svg({
-  mainFilePath: filePath,
-  inputs: {
-    theme: "light",
-  },
-});
-const darkSvg = compiler.svg({
-  mainFilePath: filePath,
-  inputs: {
-    theme: "dark",
-  },
-});
-const notThemed = lightSvg === darkSvg;
 ---
 
 {
-  notThemed ? (
+  light === dark ? (
     <figure>
-      <Fragment set:html={lightSvg} />
+      <img src={light} loading="lazy" decoding="async" class="border-none" />
       {Astro.slots.has("default") && (
         <figcaption class="text-center">
           <slot />
@@ -52,7 +51,7 @@ const notThemed = lightSvg === darkSvg;
   ) : (
     <>
       <figure class="block dark:hidden">
-        <Fragment set:html={lightSvg} />
+        <img src={light} loading="lazy" decoding="async" class="border-none" />
         {Astro.slots.has("default") && (
           <figcaption class="text-center">
             <slot />
@@ -60,7 +59,7 @@ const notThemed = lightSvg === darkSvg;
         )}
       </figure>
       <figure class="hidden dark:block">
-        <Fragment set:html={darkSvg} />
+        <img src={dark} loading="lazy" decoding="async" class="border-none" />
         {Astro.slots.has("default") && (
           <figcaption class="text-center">
             <slot />
@@ -70,9 +69,3 @@ const notThemed = lightSvg === darkSvg;
     </>
   )
 }
-
-<style is:global>
-  .typst-doc {
-    @apply mx-auto max-w-full;
-  }
-</style>
