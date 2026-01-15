@@ -21,7 +21,7 @@
     "@astrojs/react": "4.4.2",
     "@astrojs/rss": "4.0.14",
     "@astrojs/sitemap": "3.6.1",
-    "@expressive-code/plugin-collapsible-sections": "0.41.5",
+    "@expressive-code/plugin-collapsible-sections": "0.41.6",
     "@expressive-code/plugin-line-numbers": "0.41.5",
     "@giscus/react": "3.1.0",
     "@iconify-json/tabler": "1.2.26",
