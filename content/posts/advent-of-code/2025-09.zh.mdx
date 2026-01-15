@@ -1,6 +1,7 @@
 ---
 title: Advent of Code 2025 - 第9天题解
 pubDatetime: 2026-01-04T13:30:00+08:00
+modDatetime: 2026-01-15T10:30:00-06:00
 tags:
   - Advent of Code
   - AoC 2025
@@ -11,7 +12,7 @@ draft: false
 description: 查找格点空间中完全位于多边形内的最大矩形
 ---
 
-import { Aside, Badge, Typst } from "@/components/content/components";
+import { Aside, Badge, Ruby, Typst } from "@/components/content/components";
 import { Icon } from "astro-icon/components";
 
 ## 核心任务描述
@@ -31,7 +32,7 @@ _（右）_ 选取任意两个顶点作为对角，所构成的合法与非法�
 
 ### 只用检查关键点？
 
-在第一部分中，我们已经实现了找出所有矩形的功能。那么很自然的，我们就会联想到碰撞检测，一个比较简单的做法为在一个形状内采样散点，然后检查这些点是否在另一个形状内部。为了检验每个点是否在一个形状内部，一个经典的方法是射线投射算法（ray casting algorithm）[^1]，其核心思想是从某个方向发出一条射线，统计与形状边界的交点数量，若为奇数则在内部，偶数则在外部。比如下图所示：
+在第一部分中，我们已经实现了找出所有矩形的功能。那么很自然的，我们就会联想到碰撞检测，一个比较简单的做法为在一个形状内采样散点，然后检查这些点是否在另一个形状内部。为了检验每个点是否在一个形状内部，一个经典的方法是 <Ruby rt="ray| |casting| |algorithm" rb="射线||投射||算法" split="|" />[^1]，其核心思想是从某个方向发出一条射线，统计与形状边界的交点数量，若为奇数则在内部，偶数则在外部。比如下图所示：
 
 <Typst filePath="src/assets/images/aoc/2025/09/ray-casting.typ">
 
