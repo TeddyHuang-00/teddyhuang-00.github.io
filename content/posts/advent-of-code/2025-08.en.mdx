@@ -1,0 +1,531 @@
+---
+title: Advent of Code 2025 - Day 8 Solution
+pubDatetime: 2026-01-15T09:00:00-06:00
+tags:
+  - Advent of Code
+  - AoC 2025
+  - Algorithm
+  - Rust
+featured: false
+draft: false
+description: Finding the shortest distances between points in three-dimensional space
+---
+
+import { Aside, Badge, Ruby, Typst } from "@/components/content/components";
+import { Icon } from "astro-icon/components";
+
+## Core Problem Description
+
+Given $N$ points in three-dimensional space, where each point's coordinates $(x, y, z)$ are non-negative integers. It is also ensured that each point's coordinates are unique, and the Euclidean distances[^1] between any two points are all distinct. Compute:
+
+1.  The first $K$ shortest distances among all point pairs, then output the product of the sizes of the top three connected components after connecting these distances as edges;
+2.  Following the order of edge addition, output the product of the $x$ coordinates of the two points connected by the last edge added before all points become connected.
+
+## Thought Process
+
+### Problem Breakdown
+
+The problem's requirements are complex, so we first need to break it down into several sub-problems. For the first part, we need to:
+
+1.  Find the first $K$ shortest Euclidean distances among all point pairs;
+2.  Use these distances as edges to build a graph and find connected components;
+3.  Compute the product of the sizes of the top three connected components.
+
+For the second part, we need to:
+
+1.  Connect the points step by step in the order of edge addition;
+2.  Before all points are connected, record the product of the $x$ coordinates of the two points connected by the last added edge.
+
+It's not difficult to see that for the first part we can use a Disjoint Set Union (DSU)[^2] to manage connected components, and for the second part we similarly need to use DSU to check the connection status of points. This is not particularly challenging, so the main difficulty lies in the first step of each problem: how to efficiently find the first $K$ shortest distances among all point pairs, or to connect the points in distance order.
+
+### Parallel Optimization
+
+For finding the first $K$ shortest distances and the top $3$ largest connected components, we can use max/min heaps[^3] to assist the computation. Of course, the most time-consuming step is calculating the distances between all point pairs. To address this, we can employ some simple parallel optimization techniques:
+
+1. **Replace Euclidean Distance**: Since we only need to compare the relative sizes of distances and not the exact values, we can use the square of the Euclidean distance instead of the Euclidean distance itself for comparison. This way we only need integer multiplication and addition, avoiding the square root operation for floating-point numbers, thereby improving calculation speed.
+2. **Avoid Redundant Calculations**: Since Euclidean distance is symmetric, we only need to calculate each pair once. We can only calculate pairs $(p_i, p_j)$ where $i < j$.
+3. **Parallel Processing**: Using a parallel computing library, we can split all calculation tasks into $M$ parts, each processed by a thread, and finally merge the results. This can significantly reduce computation time, especially on multi-core processors.
+
+<Aside type="tip" title="Parallel Reduction">
+
+In parallel computing, reducing is a common computational pattern: for $M$ input data of type $A$, reduce them to a single output of type $A$ using a binary operator $f: A\times A\to A$. In parallelized reduction, $f$ must be associative, meaning for any $a, b, c$, $f(f(a, b), c) \equiv f(a, f(b, c))$ holds. For example, in this problem, when merging two heaps, the output is still a heap, and the operation is associative. For such operations, we can partition the input data into several pieces, perform the reduction operation in multiple threads, a common pattern being the tree structure shown below:
+
+<Typst filePath="src/assets/images/aoc/2025/08/parallel-reduce.typ">
+
+**Parallel Reduction**\
+The top layer contains the input data to be reduced. Each layer reduces two adjacent nodes using the reduction operation, eventually yielding a single output result.
+
+</Typst>
+
+If it's a folding operation, where the function type is $g: A\times B\to A$, then during parallelization, typically only the first layer's operation is replaced with $g: A\times B\to A$, while the remaining layers still use $f: A\times A\to A$ for reduction. This is also the pattern for implementing parallel folds in [rayon](https://github.com/rayon-rs/rayon).
+
+</Aside>
+
+With this, we can already solve the first part:
+
+```rust title="Parallel Calculation of First K Shortest Distances" {"Only compute pairs where i<j":5-6} {"Parallel fold into max heap":10-18} {"Parallel reduce max heaps":19-26} {"Take top three connected components":31-38}
+let mut dsu = DisjointSet::new(self.nodes.nrows());
+(0..self.nodes.nrows())
+    .into_par_iter()
+    .flat_map_iter(|i| {
+
+        ((i + 1)..self.nodes.nrows())
+            .map(|j| (i, j))
+            .collect::<Vec<_>>()
+    })
+
+    .fold(BinaryHeap::new, |mut heap, (i, j)| {
+        let d = self.dist(i, j);
+        heap.push((d, i, j));
+        if heap.len() > self.max_steps {
+            heap.pop();
+        }
+        heap
+    })
+
+    .reduce(BinaryHeap::new, |mut acc, mut heap| {
+        acc.extend(heap.drain());
+        while acc.len() > self.max_steps {
+            acc.pop();
+        }
+        acc
+    })
+    .into_iter()
+    .for_each(|(_, i, j)| dsu.union(i, j));
+dsu.sizes
+    .values()
+
+    .fold(BinaryHeap::new(), |mut heap, &size| {
+        heap.push(Reverse(size));
+        if heap.len() > 3 {
+            heap.pop();
+        }
+        heap
+    })
+    .iter()
+    .map(|&Reverse(x)| x)
+    .product::<u64>()
+    .to_string()
+```
+
+For the second part, directly calculating all edges and sorting them is clearly impractical, as the number of edges we need to handle is on the order of $O(N^2)$. Therefore, we need some optimization to reduce computation. It's clear that since we only care about the last edge that connects all points into a single connected component, we don't actually need to care about edges that **do not connect different connected components**. Based on this, we can adopt the following strategy:
+
+1. **Edge Set Based on Points' Shortest Edge**: For each point, we only calculate the shortest edge connecting it to a point belonging to a different connected component, and add these edges to a candidate edge set. This can greatly reduce the number of edges to compute.
+2. **Dynamically Update the Edge Set**: Each time we take the shortest edge $(u,v)$ from the edge set, we need to recalculate the shortest edge from $u$ to other connected components and add this edge to the edge set. This ensures the edge set is updated only when necessary, avoiding unnecessary computations.
+3. **Loop Until All Points Are Connected**: Repeat the above process until all points belong to the same connected component. During this process, record the last edge $(u,v)$ that connected different connected components and output the product of its $x$ coordinates.
+
+Following this idea, we can implement the following code:
+
+```rust title="Dynamically Building Edge Set to Connect Points" {"Merge different connected components":18-23} {"Terminate when fully connected":24-27} {"Update edge set":28-37}
+let mut closest_neighbor = (0..self.nodes.nrows())
+    .into_par_iter()
+    .map(|i| {
+        (0..self.nodes.nrows())
+            .filter_map(|j| (j != i).then_some((self.dist(i, j), i, j)))
+            .min_by_key(|&(dist, _, _)| dist)
+            .map_or_else(
+                || unreachable!("There should be at least one other node"),
+                Reverse,
+            )
+    })
+    .collect::<BinaryHeap<_>>();
+let mut dsu = DisjointSet::new(self.nodes.nrows());
+loop {
+    let Some(Reverse((_, i, j))) = closest_neighbor.pop() else {
+        panic!("No more edges to process");
+    };
+
+    let root_i = dsu.find(i);
+    let root_j = dsu.find(j);
+    if root_i != root_j {
+        dsu.union(i, j);
+    }
+
+    if dsu.sizes.len() == 1 {
+        return (self.nodes[[i, 0]] * self.nodes[[j, 0]]).to_string();
+    }
+
+    closest_neighbor.push(
+        (0..self.nodes.nrows())
+            .filter_map(|k| (root_i != dsu.find(k)).then_some((self.dist(i, k), i, k)))
+            .min_by_key(|&(dist, _, _)| dist)
+            .map_or_else(
+                || unreachable!("At least one different component should exist"),
+                Reverse,
+            ),
+    );
+}
+```
+
+### Octree Representation
+
+In the above methods, although we use parallel computing and some dynamic update strategies to reduce computation time, the computational complexity is still $O(N^2)$. Facing very large datasets, it may still be impossible to complete within a reasonable time. Even with only $N=1,000$ in this problem, the above algorithm requires $21 ms$ and $281 ms$. Therefore, we need to further optimize the algorithm.
+
+For the problem of distances between point pairs in space, we naturally think of using an octree to partition the space. In an octree, space is recursively divided into eight quadrants (as shown in the figure below), allowing us to quickly locate the spatial region of a point and theoretically query a point's neighboring points efficiently.
+
+<Typst filePath="src/assets/images/aoc/2025/08/octree.typ">
+
+**Octree Partitioning Space**\
+Cubes of different colors represent octree nodes at different levels, each containing the space covered by its child nodes.
+
+</Typst>
+
+It's worth noting that in this problem, since the coordinates of each point are integers, we can actually use Morton encoding, also known as the Z-order curve[^4], to partition space. Morton encoding interleaves the binary bits of each coordinate to generate a one-dimensional encoded value, achieving a linear representation of space, as shown below:
+
+<Typst filePath="src/assets/images/aoc/2025/08/morton-code.typ">
+
+**Morton Encoding**\
+Interleaving the binary bits of $(x, y, z)$ coordinates to generate the Morton encoded value.
+
+</Typst>
+
+<Aside type="info" title="Magic Bit Operations">
+
+As Jeroen Baert described in [his blog](https://www.forceflow.be/2013/10/07/morton-encodingdecoding-through-bit-interleaving-implementations#“Magic_Bits”_method), we can use some "magic bit operations" to efficiently interleave binary bits. Specifically, through a series of bit shifts and mask operations, we can scatter the binary bits of each coordinate (and vice versa), achieving interleaving. As shown below:
+
+```rust title="Magic Bit Operations for Morton Encoding"
+const fn interleave_bits_by_3(x: i64) -> u64 {
+    let mut x = x.cast_unsigned() & 0x1ff_fff;
+    x = (x | (x << 32)) & 0x1f_000_000_00f_fff;
+    x = (x | (x << 16)) & 0x1f_000_0ff_000_0ff;
+    x = (x | (x << 8)) & 0x1_00f_00f_00f_00f_00f;
+    x = (x | (x << 4)) & 0x1_0c3_0c3_0c3_0c3_0c3;
+    x = (x | (x << 2)) & 0x1_249_249_249_249_249;
+    x
+}
+```
+
+<Typst filePath="src/assets/images/aoc/2025/08/magic-bits.typ">
+
+**Magic Bit Operations**\
+Through bit shifts and mask operations, binary bit interleaving can be achieved in a few steps without looping.
+
+</Typst>
+
+</Aside>
+
+Using Morton encoding, we can sort the points in space according to their Morton encoded values, resulting in a fractal curve similar to the one below:
+
+<Typst filePath="src/assets/images/aoc/2025/08/z-order-curve.typ">
+
+**Z-order Curve**\
+The distribution of points in space after sorting by Morton encoded values forms a fractal curve traversing the eight quadrants.
+
+</Typst>
+
+The Morton encoded value implicitly contains hierarchical partitioning of a multi-dimensional space. Since we interleave the binary bits of the three-dimensional coordinates, every three bits in the encoding can be seen as a level, and the three-bit binary number at each level indicates one of the eight quadrants at that level. Therefore, by sorting according to Morton encoding, we have implicitly built an octree structure; any octree node can be represented as a prefix of a Morton encoded value and/or a corresponding array interval.
+
+### Branch and Bound
+
+With the octree structure, we can leverage spatial partitioning to accelerate nearest neighbor search, which is branch and bound[^5]. During the search, after obtaining several nearest neighbor candidate points, we can use the current shortest distance to prune nodes in the octree. Specifically, assuming the current nearest neighbor distance is $d$, when we encounter an octree node during the search, we can calculate the minimum distance $d_{\min}$ between the space covered by that node and the query point. If $d_{\min} \geq d$, it means that all points within that node and its child nodes cannot be closer neighbors, so we can skip the node directly, avoiding unnecessary calculations.
+
+Since in both parts of the problem, we need to consider distances **between all points**, we can instead use the dual-tree traversal method to batch process calculations between point pairs. For example, for the first part, we can construct all points as the root node of the octree, then traverse:
+
+1. For the current node pair $(L, R)$, calculate the minimum distance $d_{\min}$ between their covered spaces;
+2. **(Bound)** If $d_{\min}$ is greater than the currently known $K$-th largest distance, skip this node pair;
+3. **(Batch Calculation)** Otherwise, if the sizes of $L$ and $R$ are below a certain threshold, directly calculate the distances between all point pairs in $L$ and $R$, and update the nearest neighbor heap;
+4. **(Branch)** Otherwise, generate new node pairs to continue traversal according to the following rules:
+   - If $L$ and $R$ are the same node, generate all node pairs combining child nodes without repetition ($i \le j$);
+   - Otherwise, split the larger node and generate all combinations of its child nodes with the other node.
+
+When calculating $d_{\min}$, we can use the properties of Morton encoding to quickly estimate the minimum distance between the spaces covered by two nodes. Specifically, each node corresponds to a prefix of a Morton encoded value, and all child nodes' corresponding Morton encoded values start with that prefix. Therefore, we can extract the corresponding coordinate range from this prefix, obtaining the node's corresponding **Axis-Aligned Bounding Box** (AABB [^6]). Then, we can use AABB distance calculation methods to get $d_{\min}$ in $O(1)$ time.
+
+<Aside type="caution" title="AABB Estimated from Prefix vs. Actual AABB">
+
+The AABB estimated from the prefix is the theoretically maximum bounding box; the actual point set contained by the node may be distributed more compactly, resulting in a smaller actual AABB, as shown below:
+
+<Typst filePath="src/assets/images/aoc/2025/08/tight-bounding-box.typ">
+
+**AABB Estimated from Prefix vs. Actual AABB**\
+(Left) AABB estimated from the Morton encoding prefix,\
+(Right) Actual AABB of the point set contained in the node.
+
+</Typst>
+
+When the point set distribution is relatively uniform, this difference is usually small; but when the point set distribution is extremely uneven, the difference can be significant, affecting pruning efficiency. Therefore, in actual implementation, we can pre-calculate the actual AABB for each node when building the octree, improving the hit rate of pruning paths.
+
+</Aside>
+
+In this way, we can efficiently calculate the first $K$ shortest distances among all point pairs, thus solving the first part. But what about the second part? Since in the second part we need to dynamically update connected components, we cannot know in advance how many edges need to be calculated like in the first part, so we cannot directly use the dual-tree traversal method. Therefore, further improvement is needed.
+
+### Minimum Spanning Tree
+
+Actually, we can re-examine the requirements of the second part. In the previous analysis, we concluded that we only need to focus on edges connecting different connected components. This process is essentially the Kruskal algorithm for constructing a Minimum Spanning Tree (MST). And the last edge is the longest edge in this MST. Due to the uniqueness of the MST, if we can directly construct the MST, then we can find this edge faster.
+
+<Aside type="important" title="Proof of Minimum Spanning Tree Uniqueness">
+
+> For a weighted undirected graph $\mathcal{G}$, if all edge weights are distinct, then the minimum spanning tree of $\mathcal{G}$ is unique.
+
+**Proof by contradiction**: Assume there are two different minimum spanning trees $T_1$ and $T_2$ on $\mathcal{G}$, $T_1 \ne T_2$. Since they are different, there must exist an edge $e_1$ belonging to $T_1$ but not $T_2$ ($\exists e_1 \in T_1, e_1 \notin T_2$). If $e_1$ is removed from $T_1$, then $T_1 \setminus \{e_1\}$ splits into two connected components $C_1$ and $C_2$.
+
+Since $T_2$ is connected, there must exist an edge $e_2$ belonging to $T_2$ but not $T_1$ ($\exists e_2 \in T_2, e_2 \notin T_1$) that connects $C_1$ and $C_2$. This is because if such an edge does not exist, meaning $C_1$ and $C_2$ in $T_2$ are also connected entirely using edges from $T_1 \setminus \{e_1\}$, then there would already have been a cycle in the original $T_1$, contradicting that $T_1$ is a spanning tree.
+
+Now, we can compare the weights of $e_1$ and $e_2$. Since all edge weights are distinct, we must have $w(e_1) \neq w(e_2)$. If $w(e_1) < w(e_2)$, then we can construct a new spanning tree $T_3 = T_2 \setminus \{e_2\} \cup \{e_1\}$, whose total weight is less than that of $T_2$, contradicting that $T_2$ is a minimum spanning tree. Similarly, if $w(e_1) > w(e_2)$, we can construct a new spanning tree $T_4 = T_1 \setminus \{e_1\} \cup \{e_2\}$, whose total weight is less than that of $T_1$, contradicting that $T_1$ is a minimum spanning tree.
+
+Therefore, the assumption is false, and the minimum spanning tree of $\mathcal{G}$ is unique.
+
+</Aside>
+
+Indeed, we have faster algorithms for constructing the minimum spanning tree, such as Borůvka's algorithm. The core idea of this algorithm is:
+
+1. Initially, each point is an independent connected component;
+2. For each connected component, find its shortest edge to any other connected component;
+3. Add these edges to the minimum spanning tree and merge these connected components;
+4. Repeat steps 2 and 3 until all points belong to the same connected component.
+
+By combining the dual-tree traversal method with the octree, we can efficiently find the shortest edge for each connected component, thus quickly constructing the minimum spanning tree. We can also add an extra pruning condition: if the two nodes currently being processed belong to the same connected component, skip that node pair. The complete algorithm flow is as follows:
+
+1. Initialize all points as independent connected components;
+2. Initialize the shortest distance for each connected component to infinity;
+3. Push the root node pair $(root, root)$ onto the stack;
+4. Repeat the following steps until the stack is empty:
+   1. For the node pair $(L, R)$ at the top of the stack, calculate the minimum distance $d_{\min}$ between their covered spaces;
+   2. If $d_{\min}$ is greater than the maximum of the shortest distances of the connected components contained in $L$ and $R$, skip this node pair;
+   3. If $L$ and $R$ belong to the same connected component, skip this node pair;
+   4. If the size of $L \times R$ is below a certain threshold, directly calculate the distances between all point pairs in $L$ and $R$, and update the shortest distance for each connected component;
+   5. Otherwise, generate new node pairs to push onto the stack according to the following rules:
+      - If $L$ and $R$ are the same node, generate all node pairs combining child nodes without repetition ($i \le j$);
+      - Otherwise, split the larger node and generate all combinations of its child nodes with the other node.
+5. Use the shortest edge of each connected component to merge connected components, and record the longest edge updated during this process.
+6. Repeat steps 2 to 5 until all points belong to the same connected component.
+
+## Core Algorithm Implementation
+
+In the actual implementation for this problem, due to the small scale of the point set, we can adopt some detailed optimizations:
+
+1. Fully construct the octree, determining the point set interval for each node to avoid frequent point set partitioning during traversal;
+2. Pre-calculate the actual bounding box for each node to obtain a tighter bounding box than estimated from the Morton encoding prefix, improving pruning path hit rate.
+3. In the second part, pre-calculate the connected components contained in all nodes for each iteration to avoid frequent Disjoint Set Union queries during traversal.
+
+```rust title="day08/src/main.rs" {"Branch": 2-3} {"Special case: left and right nodes are equal":8-16} {"Split the larger node":17-28} {"Calculate AABB distance and prune":40-53,135-148} {"Brute force when scale is small":55-56,150-151} {"If nodes are equal, only enumerate non-repeating point pairs":58-61,153-165} {"If nodes differ, enumerate all combinations":63-66,167-182} {"Initialize nearest neighbor for each component":106-110} {"Pre-calculate components contained in each node":111-112} {"Prune if only contains same component":117-119} {"Calculate farthest nearest neighbor among different components":123-132}
+impl Puzzle {
+
+    fn deeper_search_nodes(
+        &self,
+        left_node_idx: usize,
+        right_node_idx: usize,
+    ) -> Vec<(usize, usize)> {
+
+        if left_node_idx == right_node_idx {
+            let children = &self.octree_children[left_node_idx];
+            return children
+                .iter()
+                .enumerate()
+                .flat_map(|(idx, &i)| children[idx..].iter().map(move |&j| (i, j)))
+                .collect();
+        }
+
+        if self.octree[left_node_idx].size() > self.octree[right_node_idx].size() {
+            self.octree_children[left_node_idx]
+                .iter()
+                .map(|&child| (child, right_node_idx))
+                .collect()
+        } else {
+            self.octree_children[right_node_idx]
+                .iter()
+                .map(|&child| (left_node_idx, child))
+                .collect()
+        }
+    }
+}
+
+impl Solution for Puzzle {
+    fn part1(&self) -> String {
+        let mut min_dist = BinaryHeap::new();
+        let mut search_stack = vec![(0, 0)];
+        while let Some((left_node_idx, right_node_idx)) = search_stack.pop() {
+            let left_node = self.octree[left_node_idx];
+            let right_node = self.octree[right_node_idx];
+            if let Some(&(delta, _, _)) = min_dist.peek() {
+
+                let (left_min, left_max) = self.octree_bounding_boxes[left_node_idx];
+                let (right_min, right_max) = self.octree_bounding_boxes[right_node_idx];
+                let mut min_possible_dist = 0;
+                for dim in 0..3 {
+                    if left_max[dim] < right_min[dim] {
+                        min_possible_dist += (right_min[dim] - left_max[dim]).pow(2);
+                    } else if right_max[dim] < left_min[dim] {
+                        min_possible_dist += (left_min[dim] - right_max[dim]).pow(2);
+                    }
+                }
+                if min_possible_dist >= delta {
+                    continue;
+                }
+            }
+
+            if left_node.size() * right_node.size() <= self.max_steps {
+                let pairs = if left_node_idx == right_node_idx {
+
+                    (left_node.start..left_node.end)
+                        .flat_map(|i| (i + 1..left_node.end).map(move |j| (i, j)))
+                        .collect::<Vec<_>>()
+                } else {
+
+                    (left_node.start..left_node.end)
+                        .flat_map(|i| (right_node.start..right_node.end).map(move |j| (i, j)))
+                        .collect::<Vec<_>>()
+                };
+                for (i, j) in pairs {
+                    let d = Self::dist(&self.nodes[i], &self.nodes[j]);
+                    if d > min_dist.peek().map_or(i64::MAX, |&(d, _, _)| d) {
+                        continue;
+                    }
+                    min_dist.push((d, i, j));
+                    if min_dist.len() > self.max_steps {
+                        min_dist.pop();
+                    }
+                }
+                continue;
+            }
+            search_stack.extend(self.deeper_search_nodes(left_node_idx, right_node_idx));
+        }
+        let mut dsu = DisjointSet::new(self.nodes.len());
+        for (_, i, j) in min_dist {
+            dsu.union(i, j);
+        }
+        dsu.sizes
+            .values()
+            .fold(BinaryHeap::new(), |mut heap, &size| {
+                heap.push(Reverse(size));
+                if heap.len() > 3 {
+                    heap.pop();
+                }
+                heap
+            })
+            .iter()
+            .map(|&Reverse(x)| x)
+            .product::<u64>()
+            .to_string()
+    }
+
+    fn part2(&self) -> String {
+        let mut dsu = DisjointSet::new(self.nodes.len());
+        let mut last_edge = (i64::MIN, 0, 0);
+        let mut components = vec![BTreeSet::new(); self.octree.len()];
+        while dsu.sizes.len() > 1 {
+
+            let mut min_edges = dsu.sizes.keys().fold(HashMap::new(), |mut map, &comp| {
+                map.insert(comp, (i64::MAX, 0, 0));
+                map
+            });
+
+            self.compute_components(&mut dsu, &mut components);
+            let mut search_stack = vec![(0, 0)];
+            while let Some((left_node_idx, right_node_idx)) = search_stack.pop() {
+                let left_node = self.octree[left_node_idx];
+                let right_node = self.octree[right_node_idx];
+
+                if components[left_node_idx].len() == 1
+                    && components[left_node_idx] == components[right_node_idx]
+                {
+                    continue;
+                }
+
+                let max_min_edge = components[left_node_idx]
+                    .iter()
+                    .chain(components[right_node_idx].iter())
+                    .fold(i64::MIN, |max_edge, &comp| {
+                        let Some((d, _, _)) = min_edges.get(&comp) else {
+                            unreachable!("Every component should have an entry in min_edges")
+                        };
+                        max_edge.max(*d)
+                    });
+
+                if max_min_edge < i64::MAX {
+
+                    let (left_min, left_max) = self.octree_bounding_boxes[left_node_idx];
+                    let (right_min, right_max) = self.octree_bounding_boxes[right_node_idx];
+                    let mut min_possible_dist = 0;
+                    for dim in 0..3 {
+                        if left_max[dim] < right_min[dim] {
+                            min_possible_dist += (right_min[dim] - left_max[dim]).pow(2);
+                        } else if right_max[dim] < left_min[dim] {
+                            min_possible_dist += (left_min[dim] - right_max[dim]).pow(2);
+                        }
+                    }
+                    if min_possible_dist >= max_min_edge {
+                        continue;
+                    }
+                }
+
+                if left_node.size() * right_node.size() <= 64 {
+                    let pairs = if left_node_idx == right_node_idx {
+
+                        let nodes = (left_node.start..left_node.end)
+                            .map(|i| (i, dsu.find(self.nodes[i].index)))
+                            .collect::<Vec<_>>();
+                        nodes
+                            .iter()
+                            .enumerate()
+                            .flat_map(|(idx, &i)| {
+                                nodes[idx + 1..]
+                                    .iter()
+                                    .filter_map(move |&j| (i.1 != j.1).then_some((i, j)))
+                            })
+                            .collect::<Vec<_>>()
+                    } else {
+
+                        let left_nodes = (left_node.start..left_node.end)
+                            .map(|i| (i, dsu.find(self.nodes[i].index)))
+                            .collect::<Vec<_>>();
+                        let right_nodes = (right_node.start..right_node.end)
+                            .map(|i| (i, dsu.find(self.nodes[i].index)))
+                            .collect::<Vec<_>>();
+
+                        left_nodes
+                            .into_iter()
+                            .flat_map(|i| {
+                                right_nodes
+                                    .iter()
+                                    .filter_map(move |&j| (i.1 != j.1).then_some((i, j)))
+                            })
+                            .collect::<Vec<_>>()
+                    };
+                    for ((i, ci), (j, cj)) in pairs {
+                        let d = Self::dist(&self.nodes[i], &self.nodes[j]);
+                        min_edges.entry(ci).and_modify(|entry| {
+                            if d < entry.0 {
+                                *entry = (d, i, j);
+                            }
+                        });
+                        min_edges.entry(cj).and_modify(|entry| {
+                            if d < entry.0 {
+                                *entry = (d, i, j);
+                            }
+                        });
+                    }
+                    continue;
+                }
+                search_stack.extend(self.deeper_search_nodes(left_node_idx, right_node_idx));
+            }
+            for (_, (d, i, j)) in min_edges {
+                dsu.union(self.nodes[i].index, self.nodes[j].index);
+                if d > last_edge.0 {
+                    last_edge = (d, i, j);
+                }
+            }
+        }
+        (self.nodes[last_edge.1].coordinate[0] * self.nodes[last_edge.2].coordinate[0]).to_string()
+    }
+}
+```
+
+## Summary
+
+The complete code can be found [here](https://github.com/TeddyHuang-00/AoC2025/blob/main/day08/src/main.rs).
+
+Through the above analysis and implementation, we successfully reduced the solution time to $0.75 ms$ and $24 ms$, achieving a 10-20x performance improvement despite not using parallel computing. This demonstrates that leveraging octree spatial partitioning and branch and bound strategies can effectively reduce computational complexity, allowing us to efficiently handle distance calculation problems between point pairs. Of course, the implementation of this method is relatively complex, requiring careful handling of octree construction, node traversal, and pruning conditions, which requires trade-offs and choices based on specific scenarios.
+
+## References
+
+[^1]: https://en.wikipedia.org/wiki/Euclidean_distance
+
+[^2]: https://en.wikipedia.org/wiki/Disjoint-set_data_structure
+
+[^3]: https://en.wikipedia.org/wiki/Binary_heap
+
+[^4]: https://en.wikipedia.org/wiki/Z-order_curve
+
+[^5]: https://en.wikipedia.org/wiki/Branch_and_bound
+
+[^6]: https://en.wikipedia.org/wiki/Bounding_volume
