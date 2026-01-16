@@ -11,20 +11,25 @@ import {
 import postTemplate from "./og-templates/post.typ?raw";
 import siteTemplate from "./og-templates/site.typ?raw";
 
+const showText = false;
+
+const compiler = NodeCompiler.create({
+  workspace: ".",
+  fontArgs: showText ? [{ fontPaths: [".cache/fonts"] }] : undefined,
+});
+
 const svgBufferToPngBuffer = (svg: string) => {
-  const resvg = new Resvg(svg);
+  const resvg = new Resvg(svg, {
+    shapeRendering: 2,
+  });
   const pngData = resvg.render();
   return pngData.asPng();
 };
 
 export const generateOgImageForPost = async (post: CollectionEntry<"blog">) => {
-  const cacheKey = await getPostOgCacheKey(post);
+  const cacheKey = await getPostOgCacheKey(post, showText);
 
   return withOgImageCache(cacheKey, async () => {
-    const compiler = NodeCompiler.create({
-      workspace: ".",
-      fontArgs: [{ fontPaths: [".cache/fonts"] }],
-    });
     const localeString = useTranslations(
       post.data.locale as keyof typeof SITE.locales
     );
@@ -34,6 +39,7 @@ export const generateOgImageForPost = async (post: CollectionEntry<"blog">) => {
         title: post.data.title,
         author: post.data.author,
         site: localeString("site.title"),
+        "show-text": String(showText),
       },
     });
     return svgBufferToPngBuffer(svg);
@@ -41,16 +47,10 @@ export const generateOgImageForPost = async (post: CollectionEntry<"blog">) => {
 };
 
 export const generateOgImageForSite = async () => {
-  const cacheKey = await getSiteOgCacheKey();
+  const cacheKey = await getSiteOgCacheKey(showText);
 
   return withOgImageCache(cacheKey, async () => {
-    const compiler = NodeCompiler.create({
-      workspace: ".",
-      fontArgs: [{ fontPaths: [".cache/fonts"] }],
-    });
-    const svg = compiler.svg({
-      mainFileContent: siteTemplate,
-    });
+    const svg = compiler.svg({ mainFileContent: siteTemplate });
     return svgBufferToPngBuffer(svg);
   });
 };

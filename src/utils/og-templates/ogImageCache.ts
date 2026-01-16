@@ -2,12 +2,26 @@ import type { CollectionEntry } from "astro:content";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { getFontVersion } from "../loadCustomFont";
 import postTemplate from "./post.typ?raw";
 import siteTemplate from "./site.typ?raw";
 
 const CACHE_DIR = ".cache/og-images";
 const CACHE_VERSION = "v1";
+
+/**
+ * Get font version from cached config
+ */
+export const getFontVersion = (): string => {
+  try {
+    const configPath = join(process.cwd(), ".cache", "fonts", "config.json");
+    const config = JSON.parse(readFileSync(configPath, "utf-8"));
+    const family = config.family_name || "Maple Mono";
+    const version = config.version || "unknown";
+    return `${family} ${version}`;
+  } catch (error) {
+    throw new Error(`Failed to read font config: ${error}`);
+  }
+};
 
 /**
  * Ensure cache directory exists (will be called lazily)
@@ -50,11 +64,11 @@ const generateHash = async (
 /**
  * Generate cache key for site OG image
  */
-export const getSiteOgCacheKey = async (): Promise<string> => {
+export const getSiteOgCacheKey = async (useFont: boolean): Promise<string> => {
   const siteData = {
     version: CACHE_VERSION,
+    font: useFont ? getFontVersion() : undefined,
     // The following fields are commented out since they are not used in the current implementation, uncomment if they are included in the future
-    // font: getFontVersion(),
     // title: SITE.title,
     // author: SITE.author,
     // desc: SITE.desc,
@@ -68,11 +82,12 @@ export const getSiteOgCacheKey = async (): Promise<string> => {
  * Generate cache key for post OG image
  */
 export const getPostOgCacheKey = async (
-  post: CollectionEntry<"blog">
+  post: CollectionEntry<"blog">,
+  useFont: boolean
 ): Promise<string> => {
   const postData = {
     version: CACHE_VERSION,
-    font: getFontVersion(),
+    font: useFont ? getFontVersion() : undefined,
     title: post.data.title,
     author: post.data.author,
     locale: post.data.locale,
