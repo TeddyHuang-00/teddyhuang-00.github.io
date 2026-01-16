@@ -32,7 +32,7 @@ As shown above, the polygon is defined by a sequence of vertices (left figure). 
 
 ### Just Checking Key Points?
 
-In Part One, we already implemented functionality to find all rectangles. Naturally, collision detection comes to mind. A simple approach would be to sample points inside the rectangle and check if they are inside the polygon. To check if a point is inside a shape, a classic method is the ray casting algorithm[^1]. The core idea is to cast a ray from the point in any direction and count intersections with the shape's boundary; an odd count means the point is inside, even means outside. For example:
+In Part One, we already implemented functionality to find all rectangles. Naturally, collision detection comes to mind. A simple approach would be to sample points inside the rectangle and check if they are inside the polygon. To check if a point is inside a shape, a classic method is the [ray casting algorithm](https://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm). The core idea is to cast a ray from the point in any direction and count intersections with the shape's boundary; an odd count means the point is inside, even means outside. For example:
 
 <Typst filePath="src/assets/images/aoc/2025/09/ray-casting.typ">
 
@@ -216,7 +216,3 @@ impl Solution for Puzzle {
 The complete code can be found [here](https://github.com/TeddyHuang-00/AoC2025/blob/main/day09/src/main.rs).
 
 Although the problem itself is not overly complex, by re-examining and analyzing the problem, we found a more elegant and efficient solution. This highlights the importance of understanding a problem's essence in algorithm design.
-
-## References
-
-[^1]: https://en.wikipedia.org/wiki/Point_in_polygon

@@ -16,7 +16,7 @@ import { Icon } from "astro-icon/components";
 
 ## Core Problem Description
 
-Given $N$ points in three-dimensional space, where each point's coordinates $(x, y, z)$ are non-negative integers. It is also ensured that each point's coordinates are unique, and the Euclidean distances[^1] between any two points are all distinct. Compute:
+Given $N$ points in three-dimensional space, where each point's coordinates $(x, y, z)$ are non-negative integers. It is also ensured that each point's coordinates are unique, and the [Euclidean distances](https://en.wikipedia.org/wiki/Euclidean_distance) between any two points are all distinct. Compute:
 
 1.  The first $K$ shortest distances among all point pairs, then output the product of the sizes of the top three connected components after connecting these distances as edges;
 2.  Following the order of edge addition, output the product of the $x$ coordinates of the two points connected by the last edge added before all points become connected.
@@ -36,11 +36,11 @@ For the second part, we need to:
 1.  Connect the points step by step in the order of edge addition;
 2.  Before all points are connected, record the product of the $x$ coordinates of the two points connected by the last added edge.
 
-It's not difficult to see that for the first part we can use a Disjoint Set Union (DSU)[^2] to manage connected components, and for the second part we similarly need to use DSU to check the connection status of points. This is not particularly challenging, so the main difficulty lies in the first step of each problem: how to efficiently find the first $K$ shortest distances among all point pairs, or to connect the points in distance order.
+It's not difficult to see that for the first part we can use a [Disjoint Set Union (DSU)](https://en.wikipedia.org/wiki/Disjoint-set_data_structure) to manage connected components, and for the second part we similarly need to use DSU to check the connection status of points. This is not particularly challenging, so the main difficulty lies in the first step of each problem: how to efficiently find the first $K$ shortest distances among all point pairs, or to connect the points in distance order.
 
 ### Parallel Optimization
 
-For finding the first $K$ shortest distances and the top $3$ largest connected components, we can use max/min heaps[^3] to assist the computation. Of course, the most time-consuming step is calculating the distances between all point pairs. To address this, we can employ some simple parallel optimization techniques:
+For finding the first $K$ shortest distances and the top $3$ largest connected components, we can use [max/min heaps](https://en.wikipedia.org/wiki/Binary_heap) to assist the computation. Of course, the most time-consuming step is calculating the distances between all point pairs. To address this, we can employ some simple parallel optimization techniques:
 
 1. **Replace Euclidean Distance**: Since we only need to compare the relative sizes of distances and not the exact values, we can use the square of the Euclidean distance instead of the Euclidean distance itself for comparison. This way we only need integer multiplication and addition, avoiding the square root operation for floating-point numbers, thereby improving calculation speed.
 2. **Avoid Redundant Calculations**: Since Euclidean distance is symmetric, we only need to calculate each pair once. We can only calculate pairs $(p_i, p_j)$ where $i < j$.
@@ -170,7 +170,7 @@ Cubes of different colors represent octree nodes at different levels, each conta
 
 </Typst>
 
-It's worth noting that in this problem, since the coordinates of each point are integers, we can actually use Morton encoding, also known as the Z-order curve[^4], to partition space. Morton encoding interleaves the binary bits of each coordinate to generate a one-dimensional encoded value, achieving a linear representation of space, as shown below:
+It's worth noting that in this problem, since the coordinates of each point are integers, we can actually use Morton encoding, also known as the [Z-order curve](https://en.wikipedia.org/wiki/Z-order_curve), to partition space. Morton encoding interleaves the binary bits of each coordinate to generate a one-dimensional encoded value, achieving a linear representation of space, as shown below:
 
 <Typst filePath="src/assets/images/aoc/2025/08/morton-code.typ">
 
@@ -217,7 +217,7 @@ The Morton encoded value implicitly contains hierarchical partitioning of a mult
 
 ### Branch and Bound
 
-With the octree structure, we can leverage spatial partitioning to accelerate nearest neighbor search, which is branch and bound[^5]. During the search, after obtaining several nearest neighbor candidate points, we can use the current shortest distance to prune nodes in the octree. Specifically, assuming the current nearest neighbor distance is $d$, when we encounter an octree node during the search, we can calculate the minimum distance $d_{\min}$ between the space covered by that node and the query point. If $d_{\min} \geq d$, it means that all points within that node and its child nodes cannot be closer neighbors, so we can skip the node directly, avoiding unnecessary calculations.
+With the octree structure, we can leverage spatial partitioning to accelerate nearest neighbor search, which is [branch and bound](https://en.wikipedia.org/wiki/Branch_and_bound). During the search, after obtaining several nearest neighbor candidate points, we can use the current shortest distance to prune nodes in the octree. Specifically, assuming the current nearest neighbor distance is $d$, when we encounter an octree node during the search, we can calculate the minimum distance $d_{\min}$ between the space covered by that node and the query point. If $d_{\min} \geq d$, it means that all points within that node and its child nodes cannot be closer neighbors, so we can skip the node directly, avoiding unnecessary calculations.
 
 Since in both parts of the problem, we need to consider distances **between all points**, we can instead use the dual-tree traversal method to batch process calculations between point pairs. For example, for the first part, we can construct all points as the root node of the octree, then traverse:
 
@@ -228,7 +228,7 @@ Since in both parts of the problem, we need to consider distances **between all 
    - If $L$ and $R$ are the same node, generate all node pairs combining child nodes without repetition ($i \le j$);
    - Otherwise, split the larger node and generate all combinations of its child nodes with the other node.
 
-When calculating $d_{\min}$, we can use the properties of Morton encoding to quickly estimate the minimum distance between the spaces covered by two nodes. Specifically, each node corresponds to a prefix of a Morton encoded value, and all child nodes' corresponding Morton encoded values start with that prefix. Therefore, we can extract the corresponding coordinate range from this prefix, obtaining the node's corresponding **Axis-Aligned Bounding Box** (AABB [^6]). Then, we can use AABB distance calculation methods to get $d_{\min}$ in $O(1)$ time.
+When calculating $d_{\min}$, we can use the properties of Morton encoding to quickly estimate the minimum distance between the spaces covered by two nodes. Specifically, each node corresponds to a prefix of a Morton encoded value, and all child nodes' corresponding Morton encoded values start with that prefix. Therefore, we can extract the corresponding coordinate range from this prefix, obtaining the node's corresponding [**Axis-Aligned Bounding Box** (AABB)](https://en.wikipedia.org/wiki/Bounding_volume). Then, we can use AABB distance calculation methods to get $d_{\min}$ in $O(1)$ time.
 
 <Aside type="caution" title="AABB Estimated from Prefix vs. Actual AABB">
 
@@ -515,17 +515,3 @@ impl Solution for Puzzle {
 The complete code can be found [here](https://github.com/TeddyHuang-00/AoC2025/blob/main/day08/src/main.rs).
 
 Through the above analysis and implementation, we successfully reduced the solution time to $0.75 ms$ and $24 ms$, achieving a 10-20x performance improvement despite not using parallel computing. This demonstrates that leveraging octree spatial partitioning and branch and bound strategies can effectively reduce computational complexity, allowing us to efficiently handle distance calculation problems between point pairs. Of course, the implementation of this method is relatively complex, requiring careful handling of octree construction, node traversal, and pruning conditions, which requires trade-offs and choices based on specific scenarios.
-
-## References
-
-[^1]: https://en.wikipedia.org/wiki/Euclidean_distance
-
-[^2]: https://en.wikipedia.org/wiki/Disjoint-set_data_structure
-
-[^3]: https://en.wikipedia.org/wiki/Binary_heap
-
-[^4]: https://en.wikipedia.org/wiki/Z-order_curve
-
-[^5]: https://en.wikipedia.org/wiki/Branch_and_bound
-
-[^6]: https://en.wikipedia.org/wiki/Bounding_volume
