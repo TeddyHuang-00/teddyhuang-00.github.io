@@ -21,15 +21,16 @@ if (rbs.length !== rts.length) {
   );
 }
 const pairs = rbs.map((rb, i) => ({ rb, rt: rts[i] }));
+const innerHtml = pairs
+  .map(({ rb, rt }) => `<rb>${rb}<rp>(<rt>${rt}<rp>)`)
+  .join("");
 ---
 
-<ruby class="text-inherit">
-  {
-    pairs.map(({ rb, rt }, _) => (
-      <><rb>{rb}<rp>(<rt>{rt}<rp>)</>
-    ))
-  }
-</ruby>
+<>
+  <ruby class="inline text-inherit">
+    <Fragment set:html={innerHtml} />
+  </ruby>
+</>
 
 <style is:global>
   ruby > rt {
