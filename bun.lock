@@ -26,7 +26,7 @@
         "astro-expressive-code": "0.41.6",
         "astro-icon": "1.1.5",
         "astro-loader-i18n": "0.10.11",
-        "astro-og": "0.3.1",
+        "astro-og": "0.3.2",
         "astro-pagefind": "1.8.5",
         "astro-theme-toggle": "0.8.0",
         "dayjs": "1.11.19",
@@ -41,7 +41,7 @@
         "remark-math": "6.0.0",
         "rustywind": "0.24.3",
         "satori": "0.18.3",
-        "svgo": "^4.0.0",
+        "svgo": "4.0.0",
         "tailwindcss": "4.1.18",
         "typescript": "5.9.3",
       },
@@ -560,7 +560,7 @@
 
     "astro-loader-i18n": ["astro-loader-i18n@0.10.11", "", { "peerDependencies": { "astro": "^5.5.0" } }, "sha512-jzkc0PP4+Ziam1fwdsgA2wXYXrTRW4wDVZREabf0Niv1+x6DNsjwLlbJUeEIu8ONz1qd4JxIH7YlI+igHlyxsw=="],
 
-    "astro-og": ["astro-og@0.3.1", "", { "dependencies": { "preact": "10.28.0" }, "peerDependencies": { "astro": ">=5.0.0" } }, "sha512-Vl0m8l6q/izbmwCERb4KnkxFCilxCnfzqym62v1lbJhlb2PiAvxPkr3LAMOJ+BUEB5JQeuM9LD2OBZH60wPuIw=="],
+    "astro-og": ["astro-og@0.3.2", "", { "dependencies": { "preact": "10.28.2" }, "peerDependencies": { "astro": ">=5.0.0" } }, "sha512-87soXn7bSVzcY+9YyG5xQt/F4J4hsZ6ZKXAfRzBwqiQ2FF+esRLpQU62v6IKQHnlvzkQvmbUmeAKaEP0W1SM2g=="],
 
     "astro-pagefind": ["astro-pagefind@1.8.5", "", { "dependencies": { "@pagefind/default-ui": "^1.2.0", "pagefind": "^1.2.0", "sirv": "^3.0.0" }, "peerDependencies": { "astro": "^2.0.4 || ^3 || ^4 || ^5" } }, "sha512-CVhKKA9bTQ7hLsHk9KTNDzOdgR4EI04gn0mjDGfnXzaHx7rL92YkNpFM5AoFl9NWmOUbaIFC2DN7Yvs/ZFPRdA=="],
 
@@ -1238,7 +1238,7 @@
 
     "postcss-value-parser": ["postcss-value-parser@4.2.0", "", {}, "sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ=="],
 
-    "preact": ["preact@10.28.0", "", {}, "sha512-rytDAoiXr3+t6OIP3WGlDd0ouCUG1iCWzkcY3++Nreuoi17y6T5i/zRhe6uYfoVcxq6YU+sBtJouuRDsq8vvqA=="],
+    "preact": ["preact@10.28.2", "", {}, "sha512-lbteaWGzGHdlIuiJ0l2Jq454m6kcpI1zNje6d8MlGAFlYvP2GO4ibnat7P74Esfz4sPTdM6UxtTwh/d3pwM9JA=="],
 
     "prettier": ["prettier@3.6.2", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ=="],
 
