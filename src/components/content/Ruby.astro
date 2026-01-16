@@ -20,10 +20,7 @@ if (rbs.length !== rts.length) {
       matched.join(", ")
   );
 }
-const pairs = rbs.map((rb, i) => ({ rb, rt: rts[i] }));
-const innerHtml = pairs
-  .map(({ rb, rt }) => `<rb>${rb}<rp>(<rt>${rt}<rp>)`)
-  .join("");
+const innerHtml = `<rb>${rbs.join("<rb>")}<rp> (<rt>${rts.join("<rt>")}<rp>) `;
 ---
 
 <>
