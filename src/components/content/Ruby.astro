@@ -5,7 +5,7 @@ export interface Props {
   split?: string;
 }
 
-const { rb, rt, split = " " } = Astro.props;
+const { rb, rt, split = "|" } = Astro.props;
 
 const rbs = rb.split(split);
 const rts = rt.split(split);

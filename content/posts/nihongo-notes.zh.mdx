@@ -9,7 +9,11 @@ draft: false
 description: 记录一些自学日语过程中遇到的高频知识点，以便日后查阅。（或许）时不时更新。
 ---
 
-import { Aside, Ruby } from "@/components/content/components";
+import { Aside, Ruby as Rubby } from "@/components/content/components";
+
+export const Ruby = ({ rt, rb }) => {
+  return <Rubby rt={rt} rb={rb} split=" " />;
+};
 
 ## 五十音
 
