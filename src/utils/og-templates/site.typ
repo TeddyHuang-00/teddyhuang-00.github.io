@@ -7,17 +7,25 @@
 #let a = 0.823637rad
 #let w = 35%
 #let l = 15
-#let thickness = 3pt
+#let thickness = 2.5pt
 #let spacing = 1200pt * (100% - 2 * w) / 3
 #let width = 1200pt * w
 #let mirror = ((x, y)) => (width - x, height - y)
 #let mirror-x = ((x, y)) => (width - x, y)
 #let mirror-y = ((x, y)) => (x, height - y)
-#let style = i => (
-  paint: color.hsl(240deg, 100%, 70%).transparentize(((l - 1 - i) / l) * 100%),
-  thickness: thickness,
-  join: "round",
-)
+#let style = i => {
+  let transparency = ((1 + i) / l) * 100%
+  (
+    paint: color.mix(
+      (color.hsl(240deg, 100%, 70%), transparency),
+      (black, 100% - transparency),
+      space: color.rgb,
+    ),
+    thickness: thickness,
+    join: "round",
+    cap: "round",
+  )
+}
 
 #stack(
   dir: ltr,
