@@ -3,13 +3,15 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { getFontVersion } from "../loadCustomFont";
-import * as postFunction from "./post";
-import * as siteFunction from "./site";
+import postTemplate from "./post.typ?raw";
+import siteTemplate from "./site.typ?raw";
 
 const CACHE_DIR = ".cache/og-images";
 const CACHE_VERSION = "v1";
 
-// Ensure cache directory exists (will be called lazily)
+/**
+ * Ensure cache directory exists (will be called lazily)
+ */
 const ensureCacheDir = async () => {
   if (!existsSync(CACHE_DIR)) {
     mkdirSync(CACHE_DIR, { recursive: true });
@@ -58,7 +60,7 @@ export const getSiteOgCacheKey = async (): Promise<string> => {
     // desc: SITE.desc,
   };
   const contentHash = await generateHash(siteData);
-  const functionHash = await generateHash(siteFunction);
+  const functionHash = await generateHash({ siteTemplate });
   return `site-${contentHash}-${functionHash}`;
 };
 
@@ -80,7 +82,7 @@ export const getPostOgCacheKey = async (
     // tags: post.data.tags,
   };
   const contentHash = await generateHash(postData);
-  const functionHash = await generateHash(postFunction);
+  const functionHash = await generateHash({ postTemplate });
   return `post-${contentHash}-${functionHash}`;
 };
 
