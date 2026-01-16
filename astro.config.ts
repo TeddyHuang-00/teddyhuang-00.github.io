@@ -15,6 +15,7 @@ import icon from "astro-icon";
 import og from "astro-og";
 import pagefind from "astro-pagefind";
 import rehypeKatex from "rehype-katex";
+import remarkCjkFriendly from "remark-cjk-friendly";
 import remarkMath from "remark-math";
 import { SITE } from "./src/config";
 
@@ -87,7 +88,7 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [remarkMath],
+    remarkPlugins: [remarkMath, remarkCjkFriendly],
     rehypePlugins: [
       [
         rehypeKatex,
