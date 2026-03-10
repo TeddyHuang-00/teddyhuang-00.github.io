@@ -23,7 +23,7 @@ format: install
     bun rustywind --check-formatted --custom-regex "@apply ([_a-zA\.-Z0-9\s\-:\[\]]+?);" ./src
 
 check: install
-    bunx astro check
+    bunx --bun astro check
     biome check
 
 lint:
@@ -37,19 +37,19 @@ fix-all:
     biome lint --write
 
 dev: install font
-    bunx astro dev
+    bunx --bun astro dev
 
 build: install check font
-    bunx astro build
+    bunx --bun astro build
     cp -r dist/pagefind public/
 
 clean-build: clean && build
 
 preview: install
-    bunx astro preview
+    bunx --bun astro preview
 
 sync: install
-    bunx astro sync
+    bunx --bun astro sync
 
 clean:
     rm -rf dist public/pagefind public/assets/generated node_modules .astro
