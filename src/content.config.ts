@@ -1,4 +1,5 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
 import { extendI18nLoaderSchema, i18nLoader } from "astro-loader-i18n";
 import { SITE } from "@/config";
 
@@ -12,8 +13,8 @@ const blog = defineCollection({
       z.object({
         title: z.string(),
         author: z.string().default(SITE.author),
-        pubDatetime: z.date(),
-        modDatetime: z.date().optional().nullable(),
+        pubDatetime: z.coerce.date(),
+        modDatetime: z.coerce.date().optional().nullable(),
         featured: z.boolean().optional(),
         draft: z.boolean().optional(),
         tags: z.array(z.string()).default(["others"]),
