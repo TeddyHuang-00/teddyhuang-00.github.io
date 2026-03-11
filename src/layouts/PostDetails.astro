@@ -135,7 +135,7 @@ const nextPost =
     <EditPost class="sm:hidden" {hideEditPost} {post} />
 
     <ul class="mt-4 mb-8 sm:my-8">
-      {tags.map((tag) => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
+      {tags.map((tag: string) => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
     </ul>
 
     <BackToTopButton />
@@ -151,7 +151,7 @@ const nextPost =
           <a
             href={getRelativeLocaleUrl(
               locale,
-              getPath(prevPost.translationId, prevPost.filePath)
+              getPath(prevPost.translationId, prevPost.filePath),
             )}
             class="flex gap-1 w-full hover:opacity-75"
           >
@@ -171,7 +171,7 @@ const nextPost =
           <a
             href={getRelativeLocaleUrl(
               locale,
-              getPath(nextPost.translationId, nextPost.filePath)
+              getPath(nextPost.translationId, nextPost.filePath),
             )}
             class="flex gap-1 justify-end w-full sm:col-start-2 hover:opacity-75 text-end"
           >
@@ -244,7 +244,7 @@ const nextPost =
    *  allowing sharing of sections easily */
   function addHeadingLinks() {
     const headings = Array.from(
-      document.querySelectorAll("h2, h3, h4, h5, h6")
+      document.querySelectorAll("h2, h3, h4, h5, h6"),
     );
     for (const heading of headings) {
       heading.classList.add("group");
@@ -264,6 +264,6 @@ const nextPost =
 
   /* Go to page start after page swap */
   document.addEventListener("astro:after-swap", () =>
-    window.scrollTo({ left: 0, top: 0, behavior: "instant" })
+    window.scrollTo({ left: 0, top: 0, behavior: "instant" }),
   );
 </script>
