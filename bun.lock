@@ -25,7 +25,7 @@
         "astro": "6.0.7",
         "astro-expressive-code": "0.41.7",
         "astro-icon": "1.1.5",
-        "astro-loader-i18n": "0.11.0",
+        "astro-loader-i18n": "0.11.1",
         "astro-og": "0.3.2",
         "astro-pagefind": "1.8.5",
         "astro-theme-toggle": "0.8.0",
@@ -558,7 +558,7 @@
 
     "astro-icon": ["astro-icon@1.1.5", "", { "dependencies": { "@iconify/tools": "^4.0.5", "@iconify/types": "^2.0.0", "@iconify/utils": "^2.1.30" } }, "sha512-CJYS5nWOw9jz4RpGWmzNQY7D0y2ZZacH7atL2K9DeJXJVaz7/5WrxeyIxO8KASk1jCM96Q4LjRx/F3R+InjJrw=="],
 
-    "astro-loader-i18n": ["astro-loader-i18n@0.11.0", "", { "peerDependencies": { "astro": "^5.5.0 || ^6.0.0" } }, "sha512-JIOnWo3WuqqaCBwW4tPitYFn7ZdcWV2+vJLxmMJ2V41RtIIuZiVpItQOo9lrTLswMPZ2m/EQmg1nCrm0Mo23pg=="],
+    "astro-loader-i18n": ["astro-loader-i18n@0.11.1", "", { "peerDependencies": { "astro": "^5.5.0 || ^6.0.0" } }, "sha512-JLrfUR0EsQb/dKPBRsuGkbXyQIBGSGNwB7vcf8lQF9e28lW2+YVfGXfRZSPzrmP/iZjkIuD44sGgO0DD2e7vWQ=="],
 
     "astro-og": ["astro-og@0.3.2", "", { "dependencies": { "preact": "10.28.2" }, "peerDependencies": { "astro": ">=5.0.0" } }, "sha512-87soXn7bSVzcY+9YyG5xQt/F4J4hsZ6ZKXAfRzBwqiQ2FF+esRLpQU62v6IKQHnlvzkQvmbUmeAKaEP0W1SM2g=="],
 
