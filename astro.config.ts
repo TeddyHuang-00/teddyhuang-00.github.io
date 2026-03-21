@@ -81,6 +81,20 @@ export default defineConfig({
     }),
     pagefind(),
     playformCompress({
+      Image: {
+        sharp: {
+          png: {
+            compressionLevel: 9,
+            effort: 10,
+          },
+          gif: {
+            effort: 10,
+          },
+          webp: {
+            effort: 6,
+          },
+        },
+      },
       Exclude: [
         // ignore /dist/_astro/*.css as csso will mess up nested css selectors
         (File: string) => /dist\/_astro\/.*\.css$/g.test(File),
