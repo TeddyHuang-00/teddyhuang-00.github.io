@@ -27,7 +27,6 @@
     "@iconify-json/tabler": "1.2.32",
     "@myriaddreamin/typst-ts-node-compiler": "0.7.0-rc2",
     "@playform/compress": "0.2.2",
-    "@resvg/resvg-js": "2.6.2",
     "@tailwindcss/typography": "0.5.19",
     "@tailwindcss/vite": "4.2.2",
     "@types/lodash.kebabcase": "4.1.9",
@@ -52,6 +51,7 @@
     "remark-cjk-friendly": "2.0.1",
     "remark-math": "6.0.0",
     "rustywind": "0.24.3",
+    "sharp": "^0.34.5",
     "svgo": "4.0.1",
     "tailwindcss": "4.2.2",
     "typescript": "6.0.2"

@@ -1,6 +1,6 @@
 import type { CollectionEntry } from "astro:content";
 import { NodeCompiler } from "@myriaddreamin/typst-ts-node-compiler";
-import { Resvg } from "@resvg/resvg-js";
+import sharp from "sharp";
 import type { SITE } from "@/config";
 import { useTranslations } from "@/i18n/utils";
 import {
@@ -18,12 +18,11 @@ const compiler = NodeCompiler.create({
   fontArgs: showText ? [{ fontPaths: [".cache/fonts"] }] : undefined,
 });
 
-const svgBufferToPngBuffer = (svg: string) => {
-  const resvg = new Resvg(svg, {
-    shapeRendering: 2,
-  });
-  const pngData = resvg.render();
-  return pngData.asPng();
+const svgToPngBuffer = (svg: string) => {
+  const ppi = 72;
+  return sharp(Buffer.from(svg), { density: ppi })
+    .png({ compressionLevel: 9, effort: 10 })
+    .toBuffer();
 };
 
 export const generateOgImageForPost = async (post: CollectionEntry<"blog">) => {
@@ -42,7 +41,7 @@ export const generateOgImageForPost = async (post: CollectionEntry<"blog">) => {
         "show-text": String(showText),
       },
     });
-    return svgBufferToPngBuffer(svg);
+    return svgToPngBuffer(svg);
   });
 };
 
@@ -51,6 +50,6 @@ export const generateOgImageForSite = async () => {
 
   return withOgImageCache(cacheKey, async () => {
     const svg = compiler.svg({ mainFileContent: siteTemplate });
-    return svgBufferToPngBuffer(svg);
+    return svgToPngBuffer(svg);
   });
 };
