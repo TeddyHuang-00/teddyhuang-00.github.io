@@ -54,7 +54,7 @@
     "rustywind": "0.24.3",
     "svgo": "4.0.1",
     "tailwindcss": "4.2.2",
-    "typescript": "5.9.3"
+    "typescript": "6.0.2"
   },
   "trustedDependencies": [
     "@tailwindcss/oxide",
