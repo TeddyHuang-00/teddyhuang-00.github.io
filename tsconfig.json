@@ -3,6 +3,8 @@
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist", "public/pagefind", ".jj"],
   "compilerOptions": {
+    // The baseUrl is to be deprecated in TS 7.0, but the VSCode plugins still rely on it for path mapping. Once the plugins are updated, we can remove this and switch to the new "imports" field.
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
