@@ -43,7 +43,7 @@
           stroke: (paint: palette.surface0),
         )
       })
-      on-yz(x: 0, {
+      on-zy(x: 0, {
         grid(
           (0, 0),
           (4, 4),
