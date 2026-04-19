@@ -18,7 +18,7 @@
         for (layer, offset) in (
           (on-xy, (z: 4)),
           (on-xz, (y: 4)),
-          (on-yz, (x: 4)),
+          (on-zy, (x: 4)),
         ) {
           layer(
             ..offset,
