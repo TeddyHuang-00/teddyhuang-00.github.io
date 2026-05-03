@@ -12,6 +12,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
+import mermaid from "astro-mermaid";
 import og from "astro-og";
 import pagefind from "astro-pagefind";
 import rehypeKatex from "rehype-katex";
@@ -54,6 +55,10 @@ export default defineConfig({
     react(),
     icon({ iconDir: "src/assets/icons" }),
     og(),
+    mermaid({
+      theme: "base",
+      autoTheme: true,
+    }),
     expressiveCode({
       themes: ["catppuccin-mocha", "catppuccin-latte"],
       useDarkModeMediaQuery: false,
