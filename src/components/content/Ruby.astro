@@ -7,8 +7,11 @@ export interface Props {
 
 const { rb, rt, split = "|" } = Astro.props;
 
-const rbs = rb.split(split);
-const rts = rt.split(split);
+const spaceToNbsp = (s: string) =>
+  s.length > 0 && s.trim().length === 0 ? "&nbsp;" : s;
+
+const rbs = rb.split(split).map(spaceToNbsp);
+const rts = rt.split(split).map(spaceToNbsp);
 
 if (rbs.length !== rts.length) {
   const length = Math.max(rbs.length, rts.length);
