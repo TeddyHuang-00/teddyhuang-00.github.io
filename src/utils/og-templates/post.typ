@@ -1,5 +1,5 @@
 #import "@preview/suiji:0.5.1": gen-rng-f, random-f
-#import "@preview/digestify:0.1.0": md5
+#import "@preview/digestify:0.2.0": md5
 
 #let width = 1200pt
 #let height = 630pt
