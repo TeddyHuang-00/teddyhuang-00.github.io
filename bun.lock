@@ -24,7 +24,7 @@
         "astro": "6.3.1",
         "astro-expressive-code": "0.42.0",
         "astro-icon": "1.1.5",
-        "astro-loader-i18n": "0.11.1",
+        "astro-loader-i18n": "0.12.0",
         "astro-mermaid": "^2.0.1",
         "astro-og": "0.3.2",
         "astro-pagefind": "1.8.6",
@@ -614,7 +614,7 @@
 
     "astro-icon": ["astro-icon@1.1.5", "", { "dependencies": { "@iconify/tools": "^4.0.5", "@iconify/types": "^2.0.0", "@iconify/utils": "^2.1.30" } }, "sha512-CJYS5nWOw9jz4RpGWmzNQY7D0y2ZZacH7atL2K9DeJXJVaz7/5WrxeyIxO8KASk1jCM96Q4LjRx/F3R+InjJrw=="],
 
-    "astro-loader-i18n": ["astro-loader-i18n@0.11.1", "", { "peerDependencies": { "astro": "^5.5.0 || ^6.0.0" } }, "sha512-JLrfUR0EsQb/dKPBRsuGkbXyQIBGSGNwB7vcf8lQF9e28lW2+YVfGXfRZSPzrmP/iZjkIuD44sGgO0DD2e7vWQ=="],
+    "astro-loader-i18n": ["astro-loader-i18n@0.12.0", "", { "peerDependencies": { "astro": "^5.5.0 || ^6.0.0" } }, "sha512-dACMDudFdPQhpKX7w2pZnqHA1jNQ6fYqEfMepijeBIr7m92EflYa1J4Re/MQAoqUpHaW3rDp0miEt59goKyjVg=="],
 
     "astro-mermaid": ["astro-mermaid@2.0.1", "", { "dependencies": { "import-meta-resolve": "^4.2.0", "mdast-util-to-string": "^4.0.0", "unist-util-visit": "^5.0.0" }, "peerDependencies": { "@mermaid-js/layout-elk": "^0.2.0", "astro": ">=4", "mermaid": "^10.0.0 || ^11.0.0" }, "optionalPeers": ["@mermaid-js/layout-elk"] }, "sha512-JTyB62FMFJpwS/1yUplmrugL0yr0flBVYZw6mf3s7pVlh+CHCeZTXyj3KCCWtFhnPLAdM+PYld0D+gxN/SysLQ=="],
 
