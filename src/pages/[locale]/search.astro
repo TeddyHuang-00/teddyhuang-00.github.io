@@ -1,6 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import PageFindSearch from "astro-pagefind/components/Search";
+import PagefindConfig from "astro-pagefind/components/PagefindConfig.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import { SITE } from "@/config";
@@ -42,11 +42,12 @@ const backUrl = SITE.showBackButton
           </div>
         )
       }
-      <PageFindSearch
-        id="pagefind-search"
-        className="pagefind-ui"
-        uiOptions={{ showImages: false }}
-      />
+      <div id="pagefind-search">
+        <PagefindConfig />
+        <pagefind-input></pagefind-input>
+        <pagefind-summary></pagefind-summary>
+        <pagefind-results show-images="false"></pagefind-results>
+      </div>
     </div>
   </Main>
   <Footer />
@@ -54,49 +55,66 @@ const backUrl = SITE.showBackButton
 
 <style is:global>
   #pagefind-search {
-    --pagefind-ui-font: var(--font-mono);
-    --pagefind-ui-text: var(--foreground);
-    --pagefind-ui-background: var(--background);
-    --pagefind-ui-border: var(--border);
-    --pagefind-ui-primary: var(--accent);
-    --pagefind-ui-tag: var(--background);
-    --pagefind-ui-border-radius: 0.375rem;
-    --pagefind-ui-border-width: 1px;
-    --pagefind-ui-image-border-radius: 8px;
-    --pagefind-ui-image-box-ratio: 3 / 2;
+    --pf-font: var(--font-mono);
+    --pf-text: var(--foreground);
+    --pf-text-secondary: color-mix(in srgb, var(--foreground) 70%, transparent);
+    --pf-text-muted: color-mix(in srgb, var(--foreground) 55%, transparent);
+    --pf-background: var(--background);
+    --pf-border: var(--border);
+    --pf-border-focus: var(--accent);
+    --pf-hover: color-mix(in srgb, var(--muted) 75%, transparent);
+    --pf-mark: var(--accent);
+    --pf-outline-focus: var(--accent);
+    --pf-outline-width: 1px;
+    --pf-outline-offset: 1px;
+    --pf-border-radius: 0.375rem;
+    --pf-results-gap: 1rem;
+  }
 
-    form::before {
-      background-color: var(--foreground);
-    }
+  #pagefind-search pagefind-summary,
+  #pagefind-search pagefind-results {
+    margin-top: 1rem;
+  }
 
-    input {
-      font-weight: 400;
-      border: 1px solid var(--border);
-    }
+  #pagefind-search .pf-input-wrapper::before {
+    background-color: var(--foreground);
+  }
 
-    input:focus-visible {
-      outline: 1px solid var(--accent);
-    }
+  #pagefind-search .pf-input {
+    font-weight: 400;
+    border: 1px solid var(--border);
+  }
 
-    .pagefind-ui__result-title a {
-      color: var(--accent);
-      outline-offset: 1px;
-      outline-color: var(--accent);
-    }
+  #pagefind-search .pf-input:focus-visible,
+  #pagefind-search .pf-result-card:has(.pf-result-link:focus-visible) {
+    box-shadow: 0 0 0 1px var(--accent);
+  }
 
-    .pagefind-ui__result-title a:focus-visible,
-    .pagefind-ui__search-clear:focus-visible {
-      text-decoration-line: none;
-      outline-width: 2px;
-      outline-style: dashed;
-    }
+  #pagefind-search .pf-result-link {
+    color: var(--accent);
+    outline-offset: 1px;
+    outline-color: var(--accent);
+  }
 
-    .pagefind-ui__result:last-of-type {
-      border-bottom: 0;
-    }
+  #pagefind-search .pf-result-link:hover {
+    text-decoration-line: none;
+  }
 
-    .pagefind-ui__result-nested .pagefind-ui__result-link:before {
-      font-family: system-ui;
-    }
+  #pagefind-search .pf-input-clear:focus-visible,
+  #pagefind-search .pf-result-link:focus-visible {
+    outline-width: 2px;
+    outline-style: dashed;
+  }
+
+  #pagefind-search .pf-results {
+    margin-top: 1rem;
+  }
+
+  #pagefind-search .pf-result:last-of-type {
+    border-bottom: 0;
+  }
+
+  #pagefind-search .pf-subresults .pf-result-link::before {
+    font-family: system-ui;
   }
 </style>
