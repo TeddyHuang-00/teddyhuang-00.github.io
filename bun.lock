@@ -1,6 +1,5 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "teddyhuang-00-github-io-astro",
@@ -28,7 +27,7 @@
         "astro-mermaid": "^2.0.1",
         "astro-og": "0.3.2",
         "astro-pagefind": "2.0.0",
-        "astro-theme-toggle": "0.8.0",
+        "astro-theme-toggle": "0.8.1",
         "dayjs": "1.11.20",
         "globals": "17.6.0",
         "katex": "0.16.45",
@@ -628,7 +627,7 @@
 
     "astro-pagefind": ["astro-pagefind@2.0.0", "", { "dependencies": { "@pagefind/component-ui": "^1.5.0", "pagefind": "^1.5.0", "sirv": "^3.0.0" }, "peerDependencies": { "astro": "^2.0.4 || ^3 || ^4 || ^5 || ^6" } }, "sha512-i270YlJ/8aX/eRkvtuAPANSk+WK1uyp9DEj/TuuWem4pA0xBUGQk7agNFdu71nRxtH0j7TZxee2qwQRlrfZa1g=="],
 
-    "astro-theme-toggle": ["astro-theme-toggle@0.8.0", "", {}, "sha512-7ngEKDfCLKoVbxX4yxrggtBr8i6W8eT0un0TpNKHUeOG/Pq2g7BrjH+etP/l/XQYYSWQmeOIAI02LvLXDMvOWw=="],
+    "astro-theme-toggle": ["astro-theme-toggle@0.8.1", "", {}, "sha512-cUQDnMpRrGwWQ0C6dj1x3y3e3ULlikvoc6Tb6FkIQkL1Ropyd6jQ/IZ9GdhSogWEVpNodPckOKeItIh89EDwkg=="],
 
     "asynckit": ["asynckit@0.4.0", "", {}, "sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q=="],
 

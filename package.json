@@ -39,7 +39,7 @@
     "astro-mermaid": "^2.0.1",
     "astro-og": "0.3.2",
     "astro-pagefind": "2.0.0",
-    "astro-theme-toggle": "0.8.0",
+    "astro-theme-toggle": "0.8.1",
     "dayjs": "1.11.20",
     "globals": "17.6.0",
     "katex": "0.16.45",
