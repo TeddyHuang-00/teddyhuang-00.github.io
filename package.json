@@ -53,7 +53,7 @@
     "remark-cjk-friendly": "2.0.1",
     "remark-math": "6.0.0",
     "rustywind": "0.24.3",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.0",
     "svgo": "4.0.1",
     "tailwindcss": "4.3.1",
     "typescript": "6.0.3"
