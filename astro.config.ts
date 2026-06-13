@@ -1,3 +1,4 @@
+import { unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
@@ -107,17 +108,19 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [remarkMath, remarkCjkFriendly],
-    rehypePlugins: [
-      [
-        rehypeKatex,
-        {
-          // biome-ignore lint/suspicious/noExplicitAny: We don't need to type this properly as they will not be used.
-          strict: (errorCode: string, ..._: any[]) =>
-            errorCode === "newLineInDisplayMode" ? false : "warn",
-        },
+    processor: unified({
+      remarkPlugins: [remarkMath, remarkCjkFriendly],
+      rehypePlugins: [
+        [
+          rehypeKatex,
+          {
+            // biome-ignore lint/suspicious/noExplicitAny: We don't need to type this properly as they will not be used.
+            strict: (errorCode: string, ..._: any[]) =>
+              errorCode === "newLineInDisplayMode" ? false : "warn",
+          },
+        ],
       ],
-    ],
+    }),
     // Prefer to handle syntax highlighting in expressive code
     syntaxHighlight: false,
   },
