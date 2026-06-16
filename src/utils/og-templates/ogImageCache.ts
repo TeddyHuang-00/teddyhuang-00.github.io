@@ -6,7 +6,7 @@ import postTemplate from "./post.typ?raw";
 import siteTemplate from "./site.typ?raw";
 
 const CACHE_DIR = ".cache/og-images";
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v1.1";
 
 /**
  * Get font version from cached config

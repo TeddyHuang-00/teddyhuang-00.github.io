@@ -101,7 +101,9 @@ function compileTypst(
     fontArgs: fontPaths ? [{ fontPaths }] : undefined,
   });
   return ["light", "dark"]
-    .map((theme) => compiler.svg({ mainFilePath: filePath, inputs: { theme } }))
+    .map((theme) =>
+      compiler.plainSvg({ mainFilePath: filePath, inputs: { theme } })
+    )
     .map(optimizeSvg) as [string, string];
 }
 

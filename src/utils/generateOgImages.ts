@@ -32,7 +32,7 @@ export const generateOgImageForPost = async (post: CollectionEntry<"blog">) => {
     const localeString = useTranslations(
       post.data.locale as keyof typeof SITE.locales
     );
-    const svg = compiler.svg({
+    const svg = compiler.plainSvg({
       mainFileContent: postTemplate,
       inputs: {
         title: post.data.title,
@@ -49,7 +49,7 @@ export const generateOgImageForSite = async () => {
   const cacheKey = await getSiteOgCacheKey(showText);
 
   return withOgImageCache(cacheKey, async () => {
-    const svg = compiler.svg({ mainFileContent: siteTemplate });
+    const svg = compiler.plainSvg({ mainFileContent: siteTemplate });
     return svgToPngBuffer(svg);
   });
 };
