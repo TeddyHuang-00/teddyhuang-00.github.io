@@ -39,7 +39,7 @@
         "react-dom": "19.2.7",
         "rehype-format": "5.0.1",
         "rehype-katex": "7.0.1",
-        "remark-cjk-friendly": "2.1.0",
+        "remark-cjk-friendly": "2.2.0",
         "remark-math": "6.0.0",
         "rustywind": "0.24.3",
         "sharp": "^0.35.0",
@@ -1434,7 +1434,7 @@
 
     "relateurl": ["relateurl@0.2.7", "", {}, "sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog=="],
 
-    "remark-cjk-friendly": ["remark-cjk-friendly@2.1.0", "", { "dependencies": { "mdast-util-to-markdown-cjk-friendly": "1.0.0", "micromark-extension-cjk-friendly": "2.0.1" }, "peerDependencies": { "@types/mdast": "^4.0.0", "unified": "^11.0.0" }, "optionalPeers": ["@types/mdast"] }, "sha512-ZWGDfTJNLEZ1gap+pd33K13ZhRAWgVDqxKA7JIlBs5IDu+qvbiWl/pEbeuxzRrWyrrkeFFoTnvNw00iW9mBcow=="],
+    "remark-cjk-friendly": ["remark-cjk-friendly@2.2.0", "", { "dependencies": { "mdast-util-to-markdown-cjk-friendly": "1.0.0", "micromark-extension-cjk-friendly": "2.0.1" }, "peerDependencies": { "@types/mdast": "^4.0.0", "unified": "^11.0.0" }, "optionalPeers": ["@types/mdast"] }, "sha512-tJ+FkYnE6I+rl6DIQEarJLwvATHPmIE88ac0NWZjB24WR7hdwowvnystZK+df4mC53x0OJEtiexlKbFn9Zz0hA=="],
 
     "remark-gfm": ["remark-gfm@4.0.1", "", { "dependencies": { "@types/mdast": "^4.0.0", "mdast-util-gfm": "^3.0.0", "micromark-extension-gfm": "^3.0.0", "remark-parse": "^11.0.0", "remark-stringify": "^11.0.0", "unified": "^11.0.0" } }, "sha512-1quofZ2RQ9EWdeN34S79+KExV1764+wCUGop5CPL1WGdD0ocPpu91lzPGbwWMECpEpd42kJGQwzRfyov9j4yNg=="],
 
