@@ -11,7 +11,7 @@ export const getStaticPaths = async () => {
   }
 
   const posts = await getCollection("blog").then((p) =>
-    p.filter(({ data }) => !data.draft && !data.ogImage)
+    p.filter(({ data }) => !(data.draft ?? false) && data.ogImage === undefined)
   );
 
   return posts.map((post) => ({
@@ -32,6 +32,7 @@ export const GET: APIRoute = async ({ props }) => {
   }
 
   return new Response(
+    // oxlint-disable-next-line no-unsafe-type-assertion
     (await generateOgImageForPost(props as CollectionEntry<"blog">)).buffer as ArrayBuffer,
     {
       headers: { "Content-Type": "image/png" },

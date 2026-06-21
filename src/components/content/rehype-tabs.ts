@@ -64,7 +64,7 @@ const tabsProcessor = rehype()
       file.data.panels = [];
       let isFirst = true;
       visit(tree, "element", (node) => {
-        if (node.tagName !== TabItemTagname || !node.properties) {
+        if (node.tagName !== TabItemTagname || node.properties === undefined) {
           return CONTINUE;
         }
 
@@ -74,7 +74,7 @@ const tabsProcessor = rehype()
           ...ids,
           label: String(dataLabel),
         };
-        if (dataIcon) panel.icon = String(dataIcon);
+        if (dataIcon !== undefined && dataIcon !== null) panel.icon = String(dataIcon);
         file.data.panels?.push(panel);
 
         // Remove `<TabItem>` props

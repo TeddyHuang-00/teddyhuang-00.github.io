@@ -16,9 +16,10 @@ const CACHE_VERSION = "v1.1";
 export const getFontVersion = (): string => {
   try {
     const configPath = join(process.cwd(), ".cache", "fonts", "config.json");
-    const config = JSON.parse(readFileSync(configPath, "utf-8"));
-    const family = config.family_name || "Maple Mono";
-    const version = config.version || "unknown";
+    // oxlint-disable-next-line no-unsafe-assignment no-unsafe-type-assertion
+    const config = JSON.parse(readFileSync(configPath, "utf-8")) as Record<string, string>;
+    const family = config.family_name ?? "Maple Mono";
+    const version = config.version ?? "unknown";
     return `${family} ${version}`;
   } catch (error) {
     throw new Error(`Failed to read font config`, {
@@ -49,7 +50,7 @@ const generateHash = (content: Record<string, unknown>): string => {
       // Convert functions to their string representation
       stringifiedContent[key] = content[key].toString();
     } else if (typeof content[key] === "number" || typeof content[key] === "string") {
-      stringifiedContent[key] = content[key] as string | number;
+      stringifiedContent[key] = content[key];
     }
   }
   const contentString = JSON.stringify(
@@ -133,14 +134,14 @@ export const setCachedOgImage = (cacheKey: string, imageBuffer: Buffer): void =>
 /**
  * Wrapper function for cached OG image generation
  */
-export const withOgImageCache = async <T>(
+export const withOgImageCache = async (
   cacheKey: string,
-  generator: () => Promise<T>
-): Promise<T> => {
+  generator: () => Promise<Buffer>
+): Promise<Buffer> => {
   // Try to get from cache first
   const cached = getCachedOgImage(cacheKey);
   if (cached) {
-    return cached as T;
+    return cached;
   }
 
   // Generate new image

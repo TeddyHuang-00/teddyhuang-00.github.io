@@ -9,12 +9,12 @@ import getSortedPosts from "@/utils/getSortedPosts";
 
 export const getStaticPaths = (() => {
   return Object.keys(SITE.locales).map((lang) => ({
-    params: { locale: lang as keyof typeof SITE.locales },
+    params: { locale: lang },
   }));
 }) satisfies GetStaticPaths;
 
 export const GET: APIRoute = async ({ params }) => {
-  const locale = (params.locale || "en") as keyof typeof SITE.locales;
+  const locale = params.locale ?? SITE.defaultLocale;
   const localeString = getTranslations(locale);
 
   const posts = await getCollection("blog", ({ data }) => data.locale === locale);

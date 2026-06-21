@@ -99,6 +99,7 @@ function compileTypst(
     workspace,
     fontArgs: fontPaths ? [{ fontPaths }] : undefined,
   });
+  // oxlint-disable-next-line no-unsafe-type-assertion
   return ["light", "dark"]
     .map((theme) => compiler.plainSvg({ mainFilePath: filePath, inputs: { theme } }))
     .map((svg) => optimizeSvg(svg)) as [string, string];

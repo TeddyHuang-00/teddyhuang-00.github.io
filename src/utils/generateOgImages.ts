@@ -2,7 +2,6 @@ import { NodeCompiler } from "@myriaddreamin/typst-ts-node-compiler";
 import type { CollectionEntry } from "astro:content";
 import sharp from "sharp";
 
-import type { SITE } from "@/config";
 import { getTranslations } from "@/i18n/utils";
 
 import {
@@ -31,7 +30,7 @@ export const generateOgImageForPost = (post: CollectionEntry<"blog">) => {
   const cacheKey = getPostOgCacheKey(post, showText);
 
   return withOgImageCache(cacheKey, () => {
-    const localeString = getTranslations(post.data.locale as keyof typeof SITE.locales);
+    const localeString = getTranslations(post.data.locale);
     const svg = compiler.plainSvg({
       mainFileContent: postTemplate,
       inputs: {

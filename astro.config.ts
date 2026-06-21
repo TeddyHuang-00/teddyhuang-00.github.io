@@ -73,7 +73,7 @@ export default defineConfig({
         collapseStyle: "collapsible-auto",
       },
       getBlockLocale: ({ file }) => {
-        const fileName = file.path?.split("/").pop() || "";
+        const fileName = file.path?.split("/").pop() ?? "";
         const [, locale] = fileName.split(".");
         return Object.keys(SITE.locales).includes(locale) ? locale : SITE.defaultLocale;
       },

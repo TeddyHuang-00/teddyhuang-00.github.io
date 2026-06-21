@@ -43,7 +43,10 @@ export default function Comments({
       });
 
       // Cleanup function to disconnect the observer when the component unmounts
-      return () => observer.disconnect();
+      // oxlint-disable-next-line consistent-return
+      return () => {
+        observer.disconnect();
+      };
     },
     // Empty dependency array means this effect runs once on mount
     []

@@ -12,7 +12,7 @@ const getPostsByGroupCondition = (
   for (let i = 0; i < posts.length; i++) {
     const item = posts[i];
     const groupKey = groupFunction(item, i);
-    if (!result[groupKey]) {
+    if (!(groupKey in result)) {
       result[groupKey] = [];
     }
     result[groupKey].push(item);
