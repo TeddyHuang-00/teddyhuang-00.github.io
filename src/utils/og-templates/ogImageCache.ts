@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import type { CollectionEntry } from "astro:content";
+import { z } from "zod";
 
 import postTemplate from "./post.typ?raw";
 import siteTemplate from "./site.typ?raw";
@@ -10,14 +11,18 @@ import siteTemplate from "./site.typ?raw";
 const CACHE_DIR = ".cache/og-images";
 const CACHE_VERSION = "v1.1";
 
+const FontConfigSchema = z.looseObject({
+  version: z.string().optional(),
+  family_name: z.string().optional(),
+});
+
 /**
  * Get font version from cached config
  */
 export const getFontVersion = (): string => {
   try {
     const configPath = join(process.cwd(), ".cache", "fonts", "config.json");
-    // oxlint-disable-next-line no-unsafe-assignment no-unsafe-type-assertion
-    const config = JSON.parse(readFileSync(configPath, "utf-8")) as Record<string, string>;
+    const config = FontConfigSchema.parse(JSON.parse(readFileSync(configPath, "utf-8")));
     const family = config.family_name ?? "Maple Mono";
     const version = config.version ?? "unknown";
     return `${family} ${version}`;
