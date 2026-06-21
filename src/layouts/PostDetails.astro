@@ -13,7 +13,7 @@ import ShareLinks from "@/components/ShareLinks.astro";
 import TableOfContent from "@/components/TableOfContent.astro";
 import Tag from "@/components/Tag.astro";
 import { SITE } from "@/config";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
@@ -39,7 +39,7 @@ const {
 } = post.data;
 
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 
 const { Content, headings } = await render(post);
 
@@ -47,9 +47,11 @@ let ogImageUrl: string | undefined;
 
 // Determine OG image source
 if (typeof initOgImage === "string") {
-  ogImageUrl = initOgImage; // Remote OG image (absolute URL)
+  // Remote OG image (absolute URL)
+  ogImageUrl = initOgImage;
 } else if (initOgImage?.src) {
-  ogImageUrl = initOgImage.src; // Local asset
+  // Local asset
+  ogImageUrl = initOgImage.src;
 }
 
 // Use dynamic OG image if enabled and no remote|local ogImage
@@ -57,7 +59,7 @@ if (!ogImageUrl && SITE.dynamicOgImage) {
   ogImageUrl = getRelativeLocaleUrl(
     locale,
     `${getPath(post.data.translationId, post.filePath)}/index.png`
-  ).replace(/\/$/, "");
+  ).replace(/\/$/u, "");
 }
 
 // Resolve OG image URL (or fallback to SITE.ogImage / default `og.png`)
@@ -88,9 +90,9 @@ const currentPostIndex = allPosts.findIndex(
   (a) => a.translationId === post.data.translationId
 );
 
-const prevPost = currentPostIndex !== 0 ? allPosts[currentPostIndex - 1] : null;
+const prevPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
 const nextPost =
-  currentPostIndex !== allPosts.length ? allPosts[currentPostIndex + 1] : null;
+  currentPostIndex + 1 < allPosts.length ? allPosts[currentPostIndex + 1] : null;
 ---
 
 <Layout {...layoutProps}>
@@ -213,10 +215,10 @@ const nextPost =
     progressBar.id = "myBar";
 
     // Append the progress bar to the progress container
-    progressContainer.appendChild(progressBar);
+    progressContainer.append(progressBar);
 
     // Append the progress container to the document body or any other desired parent element
-    document.body.appendChild(progressContainer);
+    document.body.append(progressContainer);
   }
   createProgressBar();
 
@@ -231,7 +233,7 @@ const nextPost =
         document.documentElement.clientHeight;
       const scrolled = (winScroll / height) * 100;
       if (document) {
-        const myBar = document.getElementById("myBar");
+        const myBar = document.querySelector("#myBar");
         if (myBar) {
           myBar.style.width = scrolled + "%";
         }
@@ -256,8 +258,8 @@ const nextPost =
       const span = document.createElement("span");
       span.ariaHidden = "true";
       span.innerText = "#";
-      link.appendChild(span);
-      heading.appendChild(link);
+      link.append(span);
+      heading.append(link);
     }
   }
   addHeadingLinks();

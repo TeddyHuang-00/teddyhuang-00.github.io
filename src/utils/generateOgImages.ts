@@ -1,8 +1,10 @@
-import type { CollectionEntry } from "astro:content";
 import { NodeCompiler } from "@myriaddreamin/typst-ts-node-compiler";
+import type { CollectionEntry } from "astro:content";
 import sharp from "sharp";
+
 import type { SITE } from "@/config";
-import { useTranslations } from "@/i18n/utils";
+import { getTranslations } from "@/i18n/utils";
+
 import {
   getPostOgCacheKey,
   getSiteOgCacheKey,
@@ -25,13 +27,11 @@ const svgToPngBuffer = (svg: string) => {
     .toBuffer();
 };
 
-export const generateOgImageForPost = async (post: CollectionEntry<"blog">) => {
-  const cacheKey = await getPostOgCacheKey(post, showText);
+export const generateOgImageForPost = (post: CollectionEntry<"blog">) => {
+  const cacheKey = getPostOgCacheKey(post, showText);
 
-  return withOgImageCache(cacheKey, async () => {
-    const localeString = useTranslations(
-      post.data.locale as keyof typeof SITE.locales
-    );
+  return withOgImageCache(cacheKey, () => {
+    const localeString = getTranslations(post.data.locale as keyof typeof SITE.locales);
     const svg = compiler.plainSvg({
       mainFileContent: postTemplate,
       inputs: {
@@ -45,10 +45,10 @@ export const generateOgImageForPost = async (post: CollectionEntry<"blog">) => {
   });
 };
 
-export const generateOgImageForSite = async () => {
-  const cacheKey = await getSiteOgCacheKey(showText);
+export const generateOgImageForSite = () => {
+  const cacheKey = getSiteOgCacheKey(showText);
 
-  return withOgImageCache(cacheKey, async () => {
+  return withOgImageCache(cacheKey, () => {
     const svg = compiler.plainSvg({ mainFileContent: siteTemplate });
     return svgToPngBuffer(svg);
   });

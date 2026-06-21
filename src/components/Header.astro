@@ -3,24 +3,24 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import { Toggle } from "astro-theme-toggle";
 import { SITE } from "@/config";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
 
 const { pathname } = Astro.url;
 
 const currentLang = getLangFromUrl(Astro.url);
-const localeString = useTranslations(currentLang);
+const localeString = getTranslations(currentLang);
 // Remove trailing slash from current pathname if exists
 const currentPath =
   pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
 const langAgnosticPath = currentPath.split("/").slice(2).join("/");
 
 const isActive = (path: string) => {
-  const currentPathArray = langAgnosticPath.split("/").filter((p) => p.trim());
-  const pathArray = path.split("/").filter((p) => p.trim());
+  const currentPath = langAgnosticPath.split("/").find((p) => p.trim());
+  const firstPath = path.split("/").find((p) => p.trim());
 
-  return currentPath === path || currentPathArray[0] === pathArray[0];
+  return currentPath === path || currentPath === firstPath;
 };
 ---
 
@@ -28,7 +28,7 @@ const isActive = (path: string) => {
   <a
     id="skip-to-content"
     href="#main-content"
-    class="absolute -top-full z-50 py-2 px-3 transition-all focus:top-4 start-16 bg-background text-accent backdrop-blur-lg"
+    class="absolute -top-full z-50 py-2 px-3 transition-all focus:top-4 inset-s-16 bg-background text-accent backdrop-blur-lg"
   >
     {localeString("nav.skip-to-content")}
   </a>
@@ -265,7 +265,7 @@ const isActive = (path: string) => {
     const langLinks = langMenu.querySelectorAll("a[data-lang]");
     langLinks.forEach((link) => {
       link.addEventListener("click", (e) => {
-        const langCode = (e.target as HTMLAnchorElement).getAttribute("data-lang");
+        const langCode = (e.target as HTMLAnchorElement).dataset.lang;
         if (langCode) {
           localStorage.setItem("locale", langCode);
         }

@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { SOCIALS } from "@/constants";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import LinkButton from "./LinkButton.astro";
 
 export interface Props {
@@ -10,7 +10,7 @@ export interface Props {
 
 const { centered = false } = Astro.props;
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 ---
 
 <div class:list={["flex-wrap justify-center gap-1", { flex: centered }]}>

@@ -16,49 +16,51 @@ if (!document.childNodes) {
   throw new Error(
     "<Steps> component requires a single <ol> child element. But none was found."
   );
-} else if (document.childNodes.length > 1) {
+}
+if (document.childNodes.length > 1) {
   throw new Error(
     "<Steps> component requires a single <ol> child element. But multiple were found."
   );
-} else if (document.childNodes[0].nodeName !== "OL") {
+}
+if (document.childNodes[0].nodeName !== "OL") {
   throw new Error(
     `<Steps> component requires a single <ol> child element. But found <${document.childNodes[0].nodeName.toLowerCase()}> instead.`
   );
-} else {
-  const ol = document.childNodes[0] as HTMLElement;
-  ol.setAttribute("role", "list");
-  // We use this workaround to make both tailwind intellisense and rustywind work
-  const olClassList = ol.classList;
-  ol.className = "list-none ps-0";
-  ol.classList.add(...Array.from(olClassList));
-
-  const startIndex = ol.hasAttribute("start")
-    ? parseInt(ol.getAttribute("start") || "1", 10)
-    : 1;
-
-  const listItems = Array.from(ol.children).filter(
-    (child) => child.nodeName === "LI"
-  ) as HTMLElement[];
-
-  listItems.forEach((li, index) => {
-    const stepNumber = startIndex + index;
-
-    const bulletSpan = document.createElement("span");
-    bulletSpan.className =
-      "flex absolute left-0 -top-1 justify-center items-center w-8 h-8 text-xs font-semibold rounded-full border bg-muted text-foreground border-border";
-    bulletSpan.textContent = String(stepNumber);
-
-    const lineSpan = document.createElement("span");
-    lineSpan.className =
-      "absolute -bottom-2 left-4 top-10 w-px -translate-x-0.5 bg-border";
-
-    const liClassList = li.classList;
-    li.className = "relative pb-1 pl-12 min-h-12";
-    li.classList.add(...Array.from(liClassList));
-    li.insertBefore(bulletSpan, li.firstChild);
-    li.appendChild(lineSpan);
-  });
 }
+
+const ol = document.childNodes[0] as HTMLElement;
+ol.setAttribute("role", "list");
+// We use this workaround to make both tailwind intellisense and rustywind work
+const olClassList = ol.classList;
+ol.className = "list-none ps-0";
+ol.classList.add(...Array.from(olClassList));
+
+const startIndex = ol.hasAttribute("start")
+  ? parseInt(ol.getAttribute("start") || "1", 10)
+  : 1;
+
+const listItems = Array.from(ol.children).filter(
+  (child) => child.nodeName === "LI"
+) as HTMLElement[];
+
+listItems.forEach((li, index) => {
+  const stepNumber = startIndex + index;
+
+  const bulletSpan = document.createElement("span");
+  bulletSpan.className =
+    "flex absolute left-0 -top-1 justify-center items-center w-8 h-8 text-xs font-semibold rounded-full border bg-muted text-foreground border-border";
+  bulletSpan.textContent = String(stepNumber);
+
+  const lineSpan = document.createElement("span");
+  lineSpan.className =
+    "absolute -bottom-2 left-4 top-10 w-px -translate-x-0.5 bg-border";
+
+  const liClassList = li.classList;
+  li.className = "relative pb-1 pl-12 min-h-12";
+  li.classList.add(...Array.from(liClassList));
+  li.insertBefore(bulletSpan, li.firstChild);
+  li.append(lineSpan);
+});
 
 const html = document.documentElement.outerHTML;
 ---

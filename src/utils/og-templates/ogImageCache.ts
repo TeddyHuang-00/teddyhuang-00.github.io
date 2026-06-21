@@ -1,7 +1,9 @@
-import type { CollectionEntry } from "astro:content";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+
+import type { CollectionEntry } from "astro:content";
+
 import postTemplate from "./post.typ?raw";
 import siteTemplate from "./site.typ?raw";
 
@@ -19,14 +21,16 @@ export const getFontVersion = (): string => {
     const version = config.version || "unknown";
     return `${family} ${version}`;
   } catch (error) {
-    throw new Error(`Failed to read font config: ${error}`);
+    throw new Error(`Failed to read font config`, {
+      cause: error,
+    });
   }
 };
 
 /**
  * Ensure cache directory exists (will be called lazily)
  */
-const ensureCacheDir = async () => {
+const ensureCacheDir = () => {
   if (!existsSync(CACHE_DIR)) {
     mkdirSync(CACHE_DIR, { recursive: true });
   }
@@ -35,9 +39,7 @@ const ensureCacheDir = async () => {
 /**
  * Generate a stable hash for content-based cache invalidation
  */
-const generateHash = async (
-  content: Record<string, unknown>
-): Promise<string> => {
+const generateHash = (content: Record<string, unknown>): string => {
   const stringifiedContent = {} as Record<string, string | number>;
   for (const key of Object.keys(content)) {
     // Stringify nested objects and functions
@@ -46,16 +48,13 @@ const generateHash = async (
     } else if (typeof content[key] === "function") {
       // Convert functions to their string representation
       stringifiedContent[key] = content[key].toString();
-    } else if (
-      typeof content[key] === "number" ||
-      typeof content[key] === "string"
-    ) {
+    } else if (typeof content[key] === "number" || typeof content[key] === "string") {
       stringifiedContent[key] = content[key] as string | number;
     }
   }
   const contentString = JSON.stringify(
     stringifiedContent,
-    Object.keys(stringifiedContent).sort()
+    Object.keys(stringifiedContent).toSorted()
   );
 
   return createHash("sha256").update(contentString).digest("hex").slice(0, 16);
@@ -64,7 +63,7 @@ const generateHash = async (
 /**
  * Generate cache key for site OG image
  */
-export const getSiteOgCacheKey = async (useFont: boolean): Promise<string> => {
+export const getSiteOgCacheKey = (useFont: boolean): string => {
   const siteData = {
     version: CACHE_VERSION,
     font: useFont ? getFontVersion() : undefined,
@@ -73,18 +72,15 @@ export const getSiteOgCacheKey = async (useFont: boolean): Promise<string> => {
     // author: SITE.author,
     // desc: SITE.desc,
   };
-  const contentHash = await generateHash(siteData);
-  const functionHash = await generateHash({ siteTemplate });
+  const contentHash = generateHash(siteData);
+  const functionHash = generateHash({ siteTemplate });
   return `site-${contentHash}-${functionHash}`;
 };
 
 /**
  * Generate cache key for post OG image
  */
-export const getPostOgCacheKey = async (
-  post: CollectionEntry<"blog">,
-  useFont: boolean
-): Promise<string> => {
+export const getPostOgCacheKey = (post: CollectionEntry<"blog">, useFont: boolean): string => {
   const postData = {
     version: CACHE_VERSION,
     font: useFont ? getFontVersion() : undefined,
@@ -96,17 +92,15 @@ export const getPostOgCacheKey = async (
     // modDatetime: post.data.modDatetime?.toISOString(),
     // tags: post.data.tags,
   };
-  const contentHash = await generateHash(postData);
-  const functionHash = await generateHash({ postTemplate });
+  const contentHash = generateHash(postData);
+  const functionHash = generateHash({ postTemplate });
   return `post-${contentHash}-${functionHash}`;
 };
 
 /**
  * Get cached OG image if it exists and is valid
  */
-export const getCachedOgImage = async (
-  cacheKey: string
-): Promise<Buffer | null> => {
+export const getCachedOgImage = (cacheKey: string): Buffer | null => {
   try {
     const cacheFilePath = join(CACHE_DIR, `${cacheKey}.png`);
 
@@ -125,12 +119,9 @@ export const getCachedOgImage = async (
 /**
  * Cache OG image buffer with content-based key
  */
-export const setCachedOgImage = async (
-  cacheKey: string,
-  imageBuffer: Buffer
-): Promise<void> => {
+export const setCachedOgImage = (cacheKey: string, imageBuffer: Buffer): void => {
   try {
-    await ensureCacheDir();
+    ensureCacheDir();
     const cacheFilePath = join(CACHE_DIR, `${cacheKey}.png`);
     writeFileSync(cacheFilePath, new Uint8Array(imageBuffer));
     console.log(`Cached image: ${cacheKey}`);
@@ -147,7 +138,7 @@ export const withOgImageCache = async <T>(
   generator: () => Promise<T>
 ): Promise<T> => {
   // Try to get from cache first
-  const cached = await getCachedOgImage(cacheKey);
+  const cached = getCachedOgImage(cacheKey);
   if (cached) {
     return cached as T;
   }
@@ -158,7 +149,7 @@ export const withOgImageCache = async <T>(
 
   // Cache the result if it's a Buffer
   if (result instanceof Buffer) {
-    await setCachedOgImage(cacheKey, result);
+    setCachedOgImage(cacheKey, result);
   }
 
   return result;

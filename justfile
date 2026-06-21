@@ -18,23 +18,19 @@ FONT_CACHE_EXISTS := path_exists(FONT_CACHE_FILE)
     bun install --frozen-lockfile
 
 format: install
-    biome format
+    bun run format
     bun rustywind --check-formatted ./content ./src
     bun rustywind --check-formatted --custom-regex "@apply ([_a-zA\.-Z0-9\s\-:\[\]]+?);" ./src
 
 check: install
     bunx --bun astro check
-    biome check
-
-lint:
-    biome lint
+    bun run lint
 
 fix-all:
     bun rustywind --write ./content ./src
     bun rustywind --write --custom-regex "@apply ([_a-zA\.-Z0-9\s\-:\[\]]+?);" ./src
-    biome format --write
-    biome check --write
-    biome lint --write
+    bun run format:fix
+    bun run lint:fix
 
 dev: install font
     bunx --bun astro dev

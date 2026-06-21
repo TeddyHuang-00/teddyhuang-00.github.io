@@ -1,5 +1,6 @@
-import { type CollectionEntry, getCollection } from "astro:content";
 import type { APIRoute } from "astro";
+import { type CollectionEntry, getCollection } from "astro:content";
+
 import { SITE } from "@/config";
 import { generateOgImageForPost } from "@/utils/generateOgImages";
 import { getPath } from "@/utils/getPath";
@@ -31,8 +32,7 @@ export const GET: APIRoute = async ({ props }) => {
   }
 
   return new Response(
-    (await generateOgImageForPost(props as CollectionEntry<"blog">))
-      .buffer as ArrayBuffer,
+    (await generateOgImageForPost(props as CollectionEntry<"blog">)).buffer as ArrayBuffer,
     {
       headers: { "Content-Type": "image/png" },
     }

@@ -1,6 +1,7 @@
-import { defineCollection } from "astro:content";
-import { z } from "astro/zod";
 import { extendI18nLoaderSchema, i18nLoader } from "astro-loader-i18n";
+import { z } from "astro/zod";
+import { defineCollection } from "astro:content";
+
 import { SITE } from "@/config";
 
 export const BLOG_PATH = "content/posts";

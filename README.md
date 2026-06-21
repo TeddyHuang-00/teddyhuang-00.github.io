@@ -8,7 +8,7 @@ Visit [teddyhuang-00.github.io](https://teddyhuang-00.github.io) to see the webs
 - **Main Framework** - [Astro](https://astro.build/)
 - **Styling** - [TailwindCSS](https://tailwindcss.com/)
 - **Icons** - [Iconify](https://iconify.design/)
-- **Formatting & Linting** - [Biome](https://biomejs.dev/)
+- **Formatting & Linting** - [Oxc](https://oxc.rs/)
 - **Deployment** - [GitHub Pages](https://pages.github.com/)
 
 ## License

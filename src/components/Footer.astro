@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import Hr from "./Hr.astro";
 import Socials from "./Socials.astro";
 
@@ -11,7 +11,7 @@ export interface Props {
 
 const { noMarginTop = false } = Astro.props;
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 const license = "CC BY-NC-SA 4.0";
 ---
 

@@ -10,15 +10,16 @@ import { pluginFramesTexts } from "@expressive-code/plugin-frames";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import playformCompress from "@playform/compress";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig, envField } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
 import mermaid from "astro-mermaid";
 import og from "astro-og";
 import pagefind from "astro-pagefind";
+import { defineConfig, envField } from "astro/config";
 import rehypeKatex from "rehype-katex";
 import remarkCjkFriendly from "remark-cjk-friendly";
 import remarkMath from "remark-math";
+
 import { SITE } from "./src/config";
 
 pluginFramesTexts.overrideTexts("en", {
@@ -74,9 +75,7 @@ export default defineConfig({
       getBlockLocale: ({ file }) => {
         const fileName = file.path?.split("/").pop() || "";
         const [, locale] = fileName.split(".");
-        return Object.keys(SITE.locales).includes(locale)
-          ? locale
-          : SITE.defaultLocale;
+        return Object.keys(SITE.locales).includes(locale) ? locale : SITE.defaultLocale;
       },
       useThemedSelectionColors: true,
       plugins: [pluginCollapsibleSections(), pluginLineNumbers()],
@@ -103,7 +102,7 @@ export default defineConfig({
       },
       Exclude: [
         // ignore /dist/_astro/*.css as csso will mess up nested css selectors
-        (File: string) => /dist\/_astro\/.*\.css$/g.test(File),
+        (File: string) => /dist\/_astro\/.*\.css$/gu.test(File),
       ],
     }),
   ],
@@ -114,7 +113,6 @@ export default defineConfig({
         [
           rehypeKatex,
           {
-            // biome-ignore lint/suspicious/noExplicitAny: We don't need to type this properly as they will not be used.
             strict: (errorCode: string, ..._: any[]) =>
               errorCode === "newLineInDisplayMode" ? false : "warn",
           },
@@ -128,12 +126,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
     server: {
       watch: {
-        ignored: [
-          "**/node_modules/**",
-          "**/dist/**",
-          "**/.jj/**",
-          "**/.git/**",
-        ],
+        ignored: ["**/node_modules/**", "**/dist/**", "**/.jj/**", "**/.git/**"],
       },
     },
   },

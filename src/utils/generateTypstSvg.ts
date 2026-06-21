@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+
 import { NodeCompiler } from "@myriaddreamin/typst-ts-node-compiler";
 import { optimize } from "svgo";
 
@@ -19,9 +20,8 @@ function getOutputDirectory(): string {
 
   if (isProd) {
     return path.join(root, BUILD_DIR, ASSET_SUBDIR);
-  } else {
-    return path.join(root, DEV_PUBLIC_DIR, ASSET_SUBDIR);
   }
+  return path.join(root, DEV_PUBLIC_DIR, ASSET_SUBDIR);
 }
 
 /**
@@ -69,23 +69,22 @@ export function processTypstFile({
       light: `${urlBase}/${fileName}`,
       dark: `${urlBase}/${fileName}`,
     };
-  } else {
-    // Define proper output filenames
-    const fileLight = `${slug}.light.svg`;
-    const fileDark = `${slug}.dark.svg`;
-
-    const pathLight = path.join(outDir, fileLight);
-    const pathDark = path.join(outDir, fileDark);
-
-    // Write themed SVG files
-    fs.writeFileSync(pathLight, svgLight);
-    fs.writeFileSync(pathDark, svgDark);
-
-    return {
-      light: `${urlBase}/${fileLight}`,
-      dark: `${urlBase}/${fileDark}`,
-    };
   }
+  // Define proper output filenames
+  const fileLight = `${slug}.light.svg`;
+  const fileDark = `${slug}.dark.svg`;
+
+  const pathLight = path.join(outDir, fileLight);
+  const pathDark = path.join(outDir, fileDark);
+
+  // Write themed SVG files
+  fs.writeFileSync(pathLight, svgLight);
+  fs.writeFileSync(pathDark, svgDark);
+
+  return {
+    light: `${urlBase}/${fileLight}`,
+    dark: `${urlBase}/${fileDark}`,
+  };
 }
 
 /**
@@ -101,10 +100,8 @@ function compileTypst(
     fontArgs: fontPaths ? [{ fontPaths }] : undefined,
   });
   return ["light", "dark"]
-    .map((theme) =>
-      compiler.plainSvg({ mainFilePath: filePath, inputs: { theme } })
-    )
-    .map(optimizeSvg) as [string, string];
+    .map((theme) => compiler.plainSvg({ mainFilePath: filePath, inputs: { theme } }))
+    .map((svg) => optimizeSvg(svg)) as [string, string];
 }
 
 /**

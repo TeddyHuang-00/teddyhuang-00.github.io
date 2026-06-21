@@ -1,13 +1,13 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 
 // Remove current url path and remove trailing slash if exists
-const currentUrlPath = Astro.url.pathname.replace(/\/+$/, "");
+const currentUrlPath = Astro.url.pathname.replace(/\/+$/u, "");
 
 // Get url array from path, without locale prefix
 // eg: /en/tags/tailwindcss => ['tags', 'tailwindcss']

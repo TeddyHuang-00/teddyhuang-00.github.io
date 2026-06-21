@@ -8,12 +8,10 @@
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",
-    "format": "biome format",
-    "format:fix": "biome format --write",
-    "lint": "biome lint",
-    "lint:fix": "biome lint --write",
-    "check": "biome check",
-    "check:fix": "biome check --write"
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.9",
@@ -46,6 +44,8 @@
     "linkedom": "0.18.12",
     "lodash.kebabcase": "4.1.1",
     "mermaid": "11.15.0",
+    "oxfmt": "0.55.0",
+    "oxlint": "1.70.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "rehype-format": "5.0.1",

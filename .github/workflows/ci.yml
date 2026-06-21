@@ -21,17 +21,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: extractions/setup-just@v4
       - uses: oven-sh/setup-bun@v2
-      - uses: biomejs/setup-biome@v2
       - run: just format
-
-  lint:
-    name: Code Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: extractions/setup-just@v4
-      - uses: biomejs/setup-biome@v2
-      - run: just lint
 
   check:
     name: Code Check
@@ -40,7 +30,6 @@ jobs:
       - uses: actions/checkout@v7
       - uses: extractions/setup-just@v4
       - uses: oven-sh/setup-bun@v2
-      - uses: biomejs/setup-biome@v2
       - run: just check
 
   build:
@@ -50,7 +39,6 @@ jobs:
       - uses: actions/checkout@v7
       - uses: extractions/setup-just@v4
       - uses: oven-sh/setup-bun@v2
-      - uses: biomejs/setup-biome@v2
       - id: font-version
         run: just font-version >> $GITHUB_OUTPUT
       - uses: actions/cache@v5

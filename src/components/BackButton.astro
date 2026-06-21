@@ -2,11 +2,11 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import LinkButton from "./LinkButton.astro";
 
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 ---
 
 {

@@ -2,7 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import type { Page } from "astro";
 import { Icon } from "astro-icon/components";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import LinkButton from "./LinkButton.astro";
 
 export interface Props {
@@ -11,7 +11,7 @@ export interface Props {
 
 const { page } = Astro.props;
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 ---
 
 {

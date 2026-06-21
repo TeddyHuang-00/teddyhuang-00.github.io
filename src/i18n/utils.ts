@@ -8,7 +8,7 @@ export const getLangFromUrl = (url: URL) => {
   return SITE.defaultLocale;
 };
 
-export const useTranslations = (lang: keyof typeof ui) => {
+export const getTranslations = (lang: keyof typeof ui) => {
   return (
     key: keyof (typeof ui)[typeof SITE.defaultLocale],
     replacements?: Record<string, string>

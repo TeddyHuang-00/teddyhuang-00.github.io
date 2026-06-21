@@ -2,7 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 
 export interface Props {
   hideEditPost?: CollectionEntry<"blog">["data"]["hideEditPost"];
@@ -13,7 +13,7 @@ export interface Props {
 const { hideEditPost, post, class: className = "" } = Astro.props;
 
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 
 const href = `${SITE.editPost.url}${post.filePath}`;
 const showEditPost =

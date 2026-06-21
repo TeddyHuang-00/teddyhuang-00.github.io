@@ -4,18 +4,19 @@ import PagefindConfig from "astro-pagefind/components/PagefindConfig.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import { SITE } from "@/config";
-import { useTranslations } from "@/i18n/utils";
+import { getTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/layouts/Main.astro";
+import type { GetStaticPaths } from "astro";
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = (() => {
   return Object.keys(SITE.locales).map((lang) => ({
     params: { locale: lang as keyof typeof SITE.locales },
   }));
-};
+}) satisfies GetStaticPaths;
 
 const { locale } = Astro.params;
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 
 const backUrl = SITE.showBackButton
   ? `${Astro.url.pathname}`

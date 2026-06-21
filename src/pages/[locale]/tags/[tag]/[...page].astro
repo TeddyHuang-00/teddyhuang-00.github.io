@@ -6,7 +6,7 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import Pagination from "@/components/Pagination.astro";
 import { SITE } from "@/config";
-import { useTranslations } from "@/i18n/utils";
+import { getTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 import Main from "@/layouts/Main.astro";
 import getPostsByTag from "@/utils/getPostsByTag";
@@ -35,7 +35,7 @@ export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
 const { tag, locale } = Astro.params;
 const { page, tagName } = Astro.props;
 
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 ---
 
 <Layout

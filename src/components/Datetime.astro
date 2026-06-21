@@ -5,7 +5,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { SITE } from "@/config";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import "dayjs/locale/zh";
 import "dayjs/locale/en";
 
@@ -30,7 +30,7 @@ const {
 } = Astro.props;
 
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 
 /* ========== Formatted Datetime ========== */
 const isModified = modDatetime && modDatetime > pubDatetime;
@@ -38,7 +38,8 @@ const isModified = modDatetime && modDatetime > pubDatetime;
 const datetime = dayjs(isModified ? modDatetime : pubDatetime)
   .tz(postTimezone || SITE.timezone)
   .locale(locale);
-const date = datetime.format("ll"); // e.g., 'Mar 22, 2025' or '2025年3月22日'
+// e.g., 'Mar 22, 2025' or '2025年3月22日'
+const date = datetime.format("ll");
 ---
 
 <div class:list={["flex items-center gap-x-2 opacity-80", className]}>

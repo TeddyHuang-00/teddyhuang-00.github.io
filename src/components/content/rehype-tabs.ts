@@ -94,7 +94,7 @@ const tabsProcessor = rehype()
         }
 
         // Hide all panels except the first
-        // TODO: make initially visible tab configurable
+        /// TODO: make initially visible tab configurable
         if (isFirst) {
           isFirst = false;
         } else {

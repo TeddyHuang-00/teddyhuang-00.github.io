@@ -66,14 +66,7 @@ export const friends = [
       { suffix: "#gh-dark-mode-only", className: "hidden dark:block" },
       { suffix: "#gh-light-mode-only", className: "block dark:hidden" },
     ].map(({ suffix, className }) => (
-      <Image
-        class={className}
-        src={src + suffix}
-        alt={alt}
-        width={360}
-        height={210}
-        priority
-      />
+      <Image class={className} src={src + suffix} alt={alt} width={360} height={210} priority />
     ))
   )}
 </p>

@@ -5,14 +5,14 @@ import Breadcrumb from "@/components/Breadcrumb.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import { SITE } from "@/config";
-import { useTranslations } from "@/i18n/utils";
+import { getTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 
 export interface Props {
   post: CollectionEntry<"about">;
 }
 
-export const getStaticPaths = (async () => {
+export const getStaticPaths = (() => {
   return Object.keys(SITE.locales).map((lang) => ({
     params: { locale: lang as keyof typeof SITE.locales },
   }));
@@ -20,7 +20,7 @@ export const getStaticPaths = (async () => {
 
 const { locale } = Astro.params;
 
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 
 const about = await getCollection(
   "about",

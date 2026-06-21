@@ -4,7 +4,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { ClientRouter } from "astro:transitions";
 import { ThemeScript } from "astro-theme-toggle";
 import { SITE } from "@/config";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import "@/styles/global.css";
 
 export interface Props {
@@ -21,7 +21,7 @@ export interface Props {
 }
 
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 
 const {
   siteName = localeString("site.title"),

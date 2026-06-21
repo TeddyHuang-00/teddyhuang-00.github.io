@@ -1,16 +1,16 @@
 ---
 import { Icon } from "astro-icon/components";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 ---
 
 <div
   id="btt-btn-container"
   class:list={[
-    "fixed end-4 bottom-8 z-50",
-    "md:sticky md:end-auto md:float-end md:me-1",
+    "fixed inset-e-4 bottom-8 z-50",
+    "md:sticky md:inset-e-auto md:float-end md:me-1",
     "translate-y-14 opacity-0 transition duration-500",
   ]}
 >
@@ -52,8 +52,10 @@ const localeString = useTranslations(locale);
 
     // Attach click event handler for back-to-top button
     backToTopBtn.addEventListener("click", () => {
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      // For Safari
+      document.body.scrollTop = 0;
+      // For Chrome, Firefox, IE and Opera
+      document.documentElement.scrollTop = 0;
     });
 
     // Handle button visibility according to scroll position

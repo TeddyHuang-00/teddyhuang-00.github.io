@@ -43,7 +43,7 @@
     }
 
     a {
-      @apply focus-visible:no-underline wrap-break-word text-foreground decoration-dashed underline-offset-4 hover:text-accent;
+      @apply focus-visible:no-underline text-foreground wrap-break-word decoration-dashed underline-offset-4 hover:text-accent;
     }
 
     ul {
@@ -67,7 +67,7 @@
     }
 
     code {
-      @apply p-1 rounded bg-muted/75 wrap-break-word text-foreground before:content-none after:content-none;
+      @apply p-1 rounded bg-muted/75 text-foreground wrap-break-word before:content-none after:content-none;
     }
 
     .astro-code code {
@@ -79,15 +79,15 @@
     }
 
     details {
-      @apply inline-block cursor-pointer text-foreground select-none [&_p]:hidden [&_ul]:my-0!;
+      @apply text-foreground inline-block cursor-pointer select-none [&_p]:hidden [&_ul]:my-0!;
     }
 
     summary {
-      @apply focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent focus-visible:outline-dashed;
+      @apply focus-visible:no-underline focus-visible:outline-accent focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-dashed;
     }
 
     pre {
-      @apply focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-dashed;
+      @apply focus-visible:border-transparent focus-visible:outline-accent focus-visible:outline-2 focus-visible:outline-dashed;
     }
 
     /* ===== KaTeX Styles ===== */

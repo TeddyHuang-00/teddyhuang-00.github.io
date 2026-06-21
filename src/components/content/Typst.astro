@@ -25,10 +25,10 @@ if (!fs.existsSync(filePath)) {
 // This ensures "diagrams/arch.typ" becomes "diagrams-arch"
 const slug = filePath
   .replace(workspace, "")
-  .replace(/\.typ$/, "")
-  .replace(/\//g, " ")
+  .replace(/\.typ$/u, "")
+  .replaceAll("/", " ")
   .trim()
-  .replace(/\s+/g, "-");
+  .replaceAll(/\s+/gu, "-");
 
 const { light, dark } = processTypstFile({
   filePath,

@@ -1,5 +1,6 @@
 import Giscus, { type Theme } from "@giscus/react";
 import { useEffect, useState } from "react";
+
 import { GISCUS, type SITE } from "@/config";
 
 interface CommentsProps {
@@ -13,43 +14,40 @@ export default function Comments({
   darkTheme = "dark",
   lang = "en",
 }: CommentsProps) {
-  const [theme, setTheme] = useState(
-    // Initial read for the current theme
-    typeof document !== "undefined"
-      ? document.documentElement.getAttribute("data-theme") || "light"
-      : "light"
-  );
+  const [theme, setTheme] = useState(document.documentElement.dataset.theme ?? "light");
 
-  useEffect(() => {
-    // Ensure this runs only in the browser
-    if (typeof document === "undefined") {
-      return;
-    }
-
-    const htmlElement = document.documentElement;
-
-    // Create a MutationObserver to watch for attribute changes
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (
-          mutation.type === "attributes" &&
-          mutation.attributeName === "data-theme"
-        ) {
-          const currentTheme = htmlElement.getAttribute("data-theme");
-          setTheme(currentTheme || "light");
-        }
+  useEffect(
+    () => {
+      // Ensure this runs only in the browser
+      if (typeof document === "undefined") {
+        return;
       }
-    });
 
-    // Start observing the <html> tag for attribute changes
-    observer.observe(htmlElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"], // Only watch the data-theme attribute
-    });
+      const htmlElement = document.documentElement;
 
-    // Cleanup function to disconnect the observer when the component unmounts
-    return () => observer.disconnect();
-  }, []); // Empty dependency array means this effect runs once on mount
+      // Create a MutationObserver to watch for attribute changes
+      const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.type === "attributes" && mutation.attributeName === "data-theme") {
+            const currentTheme = htmlElement.dataset.theme;
+            setTheme(currentTheme ?? "light");
+          }
+        }
+      });
+
+      // Start observing the <html> tag for attribute changes
+      observer.observe(htmlElement, {
+        attributes: true,
+        // Only watch the data-theme attribute
+        attributeFilter: ["data-theme"],
+      });
+
+      // Cleanup function to disconnect the observer when the component unmounts
+      return () => observer.disconnect();
+    },
+    // Empty dependency array means this effect runs once on mount
+    []
+  );
 
   return (
     <div className="mt-8">

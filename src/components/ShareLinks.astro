@@ -1,12 +1,12 @@
 ---
 import { Icon } from "astro-icon/components";
 import { SHARE_LINKS } from "@/constants";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import LinkButton from "./LinkButton.astro";
 
 const URL = Astro.url;
 const locale = getLangFromUrl(URL);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 ---
 
 {

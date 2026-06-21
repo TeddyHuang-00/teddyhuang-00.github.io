@@ -1,12 +1,13 @@
-import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
 import type { APIRoute, GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
 import { SITE } from "@/config";
-import { useTranslations } from "@/i18n/utils";
+import { getTranslations } from "@/i18n/utils";
 import { getPath } from "@/utils/getPath";
 import getSortedPosts from "@/utils/getSortedPosts";
 
-export const getStaticPaths = (async () => {
+export const getStaticPaths = (() => {
   return Object.keys(SITE.locales).map((lang) => ({
     params: { locale: lang as keyof typeof SITE.locales },
   }));
@@ -14,12 +15,9 @@ export const getStaticPaths = (async () => {
 
 export const GET: APIRoute = async ({ params }) => {
   const locale = (params.locale || "en") as keyof typeof SITE.locales;
-  const localeString = useTranslations(locale);
+  const localeString = getTranslations(locale);
 
-  const posts = await getCollection(
-    "blog",
-    ({ data }) => data.locale === locale
-  );
+  const posts = await getCollection("blog", ({ data }) => data.locale === locale);
   const sortedPosts = getSortedPosts(posts);
   return rss({
     title: localeString("site.title"),

@@ -3,12 +3,13 @@ import { type CollectionEntry, getCollection } from "astro:content";
 import PostDetails from "@/layouts/PostDetails.astro";
 import { getPath } from "@/utils/getPath";
 import getSortedPosts from "@/utils/getSortedPosts";
+import type { GetStaticPaths } from "astro";
 
 export interface Props {
   post: CollectionEntry<"blog">;
 }
 
-export const getStaticPaths = async () => {
+export const getStaticPaths = (async () => {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
 
   return posts.map((post) => ({
@@ -18,7 +19,7 @@ export const getStaticPaths = async () => {
     },
     props: { post },
   }));
-};
+}) satisfies GetStaticPaths;
 
 const { post } = Astro.props;
 const { locale } = Astro.params;

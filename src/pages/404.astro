@@ -3,11 +3,11 @@ import { Icon } from "astro-icon/components";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import LinkButton from "@/components/LinkButton.astro";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 
 const locale = getLangFromUrl(Astro.url);
-const localeString = useTranslations(locale);
+const localeString = getTranslations(locale);
 ---
 
 <Layout
