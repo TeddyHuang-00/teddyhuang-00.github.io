@@ -54,7 +54,7 @@
 // MUST USE.
 #let typst-image = content => {
   let palette = get-theme-palette()
-  set page(width: auto, height: auto, margin: 10pt)
+  set page(width: auto, height: auto, margin: 10pt, fill: none)
   set text(size: 20pt, fill: palette.foreground)
 
   content
