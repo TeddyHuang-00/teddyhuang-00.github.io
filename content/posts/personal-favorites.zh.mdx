@@ -1,13 +1,16 @@
 ---
 title: 个人最爱项目
 pubDatetime: 2023-04-08
-modDatetime: 2025-12-24
+modDatetime: 2026-06-21T02:00:00-05:00
 tags:
+  - Agent
+  - Astro
   - CLI
   - Editor
   - DevTools
   - Font
   - Git
+  - LLM
   - PackageManager
   - PDF
   - Productivity
@@ -185,6 +188,22 @@ import { Aside, Badge, Ruby } from "@/components/content/components";
 > Ghostty 目前满足我的所有需求，在做到跨平台的同时又尽量使用了平台原生的组件。
 > 虽然没有认真测过响应速度，但是至少从我体感上来说是非常流畅的：和 `Alacritty` 相比，不管是冷启动还是字符输入，都没有可感知的差距。
 
+### Zellij
+
+<Aside type="info">
+
+- 主页：[zellij.dev](https://zellij.dev/)
+- GitHub 仓库：[zellij-org/zellij](https://github.com/zellij-org/zellij)
+
+</Aside>
+
+更现代化的终端复用工具，功能和 [`tmux`](#tmux) 相同，但是提供了更好的开箱即用体验。
+
+> 由于 `tmux` 依赖系统库，在系统 `glibc` 过时或者不匹配时则无法运行；`zellij` 则目前没有遇到过类似问题。
+
+> 相比于 `tmux` 的丰富插件生态，`zellij` 的生态略显匮乏，并且由于插件需要编译为 WASM 格式，事实上也为插件开发制造了一定摩擦力，可能也是社区插件生态没那么丰富的原因之一。
+> 不过 `zellij` 本身就内置了很多 `tmux` 需要插件才能提供的功能（比如键位地图等），因此也没那么依赖插件就能得到良好使用体验。
+
 ### tmux
 
 <Aside type="info">
@@ -287,6 +306,19 @@ import { Aside, Badge, Ruby } from "@/components/content/components";
 </Aside>
 
 一个更现代化的 `cat` 命令，支持语法高亮、行号、Git 仓库中的差异等等。
+
+### diffnav
+
+<Aside type="info">
+
+- GitHub 仓库：[dlvhdr/diffnav](https://github.com/dlvhdr/diffnav)
+
+</Aside>
+
+基于 [`delta`](#delta) 的 `diff` 浏览器，带文件树侧边栏，支持直接跳转文件。
+
+> 如果你喜欢 `delta`，那你也肯定会喜欢 `diffnav`。
+> 彻底解决文件太多/太长，不方便浏览特定文件更改的痛点。
 
 ### delta
 
@@ -413,6 +445,24 @@ import { Aside, Badge, Ruby } from "@/components/content/components";
 并且键位绑定相对更加符合直觉。
 
 ## 编辑器
+
+### Zed
+
+<Aside type="info">
+
+- 主页：[zed.dev](https://zed.dev/)
+- GitHub 仓库：[zed-industries/zed](https://github.com/zed-industries/zed)
+
+</Aside>
+
+纯 Rust、由 GPU 直接渲染的编辑器。启动，快；编辑，快！
+
+> 相较于 [VSCode](#VSCode)，更轻、更快，但是插件生态更精简。
+> 在我的 VSCode 配置和拓展日益膨胀，轻易吃掉好几个 G 内存的当下，做做减法反而给写代码带来了更好的体验。
+
+> Zed 目前仍然缺乏很多功能，比如[完整的 Notebook 支持](https://github.com/zed-industries/zed/issues/9778)、[多媒体播放器](https://github.com/zed-industries/zed/discussions/22065)、[PDF 预览](https://github.com/zed-industries/zed/issues/21208)等等。
+> 同时，插件也是仅支持 WASM 格式，开发略有难度。
+> 但是一旦习惯了让一个编辑器只做好一件它擅长的事，并且接受使用一些其他工具来补充零碎功能，那么 Zed 的体验是非常好的，仿佛进入了禅模式。
 
 ### VSCode
 
@@ -551,6 +601,26 @@ import { Aside, Badge, Ruby } from "@/components/content/components";
 > 玩法很多，而且第三方的组件生态也很丰富，可以满足各种需求。
 > 平时用于搭建简单的单页应用，或者用于快速展示一些数据，非常方便。
 > 重点是还有社区云服务器可以白嫖，可以直接部署到云端，只要是公开仓库就不限数量<Badge text="全体起立" type="info" />，非常方便。
+
+### Astro
+
+<Aside type="info">
+
+- 主页：[astro.build](https://astro.build/)
+- GitHub 仓库：[withastro/astro](https://github.com/withastro/astro)
+
+</Aside>
+
+专注于做<Ruby rb="Static| |Site| |Generator" rt="静态||站点||生成器" />（SSG）的框架，内容驱动，适合做文档、博客等静态站点。
+文件结构定义的路由和 [Nuxt](#Nuxt) 基本一致，结构非常清晰。
+
+最炫酷的地方在于，你在 Astro 中可以使用任何主流框架的代码，不管是 Vue 还是 React，SolidJS 还是 Svelte，都能够在一个站点中共存。
+这意味着理论上你完全可以将现有的基于其他框架搭建的站点迁移至 Astro，同时获得更强大的兼容性和丰富的插件生态。
+
+Astro 语法上几乎就是你熟悉的 HTML + JS + CSS，加上类似于 Jinja 的模板，因此只要你有一定网页开发基础，阅读、书写 Astro 都不成问题。
+
+> Astro 的优势非常明显：作为一个纯粹的 SSG 框架，大部分需要计算/动态获取的内容是在构建时完成的，因此产物非常精简，访问页面时没有任何客户端代码（除非你手动写了 `<script>` 或者使用了带 `<script>` 的组件）。
+> Astro 的多框架兼容性也意味着可以博采众长，比如你现在看到的博客就是既有原生 Astro，又有 React，还有一部分由 TypeScript 直接生成。
 
 ### Nuxt
 
@@ -761,3 +831,64 @@ import { Aside, Badge, Ruby } from "@/components/content/components";
 > 总体设计非常优秀，字符表比较全，也有优美的英文斜体和连字，看起来非常舒服，十分适合编辑器和终端使用。
 
 > 虽然也完全可以用于日常阅读，但看久了可能会审美疲劳。<Badge type="info" text="为了保持 2:1 的宽度比，中文字距会稍微大一些" />
+
+## AI
+
+### DeepSeek
+
+<Aside type="info">
+
+- 主页：[www.deepseek.com](https://www.deepseek.com/)
+- GitHub：[deepseek-ai](https://github.com/deepseek-ai)
+- Hugging face：[deepseek-ai](https://huggingface.co/deepseek-ai)
+
+</Aside>
+
+便宜大碗，开源权重，论文和技术报告内容详实。
+~~感谢梁圣开源🙏.jpg~~
+
+> 能力在开源模型中第一梯队，在所有模型中也相当靠前。
+> 但凭借其出色的性价比，让我也尝到了随意花 token 不心疼的感觉。
+
+> 目前阶段缺点在于：
+> 1. 模型更新节奏较慢，通常需要三到六个月进行一个小更新，并且有时更新注重于压缩推理成本而非提升性能，在各大厂商恨不得一周一个新模型，互相接力吹泡泡的时候，多少显得有点太“慢”了。
+> 2. 目前模型暂时不具备多模态能力，但是可以看到有不少论文在做视觉相关模型研究，可能目标是让视觉推理和文本推理一样便宜，因此在没有摸索到一个合适的方向前不会随大流加个视觉编码器做多模态。
+> 3. Token 永远是越便宜越好，~~如果价格能一降再降就好了~~。
+
+### Hermes agent
+
+<Aside type="info">
+
+- 主页：[hermes-agent.nousresearch.com](https://hermes-agent.nousresearch.com/)
+- GitHub 仓库：[NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent)
+
+</Aside>
+
+当下流行的智能体框架，加了更多的安全限制，自带持续学习能力，并且提供丰富的工具接口。
+
+> OpenClaw 热潮我不屑一顾，因为我知道以它的安全限制和代码屎山程度，火不过三个月（也基本和我预想的一致）。
+> 而我之前用过的 ZeroClaw 或者 IronClaw 之类的主打“安全”的框架，则更多注重的是利用 Rust 的内存安全特性，并非执行层面的安全。同时它们的文档、配置都做得比较一般，上手难度明显高于 Hermes。
+
+> Hermes 也有自己的弱点，比如配置仍然略显臃肿，可拓展性可能不及 Pi 那么高，但这些都是独立于实际使用的次要方面。
+> Hermes 作为当下最受欢迎的框架，得益于其开发活跃程度，很多使用过程中的微小痛点都在被逐步解决。
+> 并且与 OpenClaw 不同之处在于，Hermes 属于 Nous Research 的开源项目，PR 的边界相对明确，整体路线图也更为清晰。
+> 由于未曾大量合并过 AI 生成的含水量偏高的 PR，整体可维护性相对更好，也是我个人比较看好它的原因。
+
+### Pi agent
+
+<Aside type="info">
+
+- 主页：[pi.dev](https://pi.dev/)
+- GitHub 仓库：[earendil-works/pi](https://github.com/earendil-works/pi)
+
+</Aside>
+
+主打极简、高度可定制化的智能体框架。
+内置功能少到可怜，但是可拓展性与可玩性非常高。
+
+> 如果不是个人使用，而是打造智能体产品的话，我觉得 Pi 是首选。
+> 不仅是因为它做到了极简主义核心，不内置用不上的功能，更是因为它有相对丰富的包生态，用于提供各类拓展。
+
+> 这样一个极简框架的好处非常明显，其维护负担很小，因此功能的可用性有很大保障。
+> 同时缺点也会比较突出：由第三方开发的插件/包不仅扩大了供应链风险，不同功能之间的相互协作也会因碎片化而削弱，可能需要二次开发或者自己从头开发。
+> 可以说是 Hermes 完全反面，各有优劣，看你如何取舍。

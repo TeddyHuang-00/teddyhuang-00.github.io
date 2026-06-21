@@ -1,13 +1,16 @@
 ---
 title: Personal Favorite Projects
 pubDatetime: 2023-04-08
-modDatetime: 2025-12-24
+modDatetime: 2026-06-21T02:00:00-05:00
 tags:
+  - Agent
+  - Astro
   - CLI
   - Editor
   - DevTools
   - Font
   - Git
+  - LLM
   - PackageManager
   - PDF
   - Productivity
@@ -185,6 +188,22 @@ Performance-wise, it doesn't pursue extreme performance like `Alacritty` but foc
 > Ghostty currently meets all my needs, being cross-platform while striving to use native platform components.
 > Although I haven't rigorously tested its responsiveness, from my subjective experience, it's very smooth: compared to `Alacritty`, whether cold-starting or character input, there's no perceivable difference.
 
+### Zellij
+
+<Aside type="info">
+
+- Homepage: [zellij.dev](https://zellij.dev/)
+- GitHub Repository: [zellij-org/zellij](https://github.com/zellij-org/zellij)
+
+</Aside>
+
+A more modern terminal multiplexer with the same functionality as `tmux` but a better out-of-the-box experience.
+
+> Since `tmux` depends on system libraries, it can fail to run when the system's `glibc` is outdated or mismatched; I haven't encountered such issues with `zellij`.
+
+> Compared to `tmux`'s rich plugin ecosystem, `zellij`'s is relatively scarce. Since plugins need to be compiled to WASM, this creates friction for plugin development: perhaps one reason the ecosystem is less vibrant.
+> However, `zellij` itself has many features built-in that `tmux` requires plugins for (like key bindings layouts), so you can get a great experience without heavily relying on plugins.
+
 ### tmux
 
 <Aside type="info">
@@ -287,6 +306,19 @@ A more modern `top` command that supports multiple themes and can directly displ
 </Aside>
 
 A more modern `cat` command, supporting syntax highlighting, line numbers, Git diff integration, etc.
+
+### diffnav
+
+<Aside type="info">
+
+- GitHub Repository: [dlvhdr/diffnav](https://github.com/dlvhdr/diffnav)
+
+</Aside>
+
+A diff browser based on `delta`, featuring a file tree sidebar and direct file jumping.
+
+> If you like `delta`, you'll love `diffnav` too.
+> It completely solves the pain point of browsing changes in specific files when there are too many or too long files.
 
 ### delta
 
@@ -412,6 +444,24 @@ It offers quite rich functionality while reducing memory usage and startup time 
 Its key bindings are also relatively more intuitive.
 
 ## Editors
+
+### Zed
+
+<Aside type="info">
+
+- Homepage: [zed.dev](https://zed.dev/)
+- GitHub Repository: [zed-industries/zed](https://github.com/zed-industries/zed)
+
+</Aside>
+
+A pure Rust, GPU-rendered editor. Startup: fast; editing: fast!
+
+> Compared to VSCode, it's lighter and faster, but with a leaner plugin ecosystem.
+> At a time when my VSCode config and extensions keep ballooning, easily eating several GB of memory, doing less has actually brought a better coding experience.
+
+> Zed still lacks many features, such as full Notebook support, multimedia player, PDF preview, etc.
+> Additionally, plugins are WASM-only, which makes development somewhat challenging.
+> But once you get used to letting an editor do one thing well and supplementing with other tools for the gaps, Zed's experience is excellent: it's like entering zen mode.
 
 ### VSCode
 
@@ -549,6 +599,26 @@ Rich APIs make it easy to implement various features like plotting, file upload/
 > It offers many possibilities, and its third-party component ecosystem is also rich, meeting various needs.
 > It's very convenient for building simple single-page applications or quickly showcasing data.
 > Importantly, there's a community cloud server available for free use. You can deploy directly to the cloud, with unlimited deployments for public repositories <Badge text="Salute, everyone!" type="info" />. Very convenient.
+
+### Astro
+
+<Aside type="info">
+
+- Homepage: [astro.build](https://astro.build/)
+- GitHub Repository: [withastro/astro](https://github.com/withastro/astro)
+
+</Aside>
+
+A framework focused on doing SSG (Static Site Generator), content-driven, suitable for static sites like documentation and blogs.
+Its file-structure-based routing is essentially the same as Nuxt, with a very clear structure.
+
+The coolest part is that in Astro, you can use code from any mainstream framework: Vue, React, SolidJS, or Svelte, all coexisting in one site.
+This means you can theoretically migrate existing sites built with other frameworks to Astro, gaining better compatibility and a richer plugin ecosystem.
+
+Astro syntax is almost just HTML + JS + CSS as you know it, with Jinja-like templates, so if you have basic web development knowledge, reading and writing Astro is no problem.
+
+> Astro's advantages are clear: as a pure SSG framework, most content that needs computation/dynamic fetching is done at build time, so the output is very lean. When visiting a page, there's zero client-side JavaScript (unless you manually write `<script>` or use components with `<script>`).
+> Astro's multi-framework compatibility means you can cherry-pick the best tools for each job. For instance, the blog you're reading right now uses native Astro, React, and some TypeScript-generated content.
 
 ### Nuxt
 
@@ -759,3 +829,64 @@ A monospaced font with CJK characters, a 2:1 width ratio between Chinese and Eng
 > The overall design is excellent, with a relatively complete character set, beautiful English italics and ligatures, making it very comfortable to view. It's highly suitable for editors and terminals.
 
 > Although it can also be used for everyday reading, extended use might cause visual fatigue. <Badge type="info" text="To maintain the 2:1 width ratio, Chinese character spacing is slightly larger" />
+
+## AI
+
+### DeepSeek
+
+<Aside type="info">
+
+- Homepage: [www.deepseek.com](https://www.deepseek.com/)
+- GitHub: [deepseek-ai](https://github.com/deepseek-ai)
+- Hugging Face: [deepseek-ai](https://huggingface.co/deepseek-ai)
+
+</Aside>
+
+Affordable, open-weight, with detailed papers and technical reports.
+~~Thank you, Liang, for open-sourcing 🙏.jpg~~
+
+> Its capabilities place it in the top tier among open-source models and quite high among all models.
+> With its excellent cost-effectiveness, I can finally spend tokens without worrying.
+
+> Current shortcomings:
+> 1. Model update pace is relatively slow, usually 3-6 months for a minor update, and sometimes updates focus on reducing inference cost rather than improving performance. When other companies churn out a new model every week, it feels rather "slow."
+> 2. The current model lacks multimodal capabilities, but there are plenty of papers on vision-related model research. Their goal might be to make vision reasoning as cheap as text reasoning, so they won't just slap on a vision encoder for multimodality before finding the right direction.
+> 3. Tokens can never be cheap enough. ~~If only the price could keep dropping.~~
+
+### Hermes agent
+
+<Aside type="info">
+
+- Homepage: [hermes-agent.nousresearch.com](https://hermes-agent.nousresearch.com/)
+- GitHub Repository: [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent)
+
+</Aside>
+
+The currently popular agent framework, with added security restrictions, built-in continuous learning capabilities, and a rich set of tool interfaces.
+
+> I dismissed the OpenClaw hype because I knew, given its security limitations and code quality, it wouldn't stay hot for more than three months (and that's pretty much what happened).
+> The frameworks I used before that emphasized "security," like ZeroClaw or IronClaw, focused more on leveraging Rust's memory safety features rather than execution-level security. Their documentation and configuration were mediocre, with a much steeper learning curve than Hermes.
+
+> Hermes also has its weaknesses: configuration is still somewhat bloated, and extensibility may not match Pi's; but these are secondary concerns independent of actual usage.
+> As the most popular framework today, Hermes benefits from active development, so many minor pain points encountered during use are gradually being resolved.
+> Unlike OpenClaw, Hermes is an open-source project under Nous Research, with relatively clear PR boundaries and a more coherent roadmap.
+> Since it hasn't merged large volumes of AI-generated PRs with inflated water content, its overall maintainability is better: a key reason I'm bullish on it.
+
+### Pi agent
+
+<Aside type="info">
+
+- Homepage: [pi.dev](https://pi.dev/)
+- GitHub Repository: [earendil-works/pi](https://github.com/earendil-works/pi)
+
+</Aside>
+
+An agent framework focused on minimalism and high customizability.
+It comes with embarrassingly few built-in features, but its extensibility and playability are very high.
+
+> If I were building an agent product rather than for personal use, I'd choose Pi.
+> Not only because it nails the minimalist core, it doesn't ship features you won't use, and also because it has a relatively rich package ecosystem for extensions.
+
+> The advantages of such a minimal framework are clear: low maintenance burden, which ensures high feature availability.
+> The downsides are equally prominent: third-party plugins/packages expand the supply chain risk, and collaboration between different features is weakened by fragmentation, potentially requiring secondary development or a from-scratch approach.
+> It's the polar opposite of Hermes: each has its strengths; it's a matter of trade-offs.
