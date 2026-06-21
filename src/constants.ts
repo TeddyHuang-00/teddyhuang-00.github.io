@@ -12,24 +12,24 @@ export const SOCIALS: Social[] = [
     linkTitle: "on",
     iconName: "tabler:brand-github",
   },
-  {
-    name: "Bilibili",
-    href: "https://space.bilibili.com/13229205",
-    linkTitle: "on",
-    iconName: "tabler:brand-bilibili",
-  },
   // {
   //   name: "X",
   //   href: "https://x.com/username",
   //   linkTitle: `${SITE.title} on X`,
   //   icon: IconBrandX,
   // },
-  // {
-  //   name: "LinkedIn",
-  //   href: "https://www.linkedin.com/in/username/",
-  //   linkTitle: `${SITE.title} on LinkedIn`,
-  //   icon: IconLinkedin,
-  // },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/nan-huang-theodore",
+    linkTitle: "on",
+    iconName: "tabler:brand-linkedin",
+  },
+  {
+    name: "Bilibili",
+    href: "https://space.bilibili.com/13229205",
+    linkTitle: "on",
+    iconName: "tabler:brand-bilibili",
+  },
   {
     name: "Mail",
     href: "mailto:teddyhuangnan@gmail.com",
