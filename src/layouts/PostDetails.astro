@@ -90,8 +90,8 @@ const currentPostIndex = allPosts.findIndex(
   (a) => a.translationId === post.data.translationId
 );
 
-const prevPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
-const nextPost =
+const nextPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
+const prevPost =
   currentPostIndex + 1 < allPosts.length ? allPosts[currentPostIndex + 1] : null;
 ---
 
