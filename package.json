@@ -1,7 +1,7 @@
 {
   "name": "teddyhuang-00-github-io-astro",
-  "type": "module",
   "version": "5.5.0",
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build && cp -r dist/pagefind public/",
@@ -36,7 +36,7 @@
     "astro-expressive-code": "0.43.1",
     "astro-icon": "1.1.5",
     "astro-loader-i18n": "0.12.0",
-    "astro-mermaid": "^2.0.1",
+    "astro-mermaid": "2.0.4",
     "astro-og": "0.3.2",
     "astro-pagefind": "2.0.0",
     "astro-theme-toggle": "0.8.1",
@@ -45,7 +45,7 @@
     "katex": "0.17.0",
     "linkedom": "0.18.12",
     "lodash.kebabcase": "4.1.1",
-    "mermaid": "^11.14.0",
+    "mermaid": "11.15.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "rehype-format": "5.0.1",
@@ -53,7 +53,7 @@
     "remark-cjk-friendly": "2.3.1",
     "remark-math": "6.0.0",
     "rustywind": "0.24.3",
-    "sharp": "^0.35.0",
+    "sharp": "0.35.2",
     "svgo": "4.0.1",
     "tailwindcss": "4.3.1",
     "typescript": "6.0.3"
