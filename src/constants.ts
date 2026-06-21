@@ -25,6 +25,12 @@ export const SOCIALS: Social[] = [
     iconName: "tabler:brand-linkedin",
   },
   {
+    name: "Google Scholar",
+    href: "https://scholar.google.com/citations?user=H3XLeggAAAAJ",
+    linkTitle: "on",
+    iconName: "tabler:school",
+  },
+  {
     name: "Bilibili",
     href: "https://space.bilibili.com/13229205",
     linkTitle: "on",
