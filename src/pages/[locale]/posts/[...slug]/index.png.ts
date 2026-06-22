@@ -23,7 +23,7 @@ export const getStaticPaths = async () => {
   }));
 };
 
-export const GET: APIRoute = async ({ props }) => {
+export const GET: APIRoute<CollectionEntry<"blog">> = async ({ props }) => {
   if (!SITE.dynamicOgImage) {
     return new Response(null, {
       status: 404,
@@ -31,11 +31,10 @@ export const GET: APIRoute = async ({ props }) => {
     });
   }
 
-  return new Response(
-    // oxlint-disable-next-line no-unsafe-type-assertion
-    (await generateOgImageForPost(props as CollectionEntry<"blog">)).buffer as ArrayBuffer,
-    {
-      headers: { "Content-Type": "image/png" },
-    }
-  );
+  const png = await generateOgImageForPost(props);
+  const buf = png.buffer;
+  if (buf instanceof ArrayBuffer) {
+    return new Response(buf, { headers: { "Content-Type": "image/png" } });
+  }
+  return new Response(null, { status: 500 });
 };

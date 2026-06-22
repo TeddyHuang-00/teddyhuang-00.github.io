@@ -19,9 +19,7 @@ export default function Comments({
   useEffect(
     () => {
       // Ensure this runs only in the browser
-      if (typeof document === "undefined") {
-        return;
-      }
+      if (typeof document === "undefined") return () => {};
 
       const htmlElement = document.documentElement;
 
@@ -29,8 +27,7 @@ export default function Comments({
       const observer = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
           if (mutation.type === "attributes" && mutation.attributeName === "data-theme") {
-            const currentTheme = htmlElement.dataset.theme;
-            setTheme(currentTheme ?? "light");
+            setTheme(htmlElement.dataset.theme ?? "light");
           }
         }
       });
@@ -43,7 +40,6 @@ export default function Comments({
       });
 
       // Cleanup function to disconnect the observer when the component unmounts
-      // oxlint-disable-next-line consistent-return
       return () => {
         observer.disconnect();
       };
