@@ -40,7 +40,7 @@
     "astro-pagefind": "2.0.0",
     "astro-theme-toggle": "0.8.1",
     "dayjs": "1.11.21",
-    "globals": "17.6.0",
+    "globals": "17.7.0",
     "katex": "0.17.0",
     "linkedom": "0.18.12",
     "lodash.kebabcase": "4.1.1",
