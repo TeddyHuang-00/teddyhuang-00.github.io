@@ -5,6 +5,10 @@
     {
       "groupName": "Expressive Code",
       "matchPackageNames": ["@expressive-code/**", "astro-expressive-code"]
+    },
+    {
+      "groupName": "oxc",
+      "matchPackageNames": ["oxfmt", "oxlint", "oxlint-tsgolint"]
     }
   ]
 }
