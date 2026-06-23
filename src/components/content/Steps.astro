@@ -35,9 +35,7 @@ const olClassList = ol.classList;
 ol.className = "list-none ps-0";
 ol.classList.add(...Array.from(olClassList));
 
-const startIndex = ol.hasAttribute("start")
-  ? parseInt(ol.getAttribute("start") || "1", 10)
-  : 1;
+const startIndex = Math.trunc(Number(ol.getAttribute("start") ?? "1"));
 
 const listItems = Array.from(ol.children).filter(
   (child) => child.nodeName === "LI"
