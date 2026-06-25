@@ -26,7 +26,7 @@
         "astro-expressive-code": "0.43.1",
         "astro-icon": "1.1.5",
         "astro-loader-i18n": "1.0.0",
-        "astro-mermaid": "2.0.4",
+        "astro-mermaid": "2.1.0",
         "astro-og": "0.3.2",
         "astro-pagefind": "2.0.0",
         "astro-theme-toggle": "0.8.1",
@@ -788,7 +788,7 @@
 
     "astro-loader-i18n": ["astro-loader-i18n@1.0.0", "", { "peerDependencies": { "astro": "^5.5.0 || ^6.0.0 || ^7.0.0" } }, "sha512-tYY2dBTn9fEO82/WcT9FJbL9yOcn9cfXIP2+kPM5LdGLYv47Cl3IM/Mr6qnhbpCUY5pL1taG3NzI/6rX70lXnQ=="],
 
-    "astro-mermaid": ["astro-mermaid@2.0.4", "", { "dependencies": { "import-meta-resolve": "^4.2.0", "mdast-util-to-string": "^4.0.0", "unist-util-visit": "^5.0.0" }, "peerDependencies": { "@mermaid-js/layout-elk": "^0.2.0", "astro": ">=4", "mermaid": "^10.0.0 || ^11.0.0" }, "optionalPeers": ["@mermaid-js/layout-elk"] }, "sha512-9oTGCdgnRs2PShPgyhkA45EvRVr3NcgZmFgQBaZywVijwwQm+RYvAL5XM4lgMQZc+pCrNM76hkZl85ioeKkEFQ=="],
+    "astro-mermaid": ["astro-mermaid@2.1.0", "", { "dependencies": { "import-meta-resolve": "^4.2.0", "mdast-util-to-string": "^4.0.0", "unist-util-visit": "^5.0.0" }, "peerDependencies": { "@mermaid-js/layout-elk": "^0.2.0", "astro": ">=4", "mermaid": "^10.0.0 || ^11.0.0" }, "optionalPeers": ["@mermaid-js/layout-elk"] }, "sha512-fFRUN0BTZh+DZhDiLyblXoO26XqJ1Rr+qK3JGgSu7OBspKHDm59jkztg/aHsrdo1vO/tIq/+xhP/vgT8Mp92XA=="],
 
     "astro-og": ["astro-og@0.3.2", "", { "dependencies": { "preact": "10.28.2" }, "peerDependencies": { "astro": ">=5.0.0" } }, "sha512-87soXn7bSVzcY+9YyG5xQt/F4J4hsZ6ZKXAfRzBwqiQ2FF+esRLpQU62v6IKQHnlvzkQvmbUmeAKaEP0W1SM2g=="],
 
