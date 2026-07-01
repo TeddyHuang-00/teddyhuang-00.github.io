@@ -5,7 +5,7 @@ import { getPath } from "@/utils/getPath";
 import getSortedPosts from "@/utils/getSortedPosts";
 import type { GetStaticPaths } from "astro";
 
-export interface Props {
+type Props = {
   post: CollectionEntry<"blog">;
 }
 

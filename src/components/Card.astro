@@ -6,9 +6,9 @@ import { getPath } from "@/utils/getPath";
 import { toTransitionName } from "@/utils/toTransitionName";
 import Datetime from "./Datetime.astro";
 
-export interface Props extends CollectionEntry<"blog"> {
+type Props = {
   variant?: "h2" | "h3";
-}
+} & CollectionEntry<"blog">;
 
 const { variant = "h2", data, filePath } = Astro.props;
 

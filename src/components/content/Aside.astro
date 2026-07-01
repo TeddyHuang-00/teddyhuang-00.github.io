@@ -4,7 +4,7 @@ import { Icon } from "astro-icon/components";
 const BoxTypes = ["tip", "info", "important", "caution", "danger"] as const;
 type BoxType = (typeof BoxTypes)[number];
 
-export interface Props {
+type Props = {
   type?: BoxType;
   title?: string;
   class?: string;

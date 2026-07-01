@@ -18,10 +18,10 @@ import Layout from "@/layouts/Layout.astro";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 
-export interface Props {
+type Props = {
   post: CollectionEntry<"blog">;
   posts: CollectionEntry<"blog">[];
-}
+};
 
 const { post, posts } = Astro.props;
 

@@ -5,9 +5,9 @@ import Socials from "./Socials.astro";
 
 const currentYear = new Date().getFullYear();
 
-export interface Props {
+type Props = {
   noMarginTop?: boolean;
-}
+};
 
 const { noMarginTop = false } = Astro.props;
 const locale = getLangFromUrl(Astro.url);

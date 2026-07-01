@@ -5,9 +5,9 @@ import { Icon } from "astro-icon/components";
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import LinkButton from "./LinkButton.astro";
 
-export interface Props {
+type Props = {
   page: Page<CollectionEntry<"blog">>;
-}
+};
 
 const { page } = Astro.props;
 const locale = getLangFromUrl(Astro.url);

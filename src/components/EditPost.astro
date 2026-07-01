@@ -4,11 +4,11 @@ import { Icon } from "astro-icon/components";
 import { SITE } from "@/config";
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 
-export interface Props {
+type Props = {
   hideEditPost?: CollectionEntry<"blog">["data"]["hideEditPost"];
   class?: string;
   post: CollectionEntry<"blog">;
-}
+};
 
 const { hideEditPost, post, class: className = "" } = Astro.props;
 

@@ -1,8 +1,8 @@
 ---
-export interface Props {
+type Props = {
   noPadding?: boolean;
   ariaHidden?: boolean;
-}
+};
 
 const { noPadding = false, ariaHidden = true } = Astro.props;
 ---

@@ -3,11 +3,11 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import { getLangFromUrl } from "@/i18n/utils";
 
-export interface Props {
+type Props = {
   tag: string;
   tagName: string;
   size?: "sm" | "lg";
-}
+};
 
 const { tag, tagName, size = "lg" } = Astro.props;
 const locale = getLangFromUrl(Astro.url);

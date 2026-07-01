@@ -5,7 +5,7 @@ import { Icon } from "astro-icon/components";
 const BadgeTypes = ["tip", "info", "important", "caution", "danger"] as const;
 type BadgeType = (typeof BadgeTypes)[number];
 
-export interface Props {
+type Props = {
   text: string;
   type?: BadgeType;
   class?: string;

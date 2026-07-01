@@ -2,7 +2,7 @@
 import fs from "node:fs";
 import { processTypstFile } from "@/utils/generateTypstSvg";
 
-export interface Props {
+type Props = {
   filePath: string;
   workspace?: string;
   fontPaths?: string[];

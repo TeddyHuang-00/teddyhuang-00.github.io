@@ -13,13 +13,13 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(localizedFormat);
 
-export interface Props {
+type Props = {
   class?: string;
   size?: "sm" | "lg";
   timezone: string | undefined;
   pubDatetime: string | Date;
   modDatetime: string | Date | undefined | null;
-}
+};
 
 const {
   pubDatetime,

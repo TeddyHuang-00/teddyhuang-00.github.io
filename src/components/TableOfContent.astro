@@ -2,10 +2,10 @@
 import type { MarkdownHeading } from "astro";
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 
-export interface Props {
+type Props = {
   headings: MarkdownHeading[];
   filterSlugs?: string[];
-}
+};
 
 const { headings, filterSlugs = ["footnote-label"] } = Astro.props;
 

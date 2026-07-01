@@ -8,7 +8,7 @@ import { SITE } from "@/config";
 import { getTranslations } from "@/i18n/utils";
 import Layout from "@/layouts/Layout.astro";
 
-export interface Props {
+type Props = {
   post: CollectionEntry<"about">;
 }
 

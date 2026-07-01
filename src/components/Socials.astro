@@ -4,9 +4,9 @@ import { SOCIALS } from "@/constants";
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import LinkButton from "./LinkButton.astro";
 
-export interface Props {
+type Props = {
   centered?: boolean;
-}
+};
 
 const { centered = false } = Astro.props;
 const locale = getLangFromUrl(Astro.url);
