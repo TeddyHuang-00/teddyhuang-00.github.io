@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getLangFromUrl } from "@/i18n/utils";
 import { getPath } from "@/utils/getPath";
-import { slugifyStr } from "@/utils/slugify";
+import { toTransitionName } from "@/utils/toTransitionName";
 import Datetime from "./Datetime.astro";
 
 export interface Props extends CollectionEntry<"blog"> {
@@ -16,7 +16,7 @@ const { title, description, pubDatetime, modDatetime, timezone } = data;
 const locale = getLangFromUrl(Astro.url);
 
 const headerProps = {
-  style: { viewTransitionName: slugifyStr(title) },
+  style: { viewTransitionName: toTransitionName(title) },
   class: "text-lg font-medium decoration-dashed hover:underline",
 };
 ---
