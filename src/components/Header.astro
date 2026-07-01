@@ -176,7 +176,12 @@ const isActive = (path: string) => {
           {
             SITE.lightAndDarkMode && (
               <li class="flex col-span-1 justify-center items-center">
-                <a href="#" class="relative p-3 sm:p-1">
+                <a
+                  href="#"
+                  aria-label={localeString("nav.toggle-theme")}
+                  title={localeString("nav.toggle-theme")}
+                  class="relative p-3 sm:p-1"
+                >
                   <Toggle
                     tabindex={-1}
                     class="flex hover:[&>svg]:stroke-accent"
@@ -273,12 +278,23 @@ const isActive = (path: string) => {
     });
   }
 
+  const themeColors = { light: "#eaedf3", dark: "#000123" };
+
+  function updateThemeColor() {
+    const theme = window.astroThemeToggle?.getTheme() || "light";
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", themeColors[theme] ?? themeColors.light);
+  }
+
   toggleNav();
   toggleLangMenu();
+  updateThemeColor();
 
   // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", () => {
     toggleNav();
     toggleLangMenu();
+    updateThemeColor();
   });
 </script>
