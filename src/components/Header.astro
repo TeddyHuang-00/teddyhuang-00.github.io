@@ -278,13 +278,12 @@ const isActive = (path: string) => {
     });
   }
 
-  const themeColors = { light: "#eaedf3", dark: "#000123" };
-
   function updateThemeColor() {
-    const theme = window.astroThemeToggle?.getTheme() || "light";
+    const style = window.getComputedStyle(document.body);
+    const color = style.getPropertyValue("--background");
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", themeColors[theme] ?? themeColors.light);
+      ?.setAttribute("content", color);
   }
 
   toggleNav();
