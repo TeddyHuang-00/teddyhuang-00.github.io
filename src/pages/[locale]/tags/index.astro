@@ -31,8 +31,8 @@ const tags = getUniqueTags(posts);
     pageTitle={localeString("nav.tags")}
     pageDesc={localeString("tags.description")}
   >
-    <ul>
-      {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} size="lg" />)}
+    <ul class="flex flex-wrap gap-6">
+      {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} />)}
     </ul>
   </Main>
   <Footer />

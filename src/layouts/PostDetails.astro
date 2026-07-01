@@ -138,8 +138,12 @@ const prevPost =
 
     <EditPost class="sm:hidden" {hideEditPost} {post} />
 
-    <ul class="mt-4 mb-8 sm:my-8">
-      {tags.map((tag: string) => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
+    <ul class="flex flex-wrap gap-4 mt-4 mb-8 sm:my-8">
+      {
+        tags.map((tag: string) => (
+          <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />
+        ))
+      }
     </ul>
 
     <BackToTopButton />
