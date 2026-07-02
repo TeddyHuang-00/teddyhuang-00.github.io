@@ -15,19 +15,29 @@ import { Aside, Badge, Ruby } from "@/components/content/components";
 import { Icon } from "astro-icon/components";
 
 export const config = {
-    L1: { text: "text-red-600", bg: "bg-red-600/30", icon: "tabler:lock" },
-    L2: { text: "text-orange-600", bg: "bg-orange-600/30", icon: "tabler:barrier-block" },
-    L3: { text: "text-green-600", bg: "bg-green-600/30", icon: "tabler:matrix" },
-    L4: { text: "text-blue-600", bg: "bg-blue-600/30", icon: "tabler:pipeline" },
+  L1: { text: "text-red-600", bg: "bg-red-600/30", icon: "tabler:lock" },
+  L2: { text: "text-orange-600", bg: "bg-orange-600/30", icon: "tabler:barrier-block" },
+  L3: { text: "text-green-600", bg: "bg-green-600/30", icon: "tabler:matrix" },
+  L4: { text: "text-blue-600", bg: "bg-blue-600/30", icon: "tabler:pipeline" },
 };
 
 export const L = ({ text }) => (
-    <span class:list={[config[text].text, config[text].bg, "inline-block align-middle py-1 px-1.5 rounded-md bg-clip-padding"]}>
-        <span className="flex items-center gap-0.5">
-            <Icon name={config[text].icon} class:list={["size-4 align-parent-middle", config[text].text]} aria-hidden="true" />
-            <span className="text-sm/1">{text}</span>
-        </span>
+  <span
+    class:list={[
+      config[text].text,
+      config[text].bg,
+      "inline-block align-middle py-1 px-1.5 rounded-md bg-clip-padding",
+    ]}
+  >
+    <span className="flex gap-0.5 items-center">
+      <Icon
+        name={config[text].icon}
+        class:list={["size-4 align-parent-middle", config[text].text]}
+        aria-hidden="true"
+      />
+      <span className="text-sm/1">{text}</span>
     </span>
+  </span>
 );
 
 export const L1 = () => <L text="L1" />;
@@ -92,10 +102,15 @@ mindmap
 
 We distinguish four levels:
 
-- <L1 />: Fully closed. No model details published, no API offered. No commercial player occupies this space.
-- <L2 />: API only. Accessible via API, but model weights and training details are not released. Anthropic Claude, OpenAI GPT-5 series, Google Gemini, xAI Grok-4 live here.
-- <L3 />: Open weight. Model parameters are publicly released, typically accompanied by papers and technical reports. Meta Llama, DeepSeek, Mistral's core models, Google Gemma live here.
-- <L4 />: Open training. The full pipeline — dataset, training code, model weights — is public. No commercial company operates here. The closest examples are academic projects: EleutherAI's Pythia, BigScience's BLOOM, AI2's OLMo.
+- <L1 />: Fully closed. No model details published, no API offered. No commercial player occupies
+  this space.
+- <L2 />: API only. Accessible via API, but model weights and training details are not released.
+  Anthropic Claude, OpenAI GPT-5 series, Google Gemini, xAI Grok-4 live here.
+- <L3 />: Open weight. Model parameters are publicly released, typically accompanied by papers and
+  technical reports. Meta Llama, DeepSeek, Mistral's core models, Google Gemma live here.
+- <L4 />: Open training. The full pipeline — dataset, training code, model weights — is public. No
+  commercial company operates here. The closest examples are academic projects: EleutherAI's Pythia,
+  BigScience's BLOOM, AI2's OLMo.
 
 ```mermaid
 flowchart TD
@@ -134,15 +149,15 @@ A company straddles levels not because of a philosophical stance on openness, bu
 
 When you lay out every publicly available financial statement and estimate, a clear picture emerges:
 
-| Company         | 2025 Revenue   | 2025 Op. Loss   | Gross Margin | Business Model     |
-| --------------- | -------------- | --------------- | ------------ | ------------------ |
-| **OpenAI**      | \$13.1B        | -\$20.9B        | 46%          | API + Subscription |
-| **Anthropic**   | ~\$9B ARR      | -\$5B           | 40%          | API + Subscription |
-| **DeepSeek**    | Not disclosed  | Estimated loss  | ~12%         | API (low-cost)     |
-| **Mistral**     | ~\$400M ARR    | Not disclosed   | —            | API + Enterprise   |
-| **Meta AI/RL**  | ~\$1B          | -\$19.2B        | —            | Ad-subsidized      |
-| **Google Cloud**| \$80B+         | **Profitable**  | —            | Cloud services     |
-| **Azure AI**    | \$75B+         | **Profitable**  | —            | Cloud services     |
+| Company          | 2025 Revenue  | 2025 Op. Loss  | Gross Margin | Business Model     |
+| ---------------- | ------------- | -------------- | ------------ | ------------------ |
+| **OpenAI**       | \$13.1B       | -\$20.9B       | 46%          | API + Subscription |
+| **Anthropic**    | ~\$9B ARR     | -\$5B          | 40%          | API + Subscription |
+| **DeepSeek**     | Not disclosed | Estimated loss | ~12%         | API (low-cost)     |
+| **Mistral**      | ~\$400M ARR   | Not disclosed  | —            | API + Enterprise   |
+| **Meta AI/RL**   | ~\$1B         | -\$19.2B       | —            | Ad-subsidized      |
+| **Google Cloud** | \$80B+        | **Profitable** | —            | Cloud services     |
+| **Azure AI**     | \$75B+        | **Profitable** | —            | Cloud services     |
 
 Sources: [^openai_revenue] [^anthropic_revenue] [^deepseek_revenue_composition] [^meta_revenue] [^google_cloud_revenue] [^azure_revenue]
 
