@@ -23,8 +23,8 @@ const localeString = getTranslations(locale);
 
 {
   filteredHeadings.length > 0 && (
-    <aside class="relative list-none xl:sticky xl:top-1/4 xl:-mx-6 xl:w-full xl:h-0">
-      <div class="hidden overflow-y-auto py-2 px-2 rounded-md border xl:block xl:-translate-x-full border-border w-fit max-w-[calc(50vw-400px)] max-h-[50vh]">
+    <aside class="relative list-none xl:sticky xl:top-1/4 xl:-mx-6 xl:h-0 xl:w-full">
+      <div class="border-border hidden max-h-[50vh] w-fit max-w-[calc(50vw-400px)] overflow-y-auto rounded-md border px-2 py-2 xl:block xl:-translate-x-full">
         <h2 class="font-semibold">{localeString("nav.table-of-contents")}</h2>
 
         <nav>
@@ -40,7 +40,7 @@ const localeString = getTranslations(locale);
             >
               <a
                 href={`#${heading.slug}`}
-                class="block py-1 text-sm text-foreground hover:text-accent"
+                class="text-foreground hover:text-accent block py-1 text-sm"
               >
                 {heading.text}
               </a>
@@ -49,10 +49,10 @@ const localeString = getTranslations(locale);
         </nav>
       </div>
 
-      <details class="py-2 px-4 rounded-md border xl:hidden border-border">
-        <summary class="flex justify-between items-center font-semibold cursor-pointer">
+      <details class="border-border rounded-md border px-4 py-2 xl:hidden">
+        <summary class="flex cursor-pointer items-center justify-between font-semibold">
           {localeString("nav.table-of-contents")}
-          <span class="text-sm text-foreground">▾</span>
+          <span class="text-foreground text-sm">▾</span>
         </summary>
         <nav>
           <ul class="pl-6">
@@ -68,7 +68,7 @@ const localeString = getTranslations(locale);
               >
                 <a
                   href={`#${heading.slug}`}
-                  class="block py-1 text-sm text-foreground hover:text-accent"
+                  class="text-foreground hover:text-accent block py-1 text-sm"
                 >
                   {heading.text}
                 </a>

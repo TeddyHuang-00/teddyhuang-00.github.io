@@ -21,20 +21,20 @@ const wrapperProps = link
 
 <Wrapper
   {...wrapperProps}
-  class="flex items-center p-4 space-x-4 rounded-lg border border-border"
+  class="border-border flex items-center space-x-4 rounded-lg border p-4"
 >
   {
     avatar ? (
       <Image
         src={avatar}
         alt={`${name} avatar`}
-        class="object-cover w-16 h-16 rounded-full"
+        class="h-16 w-16 rounded-full object-cover"
         width={256}
         height={256}
       />
     ) : (
-      <div class="flex justify-center items-center w-16 h-16 rounded-full bg-muted">
-        <Icon name="tabler:user" class="size-8 text-foreground" />
+      <div class="bg-muted flex h-16 w-16 items-center justify-center rounded-full">
+        <Icon name="tabler:user" class="text-foreground size-8" />
       </div>
     )
   }

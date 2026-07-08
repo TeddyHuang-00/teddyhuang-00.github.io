@@ -85,13 +85,13 @@ if (isSynced) {
 <starlight-tabs data-sync-key={syncKey} class="block">
 	{
 		panels && (
-			<div class="overflow-x-auto tablist-wrapper not-content">
-				<ul role="tablist" class="flex p-0 m-0 mb-2 list-none border-b-2 border-b-muted">
+			<div class="tablist-wrapper not-content overflow-x-auto">
+				<ul role="tablist" class="m-0 mb-2 flex list-none border-b-2 border-b-muted p-0">
 					{panels.map(({ icon, label, panelId, tabId }, idx) => (
-						<li role="presentation" class="-mb-0.5 tab">
+						<li role="presentation" class="tab -mb-0.5">
 							<a
 								role="tab"
-								class="flex gap-2 items-center py-2 px-3 font-medium no-underline whitespace-nowrap border-b-2 transition-all duration-200 ease-in-out border-b-muted text-foreground/80 aria-selected:text-foreground aria-selected:border-accent aria-selected:font-semibold hover:text-foreground hover:border-b-border"
+								class="text-foreground/80 aria-selected:text-foreground aria-selected:border-accent hover:text-foreground flex items-center gap-2 border-b-2 border-b-muted px-3 py-2 font-medium whitespace-nowrap no-underline transition-all duration-200 ease-in-out hover:border-b-border aria-selected:font-semibold"
 								href={'#' + panelId}
 								id={tabId}
 								aria-selected={idx === 0 ? 'true' : 'false'}
