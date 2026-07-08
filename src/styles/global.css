@@ -38,11 +38,11 @@ html[data-theme="dark"] {
     @apply overflow-y-scroll scroll-smooth;
   }
   body {
-    @apply flex flex-col font-mono bg-background text-foreground selection:bg-accent/75 selection:text-background min-h-svh;
+    @apply bg-background text-foreground selection:bg-accent/75 selection:text-background flex min-h-svh flex-col font-mono;
   }
   a,
   button {
-    @apply focus-visible:no-underline outline-accent outline-offset-1 focus-visible:outline-2 focus-visible:outline-dashed;
+    @apply outline-accent outline-offset-1 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
@@ -50,7 +50,7 @@ html[data-theme="dark"] {
   }
   section,
   footer {
-    @apply px-4 mx-auto max-w-app;
+    @apply mx-auto max-w-app px-4;
   }
 }
 

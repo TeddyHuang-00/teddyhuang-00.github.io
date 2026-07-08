@@ -108,10 +108,10 @@ const prevPost =
     ]}
     data-pagefind-body
   >
-    <h1 class="inline-block text-2xl font-bold sm:text-3xl text-accent">
+    <h1 class="text-accent inline-block text-2xl font-bold sm:text-3xl">
       {title}
     </h1>
-    <div class="flex gap-2 items-center my-2">
+    <div class="my-2 flex items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
       <span
         aria-hidden="true"
@@ -129,7 +129,7 @@ const prevPost =
 
     <article
       id="article"
-      class="mx-auto mt-8 app-prose max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
+      class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
     >
       <Content />
     </article>
@@ -138,7 +138,7 @@ const prevPost =
 
     <EditPost class="sm:hidden" {hideEditPost} {post} />
 
-    <ul class="flex flex-wrap gap-4 mt-4 mb-8 sm:my-8">
+    <ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8">
       {
         tags.map((tag: string) => (
           <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />
@@ -161,15 +161,15 @@ const prevPost =
               locale,
               getPath(prevPost.translationId, prevPost.filePath)
             )}
-            class="flex gap-1 w-full hover:opacity-75"
+            class="flex w-full gap-1 hover:opacity-75"
           >
             <Icon
               name="tabler:chevron-left"
-              class="inline-block flex-none size-6 rtl:rotate-180"
+              class="inline-block size-6 flex-none rtl:rotate-180"
             />
             <div>
               <span>{localeString("nav.prev-post")}</span>
-              <div class="text-sm text-accent/85">{prevPost.title}</div>
+              <div class="text-accent/85 text-sm">{prevPost.title}</div>
             </div>
           </a>
         )
@@ -181,15 +181,15 @@ const prevPost =
               locale,
               getPath(nextPost.translationId, nextPost.filePath)
             )}
-            class="flex gap-1 justify-end w-full sm:col-start-2 hover:opacity-75 text-end"
+            class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
           >
             <div>
               <span>{localeString("nav.next-post")}</span>
-              <div class="text-sm text-accent/85">{nextPost.title}</div>
+              <div class="text-accent/85 text-sm">{nextPost.title}</div>
             </div>
             <Icon
               name="tabler:chevron-right"
-              class="inline-block flex-none size-6 rtl:rotate-180"
+              class="inline-block size-6 flex-none rtl:rotate-180"
             />
           </a>
         )
@@ -213,11 +213,11 @@ const prevPost =
     // Create the main container div
     const progressContainer = document.createElement("div");
     progressContainer.className =
-      "fixed top-0 z-10 w-full h-1 progress-container bg-background";
+      "progress-container bg-background fixed top-0 z-10 h-1 w-full";
 
     // Create the progress bar div
     const progressBar = document.createElement("div");
-    progressBar.className = "w-0 h-1 progress-bar bg-accent";
+    progressBar.className = "progress-bar bg-accent h-1 w-0";
     progressBar.id = "myBar";
 
     // Append the progress bar to the progress container
@@ -258,7 +258,7 @@ const prevPost =
       heading.classList.add("group");
       const link = document.createElement("a");
       link.className =
-        "no-underline opacity-75 md:opacity-0 heading-link ms-2 md:group-hover:opacity-100 md:focus:opacity-100";
+        "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
       link.href = "#" + heading.id;
 
       const span = document.createElement("span");

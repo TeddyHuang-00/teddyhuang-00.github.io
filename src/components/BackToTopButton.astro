@@ -25,14 +25,14 @@ const localeString = getTranslations(locale);
   >
     <span
       id="progress-indicator"
-      class="block absolute inset-0 bg-transparent rounded-full scale-110 md:hidden md:h-8 md:rounded-md -z-10 size-14"
+      class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"
     ></span>
     <Icon
       name="tabler:chevron-left"
-      class="inline-block rotate-90 md:hidden size-6"
+      class="inline-block size-6 rotate-90 md:hidden"
     />
-    <span class="text-sm sr-only md:not-sr-only group-hover:text-accent">
-      <Icon name="tabler:arrow-narrow-up" class="inline-block pb-0.5 size-6" />
+    <span class="group-hover:text-accent sr-only text-sm md:not-sr-only">
+      <Icon name="tabler:arrow-narrow-up" class="inline-block size-6 pb-0.5" />
       {localeString("nav.back-to-top")}
     </span>
   </button>

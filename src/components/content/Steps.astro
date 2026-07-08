@@ -46,15 +46,15 @@ listItems.forEach((li, index) => {
 
   const bulletSpan = document.createElement("span");
   bulletSpan.className =
-    "flex absolute left-0 -top-1 justify-center items-center w-8 h-8 text-xs font-semibold rounded-full border bg-muted text-foreground border-border";
+    "bg-muted text-foreground border-border absolute -top-1 left-0 flex h-8 w-8 items-center justify-center rounded-full border text-xs font-semibold";
   bulletSpan.textContent = String(stepNumber);
 
   const lineSpan = document.createElement("span");
   lineSpan.className =
-    "absolute -bottom-2 left-4 top-10 w-px -translate-x-0.5 bg-border";
+    "bg-border absolute top-10 -bottom-2 left-4 w-px -translate-x-0.5";
 
   const liClassList = li.classList;
-  li.className = "relative pb-1 pl-12 min-h-12";
+  li.className = "relative min-h-12 pb-1 pl-12";
   li.classList.add(...Array.from(liClassList));
   li.insertBefore(bulletSpan, li.firstChild);
   li.append(lineSpan);

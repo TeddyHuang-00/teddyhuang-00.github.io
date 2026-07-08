@@ -171,10 +171,10 @@ Since the UI content is relatively fixed and doesn't require much dynamic change
    <footer class:list={["w-full", { "mt-auto": !noMarginTop }]}>
      <Hr noPadding />
      <div
-       class="flex flex-col justify-between items-center py-6 sm:flex-row-reverse sm:py-4"
+       class="flex flex-col items-center justify-between py-6 sm:flex-row-reverse sm:py-4"
      >
        <Socials centered />
-       <div class="flex flex-col items-center my-2 whitespace-nowrap sm:flex-row">
+       <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
          <span>
            {
              localeString("footer.copyright", {
@@ -373,7 +373,7 @@ Specifically, we need to make the following modifications:
      <Header />
      <Breadcrumb />
      <main id="main-content">
-       <section id="about" class="mb-28 app-prose max-w-app prose-img:border-0">
+       <section id="about" class="app-prose mb-28 max-w-app prose-img:border-0">
          <h1 class="text-2xl tracking-wider sm:text-3xl">
            {aboutPage.data.title}
          </h1>
