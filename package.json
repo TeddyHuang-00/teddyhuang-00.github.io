@@ -57,7 +57,7 @@
     "rustywind": "0.25.2",
     "sharp": "0.35.3",
     "slugify": "1.6.9",
-    "svgo": "4.0.1",
+    "svgo": "4.0.2",
     "tailwindcss": "4.3.2",
     "typescript": "6.0.3"
   },
