@@ -2,7 +2,6 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { NodeCompiler } from "@myriaddreamin/typst-ts-node-compiler";
-import { optimize } from "svgo";
 
 // Configuration for output paths
 const BUILD_DIR = "dist";
@@ -99,35 +98,8 @@ function compileTypst(
     workspace,
     fontArgs: fontPaths ? [{ fontPaths }] : undefined,
   });
-  const [lightSvg, darkSvg] = ["light", "dark"]
-    .map((theme) => compiler.plainSvg({ mainFilePath: filePath, inputs: { theme } }))
-    .map((svg) => optimizeSvg(svg));
+  const [lightSvg, darkSvg] = ["light", "dark"].map((theme) =>
+    compiler.plainSvg({ mainFilePath: filePath, inputs: { theme } })
+  );
   return [lightSvg, darkSvg];
-}
-
-/**
- * Optimize SVG using SVGO with predefined plugins
- */
-function optimizeSvg(svgContent: string): string {
-  return import.meta.env.PROD
-    ? optimize(svgContent, {
-        plugins: [
-          {
-            name: "preset-default",
-            params: {
-              floatPrecision: 4,
-              // Disable plugins that will crash on certain SVGs
-              overrides: {
-                collapseGroups: false,
-                convertPathData: false,
-                mergePaths: false,
-                removeEmptyContainers: false,
-                removeHiddenElems: false,
-                removeUnknownsAndDefaults: false,
-              },
-            },
-          },
-        ],
-      }).data
-    : svgContent;
 }
