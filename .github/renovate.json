@@ -9,6 +9,10 @@
     {
       "groupName": "oxc",
       "matchPackageNames": ["oxfmt", "oxlint", "oxlint-tsgolint"]
+    },
+    {
+      "groupName": "react",
+      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"]
     }
   ]
 }
