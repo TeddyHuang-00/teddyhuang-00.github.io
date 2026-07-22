@@ -47,7 +47,7 @@
     "mermaid": "11.16.0",
     "oxfmt": "0.60.0",
     "oxlint": "1.75.0",
-    "oxlint-tsgolint": "0.25.0",
+    "oxlint-tsgolint": "7.0.2001",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "rehype-format": "5.0.1",
