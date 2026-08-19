@@ -113,6 +113,7 @@ export default defineConfig({
         [
           rehypeKatex,
           {
+            // oxlint-disable-next-line no-unused-vars
             strict: (errorCode: string, ..._: any[]) =>
               errorCode === "newLineInDisplayMode" ? false : "warn",
           },
