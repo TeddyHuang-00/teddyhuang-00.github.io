@@ -1,4 +1,4 @@
-import { unified } from "@astrojs/markdown-remark";
+import { unified, type RehypePlugin } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
@@ -111,7 +111,7 @@ export default defineConfig({
       remarkPlugins: [remarkMath, remarkCjkFriendly],
       rehypePlugins: [
         [
-          rehypeKatex,
+          rehypeKatex as RehypePlugin,
           {
             // oxlint-disable-next-line no-unused-vars
             strict: (errorCode: string, ..._: any[]) =>
