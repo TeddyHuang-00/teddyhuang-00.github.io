@@ -50,15 +50,15 @@ const date = datetime.format("ll");
       { "scale-90": size === "sm" },
     ]}
   />
-  {
-    isModified && (
-      <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>
-        {localeString("datetime.updated")}:
-      </span>
-    )
-  }
+  {isModified && (
+    <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>
+      {localeString("datetime.updated")}:
+    </span>
+  )}
   <time
     class:list={["text-sm", { "sm:text-base": size === "lg" }]}
-    datetime={datetime.toISOString()}>{date}</time
+    datetime={datetime.toISOString()}
   >
+    {date}
+  </time>
 </div>

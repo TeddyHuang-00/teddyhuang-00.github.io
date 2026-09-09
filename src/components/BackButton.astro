@@ -9,23 +9,21 @@ const locale = getLangFromUrl(Astro.url);
 const localeString = getTranslations(locale);
 ---
 
-{
-  SITE.showBackButton && (
-    <div class="mx-auto flex w-full max-w-app items-center justify-start px-2">
-      <LinkButton
-        id="back-button"
-        href={getRelativeLocaleUrl(locale, "/")}
-        class="hover:text-foreground/75 focus-outline mt-8 mb-2 flex"
-      >
-        <Icon
-          name="tabler:chevron-left"
-          class="inline-block size-6 pb-1 rtl:rotate-180"
-        />
-        <span>{localeString("nav.go-back")}</span>
-      </LinkButton>
-    </div>
-  )
-}
+{SITE.showBackButton && (
+  <div class="mx-auto flex w-full max-w-app items-center justify-start px-2">
+    <LinkButton
+      id="back-button"
+      href={getRelativeLocaleUrl(locale, "/")}
+      class="hover:text-foreground/75 focus-outline mt-8 mb-2 flex"
+    >
+      <Icon
+        name="tabler:chevron-left"
+        class="inline-block size-6 pb-1 rtl:rotate-180"
+      />
+      <span>{localeString("nav.go-back")}</span>
+    </LinkButton>
+  </div>
+)}
 
 <script>
   /* Update Search Praam */

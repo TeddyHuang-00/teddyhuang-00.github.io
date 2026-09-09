@@ -21,13 +21,40 @@ const locale = getLangFromUrl(Astro.url);
 const localeString = getTranslations(locale);
 ---
 
-{
-  filteredHeadings.length > 0 && (
-    <aside class="relative list-none xl:sticky xl:top-1/4 xl:-mx-6 xl:h-0 xl:w-full">
-      <div class="border-border hidden max-h-[50vh] w-fit max-w-[calc(50vw-400px)] overflow-y-auto rounded-md border px-2 py-2 xl:block xl:-translate-x-full">
-        <h2 class="font-semibold">{localeString("nav.table-of-contents")}</h2>
+{filteredHeadings.length > 0 && (
+  <aside class="relative list-none xl:sticky xl:top-1/4 xl:-mx-6 xl:h-0 xl:w-full">
+    <div class="border-border hidden max-h-[50vh] w-fit max-w-[calc(50vw-400px)] overflow-y-auto rounded-md border px-2 py-2 xl:block xl:-translate-x-full">
+      <h2 class="font-semibold">{localeString("nav.table-of-contents")}</h2>
 
-        <nav>
+      <nav>
+        {filteredHeadings.map((heading) => (
+          <li
+            class:list={[
+              {
+                "pl-0": heading.depth === 2,
+                "pl-4": heading.depth === 3,
+                "pl-8": heading.depth === 4,
+              },
+            ]}
+          >
+            <a
+              href={`#${heading.slug}`}
+              class="text-foreground hover:text-accent block py-1 text-sm"
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </nav>
+    </div>
+
+    <details class="border-border rounded-md border px-4 py-2 xl:hidden">
+      <summary class="flex cursor-pointer items-center justify-between font-semibold">
+        {localeString("nav.table-of-contents")}
+        <span class="text-foreground text-sm">▾</span>
+      </summary>
+      <nav>
+        <ul class="pl-6">
           {filteredHeadings.map((heading) => (
             <li
               class:list={[
@@ -46,37 +73,8 @@ const localeString = getTranslations(locale);
               </a>
             </li>
           ))}
-        </nav>
-      </div>
-
-      <details class="border-border rounded-md border px-4 py-2 xl:hidden">
-        <summary class="flex cursor-pointer items-center justify-between font-semibold">
-          {localeString("nav.table-of-contents")}
-          <span class="text-foreground text-sm">▾</span>
-        </summary>
-        <nav>
-          <ul class="pl-6">
-            {filteredHeadings.map((heading) => (
-              <li
-                class:list={[
-                  {
-                    "pl-0": heading.depth === 2,
-                    "pl-4": heading.depth === 3,
-                    "pl-8": heading.depth === 4,
-                  },
-                ]}
-              >
-                <a
-                  href={`#${heading.slug}`}
-                  class="text-foreground hover:text-accent block py-1 text-sm"
-                >
-                  {heading.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </details>
-    </aside>
-  )
-}
+        </ul>
+      </nav>
+    </details>
+  </aside>
+)}

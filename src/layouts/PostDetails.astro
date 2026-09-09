@@ -139,11 +139,9 @@ const prevPost =
     <EditPost class="sm:hidden" {hideEditPost} {post} />
 
     <ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8">
-      {
-        tags.map((tag: string) => (
-          <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />
-        ))
-      }
+      {tags.map((tag: string) => (
+        <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />
+      ))}
     </ul>
 
     <BackToTopButton />
@@ -154,46 +152,42 @@ const prevPost =
 
     <!-- Previous/Next Post Buttons -->
     <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-      {
-        prevPost && (
-          <a
-            href={getRelativeLocaleUrl(
-              locale,
-              getPath(prevPost.translationId, prevPost.filePath)
-            )}
-            class="flex w-full gap-1 hover:opacity-75"
-          >
-            <Icon
-              name="tabler:chevron-left"
-              class="inline-block size-6 flex-none rtl:rotate-180"
-            />
-            <div>
-              <span>{localeString("nav.prev-post")}</span>
-              <div class="text-accent/85 text-sm">{prevPost.title}</div>
-            </div>
-          </a>
-        )
-      }
-      {
-        nextPost && (
-          <a
-            href={getRelativeLocaleUrl(
-              locale,
-              getPath(nextPost.translationId, nextPost.filePath)
-            )}
-            class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
-          >
-            <div>
-              <span>{localeString("nav.next-post")}</span>
-              <div class="text-accent/85 text-sm">{nextPost.title}</div>
-            </div>
-            <Icon
-              name="tabler:chevron-right"
-              class="inline-block size-6 flex-none rtl:rotate-180"
-            />
-          </a>
-        )
-      }
+      {prevPost && (
+        <a
+          href={getRelativeLocaleUrl(
+            locale,
+            getPath(prevPost.translationId, prevPost.filePath)
+          )}
+          class="flex w-full gap-1 hover:opacity-75"
+        >
+          <Icon
+            name="tabler:chevron-left"
+            class="inline-block size-6 flex-none rtl:rotate-180"
+          />
+          <div>
+            <span>{localeString("nav.prev-post")}</span>
+            <div class="text-accent/85 text-sm">{prevPost.title}</div>
+          </div>
+        </a>
+      )}
+      {nextPost && (
+        <a
+          href={getRelativeLocaleUrl(
+            locale,
+            getPath(nextPost.translationId, nextPost.filePath)
+          )}
+          class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
+        >
+          <div>
+            <span>{localeString("nav.next-post")}</span>
+            <div class="text-accent/85 text-sm">{nextPost.title}</div>
+          </div>
+          <Icon
+            name="tabler:chevron-right"
+            class="inline-block size-6 flex-none rtl:rotate-180"
+          />
+        </a>
+      )}
     </div>
 
     <Comments

@@ -54,46 +54,42 @@ if (urlParts[0] === "about") {
 ---
 
 <nav class="mx-auto mt-8 mb-1 w-full max-w-app px-4" aria-label="breadcrumb">
-  <ul
-    class="flex items-center font-light [&>li]:inline [&>li:not(:last-child)>a]:hover:opacity-100"
-  >
+  <ul class="flex items-center font-light [&>li]:inline [&>li:not(:last-child)>a]:hover:opacity-100">
     <li>
       <a href={getRelativeLocaleUrl(locale, "/")} class="opacity-80">
         {localeString("nav.home")}
       </a>
     </li>
-    {
-      breadcrumbList.map((breadcrumb, index) =>
-        index + 1 === breadcrumbList.length ? (
-          <li>
-            <Icon
-              aria-hidden="true"
-              name="tabler:chevron-right"
-              class="inline-block size-4 opacity-80"
-            />
-            <span
-              class:list={["capitalize opacity-75", { lowercase: index > 0 }]}
-              aria-current="page"
-            >
-              {breadcrumb}
-            </span>
-          </li>
-        ) : (
-          <li>
-            <Icon
-              aria-hidden="true"
-              name="tabler:chevron-right"
-              class="inline-block size-4 opacity-80"
-            />
-            <a
-              href={getRelativeLocaleUrl(locale, `/${urlParts[index]}/`)}
-              class="pr-1 capitalize opacity-70"
-            >
-              {breadcrumb}
-            </a>
-          </li>
-        )
+    {breadcrumbList.map((breadcrumb, index) =>
+      index + 1 === breadcrumbList.length ? (
+        <li>
+          <Icon
+            aria-hidden="true"
+            name="tabler:chevron-right"
+            class="inline-block size-4 opacity-80"
+          />
+          <span
+            class:list={["capitalize opacity-75", { lowercase: index > 0 }]}
+            aria-current="page"
+          >
+            {breadcrumb}
+          </span>
+        </li>
+      ) : (
+        <li>
+          <Icon
+            aria-hidden="true"
+            name="tabler:chevron-right"
+            class="inline-block size-4 opacity-80"
+          />
+          <a
+            href={getRelativeLocaleUrl(locale, `/${urlParts[index]}/`)}
+            class="pr-1 capitalize opacity-70"
+          >
+            {breadcrumb}
+          </a>
+        </li>
       )
-    }
+    )}
   </ul>
 </nav>

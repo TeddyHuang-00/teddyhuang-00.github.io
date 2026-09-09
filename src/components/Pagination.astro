@@ -14,34 +14,29 @@ const locale = getLangFromUrl(Astro.url);
 const localeString = getTranslations(locale);
 ---
 
-{
-  page.lastPage > 1 && (
-    <nav class="mt-auto mb-8 flex justify-center" aria-label="Pagination">
-      <LinkButton
-        disabled={!page.url.prev}
-        href={page.url.prev as string}
-        class:list={["me-4 select-none", { "opacity-50": !page.url.prev }]}
-        ariaLabel={localeString("nav.page-prev")}
-      >
-        <Icon
-          name="tabler:arrow-left"
-          class="inline-block pb-1 rtl:rotate-180"
-        />
-        {localeString("nav.page-prev")}
-      </LinkButton>
-      {page.currentPage} / {page.lastPage}
-      <LinkButton
-        disabled={!page.url.next}
-        href={page.url.next as string}
-        class:list={["ms-4 select-none", { "opacity-50": !page.url.next }]}
-        ariaLabel={localeString("nav.page-next")}
-      >
-        {localeString("nav.page-next")}
-        <Icon
-          name="tabler:arrow-right"
-          class="inline-block pb-1 rtl:rotate-180"
-        />
-      </LinkButton>
-    </nav>
-  )
-}
+{page.lastPage > 1 && (
+  <nav class="mt-auto mb-8 flex justify-center" aria-label="Pagination">
+    <LinkButton
+      disabled={!page.url.prev}
+      href={page.url.prev as string}
+      class:list={["me-4 select-none", { "opacity-50": !page.url.prev }]}
+      ariaLabel={localeString("nav.page-prev")}
+    >
+      <Icon name="tabler:arrow-left" class="inline-block pb-1 rtl:rotate-180" />
+      {localeString("nav.page-prev")}
+    </LinkButton>
+    {page.currentPage} / {page.lastPage}
+    <LinkButton
+      disabled={!page.url.next}
+      href={page.url.next as string}
+      class:list={["ms-4 select-none", { "opacity-50": !page.url.next }]}
+      ariaLabel={localeString("nav.page-next")}
+    >
+      {localeString("nav.page-next")}
+      <Icon
+        name="tabler:arrow-right"
+        class="inline-block pb-1 rtl:rotate-180"
+      />
+    </LinkButton>
+  </nav>
+)}

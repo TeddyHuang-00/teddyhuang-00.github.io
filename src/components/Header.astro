@@ -96,29 +96,27 @@ const isActive = (path: string) => {
               {localeString("nav.about")}
             </a>
           </li>
-          {
-            SITE.showArchives && (
-              <li class="col-span-3">
-                <LinkButton
-                  href={getRelativeLocaleUrl(currentLang, "/archives")}
-                  class:list={[
-                    "focus-outline flex justify-center p-3 sm:p-1",
-                    {
-                      "active-nav [&>svg]:text-accent": isActive("/archives"),
-                    },
-                  ]}
-                  ariaLabel={localeString("nav.archives")}
-                  title={localeString("nav.archives")}
-                >
-                  <Icon
-                    name="tabler:archive"
-                    class="hidden size-6 sm:inline-block"
-                  />
-                  <span class="sm:sr-only">{localeString("nav.archives")}</span>
-                </LinkButton>
-              </li>
-            )
-          }
+          {SITE.showArchives && (
+            <li class="col-span-3">
+              <LinkButton
+                href={getRelativeLocaleUrl(currentLang, "/archives")}
+                class:list={[
+                  "focus-outline flex justify-center p-3 sm:p-1",
+                  {
+                    "active-nav [&>svg]:text-accent": isActive("/archives"),
+                  },
+                ]}
+                ariaLabel={localeString("nav.archives")}
+                title={localeString("nav.archives")}
+              >
+                <Icon
+                  name="tabler:archive"
+                  class="hidden size-6 sm:inline-block"
+                />
+                <span class="sm:sr-only">{localeString("nav.archives")}</span>
+              </LinkButton>
+            </li>
+          )}
           <li class="col-span-1 flex items-center justify-center">
             <LinkButton
               href={getRelativeLocaleUrl(currentLang, "/search")}
@@ -135,74 +133,64 @@ const isActive = (path: string) => {
               <span class="sr-only">{localeString("nav.search")}</span>
             </LinkButton>
           </li>
-          {
-            Object.keys(SITE.locales).length > 1 && (
-              <li class="relative col-span-1 flex items-center justify-center">
-                <a
-                  href="#"
-                  id="lang-btn"
-                  class="focus-outline hover:[&>svg]:stroke-accent flex p-3 sm:p-1"
-                  title={localeString("nav.change-language")}
-                  aria-label={`${localeString("nav.current-language")}: ${SITE.locales[currentLang].label}`}
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                >
-                  <Icon name="tabler:language" class="size-6" />
-                </a>
-                <div
-                  id="lang-menu"
-                  class="border-border bg-background absolute top-full z-50 mt-2 hidden min-w-max rounded-md border p-1 shadow-lg backdrop-blur-lg"
-                >
-                  {Object.entries(SITE.locales).map(([lang, { label }]) => (
-                    <a
-                      href={getRelativeLocaleUrl(lang, langAgnosticPath)}
-                      class:list={[
-                        "block rounded px-3 py-2 text-sm font-medium transition-colors text-center hover:bg-muted hover:text-accent",
-                        {
-                          "text-accent": currentLang === lang,
-                        },
-                      ]}
-                      title={`Switch to ${label}`}
-                      aria-label={`Switch to ${label}`}
-                      data-lang={lang}
-                    >
-                      {label}
-                    </a>
-                  ))}
-                </div>
-              </li>
-            )
-          }
-          {
-            SITE.lightAndDarkMode && (
-              <li class="col-span-1 flex items-center justify-center">
-                <a
-                  href="#"
-                  aria-label={localeString("nav.toggle-theme")}
-                  title={localeString("nav.toggle-theme")}
-                  class="relative p-3 sm:p-1"
-                >
-                  <Toggle
-                    tabindex={-1}
-                    class="hover:[&>svg]:stroke-accent flex"
+          {Object.keys(SITE.locales).length > 1 && (
+            <li class="relative col-span-1 flex items-center justify-center">
+              <a
+                href="#"
+                id="lang-btn"
+                class="focus-outline hover:[&>svg]:stroke-accent flex p-3 sm:p-1"
+                title={localeString("nav.change-language")}
+                aria-label={`${localeString("nav.current-language")}: ${SITE.locales[currentLang].label}`}
+                aria-expanded="false"
+                aria-haspopup="true"
+              >
+                <Icon name="tabler:language" class="size-6" />
+              </a>
+              <div
+                id="lang-menu"
+                class="border-border bg-background absolute top-full z-50 mt-2 hidden min-w-max rounded-md border p-1 shadow-lg backdrop-blur-lg"
+              >
+                {Object.entries(SITE.locales).map(([lang, { label }]) => (
+                  <a
+                    href={getRelativeLocaleUrl(lang, langAgnosticPath)}
+                    class:list={[
+                      "block rounded px-3 py-2 text-sm font-medium transition-colors text-center hover:bg-muted hover:text-accent",
+                      {
+                        "text-accent": currentLang === lang,
+                      },
+                    ]}
+                    title={`Switch to ${label}`}
+                    aria-label={`Switch to ${label}`}
+                    data-lang={lang}
                   >
-                    <Fragment slot="icon-light">
-                      <Icon
-                        name="tabler:sun-high"
-                        class="block size-6 dark:hidden"
-                      />
-                    </Fragment>
-                    <Fragment slot="icon-dark">
-                      <Icon
-                        name="tabler:moon"
-                        class="hidden size-6 dark:block"
-                      />
-                    </Fragment>
-                  </Toggle>
-                </a>
-              </li>
-            )
-          }
+                    {label}
+                  </a>
+                ))}
+              </div>
+            </li>
+          )}
+          {SITE.lightAndDarkMode && (
+            <li class="col-span-1 flex items-center justify-center">
+              <a
+                href="#"
+                aria-label={localeString("nav.toggle-theme")}
+                title={localeString("nav.toggle-theme")}
+                class="relative p-3 sm:p-1"
+              >
+                <Toggle tabindex={-1} class="hover:[&>svg]:stroke-accent flex">
+                  <Fragment slot="icon-light">
+                    <Icon
+                      name="tabler:sun-high"
+                      class="block size-6 dark:hidden"
+                    />
+                  </Fragment>
+                  <Fragment slot="icon-dark">
+                    <Icon name="tabler:moon" class="hidden size-6 dark:block" />
+                  </Fragment>
+                </Toggle>
+              </a>
+            </li>
+          )}
         </ul>
       </nav>
     </div>

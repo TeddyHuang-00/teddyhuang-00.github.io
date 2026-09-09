@@ -26,13 +26,11 @@ const headerProps = {
     href={getRelativeLocaleUrl(locale, getPath(data.translationId, filePath))}
     class="text-accent inline-block text-lg font-medium decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
   >
-    {
-      variant === "h2" ? (
-        <h2 {...headerProps}>{title}</h2>
-      ) : (
-        <h3 {...headerProps}>{title}</h3>
-      )
-    }
+    {variant === "h2" ? (
+      <h2 {...headerProps}>{title}</h2>
+    ) : (
+      <h3 {...headerProps}>{title}</h3>
+    )}
   </a>
   <Datetime {pubDatetime} {modDatetime} {timezone} />
   <p>{description}</p>
