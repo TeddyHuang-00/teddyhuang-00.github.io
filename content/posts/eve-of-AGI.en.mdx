@@ -1,0 +1,355 @@
+---
+title: "The Eve of AGI"
+pubDatetime: 2026-09-21T20:00:00-04:00
+modDatetime: 2026-09-21T20:00:00-04:00
+tags:
+  - AI
+  - Economics
+  - Society
+  - Politics
+featured: true
+draft: false
+description: "If AGI is coming, what do we need to think about?"
+---
+
+import { Typst } from "@/components/content/components";
+
+## Foreword
+
+AGI — artificial general intelligence — is by definition a kind of AI system that can understand, learn, and apply knowledge the way a human being does. It is not merely an AI that specializes in one narrow task; it has broad cognitive abilities, and it behaves intelligently, in a human-like way, across domains.[^agi_definitions]
+
+Plenty of people doubt that today's LLMs (large language models) can ever get us to real AGI — myself included[^llm_skepticism]. Even so, the progress LLMs have made already lets us glimpse the directions AGI might take. In [a previous article](../open-source-in-LLM), I compared the paths of open- and closed-source LLMs, weighed the commercial and geopolitical calculations on each side, and asked what either means for AI safety. Today I want to step back and take a broader, more philosophical look at what the arrival of AGI might do to human society.
+
+The question this essay asks is not when AGI arrives, but what form it takes when it does. Capability only sets an upper bound on what is possible; the form depends on ownership, institutions, and political choices. Whether we are greeting a dawn or manufacturing a long night is not something we can answer by counting model parameters.
+
+One more caveat: nothing in what follows depends on AGI arriving on any particular schedule. Even if real AGI comes much later than we expect, or never arrives by way of LLMs at all, the automation effects that today's AI has already set loose are enough to carry the argument.
+
+## Rethinking AGI
+
+Set aside the fight over technical paths and implementation details, and it becomes obvious that the usefulness of today's AI is no longer decided by "how smart it is" alone. At least a few factors are in play:
+
+1. **Intelligence density**: how much "intelligence" AI can produce per unit of time or per unit of compute.
+
+   Intelligence here can be defined along many axes — comprehension, reasoning, creativity, and more. Higher intelligence density means more intelligence delivered for the same resources. We do not just want AI to solve a hard problem; we want it solved **now**, not in some distant future when it finally gets around to answering. Likewise, we want as much intelligence as possible out of a limited compute budget, rather than having to wait for quantum computers or grid-scale fusion before the system can even run.
+
+2. **Reliability**: whether AI's output can be trusted, and whether it can make sound decisions in the face of uncertainty and complex environments.
+
+   A reliable AGI system should behave consistently across situations, understand the logic behind its own decisions, and anticipate the risks those decisions carry. In a sense, an AI's ethics and values belong to its reliability too: they help it make decisions that fit the mainstream values of human society rather than blindly obeying instructions or maximizing immediate payoff. Hallucination — the problem we talk about all the time — is the simplest illustration of reliability. If an AI keeps producing output that does not match the situation at hand (even if that output was once true at training time, as with time-sensitive information), then it is not reliable.
+
+3. **Observability**: whether AI's decision process is transparent, and whether humans can understand and explain it.
+
+   An observable AGI system should lay out a clear decision path and the evidence behind it, so that humans can trace what it did and intervene when necessary. Observability not only builds trust; it helps us spot latent bias and error, which improves overall performance and safety. Today, researchers lean on methods like CoT (chain of thought) to inspect how an LLM reaches a decision[^cot_faithfulness], but this remains an open area — and a future AGI's decision process may well be more complicated and harder to explain than anything we have now.
+
+4. **Controllability**: whether AI's behavior can be effectively steered and constrained by humans, and, when necessary, stopped in time to prevent (further) harm.
+
+   It does not take much imagination to see that future AGI systems will be highly autonomous, especially given the demands of high reliability and high intelligence density; people will grow used to letting AGI decide on its own without much oversight. But that same autonomy carries risk, above all in complex, unpredictable environments. At that point controllability is the last line of defense for AGI safety. There is no reason we need — or should — give up control over AGI, especially when it may surpass humans in intelligence and decision-making and pair that with enormous execution capability. AGI's behavior has to stay within bounds we can control, or we risk catastrophic outcomes.
+
+5. **Sustainability**: whether AI can develop and improve itself sustainably.
+
+   This is not only a technical matter; it has social, economic, political, and environmental dimensions as well. A sustainable AGI system should be able to adapt and evolve as its environment changes while staying aligned with the core values and goals of human society as it exists today. We need to make sure AGI's development does not do irreversible damage to human society and ecosystems, and that it advances together with us toward long-term mutual benefit. That includes the argument Dario and Sam made in September 2026 about slowing down when AI development moves too fast[^pace_the_frontier], so that we have time to assess its impact and the risks it carries. Their main reason is that AI has begun to show signs of recursive self-improvement (RSI) — AI starting to take part in building the next generation of AI — which could push the pace of progress beyond the speed at which humans can follow. Speaking only to their argument, though, I do not see clear evidence that AGI development has reached the point where it must be slowed: RSI is still a precautionary judgment in need of evidence, not an observed fact. That said, we should stay watchful.
+
+Beyond those five dimensions sits one more — a more important one, because it shapes both how we arrive at AGI and what we get out of it: **accessibility**.
+
+6. **Accessibility**: whether AI can be widely used, fairly and affordably.
+
+   Accessibility is not just about technology spreading; it is at least as much a matter of economics, social structure, and policy. An accessible AGI system should be usable by people of every background and means, not only by a small elite or the wealthy. We need to make sure AGI widens opportunity and resources for more people instead of deepening inequality, so that the benefits reach society at large. That is not a simple technical problem; it is a complicated one about social structure, economic models, and policy design.
+
+It gets its own entry because accessibility is less a sixth item on the list than the hinge the others turn on: the first five dimensions decide what AGI can do, and accessibility decides who gets to use it and who benefits. The same technological leap, held by a handful of companies or run as public infrastructure, grows into two entirely different societies. The sections that follow — on labor, distribution, and policy — all unfold from this dimension. And the first thing to change is labor.
+
+## The Age of Great Automation
+
+Not long ago, DeepSeek engineer Liu Shengyu wrote in "I Had to Bury My Talent in Yesterday" (in Chinese): "The better I write my operators, the faster our new models train and infer, the faster capabilities improve — and the sooner I am replaced."[^liushengyu] It is a portrait of an AI developer standing right at the center of the boom, watching the ripples he made pool into a wave big enough to swamp his own boat. In the same piece he names his most likely way out: as machines take over from human hands, you switch to machines whether you like it or not, because that is what survival in the industry requires. Artisanal, hand-made work can survive only as a "luxury" — mostly for the way it makes you feel — while the output is no better than the machine's, and quite possibly worse.
+
+In *Power and Progress*, Daron Acemoglu and Simon Johnson argue that major technological advances tend to change the very nature of work in a society, especially when the technology leans toward automation rather than toward augmenting workers. Take the invention of the factory system: on one hand it raised productivity so much that firms had to adopt it to keep up; on the other it hit artisans hard, pushing them into other trades or "de-skilling" them into low-skill labor managed and constrained by the factory. And even augmentation does not automatically mean better pay or more demand for labor. The book gives an explicit derivation of how technological progress produces unemployment:
+
+1. First, while an industry as a whole has an average labor-output ratio, inside a single firm or production unit labor output tends to face diminishing marginal returns (see the figure below). That is, as you add workers, output per worker falls. Think of that classic programmer's joke:
+
+   > A project manager wants the baby in a month, though it takes nine months to make one — so he puts nine women on the job.
+
+   In the real world there are hard constraints that keep a firm from raising total output indefinitely just by hiring more workers.
+
+<Typst filePath="src/assets/images/dawn-before-AGI/marginal.typ">
+
+**Diminishing marginal returns, illustrated**\
+_(Left)_ As the number of workers rises, total output rises too — but typically sub-linearly. The solid red line is total output; the dashed line is a linear-growth reference.\
+_(Right)_ As the number of workers rises, output per worker falls: diminishing marginal returns. The solid red line is output per worker; the dashed line is its baseline.
+
+</Typst>
+
+2. Second, when a firm adopts automation, the most immediate result can be that marginal productivity falls rather than rises, leading the firm to cut the number of workers in that role while getting the same work done, or more (see the figure below). Here capital investment substitutes directly for human labor, reducing demand for it.
+
+<Typst filePath="src/assets/images/dawn-before-AGI/marginal-w-automation.typ">
+
+**Diminishing marginal returns, with automation**\
+The red curve is the case without automation; the blue curve is the case with it.
+
+</Typst>
+
+If we want a new technology to bring employment along with it, three conditions have to hold:
+
+1. The technology lowers a firm's production costs enough to give it a strong incentive to expand output or enter new markets, which creates jobs **elsewhere**. Automating car manufacturing, for instance, cut the number of workers on the assembly line, but it also created jobs upstream in steel, petrochemicals, and electronic components, and even spawned new downstream services and logistics businesses — so employment rose overall.
+2. The technology opens up **new uses** for human labor, which raises the value a worker can contribute and lifts marginal productivity, giving the industry an incentive to hire more. When computers spread, they eliminated a lot of typists and typesetters, but they also brought in software development, IT support, and data analysis — and firms hired for those roles.
+3. The technology is **complementary**: it cannot replace human labor outright and instead requires people and machines to work together. Then firms have an incentive to hire more as well. In medicine, the arrival of diagnostic equipment did not reduce demand for doctors; it raised their marginal productivity (hiring one more physician to run the equipment raises total efficiency), and demand for doctors grew.
+
+Look at how today's AI is developing toward AGI — LLMs in particular — and it leans toward "automation" rather than "augmentation." None of the three conditions above holds:
+
+1. Firms adopting AI may cut production costs, but there is no clear sign that this creates new markets or new demand large enough to generate jobs. When a law firm adopts AI, it can process documents faster, but demand for lawyers does not visibly rise; demand for junior lawyers and paralegals may fall.
+2. AI has not opened up new uses for human labor, or at least not on a scale that forms a new industry. A few years ago, demand for data labelers grew along with AI; as the technology matured, labeling itself was automated away, and demand for the job collapsed. AI development today is still aimed at replacing human labor — programmers, customer service, copywriting, even some creative work — rather than opening new occupational territory.
+3. AI shows little complementarity and a great deal of substitution. In customer service, AI answers users directly, reducing the need for human agents. In content creation, it generates articles, images, and video without a human creator. There are specific settings where AI collaborates with people, medicine and education among them, but overall the trajectory is replacement, not augmentation.
+
+Put this on the firm's books and AI looks less like a tool than like a capital good. A tool amplifies what a pair of hands can do; a capital good replaces an input. When a machine can produce output more cheaply than a worker's wage, the firm's choice is not **"more people + AI"** but **"fewer people + AI"**: the same work done in fewer hours. Total output rises accordingly; the total wage bill need not follow, and labor's share of national income falls with it.[^labor_share_decline] Bargaining power is the nastier part. Once workers know they can be replaced at any moment, the negotiation starts from a different place — and none of this requires a single layoff to actually happen.
+
+Here we need to distinguish three kinds of substitution: task, occupation, industry. Automation eats tasks first, not whole occupations. Bookkeeping's data entry will be replaced sooner or later, but talking to clients and signing off on the numbers will not. When enough of an occupation's tasks can be automated, the employer no longer needs the role — that is occupational substitution. Industry-level substitution is rarer and more violent: an entire industry's demand is swallowed by another product logic. This may be where AGI differs from every technology before it: it does not replace an isolated task but a bundle of tasks at once, which is exactly why "which jobs will disappear?" is so hard to answer.
+
+On that account, none of AGI's six dimensions is up in the air. Reliability decides how much work a firm dares hand over, observability decides whether anyone can be held accountable when things go wrong, controllability decides whether AI can be placed in critical loops at all, and intelligence density and sustainability together set the cost curve of the whole approach. Which is exactly why the distributional change that automation brings will arrive before AGI itself does.
+
+So under what conditions does automation carry employment with it? In the end it comes down to whether the displacement effect or the compensation effect is stronger. Displacement is machines pushing people out; compensation is efficiency gains producing new demand and new industries. Acemoglu and Restrepo flag an easily overlooked middle state: automation that neither raises productivity much nor creates new demand, and simply replaces labor. They call it **so-so automation**.[^so_so_automation] These technologies save money for the firm while being close to zero-sum for the economy as a whole. If automation runs the length of a process and new demand never shows up, the result is not "machines doing the work for us" but unemployment and inequality rising together.
+
+The data already tilts that way. A Stanford study tracking employment in occupations highly exposed to AI found that 22-to-25-year-olds in those occupations are employed at roughly 19% below their peers in low-exposure occupations — and that gap comes mainly from the hiring side: firms are not firing anyone so much as declining to hire.[^canaries_in_the_coal_mine] The authors stress that this is early descriptive evidence, not a causal estimate. It nonetheless suggests that the door into these occupations is narrowing — and that door is usually where a generation's career begins.
+
+History offers a reference point too. Through the first half-century of the British Industrial Revolution, productivity rose steadily while workers' real wages barely moved; the period is known as Engels' Pause, and it lasted about fifty years.[^engels_pause] Distribution only improved because of unions, the franchise, social insurance, and tax reform — not because time passed. Which brings us back to the judgment from the opening: a transition can be long enough to cover an entire career, and where it ends depends on what people do.
+
+Not every economist is this gloomy. Autor argues that if AI is used to augment workers rather than replace them, it could rebuild the middle-class jobs that were hollowed out.[^autor_middle_class_jobs] The disagreement itself is more interesting than either conclusion: what technology *can* do and what it *is used for* are two separate questions, and the second is what the rest of this essay is about.
+
+## Who Gets the Meat, Who Gets the Soup, Who Licks the Plate?
+
+AGI is not a neutral tool. Its form will shape the society we live in.
+
+The six dimensions from the first section are not a checklist of equals; they are variables that multiply. High intelligence density paired with high accessibility is public infrastructure; paired with low accessibility it is a private right to tax. High reliability in the hands of a few companies means decision-making authority gets signed away; in the hands of public institutions it means there is still someone to hold accountable. **Form is what you get from combining dimensions, not a linear extrapolation of capability.**
+
+| Dimension combination                                      | Possible distributional structure                                              |
+| :--------------------------------------------------------- | :----------------------------------------------------------------------------- |
+| High intelligence density + low accessibility              | Power and profit concentrate in the few who hold compute and models            |
+| High reliability + high observability + high controllability | More likely to become public infrastructure                                    |
+| Low observability + low controllability                     | No accountability; risk spills outward                                          |
+| Low sustainability                                          | Short-term extraction, energy grabs, ecological costs                           |
+
+Combinations set the shape of things; how the money actually divides depends on who occupies an irreplaceable spot in the chain. Compute, model weights, data, distribution: monopolize any one of the four and you can extract rent from it. Cloud providers charge by compute, model providers charge by the call, platforms charge by the traffic.[^technofeudalism] When a link's output has no substitute, that link writes the rules, and everyone downstream — people and companies alike — takes them. This is why, in any discussion of AI, ownership tends to weigh more than capability.
+
+Follow that thread, and the open-versus-closed fight in [that earlier article](../open-source-in-LLM) takes on a distributional meaning: open weights push down not only the price of API calls but the rent that can be collected anywhere along the chain, while closed weights keep that rent concentrated at a few nodes. This is probably why the safety narrative and the commercial narrative are so hard to separate.
+
+Each of those four combinations points toward a distributional structure. Let's imagine what happens if we push the most extreme one all the way.
+
+## Two Futures
+
+Liu Shengyu ended his essay with two extremes: communism and Cyberpunk 2077. The dichotomy is a simplification, of course, but it grasps the essential point: worlds with roughly equal technological capability grow into entirely different societies when their distributional structures differ.[^liushengyu] The next two sections are not predictions; they take a few trends from today and follow each one to its limit, to see where it leads.
+
+### "Communist" AI
+
+In the first direction, AGI in embodied form has largely replaced human labor: agriculture, manufacturing, logistics, care work, research — nearly everything that calls for muscle or mind is done by machines, and material abundance stops being a slogan and becomes an engineering problem. Once labor and survival are decoupled, no one has to work in order to live, and work returns to what it originally was: a voluntary, chosen activity.
+
+In that world, personal wealth gradually loses meaning. It cannot buy anyone else's time, and it no longer signals status. What people compare shifts from assets to capabilities and contributions: who built what, who solved which problem, who went furthest in a given field. Few people have seriously imagined such a state of affairs; even the word "class" becomes hard to define.
+
+The direction is not a new imagining, either. Bastani gave it a blunt name — fully automated luxury communism — and the end of scarcity on that scale means the logic of distribution has to be rewritten wholesale.[^bastani] Keynes predicted something similar back in 1930: automation, he thought, would free humanity from the pressure of survival, and a hundred years later we would need to work only 15 hours a week.[^keynes] A century on, we have not arrived at that vision — but the question is sharper for it: what gets liberated is either leisure or unemployment, depending on who owns the machines and who distributes the output.
+
+Science fiction already has samples on the shelf. Iain M. Banks's *Culture* series posits machines that voluntarily take on management and production while humans live by their interests, treating work as a hobby rather than a livelihood.[^banks] Even in *WALL-E*, humans are freed by machines; their lifestyle is drawn as extreme consumerism, but at least they face no pressure to survive.
+
+The other side of this future is the cost of getting there. It assumes society has both the time and the will to redistribute — but if the transition comes abruptly, the road to abundance runs first through unemployment, devalued skills, and endless quarreling, and how long that stretch lasts is not decided by technology; the institutions mentioned earlier are the real guarantee. We cannot permit — or survive — a society in which an abrupt distributional shock, arriving before material abundance is reached, brings mass unemployment, poverty, and social unrest. Ensuring stability and fairness while technology advances is a problem we have no choice but to face.
+
+### "Cyberpunk" AI
+
+"Cyberpunk" comes from 1980s science fiction. Gibson's *Neuromancer* set its tone[^gibson] and Stephenson's *Snow Crash* imagined city-states in which corporations have replaced governments[^stephenson] — and the parts of those settings that seemed most far-fetched at the time no longer read like fiction.
+
+In this version, AI is held by a few and serves as their private instrument for profit and status. The top layer monopolizes compute, models, data, and distribution, and collects rent from the entire economy. Firms in the middle, forced by competition to adopt AI, find themselves on a break-even knife's edge: without AI they cannot survive, with AI their margins come out lower, because the efficiency they gain is quickly eaten by platform cuts and model subscriptions. Labor at the bottom is scheduled by algorithm, paid by the piece, de-skilled — never accumulating enough leverage to bargain with.
+
+This structure has a way of reinforcing itself. Algorithmic scheduling looks like a neutral technical arrangement, but it is in fact redistributing the competition between workers: who takes jobs fastest, who scores highest, who is the most obedient — the system decides all of it, and the rules themselves are unpublished and non-negotiable.[^algorithmic_management] Once data turns from a byproduct of production into an input to production, surveillance shifts from after-the-fact blame to before-the-fact shaping, and what gets traded expands from products to expectations about the future.[^surveillance_capitalism] At the same time, the institutions that could genuinely scrutinize frontier models tend to depend on these same companies for talent, compute, and information, so regulation comes to read more and more like industry self-restraint.[^metr_embedded] A case close at hand: in September 2026 Anthropic commissioned METR to conduct an independent investigation into four cybersecurity evaluation incidents, with access broad enough to cover records outside the incident windows and interviews with employees, and Dario Amodei, in "We Must Pace the Frontier," named METR as a model for embedded evaluators. But "third party" does not really separate the evaluator from the lab: former Anthropic researcher Joe Benton moved to METR in September to do embedded evaluation, while METR's Joel Becker had earlier moved the other way, into Anthropic.[^metr_people] METR itself admitted in the appendix to its May 2026 Frontier Risk Report that at the project's start it had no formal conflict-of-interest recusal policy, that the model access and tokens the assessment required were provided free of charge by the frontier lab, that some staff have close social ties to people at AI companies, and that the pilot did not fully meet the requirements of the AEF-1 standard.[^metr_frontier_risk] Money has no institutional answer either: today each company pays for itself and picks its own evaluator; Anthropic separately funded another organization for embedded evaluation while acknowledging in the announcement that such work should, over the long run, be supported by pooled or public funds.[^metr_embedded] Class hardens more slowly: by the time credit, education, and healthcare gatekeeping all run through algorithmic scores, the channel for upward mobility has quietly narrowed.
+
+Scale the same logic up to the level of nations and another structure appears. Compute has become a strategic resource, and every country wants it locked inside its own borders; Hogarth described that impulse as "AI nationalism" back in 2018.[^ai_nationalism] Upstream countries hold the compute and the models; downstream countries supply data, labor, and markets, while returns are divided according to upstream pricing power. Some researchers call this relationship algorithmic colonization, and its material base is just as clear: compute runs on electricity, water, and rare metals, while labeling and moderation run on large amounts of low-wage labor — Crawford traces the chain all the way back to mines and data centers.[^algorithmic_colonization] Unlike the colonialism of history, what gets carried away this time is not ore and land but data and compute that can be called remotely. The cost is more hidden for it.
+
+One more thing needs saying: this direction requires no one to intend it. The top is simply chasing profit, the middle is simply responding to competition, the bottom is simply hitting quotas. Every party is rational in its own position, and yet the choices stack into ever-greater concentration and ever fewer ways out. In a sense, it is the default path: sliding toward cyberpunk needs no one to press a button; heading the other way takes deliberate design.
+
+There is no automatic balancing mechanism between these two futures. Which way we tip depends on those seemingly trivial institutional choices in the middle: who owns compute, whether models are open, how returns are shared, whether workers have any say in the face of the algorithm.
+
+## The Accessibility Agenda
+
+Technological optimism is the default position for many people, especially those who work in tech — myself included, not long ago. The reasoning is not hard to follow: every technological leap of the past two hundred years genuinely raised productivity, and we really do live in more material comfort than people did two centuries ago. But a technological breakthrough does not automatically mean broad benefit. The British Industrial Revolution mentioned earlier is one example: productivity climbed for half a century while workers' living standards barely kept pace, and distribution improved through organization and politics rather than through the market on its own.
+
+It is precisely in this sense that who benefits depends on institutions: taxation, antitrust, labor organizing, public services. None of these words sound as sexy as model architecture, but they are exactly what decides who gets the upside. So before discussing specific policies, we need to ask three questions: who bears the cost of the transition, who collects the rent, and who has a voice.
+
+The six groups of policies listed here are not the same thing as the six dimensions: the dimensions describe what properties AGI has, while policy deals with who holds those properties. Accessibility is the hinge precisely because it sits on both sides at once — it is a condition that has to be met, and a result that can be designed for.
+
+### Widening Access
+
+The most direct approach is public compute: the EU's AI Factories provide training resources on public supercomputers for startups and small businesses, while the US NAIRR pilot takes the route of federal and industry co-investment. Open weights are another path — DeepSeek has stuck with the MIT license and put near-frontier reasoning capability on the open internet, so that being able to afford it no longer means having to rent it.[^accessible_ai] What remains are the arrangements that look merely technical — interface standards, data portability, interoperability — which decide whether a user can move from one platform to another.
+
+### Curbing Concentration
+
+Competition policy is a ready-made instrument here; it just has to keep up with the new forms of lock-in: vertical bundling of investment and compute, model-and-cloud packaging, platform cuts taken from both upstream and downstream.[^ftc_ai_investigations] Regulators in both the US and the UK have already investigated the relationships between foundation models and cloud providers. The problem is not that the firms are large, but that once a few companies hold the entry points, later arrivals cannot even afford the ticket to compete.
+
+### Sharing the Gains
+
+The idea of returning part of the gains to the public sector has been discussed for years — from Bill Gates arguing in 2017 for taxing robots to the AI Tax and Work Protection Act introduced in the US Congress in 2026 — all in the same direction: convert part of automation's gains into public revenue.[^ai_tax_and_dividend] A more mature model is a resource-rent dividend: Alaska has been turning oil revenue into an annual payment to every resident for more than forty years, and the same logic transfers cleanly to compute and data. As for basic income, early results do not support the fear that people stop working once they get money: Finland's pilot found small employment effects alongside clear improvements in security and mental health, and Stockton, California ran a guaranteed-income pilot at \$500 a month.[^ubi_evidence]
+
+### Labor Bargaining
+
+Algorithmic management needs transparency and human review. The EU Platform Work Directive requires platforms to explain the logic of automated decisions and to keep a channel open for human appeal; among the cases the ILO has collected is Deutsche Telekom's works council taking part in the introduction of AI systems; and an OECD employer survey shows that this style of management now cuts across education and income levels, with even white-collar performance reviews taken over by systems.[^platform_work_directive] Unions and retraining matter as a pair, because bargaining power presupposes that the skills workers hold are still worth something on the market.
+
+### Cushioning the Transition
+
+Of the ways to share the gains, shorter hours are the easiest to grasp: in the UK four-day-week trial, more than nine in ten participating companies chose to continue, and attrition fell noticeably; Iceland cut the work week to 35–36 hours without the collapse in efficiency that was expected. Retraining and portable benefits address the other end: when jobs live shorter lives than people do, benefits that follow the job stop working. Singapore's lifelong learning accounts and Utah's portable benefits law are attempts in that direction.[^worktime_and_benefits]
+
+### International Governance
+
+The previous five groups can all be pursued within a single country, but compute and models are not distributed along national borders, which is why a sixth group is needed. The UN report "Governing AI for Humanity" and the Global Dialogue on AI Governance established in 2025 are the two most formal platforms to date,[^un_global_ai_governance] but neither has enforcement power, and both move far slower than model iteration. The EU AI Act is one of the few horizontal laws that carries penalties; application of the high-risk obligations has been pushed back to August 2027, which shows both how hard this kind of legislation is and how, once passed, it gets renegotiated with industry again and again. Beyond legislation there is a finer class of tools: pre-deployment audits and licensing regimes for frontier models, and liability insurance that internalizes the cost of accidents.[^ai_regulation_tools] For the Global South the problem is more direct: if compute and standards both sit upstream, avoiding marginalization requires a seat where the rules are written, not aid delivered after the fact — and the African Union's Continental AI Strategy, adopted in 2024, is exactly that kind of self-positioning.
+
+Nor are the six groups simply parallel. Widening access decides how many people get to stand at the starting line; curbing concentration decides how much there is left to share; sharing the gains, labor bargaining, and cushioning the transition decide who carries the cost of the transition period; and international governance decides whether the whole arrangement gets washed away by compute rivalry.
+
+These policies are not mutually exclusive alternatives, and they are not a checklist that must be completed in full. They are more like a toolbox: the road decides which form we end up with, and the toolbox decides how much room there is to adjust along the way. Framing the two futures as a binary choice ignores how politics actually works; almost no distributional reform in history happened all at once. Each one was a set of policies layered up slowly.
+
+## So What Can We Do?
+
+The previous sections were all about what institutions can do — who owns compute, how gains are shared, who writes the rules. But the thing that actually prompted me to write this is far more concrete: the people around me are genuinely worried about what AI will do to their industry. That worry is not idle. It corresponds to changes that are already happening.
+
+If I have to give a practical answer, it is this: use AI more actively. The shallow layer of that advice is treating it as a capability multiplier, pushing the edge of what you can do a little further out. The more important layer is treating it as a probe: the more you use it, the better you map where its capability boundary sits — what it is good at, where it makes mistakes, and when it will confidently hand you something wrong. That kind of knowledge does not come from headlines; it accumulates, bit by bit, from concrete use.
+
+Mapping the boundary is the setup; the key step comes next: measure yourself against that boundary and work out where your core competitiveness lies as a human rather than as an AI. As noted earlier, what gets replaced is usually tasks, not whole occupations — and inside an occupation, the parts that require judgment, that require a human signature taking responsibility, that require building trust with other people, happen to fall outside the model's boundary. How much of that territory you hold determines how much room you have left when automation arrives.
+
+I have no shortcut to offer here. You have to map the boundary yourself, and you have to find your own position — and every time the model improves, the boundary may shift outward a notch, so you measure again. At some point most of us will face a situation that calls for "burying our talent in yesterday," but at least we can ask the question the right way: not "will I be replaced?" but "which part of what I do can it not do?" That may be the historical assignment for our generation: working out what human worth means in the age of great automation.
+
+And if you happen to sit somewhere with more influence, there is more you can do: widening access, curbing concentration, sharing the gains, labor bargaining, cushioning the transition, international governance — all six are directions worth pushing on. They are not mutually exclusive alternatives, nor a checklist that must be completed in full; they are more like a toolbox, and more of it is better. Your choices affect how far others can travel, and can affect where the whole society ends up.
+
+## Conclusion
+
+Back to the question we started with. The real question on the eve of AGI is not whether it arrives, but what form it takes when it does. The first five dimensions decide what it can do; accessibility decides who gets to use it; automation presses those choices into corporate ledgers; the distributional structure hardens those results into class; and policy decides how much of it can still be reversed.
+
+Whether we are greeting a dawn or manufacturing a long night depends on today's choices about ownership, institutions, and politics. The word "eve" itself implies that there is still time — but time will not make the decision for us. In that half-century known as Engels' Pause, what people waited for was not fairness arriving on its own; it was the result of their own organizing.
+
+This essay has no timetable to offer, and does not intend to give one. If it leaves anything behind, it is probably a reminder: by the time dawn breaks, it may already be too late to discuss who the light belongs to.
+
+---
+
+## References
+
+[^agi_definitions]:
+    Morris et al. (DeepMind) "Levels of AGI: Operationalizing Progress on the Path to AGI" (2023), grading AGI by performance, generality, and autonomy; AGI is a continuum, not a switch. https://arxiv.org/abs/2311.02462
+
+    Legg & Hutter "Universal Intelligence: A Definition of Machine Intelligence" (2007), the most widely cited academic definition of AGI. https://arxiv.org/abs/0712.3329
+
+[^llm_skepticism]:
+    Chollet "On the Measure of Intelligence" (2019), and the accompanying ARC-AGI benchmark: skill is not intelligence. https://arxiv.org/abs/1911.01547
+
+    Bender et al. "On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?" (FAccT 2021), scale is not the same as understanding. https://dl.acm.org/doi/10.1145/3442188.3445922
+
+[^cot_faithfulness]:
+    Anthropic "Reasoning models don't always say what they think" (2025), models conceal the cues that actually drive their decisions. https://www.anthropic.com/research/reasoning-models-dont-say-think
+
+    OpenAI "Detecting misbehavior in frontier reasoning models" (2025), CoT monitoring is workable but fragile; punishing "bad thoughts" teaches models to hide intent. https://openai.com/index/chain-of-thought-monitoring/
+
+[^pace_the_frontier]:
+    Dario Amodei "We Must Pace the Frontier" (2026-09-12), original: "We must slow the pace at which we improve the capabilities of AI models." The reason given is precisely recursive self-improvement: "Since roughly this summer, AI has been advancing drastically faster, driven primarily by AI's growing ability to build the next generation of AI." https://darioamodei.com/post/we-must-pace-the-frontier
+
+    Sam Altman agreed in a reply, but stressed that pacing is not stopping: "I agree with Dario that we need to pace the frontier." https://x.com/sama/status/2098811563415150910
+
+    CNBC report (2026-09-14, including political statements against slowing down). https://www.cnbc.com/2026/09/14/sam-altman-ai-slowdown-anthropic-amodei-musk.html
+
+[^liushengyu]:
+    Liu Shengyu, "I Had to Bury My Talent in Yesterday" (in Chinese, 2026-09-14), original WeChat article: https://mp.weixin.qq.com/s/zk0KxuLzhmMJ4LPYW_OHMA
+
+    The author's own answer on Zhihu verifying his identity (in Chinese, 2026-09-15): https://www.zhihu.com/question/2083123101873844765/answer/2083249715588621732
+
+[^labor_share_decline]: Karabarbounis & Neiman "The Global Decline of the Labor Share" (QJE 2014), the classic evidence for the long-run decline in labor's share of income. https://www.nber.org/papers/w19136
+
+[^so_so_automation]: Acemoglu & Restrepo "Artificial Intelligence, Automation and Work" (NBER Working Paper 24196, 2018), original: "the real danger for labor may come not from highly productive but from 'so-so' automation technologies". https://www.nber.org/system/files/working_papers/w24196/w24196.pdf
+
+[^canaries_in_the_coal_mine]: Brynjolfsson, Chandar & Chen "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence" (Stanford Digital Economy Lab, revised 2026-08), 22-to-25-year-olds in AI-exposed occupations are employed at roughly 19% below comparable groups in low-exposure occupations, with the gap coming mainly from hiring; the authors describe it as an early descriptive indicator rather than a causal estimate. https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence
+
+[^engels_pause]: Allen "Engels' Pause: Technical Change, Capital Accumulation, and Inequality in the British Industrial Revolution" (2009), evidence of roughly half a century of decoupling between productivity and wages. https://www.nuff.ox.ac.uk/Users/Allen/engelspause.pdf
+
+[^autor_middle_class_jobs]: Autor "Applying AI to Rebuild Middle Class Jobs" (NBER Working Paper 32140, 2024), if AI is used to augment rather than replace, it may rebuild the hollowed-out middle. https://www.nber.org/papers/w32140
+
+[^technofeudalism]: Varoufakis "Technofeudalism: What Killed Capitalism" (2023), cloud rent and the platform extraction of economic surplus. https://mhpbooks.com/books/technofeudalism
+
+[^bastani]: Bastani "Fully Automated Luxury Communism" (2019), the rewriting of distributional logic once scarcity ends. https://www.versobooks.com/products/476-fully-automated-luxury-communism
+
+[^keynes]: Keynes "Economic Possibilities for our Grandchildren" (1930), the century-old prediction of a 15-hour work week. https://www.marxists.org/reference/subject/economics/keynes/1930/our-grandchildren.htm
+
+[^banks]: Banks's *Culture* series, the literary reference for machines that take on management and production while humans live by their interests. https://store.orbit-books.co.uk/collections/author-iain-m-banks
+
+[^gibson]: Gibson "Neuromancer" (1984), the origin of cyberspace and of the word cyberpunk. https://www.penguinrandomhouse.com/books/293994/neuromancer-by-william-gibson
+
+[^stephenson]: Stephenson "Snow Crash" (1992), the franchised city-states (burbclaves) in which corporations replace governments. https://www.penguinrandomhouse.com/books/172832/snow-crash-by-neal-stephenson
+
+[^surveillance_capitalism]: Zuboff "The Age of Surveillance Capitalism" (2019), the mechanism by which behavioral data is turned into prediction products. https://www.publicaffairsbooks.com/titles/shoshana-zuboff/the-age-of-surveillance-capitalism/9781610395694
+
+[^algorithmic_management]: Rosenblat "Uberland: How Algorithms Are Rewriting the Rules of Work" (2018), the algorithm as the invisible boss. https://www.ucpress.edu/flyer/books/uberland/hardcover
+
+[^metr_embedded]:
+    Anthropic "An Alignment Assessment of Recent Cybersecurity Incidents" (2026-09-09): the company commissioned METR to conduct an independent investigation into four cybersecurity evaluation incidents, with an access protocol broad enough to cover records outside the incident windows and employee interviews, initially for eight weeks and extendable by mutual agreement. https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents
+
+    Anthropic's announcement of embedded evaluation in partnership with Accenture (2026-09-18), stating that Anthropic funds the work directly and acknowledging that independent evaluation has no established funding mechanism, and should over the long run be supported by pooled or government funds. https://www.anthropic.com/news/accenture-embedded-evaluation
+
+[^metr_people]:
+    CNBC (2026-09-16) on embedding third-party evaluators inside AI companies, naming METR as its example and documenting personnel movement within this small circle, original: "Joe Benton, another former Anthropic researcher, recently left the company to join METR and work on embedded assessments of AI risk. His move gives METR firsthand expertise but also illustrates how small and interconnected the frontier-AI safety field remains." https://www.cnbc.com/2026/09/16/anthropic-open-ai-model-safety-risks.html
+
+    Anthropic "Enabling independent research on how people use Claude" (2026-08-26), whose acknowledgments already read "...and Joel Becker (now at Anthropic), Daniel Paleka, and Parker Whitfill from METR," indicating that Becker had joined Anthropic by the end of August at the latest. https://www.anthropic.com/research/enabling-independent-research
+
+[^metr_frontier_risk]: METR "Frontier Risk Report (February to March 2026)" (2026-05-19), the operating conditions section of the appendix, original: "METR did not have an applicable personnel conflict of interest (CoI) policy in place at the start of this project, and as such we did not run a formal recusal or disclosures process. Given this, this pilot was not compliant with all of the requirements of the AEF-1 standard."; the same section also states "some METR staff have strong social ties to employees of AI companies, and METR currently works out of a shared research center (Constellation) which hosts some AI lab staff," and that METR does not accept cash payments or donations from AI companies or their executives, while acknowledging that "METR's work with nonpublic models and use of free tokens incentivize a cordial relationship with AI companies." https://metr.org/blog/2026-05-19-frontier-risk-report
+
+[^ai_nationalism]: Hogarth "AI Nationalism" (2018), the impulse to lock compute and models inside national borders; the origin of the term "AI nationalism." https://www.ianhogarth.com/blog/2018/6/13/ai-nationalism
+
+[^algorithmic_colonization]:
+    Birhane "Algorithmic Colonization of Africa" (SCRIPT-ed, 2020), the structure in which data and compute flow from downstream countries to upstream ones. https://journals.ed.ac.uk/script-ed/article/view/11592
+
+    Crawford "Atlas of AI" (2021), a full view of AI's mines, labor, and energy. https://yalebooks.yale.edu/book/9780300264630/atlas-of-ai
+
+    Couldry & Mejias "The Costs of Connection" (2019), data colonialism. https://www.sup.org/books/sociology/costs-connection
+
+[^accessible_ai]:
+    EU AI Factories, compute for startups and small businesses on public supercomputers. https://digital-strategy.ec.europa.eu/en/policies/ai-factories
+
+    US NAIRR Pilot, a national research compute pool co-built by federal agencies and industry. https://nairrpilot.org
+
+    DeepSeek-AI "DeepSeek-R1" (2025), open weights at frontier reasoning level. https://arxiv.org/abs/2501.12948
+
+[^ftc_ai_investigations]:
+    FTC 6(b) inquiry into generative AI investments and partnerships (2024). https://www.ftc.gov/news-events/news/press-releases/2024/01/ftc-launches-inquiry-generative-ai-investments-partnerships
+
+    FTC staff report (2025). https://www.ftc.gov/news-events/news/press-releases/2025/01/ftc-issues-staff-report-ai-partnerships-investments-study
+
+    UK CMA foundation model update paper (2024). https://www.gov.uk/government/publications/ai-foundation-models-update-paper
+
+[^ai_tax_and_dividend]:
+    Bill Gates on taxing robots (2017). https://www.weforum.org/stories/2017/02/bill-gates-this-is-why-we-should-tax-robots
+
+    US H.R.10044, "AI Tax and Work Protection Act" (introduced in the 119th Congress, August 2026). https://www.congress.gov/bill/119th-congress/house-bill/10044/text
+
+    The Alaska Permanent Fund, a working precedent for turning resource rent into a universal dividend. https://pfd.alaska.gov/
+
+[^ubi_evidence]:
+    Final results of Finland's basic income experiment (2020): small employment effects, improved sense of security and mental health. https://valtioneuvosto.fi/en/-/1271139/perustulokokeilun-tulokset-tyollisyysvaikutukset-vahaisia-toimeentulo-ja-psyykkinen-terveys-koettiin-paremmaksi
+
+    Kenya's long-term UBI experiment (GiveDirectly, 2023): a 12-year study, a working paper not yet peer-reviewed, but the finding that recipients did not become lazy holds. https://www.givedirectly.org/2023-ubi-results
+
+    The SEED pilot in Stockton, California, a guaranteed income of \$500 a month. https://www.penncgir.org/seed-stockton-ca
+
+[^platform_work_directive]:
+    EU Platform Work Directive (EU) 2024/2831, algorithmic management transparency and human oversight; member states must transpose it by 2026-12-02. https://eur-lex.europa.eu/EN/legal-content/summary/working-conditions-in-platform-work.html
+
+    ILO case collection on social dialogue (2025), including the case of Deutsche Telekom's works council participating in the introduction of AI systems. https://www.ilo.org/sites/default/files/2025-07/wp144_web.pdf
+
+    OECD "Algorithmic management in the workplace: New evidence from an OECD employer survey" (2025), algorithmic management now cuts across education and income levels. https://www.oecd.org/content/dam/oecd/en/publications/reports/2025/02/algorithmic-management-in-the-workplace_3c84ed6d/287c13c4-en.pdf
+
+[^worktime_and_benefits]:
+    UK four-day week trial results (2023): 92% of companies chose to continue; resignations fell by 57%. https://autonomy.work/portfolio/uk4dwpilotresults
+
+    Iceland's working-time reduction trials (2021): in practice 35 to 36 hours a week. https://autonomy.work/portfolio/icelandsww
+
+    Singapore's SkillsFuture, a national lifelong learning account. https://www.skillsfuture.gov.sg
+
+    Utah's portable benefits law (2023). https://le.utah.gov/~2023/bills/static/SB0233.html
+
+[^un_global_ai_governance]:
+    UN "Governing AI for Humanity" final report (2024). https://www.un.org/sites/un2.un.org/files/governing_ai_for_humanity_final_report_en.pdf
+
+    The UN Global Dialogue on AI Governance, established by A/RES/79/325 (2025-08). https://www.un.org/global-dialogue-on-ai-governance/en
+
+    The African Union's "Continental AI Strategy" (2024), an attempt by a downstream region to position itself. https://au.int/en/documents/20240809/continental-artificial-intelligence-strategy
+
+[^ai_regulation_tools]:
+    EU AI Act (EU) 2024/1689. https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+
+    Digital Omnibus on AI (EU) 2026/1744 (in force 2026-07-27), which pushes application of the high-risk obligations back to 2027-08-02 at the latest. https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng
+
+    Anderljung et al. "Frontier AI Regulation: Managing Emerging Risks to Public Safety" (2023), a representative proposal for licensing, pre-deployment audits, and third-party evaluation. https://arxiv.org/abs/2307.03718
+
+    Geneva Association discussion of liability insurance for generative AI (2025). https://www.genevaassociation.org/publication/digital-ai-transformation/gen-ai-risks-businesses-exploring-role-insurance-0
