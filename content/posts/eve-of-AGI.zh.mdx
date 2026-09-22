@@ -9,114 +9,113 @@ tags:
   - Politics
 featured: true
 draft: false
-description: （如果）AGI即将到来，我们需要思考什么？
+description: （如果）AGI 即将到来，我们需要思考什么？
 ---
 
-import { Aside, Badge, Ruby, Typst } from "@/components/content/components";
-import { Icon } from "astro-icon/components";
+import { Ruby, Typst } from "@/components/content/components";
 
 ## 写在前面
 
-AGI，即<Ruby rb="通用||人工||智能" rt="Artificial| |General| |Intelligence" />，按照定义来说就是一种能够像人类一样理解、学习和应用知识的人工智能系统。它不仅仅是专注于特定任务的 AI，而是具备广泛的认知能力，能够在不同领域中表现出类似人类的智能行为。[^agi_definitions]
+AGI，即<Ruby rb="通用||人工||智能" rt="Artificial| |General| |Intelligence" />，按定义就是一种能像人一样理解、学习和运用知识的 AI 系统。它不只是专注于某一类特定任务的 AI，而是具备广泛的认知能力，在跨领域的场景中也能像人一样聪明地应对。[^agi_definitions]
 
-即便很多人认为真正的 AGI 无法由现在的 LLM（<Ruby rb="大||语言||模型" rt="Large| |Language| |Model" />）实现[^llm_skepticism]（包括我在内），但我们仍然可以从当下 LLM 的进展中窥见 AGI 的未来方向。在[之前的文章](../open-source-in-LLM)中，我给开源与闭源 LLM 的发展做了一个对比，分析了两者在商业、地缘政治等方面的考量，以及对于 AI 安全可能的影响。而今天，我想从另外一些更加宏观、哲学的角度来探讨 AGI 的到来可能对人类社会带来的影响。
+很多人不相信今天的 LLM（<Ruby rb="大||语言||模型" rt="Large| |Language| |Model" />）有一天能带我们走到真正的 AGI（包括我在内）[^llm_skepticism]。即便如此，LLM 已经取得的进展也足够让我们窥见 AGI 可能的方向。在[之前的文章](../open-source-in-LLM)里，我对比了开源与闭源 LLM 的两条路径，衡量了双方各自的商业与地缘政治考量，进而追问这两种路径分别意味着什么样的 AI 安全后果。今天我想换个角度，用更宏观、也更哲学的眼光，看看 AGI 的到来可能对人类社会产生什么影响。
 
-这篇文章想问的问题不是“AGI 什么时候来”，而是“它来的时候，是以什么形态实现的”。能力只决定可能性的上界，形态则取决于所有权、制度和政治选择：我们是在迎接黎明，还是在制造长夜，答案并不在模型的参数规模里。
+这篇文章想问的不是“AGI 什么时候来”，而是“它来的时候是什么形态”。能力只决定可能性的上界，形态则取决于所有权、制度和政治选择：我们是在迎接黎明，还是在制造长夜，答案不在模型的参数规模里。
 
-还需要说明一点，全文的论证并不依赖 AGI 具体实现的时间。即便真正的 AGI 比我们预想的更晚到来，甚至最终不由 LLM 这条路径实现，当下 AI 已经释放出来的自动化效应，也足以支撑这篇文章的论点。
+还要说明一点：后面的论证并不依赖 AGI 何时到来。即便真正的 AGI 比我们预想的晚得多，甚至最终根本不走 LLM 这条路，今天 AI 已经释放出来的自动化效应，也足以支撑整篇文章的论点。
 
 ## 重新思考 AGI
 
-抛开技术路径之争与具体的实现细节，我们不难发现当下 AI 的效用早就不再是“智能程度”这一单一因素决定的。我们至少可以看到以下几个方面：
+把技术路径之争和实现细节放到一边，就会发现今天 AI 的用处早就不再由“有多聪明”决定。至少有几个因素在起作用：
 
-1. **智能密度**：由 AI 以单位时间或者单位计算资源所能产出的“智能”。
+1. **智能密度**：AI 每单位时间、每单位资源能产出多少“智能”。
 
-   这里智能的定义可以是多维度的，包括但不限于理解能力、推理能力、创造力等。智能密度越高，意味着 AI 在相同资源下能够提供更多的智能输出。比如，我们不仅希望 AI 能够解决某个复杂问题，而且希望它能够在**当下**立刻解决，而不是需要等到它经过遥远的将来才给出答案。同理，我们也希望 AI 能够在有限的计算资源下，提供尽可能多的智能输出，而不是需要等到我们发明了量子计算机或者大规模部署了可控核聚变才能够支撑其运行。
+   这里的智能可以从很多维度定义：理解、推理、创造力等等。智能密度越高，同样的资源就能换来更多智能。我们不只是希望 AI 能解决某个难题，还希望它在**当下**就解决，而不是等到遥远的将来它才终于作答。同样，我们也希望有限的算力能产出尽可能多的智能，而不是要等到发明了通用量子计算机、大规模部署了可控核聚变，它才跑得起来。
 
-2. **可靠性**：AI 产出的输出是否能够被信任，以及 AI 是否有能力在面对不确定性和复杂环境时做出合理的决策。
+2. **可靠性**：AI 的输出是否可信，以及它能否在不确定性和复杂环境中做出合理的决策。
 
-   一个可靠的 AGI 系统应该能够在各种情况下保持一致的表现，并且能够理解其决策背后的逻辑、预测潜在的风险。某种角度来说，AI 的道德感和价值观也可以被视为其可靠性的一部分，有助于其在复杂的社会环境中做出符合人类社会主流价值观的决策，而不是盲从指令或者最大化即时收益。我们常说的<Ruby rb="幻觉" rt="Hallucination" />问题就是可靠性最简单的体现，如果一个 AI 频繁产生不符合当下情况的输出（即便可能在被训练时确实如是，比如一些时效性较强的信息），那么它就是不可靠的。
+   可靠的 AGI 系统在什么情况下都表现稳定，说得清自己为什么这么决策，也能预判决策会带来什么风险。从某种角度说，AI 的道德感和价值观也属于可靠性的范畴：它能让 AI 做出符合人类社会主流价值观的选择，而不是盲从指令或者只求即时收益。我们常说的<Ruby rb="幻觉" rt="Hallucination" />问题就是可靠性最简单的体现：如果一个 AI 频繁产出不符合当下情况的输出（哪怕这条信息在训练时确实成立，比如时效性较强的信息），那它就是不可靠的。
 
-3. **可观测性**：AI 的决策过程是否透明，是否能够被人类理解和解释。
+3. **可观测性**：AI 的决策过程是否透明，人类能不能理解并解释它。
 
-   一个可观测的 AGI 系统应该能够提供清晰的决策路径和依据，使得人类能够追踪其行为，并在必要时进行干预。可观测性不仅有助于建立信任，还可以帮助我们识别潜在的偏差和错误，从而提高系统的整体性能和安全性。在当下，研究者依赖于 CoT（<Ruby rb="思维链" rt="Chain of Thought" />）等方法来评估 LLM 的决策过程[^cot_faithfulness]，但这仍然是一个需要进一步探索的领域，尤其是未来 AGI 的决策过程可能会更加复杂和难以解释。
+   一个可观测的 AGI 系统应该给出清晰的决策路径和依据，让人能追踪它做了什么，必要时介入。可观测性不只是建立信任，还能帮我们发现潜在的偏差和错误，从而提升系统整体的性能和安全性。今天研究者主要靠 CoT（<Ruby rb="思维链" rt="Chain of Thought" />）这类方法来查看 LLM 是怎么得出结论的[^cot_faithfulness]，但这个领域还没有定论，未来 AGI 的决策过程很可能比我们今天见到的任何系统都更复杂、更难解释。
 
-4. **可控性**：AI 的行为是否可以被人类有效地引导和约束，以及在必要时，是否可以被及时制止，以避免产生（更大的）伤害。
+4. **可控性**：人类能不能有效地引导和约束 AI 的行为，必要时能不能及时制止，避免造成（更大的）伤害。
 
-   可以预见的是，未来的 AGI 系统将会是高度自主的，尤其是考虑到其可能满足高可靠性和高智能密度的要求，意味着人类可能习惯于让 AGI 在没有过多干预的情况下自主决策。然而，这种高度自主性也带来了潜在的风险，尤其是在面对复杂和不可预测的环境时。这种情况下，可控性是确保 AGI 安全性的最后一道防线。我们没有任何理由需要或者应该放弃对 AGI 的可控性，尤其是在其可能具备超越人类的智能和决策能力，以及强大的执行能力的情况下。我们需要确保 AGI 的行为始终在可控范围内，以避免潜在的灾难性后果。
+   不难想象，未来的 AGI 系统会高度自主：因为其高可靠、高智能密度的特性，人们会习惯让它自己拿主意，不再事事盯着。但这种自主性也带来风险，尤其是在复杂、不可预测的环境里。这个时候，可控性就是 AGI 安全的最后一道防线。对 AGI 的控制，没有必要放弃，也不应该放弃。恰恰是因为它可能比人更聪明、更会做决策，执行力还更强，这种时候更不能撒手。AGI 的行为必须留在我们可控的范围之内，否则就可能出现灾难性的后果。
 
-5. **可持续性**：AI 是否能够可持续地发展和自我改进。
+5. **可持续性**：AI 能否可持续地发展和自我改进。
 
-   这不仅涉及到技术层面，更应该考虑到在社会、经济、政治和环境等多方面的可持续性。一个可持续的 AGI 系统应该能够在不断变化的环境中适应和进化，同时保持其与当下人类社会核心价值观和目标的一致性。我们需要确保 AGI 的发展不会对人类社会和生态系统造成不可逆转的损害，而是能够与人类共同进步，实现长期的共赢。这包括类似于 Dario 和 Sam 在 2026 年 9 月所说的在 AI 发展过快时需要缓下脚步的观点[^pace_the_frontier]，以确保我们有足够的时间来评估其影响和潜在风险。他们的主要理由是 AI 已经出现了<Ruby rb="递归||自我||改进" rt="Recursive| |Self| |Improvement" />（RSI）的苗头，也就是 AI 开始参与构建下一代 AI，进步的节奏因此可能脱离人类理解的速度。不过，仅针对上述二位的观点而言，我并不认为目前有明确的迹象表明 AGI 的发展已经到了需要减速的阶段：RSI 更像是一个需要证据支撑的预防性判断，而不是已经可以观测到的事实。但我们仍然需要保持警惕。
+   这件事不只是技术问题，还牵涉社会、经济、政治和环境。一个可持续的 AGI 系统应该能随着环境变化而调整和进化，同时与当下人类社会的核心价值观和目标保持一致。我们要确保 AGI 的发展不会对人类社会和生态系统造成不可逆转的损害，而是能与人类一起走向长期的共同利益。Dario 和 Sam 在 2026 年 9 月也讲过类似的话：AI 发展过快时应该放慢脚步[^pace_the_frontier]，好让我们有时间评估它的影响和风险。他们给出的主要理由是 AI 已经出现了<Ruby rb="递归||自我||改进" rt="Recursive| |Self| |Improvement" />（RSI）的苗头，也就是 AI 开始参与构建下一代 AI，进步的节奏因此可能快到人类跟不上。不过单就这个论点而言，我看不到明确的证据表明 AGI 的发展已经到了必须减速的地步：RSI 目前还是个预防性判断，缺证据支撑，而不是已经观测到的事实。但这股苗头值得一直盯着。
 
-而在以上五个维度之外，还有一个更加重要的维度，关乎着我们迎来 AGI 的方式和结果：**可及性**。
+在这五个维度之外，还有一个更重要的维度，它既决定我们怎么迎来 AGI，也决定我们能从中得到什么：**可及性**。
 
-6. **可及性**：AI 是否能够以公平和可负担的方式被广泛使用。
+6. **可及性**：AI 能否被广泛使用，而且公平、用得起。
 
-   可及性不仅涉及到技术的普及，更多地还包括经济、社会和政策等多方面的因素。一个可及的 AGI 系统应该能够被不同背景和资源水平的人群所使用，而不仅仅是少数精英或富裕阶层。我们需要确保 AGI 的发展不会加剧社会的不平等，而是能够为更多的人提供机会和资源，从而实现更广泛的社会福祉。这并不是一个简单的技术问题，而是一个涉及到社会结构、经济模式和政策制定的复杂问题。
+   可及性不只是技术普不普及，它至少同样要看经济、社会结构和政策。一个可及的 AGI 系统，不同背景、不同收入的人都用得上，不只服务少数精英和富裕阶层。AGI 应该把机会和资源带给更多人，而不是把不平等拉得更深，好处要真正落到大多数人身上。这些事牵动社会结构、经济模式和政策设计，把模型做出来并不能自动解决。
 
-之所以把它单独列出来，是因为可及性在这六个维度里更像枢纽：前五个维度决定 AGI 能做成什么，可及性决定谁能用得上、谁从中受益。同样一次技术跃迁，被少数公司握在手里，和作为公共基础设施，会长出完全不同的两种社会。后面几节要谈的劳动、分配与政策，其实都从这个维度展开，而其中最先发生变化的，就是劳动。
+之所以把它单独列出来，是因为与其说可及性是清单上的第六项，不如说它是其他五项转动的枢纽：前五个维度决定 AGI 能做成什么，可及性决定谁能用上、谁从中受益。同样一次技术跃迁，握在少数公司手里，或者作为公共基础设施运营，会长成完全不同的两种社会。后面几节要谈的劳动、分配与政策，都从这个维度展开，而最先变化的就是劳动。
 
 ## 大自动化时代
 
-最近，DeepSeek 工程师刘胜与在《我不得不把才华埋葬在昨天》中写到：“我算子写得越好，我们的新模型的训练、推理速度就会越快，模型能力进步就会更快，我就会更早地被取代”。[^liushengyu] 这是一个 AI 开发者站在风口上，亲眼看着自己造出的涟漪逐渐汇聚成了要打翻自己船的巨浪的真实写照。同样在文中，他也提到了自己最有可能的出路：当机械逐渐取代人工时，不管你是否愿意，为了能够继续在行业中生存，你也不得不改用机械；古法手作就只能作为一种“奢侈品”存在，几乎只是提供情绪价值，而产出物却不见得比机器好，甚至可能不如机器。
+不久前，DeepSeek 工程师刘胜与在《我不得不把才华埋葬在昨天》中写道：“我算子写得越好，我们的新模型的训练、推理速度就会越快，模型能力进步就会更快，我就会更早地被取代。”[^liushengyu] 这是一个 AI 开发者站在风口正中央的自画像：看着自己划出的涟漪长成足以打翻自己那条船的浪。同一篇文章里，他也点出了自己最可能的出路：机器接手了人手上的活，不管愿不愿意，想在行业里活下去就得改用机器；古法手作只能作为一种“奢侈品”存在，多半只是提供情绪价值，产出却不见得比机器好，甚至可能更差。
 
-Daron Acemoglu 和 Simon Johnson 在《<Ruby rb="Power| |and| |Progress" rt="权力||与||进步" />》一书中提到，重要的技术进步往往带来的是社会上工作性质的根本性改变，尤其是当技术偏向于自动化而非对工人的增强时。以工厂模式的发明为例，它一方面使得生产力大幅提高，迫使大量企业采用工厂模式来提高效率；另一方面也导致了对手工业者的巨大冲击，使他们不得不转向其他行业，或者被“去技能化”，成为低技能劳动力，接受工厂模式的管理和约束。而即便是对于工人的增强，也并不自动意味着工人待遇或者劳动力需求的提升。技术进步导致失业在书中给了明确的推导：
+Daron Acemoglu 和 Simon Johnson 在《<Ruby rb="权力||与||进步" rt="Power| |and| |Progress" />》里提出，重大的技术进步往往改变的是一个社会里工作本身的性质，尤其是当这项技术偏向自动化、而不是增强工人时。以工厂制度的发明为例：它一方面把生产力抬得如此之高，逼得大量企业不得不采用它，否则就跟不上竞争；另一方面也重创了手工业者，把他们挤向别的行当，或者“去技能化”成低技能劳动力，受工厂的管理和约束。即便走增强工人这条路，也不自动意味着更好的待遇或者更大的劳动力需求。书里给了一条明确的推导，说明技术进步为什么会带来失业：
 
-1. 首先，尽管社会上一个行业有平均劳动产出比，但是在一个企业或者生产经营单位中，劳动产出往往是<Ruby rb="递减（的）||边际||收益" rt="Diminishing| |Marginal| |Returns" />/边际收益递减的（如下图所示）。也就是说，随着工人数量的增加，单位工人的产出会逐渐下降。好比是那个经典的程序员笑话：
+1. 整个行业有一个平均的人均产出，但落到单个企业或者生产经营单位内部，人越多，人均产出越低，这就是<Ruby rb="递减的||边际||收益" rt="Diminishing| |Marginal| |Returns" />（即边际收益递减，见下图）。就像那个经典的程序员笑话：
 
-   > 项目经理需要一个十月怀胎的孕妇，但需要在一个月内交付，因此派了十个孕妇来完成。
+   > 项目经理要一个月内拿到孩子，可怀胎要九个月，于是他派了九个孕妇上阵。
 
-   现实世界中也有诸多客观条件限制，导致对于企业来说，增加工人数并不能够无限制地提高总产出。
+   现实里也有绕不过的限制：企业光靠多招人，并不能无限提高总产出。
 
 <Typst filePath="src/assets/images/dawn-before-AGI/marginal.typ">
 
-**边际产出递减的示意图**\
-(左) 工人数量增加时，总产出增加，但往往是<Ruby rb="次线性" rt="Sub-linear" />的，红色实线为总产出曲线，虚线为线性增长的参照线。\
-(右) 工人数量增加时，人均产出会下降，即边际效益递减，红色实线为人均产出曲线，虚线为人均产出的基准线。
+**边际收益递减的示意图**\
+（左）工人数量增加时，总产出也在增加，但通常是<Ruby rb="次线性" rt="Sub-linear" />的。红色实线是总产出，虚线是线性增长的参照线。\
+（右）工人数量增加时，人均产出反而下降，这就是边际收益递减。红色实线是人均产出，虚线是它的基准线。
 
 </Typst>
 
-2. 其次，如果企业引入自动化技术，最直接的结果是边际生产率可能不升反降，导致企业反而选择减少这一岗位上的工人数量，来完成同样甚至更多的工作量（如下图所示）。这种情况下，资本投入直接替代了人类劳动，减少了对劳动的需求。
+2. 企业上了自动化，边际生产率可能不升反降，于是会裁掉这个岗位上的一些人，同样的活照样能干完，甚至干得更多（见下图）。这种情况下，资本投入直接替代了人的劳动，对劳动的需求随之减少。
 
 <Typst filePath="src/assets/images/dawn-before-AGI/marginal-w-automation.typ">
 
-**加入自动化后的边际产出递减示意图**\
-红色曲线为没有自动化的情况，蓝色曲线为加入自动化后的情况。
+**加入自动化的边际收益递减**\
+红色曲线是没有自动化的情况，蓝色曲线是加入自动化之后的情况。
 
 </Typst>
 
-而如果我们想要新技术带动工人就业，则主要依赖以下三种情况：
+如果想让一项新技术带来就业，有三个条件必须同时成立：
 
-1. 当企业通过新技术降低了生产成本，并因此产生足够大的动力去扩大生产或者进入新市场，从而在**其他环节**创造出更多的就业机会。比如汽车制造业自动化后，虽然减少了汽车生产线上的工人数量，但同时也带动了上游钢铁、石油化工、电子元件等行业的就业机会，甚至催生了新的下游服务业和物流业，从而在整体上增加了就业。
-2. 如果新技术开辟了人类劳动的**新用途**，那么工人可贡献的价值就会增加，使得边际生产率提升，能够让这个行业有动力去雇佣更多工人。比如当计算机普及后，虽然很多传统的打字员、排版工等岗位被取代，但同时也催生了软件开发、IT 支持、数据分析等新职业，从而也使企业增加雇员。
-3. 如果新技术是**互补性**的，并不能直接替代人类劳动，而是需要人类与技术协作完成任务，那么企业也会有动力去雇佣更多工人。比如在医疗领域，诊疗仪器的引入并没有减少医生的需求，反而提高了其边际生产率（多雇佣一个专门负责仪器的医生能够进一步提升总效率），从而增加了对医生的需求。
+1. 新技术把企业的生产成本压得足够低，企业因此有很强的动力去扩大产量或者进入新市场，就业会在**其他环节**被创造出来。比如汽车制造业自动化之后，汽车生产线上的工人减少了，上游的钢铁、石油化工、电子元件等行业却新增了岗位，甚至催生了新的下游服务业和物流业，整体就业反而增加。
+2. 新技术为人类劳动开辟出**新用途**，工人能贡献的价值随之提高，边际生产率上升，这个行业也就有动力多雇人。计算机普及之后，打字员、排版工大量消失，但软件开发、IT 支持、数据分析这些新职业出现了，企业也确实为这些岗位增加了雇员。
+3. 新技术是**互补性**的，没法直接替代人类劳动，必须由人和机器协作完成任务，企业同样有动力多雇人。在医疗领域，诊断设备的出现并没有减少对医生的需求，反而提高了医生的边际生产率：多雇一个专门操作设备的医生，整体效率还能再往上走，需求也就跟着增加了。
 
-而我们观察当下 AI 向 AGI 发展的趋势，尤其是 LLM 的发展，似乎更偏向于“自动化”而非“增强”，我们没有看到以上三条中任意一条被满足：
+再看今天 AI 走向 AGI 的趋势，尤其是 LLM，它更偏向“自动化”而不是“增强”。上面三条，一条都不成立：
 
-1. 企业引入 AI 后，虽然可能降低了生产成本，但并没有明显的迹象表明它会带来足够大的新市场或者新需求，从而创造出更多的就业机会。比如律所引入 AI 后，虽然可以提高文书处理的效率，但并没有明显增加对律师的需求，反而可能减少了对初级律师和助理的需求。
-2. AI 的引入并没有开辟出人类劳动的新用途，至少其规模不足以形成新产业。几年前数据标记员的需求曾经因为 AI 的发展而增加，但随着 AI 技术的成熟，数据标注工作也逐渐被自动化工具取代，导致这一岗位的需求迅速下降。目前 AI 的发展依然是在瞄准这替代人类劳动的方向，比如取代程序员、客服、文案，甚至是一些创意性领域的工作，而不是开辟出新的职业领域。
-3. AI 的引入并没有表现出明显的互补性，反而更多地表现为替代性。比如在客服领域，AI 可以直接回答用户的问题，减少了对人工客服的需求；在内容创作领域，AI 可以生成文章、图片、视频等内容，同样不再需要人工创作者的参与。虽然在某些特定场景下，AI 可能与人类协作，比如医疗、教育等领域，但整体来看，AI 的发展趋势仍然是以替代人类劳动为主，而非增强人类劳动。
+1. 企业引入 AI 后，生产成本可能降了下来，但没有明显迹象表明它会带来足够大的新市场或新需求，从而创造就业。比如律所引入 AI，文书处理是更快了，但对律师的需求并没有明显增加，对初级律师和助理的需求反而可能减少。
+2. AI 没有为人类劳动开辟新用途，至少规模还不足以形成新产业。几年前，数据标注员的需求曾经因为 AI 的发展而增加，技术成熟之后，标注本身被自动化工具取代，这个岗位的需求迅速萎缩。今天 AI 的发展方向仍然是在替代人类劳动，程序员、客服、文案，甚至一部分创意工作都在其中，而不是开辟新的职业领域。
+3. AI 的互补性很弱，替代性却很强。在客服领域，AI 直接回答用户的问题，对人工客服的需求随之减少；在内容创作领域，它直接生成文章、图片、视频，不再需要人类创作者参与。医疗、教育等特定场景里确实有 AI 与人类协作，但整体趋势仍然是替代人类劳动，而不是增强人类劳动。
 
-把这件事放到企业的账本上看，AI 更像是一种资本品，而不只是一件工具。工具用来放大人手上的能力，资本品用来替代要素投入。当“一台机器”的产出成本低于“一个工人”的工资时，企业的选择不是**“更多人 + AI”**，而是**“更少人 + AI”**：同样的工作量，用更少的工时完成。总产出会因此增加，工资总额却不一定跟着增加，劳动收入在国民收入中的份额也就随之下降。[^labor_share_decline] 更麻烦的是议价能力，当工人知道自己随时可以被替换，谈判的起点就已经不同了，这个过程甚至不需要真的发生裁员。
+把这件事放到企业的账本上看，AI 更像是一种资本品，而不只是一件工具。工具放大的是一双手能做的事，资本品替代的是投入要素。当一台机器的产出成本低于一个工人的工资，企业的选择就不是**“更多人 + AI”**，而是**“更少人 + AI”**：同样的工作量，用更少的工时完成。总产出会因此增加，工资总额却不一定跟着增加，劳动收入在国民收入中的份额也随之下降。[^labor_share_decline] 更麻烦的是议价能力这一头：工人一旦知道自己随时可以被替换，谈判的起点就已经不同了，而这一切甚至不需要真的发生裁员。
 
-这里我们需要区分三种替代——任务、职业、行业。自动化最先吃掉的是任务，而不是整个职业：比如会计的凭证录入迟早会被替代，但和客户沟通、签字担责的环节不会。当某个职业里可被自动化的任务多到一定程度，雇主就不再需要这个岗位，这是职业替代；行业替代则更少见也更剧烈，整个行业的需求被另一种产品逻辑吞掉。AGI 与以往的技术相比，特别之处可能就在这里：它替代的不是某个孤立的任务，而是一组任务的组合，这也是“哪些工作会消失”这个问题如此难回答的原因。
+这里要区分三种替代：任务、职业、行业。自动化最先替换的是任务，而不是整个职业。会计的凭证录入迟早会被替代，但和客户沟通、签字担责的环节不会。当某个职业里可被自动化的任务多到一定程度，雇主就不再需要这个岗位，这是职业替代；行业替代更少见，也更剧烈，整个行业的需求会被另一种产品逻辑吞掉。AGI 和以往的技术相比，特别之处可能就在这里：它替代的不是某个孤立的任务，而是一次性替代一整组任务，这也是“哪些工作会消失”这个问题如此难回答的原因。
 
-因此，AGI 的六个维度里没有一个是悬空的：可靠性决定企业敢把多少工作交出去，可观测性决定出了问题时能不能追责，可控性决定 AI 能不能被放进关键环节，智能密度和可持续性则共同决定这套方案的成本曲线。也正因为如此，自动化带来的分配变化，会先于 AGI 本身到来。
+所以，AGI 的六个维度，没有一个是悬而未决的：可靠性决定企业敢把多少工作交出去，可观测性决定出了问题时能不能追责，可控性决定 AI 能不能被放进关键环节，智能密度和可持续性则共同决定这条路线的成本曲线。也正因为如此，自动化带来的分配变化，会先于 AGI 本身到来。
 
-那么，自动化在什么条件下会带动就业？说到底，是替代效应和补偿效应谁更强的问题。替代效应是机器顶掉了人，补偿效应是效率提升带来新需求、新产业。Acemoglu 和 Restrepo 提醒过一个容易被忽略的中间状态：有些自动化既不显著提高生产力，也不创造新的需求，只是把劳动替换掉了，他们称之为<Ruby rb="平庸||自动化" rt="so-so| |Automation" />。[^so_so_automation] 这类技术对企业是省钱的，对整体经济却接近于零和。如果自动化走完整个流程，而新的需求又没有跟上，结果就不是“机器替人干活”，而是失业与不平等同时加剧。
+那么，自动化在什么条件下会带动就业？说到底，还是替代效应和补偿效应谁更强的问题。替代效应是机器把人挤出去，补偿效应是效率提升带来新需求和新产业。Acemoglu 和 Restrepo 提醒过一个容易被忽略的中间状态：有些自动化既没有明显提高生产率，也没有创造新需求，只是把劳动替换掉了。他们把这类技术叫做**<Ruby rb="平庸||自动化" rt="so-so| |Automation" />**[^so_so_automation]。这类技术对企业是省钱的，对整个经济却接近零和。如果自动化覆盖了整个流程，新需求又始终不出现，结果就不是“机器替我们干活”，而是失业和不平等一起上升。
 
-数据已经在往这个方向倾斜。Stanford 的一项研究跟踪了 AI 高暴露职业里的就业变化，发现 22 到 25 岁的年轻人在这些职业中的就业水平比处于低暴露职业的同龄人低约 19%，而这一差距主要来自招聘端：企业不是解雇了谁，而仅仅只是不再招人。[^canaries_in_the_coal_mine] 作者自己强调这是早期的描述性证据，不是因果估计，但它至少说明进入这些职业的门在变窄，而这道门通常是一代人职业生涯的起点。
+数据也已经在往这个方向走。Stanford 的一项研究跟踪了 AI 高暴露职业的就业变化，发现在这些职业里，22 到 25 岁的年轻人就业率比低暴露职业的同龄人低大约 19%，而这一差距主要来自招聘端：企业并没有解雇谁，只是不再招人。[^canaries_in_the_coal_mine] 作者强调这是早期的描述性证据，不是因果估计，但它至少说明进入这些职业的门正在变窄，而这道门通常是一代人职业生涯的起点。
 
-历史也给我们提供了一个参照。英国工业革命的头半个世纪里，生产率持续上升，工人的实际工资却几乎停滞，这个时期后来被称为 Engels' Pause，持续了大约五十年。[^engels_pause] 分配的改善最终靠的是工会、选举权、社会保险和税制改革，而不是时间本身。这也正好回到引子里的那个判断：转型期可以很长，长到覆盖一代人的整个职业生涯，而它的终点取决于人们做了什么。
+历史也提供了一个参照。英国工业革命的头半个世纪里，生产率持续上升，工人的实际工资却几乎没动，这段时间后来被称为“<Ruby rb="恩格斯停顿" rt="Engels' Pause" />”，持续了大约五十年。[^engels_pause] 分配的改善靠的是工会、选举权、社会保险和税制改革，而不是时间流逝本身。这也正好回到开头那个判断：转型期可以很长，长到覆盖一代人的整个职业生涯，而它的终点取决于人们做了什么。
 
-也并非所有经济学家都这么悲观。Autor 认为，如果 AI 被用来增强而不是替代劳动者，它有可能重建被掏空的中层岗位。[^autor_middle_class_jobs] 这个分歧本身比结论更有意思：技术能做什么，和它被用来做什么，是两个可以分开的问题，而后者才是后半部分要讨论的东西。
+也并非所有经济学家都这么悲观。Autor 认为，如果用 AI 来增强而不是替代劳动者，它有可能重建那些被掏空的中层岗位。[^autor_middle_class_jobs] 这个分歧本身比任何一方的结论都更有意思：技术能做什么，和它被用来做什么，是两回事，而后者才是后半部分要谈的东西。
 
 ## 谁吃肉、谁喝汤、谁舔盘？
 
-AGI 不是中性工具，它的形态会塑造我们身处的社会。
+AGI 不是一件中性的工具，它的形态会决定我们生活在怎样的社会里。
 
-第一节的六个维度不是并列的清单，而是一组可以相乘的变量。同样是高智能密度，配上高可及性就是公共基础设施，配上低可及性就是私人收税权；同样是高可靠性，交到少数公司手里意味着决策权被让渡出去，交到公共机构手里则意味着还有问责的余地。**形态是维度组合的结果，而不是能力的线性外推。**
+这六个维度会相乘。同样是高智能密度，配上高可及性就是公共基础设施，配上低可及性就是私人收税权；同样是高可靠性，落在少数公司手里，意味着决策权被让渡出去，落在公共机构手里，则意味着还有人可以被问责。**形态是维度组合出来的结果，不是能力的线性外推。**
 
 | 维度组合                         | 可能的分配结构                         |
 | :------------------------------- | :------------------------------------- |
@@ -125,11 +124,11 @@ AGI 不是中性工具，它的形态会塑造我们身处的社会。
 | 低可观测性 + 低可控性            | 无法问责，风险外溢                     |
 | 低可持续性                       | 短期逐利、能源掠夺、生态代价           |
 
-组合决定的是格局，具体的钱怎么分，还要看谁在链条上占着不可替代的位置。算力、模型权重、数据、分发渠道，这四样里只要有一样被垄断，垄断者就可以从中抽租：云厂商按算力收钱，模型厂商按调用量收钱，平台按流量收钱。[^technofeudalism] 当一个环节的产出没有替代品，它就能定规则，而处在它下游的人和公司只能接受规则。这也是为什么在讨论 AI 时，所有权的分量往往比能力更重。
+组合决定的是格局，钱具体怎么分，还要看谁在链条上占着不可替代的位置。算力、模型权重、数据、分发渠道，这四样里只要有一样被垄断，垄断者就能从中抽租：云厂商按算力收钱，模型厂商按调用量收钱，平台按流量收钱。[^technofeudalism] 一个环节的产出没有替代品，它就能定规则，处在它下游的人和公司只能接受。这也是为什么谈 AI 时，所有权往往比能力更关键。
 
-顺着这条线看，[上一篇文章](../open-source-in-LLM)里那场开闭源之争就有了分配上的含义：开放权重压低的不只是 API 的价格，还有整条链条上能收的租金；闭源则把这些租金集中留在少数几个节点上。安全叙事和商业叙事之所以难以分开，原因大概也在这里。
+顺着这条线看，[上一篇文章](../open-source-in-LLM)里那场开源与闭源之争就有了分配上的含义：开放权重压低的不只是 API 调用价格，还有整条链条上能收的租金；闭源则把这些租金集中在少数几个节点上。安全叙事和商业叙事之所以难以分开，原因大概也在这里。
 
-这四条组合各自指向一种分配结构。把其中最极端的一种组合推到底会得到什么，我们不妨设想一下。
+这四种组合各自指向一种分配结构。不妨设想一下：把最极端的一种推到底，会变成什么样。
 
 ## 两种未来
 
@@ -137,92 +136,92 @@ AGI 不是中性工具，它的形态会塑造我们身处的社会。
 
 ### “共产主义” AI
 
-第一个方向上，具身智能形态的 AGI 基本取代了人类劳动：农业、制造、物流、护理、研究，几乎所有需要体力和脑力的环节都由机器完成，物资的极大丰富不再是一句口号，而是一个工程问题。劳动与生存解耦之后，人不必再为了活下去而工作，工作退回到它本来的样子，一种自愿的、有选择的活动。
+先看第一个方向：以具身形态出现的 AGI 基本取代了人类劳动，农业、制造、物流、护理、研究，几乎所有需要体力和脑力的环节都由机器完成，物资的极大丰富不再是一句口号，而是一道工程题。劳动与生存解耦之后，人不必再为了活下去而工作，工作回到它本来的样子：自愿去做，自己挑。
 
-在这个世界里，个人财富会逐渐失去意义。它既买不到别人的时间，也不再是社会地位的象征，人们比较的东西从资产变成了能力和贡献：谁做成了什么，谁解决了什么问题，谁在某个领域走到了前面。这样的状态很少有人认真想象过，连“阶级”这个词都会变得难以定义。
+在那个世界里，个人财富会逐渐失去意义。它买不到别人的时间，也不再代表地位，人们比较的东西从资产变成能力和贡献：谁做成了什么，谁解决了什么问题，谁在某个领域走得最远。这样的状态很少有人认真想象过，连“阶级”这个词都会变得难以定义。
 
-这个方向也不是新出现的想象。Bastani 给它取过一个直白的名字：全自动化奢侈共产主义，而这样稀缺的终结意味着分配的逻辑要整个改写。[^bastani] Keynes 在 1930 年也预言过类似的场景，他认为自动化会把人类从生存压力里解放出来，一百年后每周只需要工作 15 小时。[^keynes] 虽然我们身处一百年后并没有达到这一愿景，但问题反而更清楚：被解放出来的是闲暇还是失业，取决于谁拥有机器、谁来分配产出。
+这个方向也不是新的想象。Bastani 给它取过一个直白的名字：全自动化奢侈共产主义，而在那种尺度上，稀缺一旦没了，分配逻辑就得整个重写。[^bastani] Keynes 在 1930 年也预言过类似的场景，他认为自动化会把人类从生存压力里解放出来，一百年后每周只需要工作 15 小时。[^keynes] 一百年过去，我们并没有走到那一步，但问题反而更清楚了：最后被解放出来的，到底是闲暇还是失业，取决于谁拥有机器、谁来分配产出。
 
-科幻里也有现成的样本。Banks 的《<Ruby rb="Culture" rt="文明" />》系列设定了一群自愿承担管理与生产的机器，人类按兴趣生活，把工作当成爱好而不是谋生手段。[^banks] 乃至早年动画电影《<Ruby rb="WALL-E" rt="机器人总动员" />》中，人类也是被机器解放出来的，虽然他们的生活方式被描绘成了极端的消费主义，但至少没有生存压力。
+科幻里也有现成的样本。Iain M. Banks 的《<Ruby rb="文明" rt="Culture" />》系列设定了一群自愿承担管理与生产的机器，人类按兴趣生活，把工作当成爱好而不是谋生手段。[^banks] 就连动画电影《<Ruby rb="机器人总动员" rt="WALL-E" />》里，人类也是被机器解放出来的，虽然他们的生活方式被描绘成了极端的消费主义，但至少没有生存压力。
 
-而这个未来的另一面是转型的成本。它默认社会有时间也有意愿完成重新分配，但如果这个过程来得突然，那么在抵达丰裕之前，会先经过一段失业、技能贬值和争吵不断的日子，而这段时间的长度并不由技术决定，前面提到的那些制度才是关键保障。我们无法允许或者承受一个社会在能够达到物资极大丰富之前，由于剧烈的分配冲击，出现大规模的失业、贫困和社会动荡。如何在技术进步的同时，确保社会的稳定和公平，是我们必须面对的重要问题。
+通往这个未来要付代价。它假定社会既有时间也有意愿完成再分配；但如果转型来得突然，通往丰裕的路会先经过失业、技能贬值和没完没了的争吵，而这一段有多长不由技术决定，前面提到的那些制度才是真正的保障。一个社会还没等到物资极大丰富，就先撞上剧烈的分配冲击，结果就是大规模失业、贫困和社会动荡，没人愿意看到，社会也扛不住。我们既要往前推进技术，也得守住稳定和公平，这件事没有第二个选项。
 
 ### “赛博朋克” AI
 
-赛博朋克这个词来自 1980 年代的科幻。Gibson 的《<Ruby rb="Neuromancer" rt="神经漫游者" />》给它定了调，[^gibson] Stephenson 的《<Ruby rb="Snow Crash" rt="雪崩" />》则写出了一种公司取代政府的城邦，[^stephenson] 而这两个设定里当时看起来最夸张的部分，如今读起来并不像虚构。
+赛博朋克这个词来自 1980 年代的科幻。Gibson 的《<Ruby rb="神经漫游者" rt="Neuromancer" />》给它定了调[^gibson]，Stephenson 的《<Ruby rb="雪崩" rt="Snow Crash" />》则想象出公司取代政府的城邦[^stephenson]，而这两个设定里当时看起来最夸张的部分，如今读起来并不像虚构。
 
-在这个设想中，AI 被少数人握在手里，成为他们获取利润和地位的私人工具。顶层垄断算力、模型、数据与分发渠道，对整个经济收取租金；中间层的企业迫于竞争不得不用 AI，却发现自己站在一条收支临界线上：不用 AI 活不下去，用了 AI 利润率反而更低，多出来的效率很快被平台抽成和模型订阅吃掉；底层的劳动被算法调度、被计件化、被去技能化，连谈判的筹码都攒不下来。
+在这个设想中，AI 掌握在少数人手里，成为他们获取利润和地位的私人工具。顶层垄断算力、模型、数据与分发渠道，向整个经济收取租金；中间层的企业迫于竞争不得不用 AI，却发现自己卡在一条收支临界线上：不用 AI 活不下去，用了 AI 利润率反而更低，多出来的效率很快被平台抽成和模型订阅吃掉；底层的劳动由算法调度、按件计酬、去技能化，始终攒不出谈判的筹码。
 
-这种结构有一种自我加固的能力。算法调度看起来是中立的技术安排，实际上在重新分配工人之间的竞争关系：谁接单快、谁评分高、谁更服从，都由系统说了算，而规则本身不公开、不可协商。[^algorithmic_management] 当数据从生产的副产品变成生产投入，监控就从事后追责变成事前塑造，被交易的对象也从产品扩展到对未来的预期。[^surveillance_capitalism] 与此同时，能真正审视前沿模型的机构，往往要靠这些公司提供人才、算力与信息，监管于是越写越像行业的自我约束[^metr_embedded]。一个近在眼前的例子是，2026 年 9 月 Anthropic 就四起网络安全评估事故委托 <Ruby rb="METR" rt="模型评估与威胁研究" /> 做独立调查，给出的权限包括事件窗口之外的记录与员工访谈，Dario Amodei 也在《We Must Pace the Frontier》里点名 METR 作为嵌入式评估者的样板。但“第三方”并不真的把评估者与实验室隔开：前 Anthropic 研究员 Joe Benton 在 9 月转到 METR 做嵌入式评估，而 METR 的 Joel Becker 则在此前反向进了 Anthropic[^metr_people]。METR 自己在 2026 年 5 月的 Frontier Risk Report 附录里承认，这个项目启动时没有正式的利益冲突回避政策，评估所需的模型访问与 token 由前沿实验室免费提供，部分员工与 AI 公司的人之间还有着密切的社交联系，试点也没有完全达到 <Ruby rb="AEF-1" rt="第三方评估运作标准" /> 标准的要求[^metr_frontier_risk]。钱的问题上同样没有制度答案：现在是各家自己付费、自己挑评估者，Anthropic 另行出资委托了另一家机构做嵌入式评估，同时在公告里承认这类工作长期应当由公共或政府资金支持[^metr_embedded]。阶层固化的过程则更慢，等到信贷、教育、医疗的入口都经过算法打分，向上流动的通道已经被悄悄收窄了。
+这种结构有一种自我强化的能力。算法调度看起来是中立的技术安排，实际上却在重新分配工人之间的竞争关系：谁接单快、谁评分高、谁最服从，都由系统说了算，而规则本身不公开、不可协商。[^algorithmic_management] 当数据从生产的副产品变成生产投入，监控就从事后追责变成提前干预，被交易的对象也从产品扩展到对未来的预期。[^surveillance_capitalism] 与此同时，真正有能力审视前沿模型的机构，往往要靠这些公司提供人才、算力和信息，监管于是越写越像行业的自我约束。[^metr_embedded] 一个近在眼前的例子是，2026 年 9 月 Anthropic 就四起网络安全评估事故委托 <Ruby rb="模型||评估|与|威胁||研究" rt="Model| |Evaluation| & |Threat| |Research" />（METR）做独立调查，权限宽到可以覆盖事件窗口之外的记录和对员工的访谈，Dario Amodei 也在《We Must Pace the Frontier》里点名 METR，作为嵌入式评估者的样板。但“第三方”并没有真的把评估者和实验室隔开：前 Anthropic 研究员 Joe Benton 在 9 月转到 METR 做嵌入式评估，而 METR 的 Joel Becker 更早就反向流动，加入了 Anthropic[^metr_people]。METR 自己在 2026 年 5 月的 <Ruby rb="前沿||风险||报告" rt="Frontier| |Risk| |Report" /> 附录里承认，这个项目启动时没有正式的利益冲突回避政策，评估所需的模型访问权限与 token 由前沿实验室免费提供，部分员工跟 AI 公司的雇员有很深的私交，试点也没有完全达到 AEF-1（第三方评估运作标准）的要求[^metr_frontier_risk]。钱的问题同样没有制度答案：现在是各家自己出钱、自己挑评估者，Anthropic 另外出资委托了一家机构做嵌入式评估，同时在公告里承认这类工作长期应当由汇集式资金或公共资金支持[^metr_embedded]。阶层固化则来得更慢：等到信贷、教育、医疗的门槛都由算法打分，往上走的路就悄悄变窄了。
 
-把同样的逻辑放大到国家之间，会得到另一层结构。算力成了新的战略资源，各国都想把它锁在自己境内，Hogarth 早在 2018 年就用“AI 民族主义”来描述这种冲动。[^ai_nationalism] 上游国家掌握算力和模型，下游国家提供数据、劳动力和市场，收益却按上游的定价权分配，这种关系被一些研究者称为算法殖民，它的物质基础同样清楚：算力要靠电力、水和稀有金属，标注与审核要靠大量低薪劳动，Crawford 把这条链条一路追溯到了矿场和数据中心。[^algorithmic_colonization] 和历史上的殖民不同，这次被运走的不是矿石和土地，而是可以远程调用的数据与算力，代价也因此更隐蔽。
+把同样的逻辑放大到国家之间，会得到另一层结构。算力成了战略资源，各国都想把它锁在自己境内，Hogarth 早在 2018 年就用“AI 民族主义”来描述这种冲动。[^ai_nationalism] 上游国家掌握算力和模型，下游国家提供数据、劳动力和市场，收益却按上游的定价权分配。一些研究者把这种关系称为算法殖民，它的物质基础同样清楚：算力要靠电力、水和稀有金属，标注与审核要靠大量低薪劳动，Crawford 把这条链一路追溯到了矿场和数据中心。[^algorithmic_colonization] 与历史上的殖民不同，这次被运走的不是矿石和土地，而是可以远程调用的数据与算力，代价也因此更隐蔽。
 
-我们还需要说明一点：这个方向不需要任何人有意为之。顶层只是在追求利润，中间层只是在应对竞争，底层只是在完成指标，每一方在自己的位置上都是理性的，但这些选择叠在一起，结果就是集中度不断提高，退出选项越来越少。某种意义上，它更像默认路径：滑向赛博朋克不需要有人按下按钮，走到另一个方向才需要主动设计。
+还有一点需要说明：这个方向不需要任何人有意为之。顶层只是在追求利润，中间层只是在应对竞争，底层只是在完成指标，每一方在自己的位置上都是理性的，但这些选择叠在一起，结果就是越来越集中，退出的路越来越少。某种意义上，它更像默认路径：滑向赛博朋克不需要有人按下按钮，走向另一个方向才需要刻意设计。
 
-这两种未来之间并没有自动的平衡机制。往哪一边偏移，取决于中间那些看起来琐碎的制度选择：算力归谁，模型是否开源，收益怎么分配，工人在算法面前有没有发言权。
+这两种未来不会自己平衡。天平往哪边倾斜，取决于中间那些看起来琐碎的制度选择：算力归谁，模型是否开放权重，收益怎么分配，工人在算法面前有没有说话的位置。
 
 ## 可及性议程
 
-科技乐观主义是很多人的默认立场，尤其是科技行业从业者（包括不久之前的我在内）。理由也不难理解：过去两百年的每一次技术跃迁，都实打实地提高了生产率，我们也确实享受到了比两百年前更优渥的物质条件。但技术突破并不自动意味着普惠。前面提到的英国工业革命就是一个例子，生产率上升了半个世纪，工人的生活水平几乎没有跟上，分配的改善靠的是组织与政治，而不是仅仅依靠市场本身。
+科技乐观主义是很多人的默认立场，尤其是科技从业者，其中也包括不久之前的我。理由也不难理解：过去两百年里，每一次技术跃迁都实打实地提高了生产率，我们也确实比两百年前的人过得富足。但技术突破并不会自动带来普惠。前面提到的英国工业革命就是一个例子：生产率上升了半个世纪，工人的生活水平却几乎没有跟上，分配改善靠的是组织与政治，而不是市场自己长出来的。
 
-也正是在这个意义上，利益怎么分取决于制度：税收、反垄断、劳工组织、公共服务。这些词听起来都没有模型架构那么性感，但它们决定的恰恰是谁能拿到好处。所以在讨论具体政策之前，我们需要先问三个问题：谁承担转型成本，谁获得租金，谁有发言权。
+也正是在这个意义上，谁能受益取决于制度：税收、反垄断、劳工组织、公共服务。这些词听起来都没有模型架构那么吸引人，但决定的恰恰是谁能拿到好处。所以在讨论具体政策之前，得先问三个问题：谁承担转型的成本，谁从中抽租，谁有发言权。
 
-这里我们列举的六组政策和之前的六个维度不是一回事：维度描述的是 AGI 有什么属性，政策处理的是这些属性被谁掌握。可及性之所以是枢纽，正因为它同时出现在这两边，既是需要被满足的条件，也是可以被设计的结果。
+这里列的六组政策和前面那六个维度不是一回事：维度描述的是 AGI 有什么属性，政策处理的是这些属性归谁掌握。可及性之所以是枢纽，是因为它两头都占：既是必须满足的条件，也是能设计出来的结果。
 
-### 让 AI 易得
+### 扩大可及性
 
-最直接的一种做法是公共算力，欧盟的 <Ruby rb="AI Factories" rt="人工智能工厂" /> 用公共超算为初创公司和中小企业提供训练资源，美国的 <Ruby rb="NAIRR" rt="国家人工智能研究资源" /> 试点走的是联邦与产业共建的路子。开源权重是另一条路，DeepSeek 坚持用 MIT 协议把接近前沿的推理能力放到了公网上，让“用得起”不再等于“租得到”。[^accessible_ai] 剩下的是那些看起来技术性的安排，接口标准、数据可携带、互操作性，它们决定了用户能不能从一个平台搬到另一个平台。
+最直接的一种做法是公共算力：欧盟的<Ruby rb="人工智能||工厂" rt="AI| |Factories" />用公共超算为初创公司和中小企业提供训练资源，美国的<Ruby rb="国家||人工||智能||研究||资源" rt="National| |Artificial| |Intelligence| |Research| |Resource" />（NAIRR）试点走的是联邦与产业共建的路子。开放权重是另一条路，DeepSeek 一直坚持 MIT 协议，把接近前沿的推理能力放到公网上，让“用得起”不再等于“只能租”。[^accessible_ai] 剩下的是一些看起来纯属技术性的安排，接口标准、数据可携带性、互操作性，它们决定用户能不能从一个平台搬到另一个平台。
 
 ### 抑制集中
 
-竞争政策在这里是现成的工具，只是要跟上新的锁定方式，投资加算力的纵向捆绑、模型与云服务的打包、平台对上下游的抽成。[^ftc_ai_investigations] 美国和英国的监管机构都已经就基础模型与云厂商的合作关系做过调查，问题不在于企业规模大，而在于入口被少数公司把持之后，后来者连参赛的资格都买不起。
+竞争政策在这里是现成的工具，只是要跟上新的锁定方式：投资加算力的纵向捆绑、模型与云服务的打包、平台对上下游的抽成。[^ftc_ai_investigations] 美国和英国的监管机构都已经就基础模型和云厂商的合作关系做过调查。问题不在于这些企业规模之大，麻烦在于入口被少数公司把持，后来者连入场资格都没有。
 
 ### 分享收益
 
-让收益回流公共部门的思路已经讨论了很多年，从 Bill Gates 2017 年主张对机器人征税，到美国国会 2026 年提出的 <Ruby rb="AI Tax and Work Protection Act" rt="AI 税收与劳动保护法案" />，方向都是把自动化的收益部分转化为公共收入。[^ai_tax_and_dividend] 更成熟的做法是资源租金分红，阿拉斯加把石油收入变成每个居民的年金，已经运行了四十多年，同一套逻辑完全可以套在算力和数据上。而基本收入实验的初步结果，并不支持“给了钱人就不工作”的担忧：芬兰的试点里就业效应很小，安全感和心理健康却有明显改善，美国加州的 Stockton 也做过一轮每月 500 美元的保障收入试点。[^ubi_evidence]
+让一部分收益回流公共部门的思路已经讨论了很多年，从 Bill Gates 2017 年主张对机器人征税，到美国国会 2026 年提出的<Ruby rb="人工智能||税收||与||劳动||保护||法案" rt="AI| |Tax| |and| |Work| |Protection| |Act" />，方向都是把自动化收益的一部分变成公共收入。[^ai_tax_and_dividend] 更成熟的做法是资源租金分红：阿拉斯加四十多年来一直把石油收入变成发给每个居民的一年一笔分红，同一套逻辑完全可以搬到算力和数据上。至于基本收入，初步结果并不支持“给了钱人就不工作”的担忧：芬兰的试点里就业效应很小，安全感和心理健康却有明显改善；美国加州的 Stockton 也做过一轮每月 500 美元的保障收入试点。[^ubi_evidence]
 
 ### 劳动议价
 
-算法管理需要透明度和人工复核，欧盟的平台工作指令要求平台说明自动化决策的逻辑，并保留人工申诉的通道，<Ruby rb="ILO" rt="国际劳工组织" /> 收集的案例里还包括德国电信的工作委员会参与 AI 系统引入这样的安排，而 <Ruby rb="OECD" rt="经合组织" /> 的雇主调查显示这类管理已经跨越教育和收入层级，连白领岗位的绩效评估也在被系统接管。[^platform_work_directive] 工会和再培训的搭配同样重要，因为议价能力的前提是工人手里的技能还有市场。
+算法管理需要透明度和人工复核。欧盟的平台工作指令要求平台说明自动化决策的逻辑，并且保留人工申诉的通道；<Ruby rb="国际劳工组织" rt="ILO" />收集的案例里，有一个是德国电信的工作委员会参与 AI 系统的引入；<Ruby rb="经合组织" rt="OECD" />的雇主调查则显示，这类管理已经跨越教育和收入层级，连白领的绩效评估也交给了系统。[^platform_work_directive] 工会和再培训得配成一对，因为议价能力的前提是工人手里的技能在市场上还值钱。
 
 ### 缓冲转型
 
-缩短工时是最容易理解的分享方式，英国的四天工作制试验里，九成以上的参与公司选择继续，离职率明显下降；冰岛把周工时缩到 35 到 36 小时，也没有出现预期中的效率崩塌。再培训和福利便携化解决的是另一头，当岗位的寿命短于人的寿命，“跟着工作走的福利”就不再适用，新加坡的终身学习账户和美国犹他州的便携福利法都是这个方向上的尝试。[^worktime_and_benefits]
+在分享收益的各种做法里，缩短工时最容易理解：英国的四天工作制试验里，九成以上的参与公司选择继续，离职率明显下降；冰岛把每周工时减到 35 到 36 小时，也没有出现预期中的效率崩塌。再培训和可携带福利管的是另一头：当岗位的寿命比人的寿命还短，跟着工作走的福利就不成立了。新加坡的终身学习账户和美国犹他州的《<Ruby rb="可携带||福利||法" rt="Portable| |Benefit| |Plan" />》，都是这个方向上的尝试。[^worktime_and_benefits]
 
 ### 国际治理
 
-前面五组都可以在一国之内推进，但算力和模型不按国界分布，所以还需要第六组。联合国《<Ruby rb="Governing AI for Humanity" rt="为人类治理人工智能" />》报告和 2025 年设立的全球 AI 治理对话是目前最正式的两个平台，[^un_global_ai_governance] 但它们都没有强制力，进展也远慢于模型迭代的速度。欧盟的 AI 法案是少有的、带惩罚机制的横向立法，高风险义务的适用时间已经被推迟到 2027 年 8 月，这既说明立法的难度，也说明一旦立起来，它会被产业反复协商；在立法之外还有一类更细的工具，前沿模型的部署前审计与许可制度，以及把事故成本内部化的责任保险。[^ai_regulation_tools] 对全球南方来说，问题更直接：如果算力和标准都在上游，那么不被边缘化需要的是参与制定规则的位置，而不是事后接受援助，非盟 2024 年通过的大陆 AI 战略正是这种自我定位的尝试。
+前面五组都可以在一国之内推进，但算力和模型不按国界分布，所以还需要第六组。联合国《<Ruby rb="治理人工智能，助力造福人类" rt="Governing AI for Humanity" />》报告和 2025 年设立的全球 AI 治理对话是目前最正式的两个平台，[^un_global_ai_governance] 但它们都没有强制力，进展也远慢于模型的迭代速度。欧盟的 AI 法案是少有的、带惩罚机制的横向立法，高风险义务的适用时间已经被推迟到 2027 年 8 月，这既说明这类立法有多难，也说明法律一旦通过，就会被产业一次次拉回谈判桌。立法之外还有一类更细的工具：前沿模型的部署前审计与许可制度，以及把事故成本内部化的责任保险。[^ai_regulation_tools] 对全球南方来说，问题更直接：如果算力和标准都在上游，要想不被边缘化，需要的是在规则制定的桌上有位置，而不是事后接受援助。非洲联盟（非盟）2024 年通过的《<Ruby rb="非洲大陆||人工||智能||战略" rt="Continental| |Artificial| |Intelligence| |Strategy" />》，就是这种自我定位的尝试。
 
-这六组之间也不是并列关系。让 AI 易得决定了有多少人能站在起跑线上，抑制集中决定了收益还有多大空间可以分，分享收益、劳动议价和缓冲转型决定转型期的成本落在谁身上，而国际治理决定这套安排会不会被算力竞争冲垮。
+这六组之间也不是并列关系。扩大可及性决定有多少人能站上起跑线，抑制集中决定还有多少收益可分，分享收益、劳动议价和缓冲转型决定转型期的成本落在谁头上，国际治理则决定这套安排会不会被算力竞争冲垮。
 
-这些政策不是互相排斥的备选，也不是一份必须全部实现的清单，更像一个工具箱：道路决定走向哪种形态，工具箱决定路上还有多少调整的余地。所谓在两条道路之间二选一，忽略了真实的政治过程，历史上几乎没有哪一次分配改革是一蹴而就的，都是一组政策慢慢叠加出来的。
+这些政策不是互相排斥的备选，也不是一份必须全部实现的清单，更像一个工具箱：道路决定我们最终走向哪种形态，工具箱决定路上还有多少调整的余地。把两种未来当成二选一，就忽略了政治实际是怎么运转的，历史上几乎没有哪一次分配改革是一蹴而就的，都是一组政策慢慢叠加出来的。
 
 ## 那我们能做什么？
 
-前面几节谈的都是机构能做什么，算力归谁、收益怎么分、规则由谁来写。但促使我写下这些文字的起因要具体得多：身边的人确实在担心 AI 对行业的冲击。这种担心不是杞人忧天，它对应的是正在发生的变化。
+前面几节谈的都是机构能做什么：算力归谁、收益怎么分、规则由谁来写。但真正促使我写下这些文字的起因要具体得多：我身边的人确实在担心 AI 对行业的冲击。这种担心不是杞人忧天，它对应的是正在发生的变化。
 
-如果一定要给一个务实的回答，我会说：更积极地使用 AI。浅的一层是把它当作能力放大的工具，让自己能做的事情往前推一点；更重要的一层是把它当作探测仪，用得越多，越能摸清它的能力边界在哪里，它擅长什么，在什么地方出错，又会在什么时候自信地把错的东西交给你。这种认识不会从新闻标题里来，只能从具体的使用里一点点攒出来。
+如果一定要给一个务实的回答，我会说：更主动地用 AI。浅的一层是把它当作能力放大器，让自己能做的事情往前推一点；更重要的一层是把它当作探针，用得越多，越能摸清它的能力边界在哪里，它擅长什么，在什么地方出错，又会在什么时候把错的东西自信地交到你手上。这种认识不会从新闻标题里来，只能从具体的使用里一点点攒出来。
 
-摸清边界之后，才是关键的一步：拿这道边界去量自己，确定自己作为人而非 AI 的核心竞争力在哪里。前面说过，被替代的往往是任务而不是整个职业；一个职业里需要判断、需要有人签字担责、需要与别人建立信任的那些环节，恰好都落在模型的边界之外。这些环节在自己手里有多厚，决定了一个人在自动化面前还剩多少余地。
+摸清边界只是准备，关键的一步在后面：拿这道边界去量自己，想清楚自己作为人、而不是作为 AI 的核心竞争力在哪里。前面说过，被替代的往往是任务，而不是整个职业；一个职业里需要判断、需要有人签字担责、需要和他人建立信任的那些环节，恰好落在模型的边界之外。这些环节你能占住多少，决定了自动化到来时你还剩多少余地。
 
-在这一点上我没有捷径可以给。边界要自己摸，位置也只能自己找，而且模型每迭代一次，边界就可能往外推一格，得重新量一遍。我们多多少少也会遇到需要“把才华埋葬在昨天”的处境，但至少可以把问题问对：不是“我会不会被取代”，而是“我做的事情里，哪一部分是它做不到的”。这或许是我们这一代人需要完成的历史课题：如何在大自动化时代找到人类的存在价值。
+这一点上我没有捷径可以给。边界要自己摸，位置也只能自己找；模型每迭代一次，边界就可能往外挪一格，那就得重新量一遍。总有一天，我们多数人会遇到需要“把才华埋葬在昨天”的处境，但至少可以把问题问对：不是“我会不会被取代？”，而是“我做的事情里，哪一部分是它做不到的？”这大概是我们这一代人绕不开的问题：大自动化时代，人的价值到底意味着什么？
 
-而如果你恰好在一个更具有影响力的位置上，那么你能做的事情就更多了：让 AI 易得、抑制集中、分享收益、劳动议价、缓冲转型、国际治理，这六个都是可以推进的方向。它们不是互相排斥的备选，也不是一份必须全部实现的清单，更像一个工具箱，多多益善。你的选择会影响到别人能走多远，甚至影响到整个社会的未来。
+如果你恰好在一个更有影响力的位置上，能做的事情就更多了：扩大可及性、抑制集中、分享收益、劳动议价、缓冲转型、国际治理，这六个方向都值得推进。它们不是互相排斥的备选，也不是一份必须全部打勾的清单，更像一个工具箱，多备几件总是好的。你的选择会影响到别人能走多远，也会影响整个社会最终走到哪里。
 
 ## 结语
 
-回到开头那个问题。AGI 前夜真正的问题，不是“它会不会来”，而是“它来的时候，是以什么形态实现的”。前五个维度决定它能做成什么，可及性决定谁能用上它，自动化把选择压进企业的账本，分配结构把结果固化成阶层，而政策决定这些结果还有多少可逆的空间。
+回到开头那个问题。AGI 前夜真正的问题，不是“它什么时候来”，而是“它来的时候是什么形态”。前五个维度决定它能做成什么，可及性决定谁能用上它，自动化把这些选择变成企业账本上的数字，分配结构把结果固化成阶层，而政策决定这些结果还有多少可以逆转的空间。
 
-我们是在迎接黎明，还是在制造长夜，取决于今天的所有权、制度和政治选择。前夜这个词本身就意味着还有时间，但时间不会替我们做决定：那段被称为 Engels' Pause 的半个世纪里，人们等来的并不是自动到来的公平，而是自己组织起来的结果。
+我们是在迎接黎明，还是在制造长夜，取决于今天在所有权、制度和政治上做出的选择。“前夜”这个词本身就意味着还有时间，但时间不会替我们做决定。在那段被称为“恩格斯停顿”的半个世纪里，人们等来的不是自动到来的公平，而是自己组织起来的结果。
 
-这篇文章没有时间表可以给，也不打算给。真要留下什么的话，大概是一句提醒：等到天亮再讨论光该归谁，可能已经太晚了。
+这篇文章没有时间表可以给，也不打算给。真要留下什么，大概是一句提醒：等到天亮之后再讨论光该归谁，可能已经太晚了。
 
 ---
 
 ## 参考资料
 
 [^agi_definitions]:
-    Morris et al. (DeepMind) "Levels of AGI: Operationalizing Progress on the Path to AGI" (2023)，按性能、通用性与自主性分级，AGI 是连续谱而不是一个开关。https://arxiv.org/abs/2311.02462
+    Morris et al. (DeepMind) "Levels of AGI: Operationalizing Progress on the Path to AGI" (2023)，按性能、通用性和自主性分级，AGI 是连续谱，不是一个开关。https://arxiv.org/abs/2311.02462
 
     Legg & Hutter "Universal Intelligence: A Definition of Machine Intelligence" (2007)，AGI 最常被引用的学术定义。https://arxiv.org/abs/0712.3329
 
@@ -232,12 +231,12 @@ AGI 不是中性工具，它的形态会塑造我们身处的社会。
     Bender et al. "On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?" (FAccT 2021)，规模不等同于理解。https://dl.acm.org/doi/10.1145/3442188.3445922
 
 [^cot_faithfulness]:
-    Anthropic "Reasoning models don't always say what they think" (2025)，模型会隐藏真实影响决策的线索。https://www.anthropic.com/research/reasoning-models-dont-say-think
+    Anthropic "Reasoning models don't always say what they think" (2025)，模型会隐藏真正影响决策的线索。https://www.anthropic.com/research/reasoning-models-dont-say-think
 
     OpenAI "Detecting misbehavior in frontier reasoning models" (2025)，CoT 监控可行但脆弱，惩罚“坏念头”会教模型隐藏意图。https://openai.com/index/chain-of-thought-monitoring/
 
 [^pace_the_frontier]:
-    Dario Amodei "We Must Pace the Frontier" (2026-09-12)，原文："We must slow the pace at which we improve the capabilities of AI models." 给出的理由正是递归自我改进："Since roughly this summer, AI has been advancing drastically faster, driven primarily by AI's growing ability to build the next generation of AI." https://darioamodei.com/post/we-must-pace-the-frontier
+    Dario Amodei "We Must Pace the Frontier" (2026-09-12)，原文："We must slow the pace at which we improve the capabilities of AI models."。给出的理由正是递归自我改进："Since roughly this summer, AI has been advancing drastically faster, driven primarily by AI's growing ability to build the next generation of AI." https://darioamodei.com/post/we-must-pace-the-frontier
 
     Sam Altman 跟帖表示同意，但强调减速不是停止："I agree with Dario that we need to pace the frontier." https://x.com/sama/status/2098811563415150910
 
@@ -252,11 +251,11 @@ AGI 不是中性工具，它的形态会塑造我们身处的社会。
 
 [^so_so_automation]: Acemoglu & Restrepo "Artificial Intelligence, Automation and Work" (NBER Working Paper 24196, 2018)，原文："the real danger for labor may come not from highly productive but from 'so-so' automation technologies"。https://www.nber.org/system/files/working_papers/w24196/w24196.pdf
 
-[^canaries_in_the_coal_mine]: Brynjolfsson, Chandar & Chen "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence" (Stanford Digital Economy Lab, 2026-08 修订版)，22 到 25 岁在 AI 高暴露职业中的就业水平比低暴露的同类人群低约 19%，差距主要来自招聘端；作者自述为早期描述性指标，非因果估计。https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence
+[^canaries_in_the_coal_mine]: Brynjolfsson, Chandar & Chen "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence" (Stanford Digital Economy Lab, 2026-08 修订版)，22 到 25 岁的年轻人在 AI 高暴露职业中的就业率比低暴露职业的同类人群低约 19%，差距主要来自招聘端；作者自述为早期描述性指标，不是因果估计。https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence
 
 [^engels_pause]: Allen "Engels' Pause: Technical Change, Capital Accumulation, and Inequality in the British Industrial Revolution" (2009)，生产率与工资脱节约半个世纪的证据。https://www.nuff.ox.ac.uk/Users/Allen/engelspause.pdf
 
-[^autor_middle_class_jobs]: Autor "Applying AI to Rebuild Middle Class Jobs" (NBER Working Paper 32140, 2024)，如果 AI 用于增强而非替代，可能重建被掏空的中层岗位。https://www.nber.org/papers/w32140
+[^autor_middle_class_jobs]: Autor "Applying AI to Rebuild Middle Class Jobs" (NBER Working Paper 32140, 2024)，如果 AI 用于增强而不是替代，可能重建被掏空的中层岗位。https://www.nber.org/papers/w32140
 
 [^technofeudalism]: Varoufakis "Technofeudalism: What Killed Capitalism" (2023)，云租（cloud rent）与平台对经济剩余的抽取。https://mhpbooks.com/books/technofeudalism
 
@@ -270,28 +269,28 @@ AGI 不是中性工具，它的形态会塑造我们身处的社会。
 
 [^stephenson]: Stephenson "Snow Crash" (1992)，公司取代政府的特许城邦（burbclave）设定。https://www.penguinrandomhouse.com/books/172832/snow-crash-by-neal-stephenson
 
-[^surveillance_capitalism]: Zuboff "The Age of Surveillance Capitalism" (2019)，行为数据被转化为预测商品的机制。https://www.publicaffairsbooks.com/titles/shoshana-zuboff/the-age-of-surveillance-capitalism/9781610395694
+[^surveillance_capitalism]: Zuboff "The Age of Surveillance Capitalism" (2019)，行为数据被转化为预测商品的机制。https://www.hachettebookgroup.com/titles/shoshana-zuboff/the-age-of-surveillance-capitalism/9781610395694/?lens=publicaffairs
 
 [^algorithmic_management]: Rosenblat "Uberland: How Algorithms Are Rewriting the Rules of Work" (2018)，算法作为“看不见的老板”。https://www.ucpress.edu/flyer/books/uberland/hardcover
 
 [^metr_embedded]:
-    Anthropic "An Alignment Assessment of Recent Cybersecurity Incidents"（2026-09-09），就四起网络安全评估事故委托 METR 做独立调查，协议给出的访问权限宽到事件窗口之外，包括记录与员工访谈，初始八周、可按双方约定延长。https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents
+    Anthropic "An Alignment Assessment of Recent Cybersecurity Incidents" (2026-09-09)，就四起网络安全评估事故委托 METR 做独立调查，权限宽到覆盖事件窗口之外的记录和员工访谈，初始八周，可按双方约定延长。https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents
 
     Anthropic 与 Accenture 合作嵌入式评估的公告（2026-09-18），写明这项工作由 Anthropic 直接出资，并承认独立评估尚无既定的出资机制，长期应由汇集式或政府资金支持。https://www.anthropic.com/news/accenture-embedded-evaluation
 
 [^metr_people]:
-    CNBC（2026-09-16）关于把第三方评估者嵌入 AI 公司的报道，点名 METR 为例，并记录了这个圈子里的人员流动，原文："Joe Benton, another former Anthropic researcher, recently left the company to join METR and work on embedded assessments of AI risk. His move gives METR firsthand expertise but also illustrates how small and interconnected the frontier-AI safety field remains." https://www.cnbc.com/2026/09/16/anthropic-open-ai-model-safety-risks.html
+    CNBC (2026-09-16) 关于把第三方评估者嵌入 AI 公司的报道，点名 METR 为例，并记录了这个圈子里的人员流动，原文："Joe Benton, another former Anthropic researcher, recently left the company to join METR and work on embedded assessments of AI risk. His move gives METR firsthand expertise but also illustrates how small and interconnected the frontier-AI safety field remains." https://www.cnbc.com/2026/09/16/anthropic-open-ai-model-safety-risks.html
 
-    Anthropic "Enabling independent research on how people use Claude"（2026-08-26）致谢名单里已经是 "…and Joel Becker (now at Anthropic), Daniel Paleka, and Parker Whitfill from METR."，说明 Becker 最迟在 8 月底已入职 Anthropic。https://www.anthropic.com/research/enabling-independent-research
+    Anthropic "Enabling independent research on how people use Claude" (2026-08-26)，致谢名单里已经是 "…and Joel Becker (now at Anthropic), Daniel Paleka, and Parker Whitfill from METR."，说明 Becker 最迟在 8 月底已经入职 Anthropic。https://www.anthropic.com/research/enabling-independent-research
 
-[^metr_frontier_risk]: METR "Frontier Risk Report (February to March 2026)"（2026-05-19）附录中的 operating conditions 一节，原文："METR did not have an applicable personnel conflict of interest (CoI) policy in place at the start of this project, and as such we did not run a formal recusal or disclosures process. Given this, this pilot was not compliant with all of the requirements of the AEF-1 standard."；同节还写明 "some METR staff have strong social ties to employees of AI companies, and METR currently works out of a shared research center (Constellation) which hosts some AI lab staff."，以及 METR 不接受 AI 公司及其高管的现金付款或捐赠，但承认 "METR's work with nonpublic models and use of free tokens incentivize a cordial relationship with AI companies"。https://metr.org/blog/2026-05-19-frontier-risk-report
+[^metr_frontier_risk]: METR "Frontier Risk Report (February to March 2026)" (2026-05-19)，附录中的 operating conditions 一节，原文："METR did not have an applicable personnel conflict of interest (CoI) policy in place at the start of this project, and as such we did not run a formal recusal or disclosures process. Given this, this pilot was not compliant with all of the requirements of the AEF-1 standard."；同节还写明 "some METR staff have strong social ties to employees of AI companies, and METR currently works out of a shared research center (Constellation) which hosts some AI lab staff."，以及 METR 不接受 AI 公司及其高管的现金付款或捐赠，但承认 "METR's work with nonpublic models and use of free tokens incentivize a cordial relationship with AI companies"。https://metr.org/blog/2026-05-19-frontier-risk-report
 
-[^ai_nationalism]: Hogarth "AI Nationalism" (2018)，算力与模型被当作战略资源锁在国境内的冲动。“AI 民族主义”一词的源头。https://www.ianhogarth.com/blog/2018/6/13/ai-nationalism
+[^ai_nationalism]: Hogarth "AI Nationalism" (2018)，算力与模型被当作战略资源锁在国境内的冲动，也是“AI 民族主义”一词的源头。https://www.ianhogarth.com/blog/2018/6/13/ai-nationalism
 
 [^algorithmic_colonization]:
     Birhane "Algorithmic Colonization of Africa" (SCRIPT-ed, 2020)，数据与算力从下游国家向上游输送的结构。https://journals.ed.ac.uk/script-ed/article/view/11592
 
-    Crawford "Atlas of AI" (2021)，AI 的矿脉、劳工与能源全景。https://yalebooks.yale.edu/book/9780300264630/atlas-of-ai
+    Crawford "Atlas of AI" (2021)，AI 的矿场、劳工与能源全景。https://yalebooks.yale.edu/book/9780300264630/atlas-of-ai
 
     Couldry & Mejias "The Costs of Connection" (2019)，数据殖民主义。https://www.sup.org/books/sociology/costs-connection
 
@@ -300,7 +299,7 @@ AGI 不是中性工具，它的形态会塑造我们身处的社会。
 
     美国 NAIRR Pilot，联邦与产业共建的国家级研究算力池。https://nairrpilot.org
 
-    DeepSeek-AI "DeepSeek-R1" (2025)，开源权重达到前沿推理水平。https://arxiv.org/abs/2501.12948
+    DeepSeek-AI "DeepSeek-R1" (2025)，开放权重达到接近前沿的推理水平。https://arxiv.org/abs/2501.12948
 
 [^ftc_ai_investigations]:
     FTC 对生成式 AI 投资与合作关系的 6(b) 调查（2024）。https://www.ftc.gov/news-events/news/press-releases/2024/01/ftc-launches-inquiry-generative-ai-investments-partnerships
@@ -317,7 +316,7 @@ AGI 不是中性工具，它的形态会塑造我们身处的社会。
     阿拉斯加永久基金，把资源租金变成全民分红的现实先例。https://pfd.alaska.gov/
 
 [^ubi_evidence]:
-    芬兰基本收入实验的最终结果（2020）：就业效应小，安全感与心理健康改善。https://valtioneuvosto.fi/en/-/1271139/perustulokokeilun-tulokset-tyollisyysvaikutukset-vahaisia-toimeentulo-ja-psyykkinen-terveys-koettiin-paremmaksi
+    芬兰基本收入实验的最终结果（2020）：就业效应小，安全感和心理健康改善。https://valtioneuvosto.fi/en/-/1271139/perustulokokeilun-tulokset-tyollisyysvaikutukset-vahaisia-toimeentulo-ja-psyykkinen-terveys-koettiin-paremmaksi
 
     肯尼亚长期 UBI 实验（GiveDirectly, 2023）：12 年期，工作论文、未经同行评审，但“没有变懒”的结论成立。https://www.givedirectly.org/2023-ubi-results
 
@@ -326,31 +325,30 @@ AGI 不是中性工具，它的形态会塑造我们身处的社会。
 [^platform_work_directive]:
     欧盟平台工作指令 (EU) 2024/2831，算法管理透明与人工监督，成员国 2026-12-02 前完成转化。https://eur-lex.europa.eu/EN/legal-content/summary/working-conditions-in-platform-work.html
 
-    ILO 社会对话案例集 (2025)，含德国电信工作委员会参与 AI 系统引入的案例。https://www.ilo.org/sites/default/files/2025-07/wp144_web.pdf
+    ILO 社会对话案例集（2025），含德国电信工作委员会参与 AI 系统引入的案例。https://www.ilo.org/sites/default/files/2025-07/wp144_web.pdf
 
-    OECD "Algorithmic management in the workplace: New evidence from an OECD employer survey" (2025)，算法管理已跨越教育与收入层级。https://www.oecd.org/content/dam/oecd/en/publications/reports/2025/02/algorithmic-management-in-the-workplace_3c84ed6d/287c13c4-en.pdf
+    OECD "Algorithmic management in the workplace: New evidence from an OECD employer survey" (2025)，算法管理已跨越教育和收入层级。https://www.oecd.org/content/dam/oecd/en/publications/reports/2025/02/algorithmic-management-in-the-workplace_3c84ed6d/287c13c4-en.pdf
 
 [^worktime_and_benefits]:
     英国四天工作制试验结果（2023）：92% 的公司选择继续，离职率下降 57%。https://autonomy.work/portfolio/uk4dwpilotresults
 
-    冰岛工时缩减试验（2021）：实为每周 35 到 36 小时。https://autonomy.work/portfolio/icelandsww
+    冰岛工时缩减试验（2021）：实际是每周 35 到 36 小时。https://autonomy.work/portfolio/icelandsww
 
     新加坡 SkillsFuture，国家级终身学习账户。https://www.skillsfuture.gov.sg
 
-    美国犹他州便携福利法（2023）。https://le.utah.gov/~2023/bills/static/SB0233.html
+    美国犹他州《可携带福利法》（2023）。https://le.utah.gov/~2023/bills/static/SB0233.html
 
 [^un_global_ai_governance]:
-    联合国《Governing AI for Humanity》最终报告（2024）。https://www.un.org/sites/un2.un.org/files/governing_ai_for_humanity_final_report_en.pdf
+    联合国《Governing AI for Humanity》最终报告 (2024)。https://www.un.org/sites/un2.un.org/files/governing_ai_for_humanity_final_report_en.pdf
 
-    联合国全球 AI 治理对话，由 A/RES/79/325（2025-08）设立。https://www.un.org/global-dialogue-on-ai-governance/en
+    联合国全球 AI 治理对话，由 A/RES/79/325（2025-08）设立。https://www.un.org/global-dialogue-ai-governance/en
 
-    非盟《Continental AI Strategy》（2024），下游国家自我定位的尝试。https://au.int/en/documents/20240809/continental-artificial-intelligence-strategy
+    非盟《Continental AI Strategy》(2024)，下游地区自我定位的尝试。https://au.int/en/documents/20240809/continental-artificial-intelligence-strategy
 
-[^ai_regulation_tools]:
-    欧盟 AI 法案 (EU) 2024/1689。https://eur-lex.europa.eu/eli/reg/2024/1689/oj
+[^ai_regulation_tools]: 欧盟 AI 法案 (EU) 2024/1689。https://eur-lex.europa.eu/eli/reg/2024/1689/oj
 
-    数字综合法案 AI 篇 (EU) 2026/1744（2026-07-27 生效），高风险义务的适用时间被推迟到最迟 2027-08-02。https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng
+    数字综合法案（AI 部分）(EU) 2026/1744（2026-07-27 生效），高风险义务的适用时间被推迟到最迟 2027-08-02。https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng
 
-    Anderljung et al. "Frontier AI Regulation: Managing Emerging Risks to Public Safety" (2023)，许可证、部署前审计与第三方评估的代表提案。https://arxiv.org/abs/2307.03718
+    Anderljung et al. "Frontier AI Regulation: Managing Emerging Risks to Public Safety" (2023)，一份有代表性的提案，主张许可证、部署前审计与第三方评估。https://arxiv.org/abs/2307.03718
 
-    Geneva Association 关于生成式 AI 责任保险的讨论 (2025)。https://www.genevaassociation.org/publication/digital-ai-transformation/gen-ai-risks-businesses-exploring-role-insurance-0
+    Geneva Association 关于生成式 AI 责任保险的讨论（2025）。https://www.genevaassociation.org/publication/digital-ai-transformation/gen-ai-risks-businesses-exploring-role-insurance-0
