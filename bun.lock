@@ -15,7 +15,7 @@
         "@expressive-code/plugin-collapsible-sections": "0.44.2",
         "@expressive-code/plugin-line-numbers": "0.44.2",
         "@giscus/react": "3.1.0",
-        "@iconify-json/tabler": "1.2.39",
+        "@iconify-json/tabler": "1.2.40",
         "@myriaddreamin/typst-ts-node-compiler": "0.7.0",
         "@playform/compress": "0.2.5",
         "@tailwindcss/typography": "0.5.20",
@@ -246,7 +246,7 @@
 
     "@giscus/react": ["@giscus/react@3.1.0", "", { "dependencies": { "giscus": "^1.6.0" }, "peerDependencies": { "react": "^16 || ^17 || ^18 || ^19", "react-dom": "^16 || ^17 || ^18 || ^19" } }, "sha512-0TCO2TvL43+oOdyVVGHDItwxD1UMKP2ZYpT6gXmhFOqfAJtZxTzJ9hkn34iAF/b6YzyJ4Um89QIt9z/ajmAEeg=="],
 
-    "@iconify-json/tabler": ["@iconify-json/tabler@1.2.39", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-lMj4kPXAS9G7fkkHxxR/LqBeaFXywTtnK5kRFDNEYxsYzGZBcBpQDaxRE4SZQS6XHBHoeOpRbE+Bg8kv0is+wg=="],
+    "@iconify-json/tabler": ["@iconify-json/tabler@1.2.40", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-CetrHwWDd8oiMySokCHjn77NSsbdnJgmA+Lr/7+0JI2r1QUZs8iknF2BhiE4i54YJcVjEt+EZw98EF2s2ligIg=="],
 
     "@iconify/tools": ["@iconify/tools@5.0.14", "", { "dependencies": { "@cyberalien/svg-utils": "^1.2.19", "@iconify/types": "^2.0.0", "@iconify/utils": "^3.1.4", "fflate": "^0.8.3", "modern-tar": "^0.8.4", "pathe": "^2.0.3", "svgo": "^4.1.0" } }, "sha512-wJ4ZE3/HZh2iBqLwG+8FOMHe7CMJAJqwSXZSpPwMdj1gZM3Z4t2hbQMVw4Vm45oQ985qn0g89PUIcDEdKTheBA=="],
 
