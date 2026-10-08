@@ -35,7 +35,7 @@
     "astro": "7.3.5",
     "astro-expressive-code": "0.44.2",
     "astro-icon": "1.2.0",
-    "astro-loader-i18n": "1.0.0",
+    "astro-loader-i18n": "1.0.2",
     "astro-mermaid": "2.1.0",
     "astro-og": "0.3.2",
     "astro-pagefind": "2.0.1",
