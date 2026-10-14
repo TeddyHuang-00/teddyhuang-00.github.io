@@ -1,9 +1,11 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
+
 import { getLangFromUrl } from "@/i18n/utils";
 import { getPath } from "@/utils/getPath";
 import { toTransitionName } from "@/utils/toTransitionName";
+
 import Datetime from "./Datetime.astro";
 
 type Props = {
@@ -26,11 +28,7 @@ const headerProps = {
     href={getRelativeLocaleUrl(locale, getPath(data.translationId, filePath))}
     class="text-accent inline-block text-lg font-medium decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
   >
-    {variant === "h2" ? (
-      <h2 {...headerProps}>{title}</h2>
-    ) : (
-      <h3 {...headerProps}>{title}</h3>
-    )}
+    {variant === "h2" ? <h2 {...headerProps}>{title}</h2> : <h3 {...headerProps}>{title}</h3>}
   </a>
   <Datetime {pubDatetime} {modDatetime} {timezone} />
   <p>{description}</p>

@@ -1,6 +1,7 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import { Icon } from "astro-icon/components";
+import type { CollectionEntry } from "astro:content";
+
 import { SITE } from "@/config";
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 
@@ -16,8 +17,7 @@ const locale = getLangFromUrl(Astro.url);
 const localeString = getTranslations(locale);
 
 const href = `${SITE.editPost.url}${post.filePath}`;
-const showEditPost =
-  SITE.editPost.enabled && !hideEditPost && href.trim() !== "";
+const showEditPost = SITE.editPost.enabled && !hideEditPost && href.trim() !== "";
 ---
 
 {showEditPost && (
@@ -25,10 +25,7 @@ const showEditPost =
     {href}
     target="_blank"
     rel="noopener noreferrer"
-    class:list={[
-      "flex justify-baseline gap-1.5 opacity-80 hover:text-accent",
-      className,
-    ]}
+    class:list={["flex justify-baseline gap-1.5 opacity-80 hover:text-accent", className]}
   >
     <Icon name="tabler:edit" class="inline-block size-6" />
     <span>{localeString("edit.this-page")}</span>

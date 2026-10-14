@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import LinkButton from "@/components/LinkButton.astro";
@@ -10,21 +11,14 @@ const locale = getLangFromUrl(Astro.url);
 const localeString = getTranslations(locale);
 ---
 
-<Layout
-  title={`${localeString("404.not-found")} | ${localeString("site.title")}`}
->
+<Layout title={`${localeString("404.not-found")} | ${localeString("site.title")}`}>
   <Header />
 
-  <main
-    id="main-content"
-    class="mx-auto flex max-w-app flex-1 items-center justify-center"
-  >
+  <main id="main-content" class="mx-auto flex max-w-app flex-1 items-center justify-center">
     <div class="mb-14 flex flex-col items-center justify-center">
       <h1 class="text-accent text-9xl font-bold">404</h1>
       <span aria-hidden="true">¯\_(ツ)_/¯</span>
-      <p class="mt-4 text-2xl sm:text-3xl">
-        {localeString("404.page-not-found")}
-      </p>
+      <p class="mt-4 text-2xl sm:text-3xl">{localeString("404.page-not-found")}</p>
       <p class="mt-4 text-lg sm:text-xl">{localeString("404.description")}</p>
       <LinkButton
         href="/"

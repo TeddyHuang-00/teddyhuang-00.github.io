@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+
 import { SITE } from "@/config";
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 import "dayjs/locale/zh";
@@ -45,10 +46,7 @@ const date = datetime.format("ll");
 <div class:list={["flex items-center gap-x-2 opacity-80", className]}>
   <Icon
     name="tabler:calendar"
-    class:list={[
-      "inline-block size-6 min-w-5.5",
-      { "scale-90": size === "sm" },
-    ]}
+    class:list={["inline-block size-6 min-w-5.5", { "scale-90": size === "sm" }]}
   />
   {isModified && (
     <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>

@@ -1,7 +1,8 @@
 ---
+import { Icon } from "astro-icon/components";
 import { type CollectionEntry, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { Icon } from "astro-icon/components";
+
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
 import Comments from "@/components/Comments";
@@ -63,9 +64,7 @@ if (!ogImageUrl && SITE.dynamicOgImage) {
 }
 
 // Resolve OG image URL (or fallback to SITE.ogImage / default `og.png`)
-const ogImage = ogImageUrl
-  ? new URL(ogImageUrl, Astro.url.origin).href
-  : undefined;
+const ogImage = ogImageUrl ? new URL(ogImageUrl, Astro.url.origin).href : undefined;
 
 const layoutProps = {
   title: `${title} | ${localeString("site.title")}`,
@@ -86,15 +85,10 @@ const allPosts = posts.map(({ data: { title, translationId }, filePath }) => ({
   filePath,
 }));
 
-const currentPostIndex = allPosts.findIndex(
-  (a) => a.translationId === post.data.translationId
-);
+const currentPostIndex = allPosts.findIndex((a) => a.translationId === post.data.translationId);
 
 const nextPost = currentPostIndex > 0 ? allPosts[currentPostIndex - 1] : null;
-const prevPost =
-  currentPostIndex + 1 < allPosts.length
-    ? allPosts[currentPostIndex + 1]
-    : null;
+const prevPost = currentPostIndex + 1 < allPosts.length ? allPosts[currentPostIndex + 1] : null;
 ---
 
 <Layout {...layoutProps}>
@@ -102,23 +96,15 @@ const prevPost =
   <BackButton />
   <main
     id="main-content"
-    class:list={[
-      "mx-auto w-full max-w-app px-4 pb-12",
-      { "mt-8": !SITE.showBackButton },
-    ]}
+    class:list={["mx-auto w-full max-w-app px-4 pb-12", { "mt-8": !SITE.showBackButton }]}
     data-pagefind-body
   >
-    <h1 class="text-accent inline-block text-2xl font-bold sm:text-3xl">
-      {title}
-    </h1>
+    <h1 class="text-accent inline-block text-2xl font-bold sm:text-3xl">{title}</h1>
     <div class="my-2 flex items-center gap-2">
       <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
       <span
         aria-hidden="true"
-        class:list={[
-          "max-sm:hidden",
-          { hidden: !SITE.editPost.enabled || hideEditPost },
-        ]}
+        class:list={["max-sm:hidden", { hidden: !SITE.editPost.enabled || hideEditPost }]}
       >
         |
       </span>
@@ -154,16 +140,10 @@ const prevPost =
     <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">
       {prevPost && (
         <a
-          href={getRelativeLocaleUrl(
-            locale,
-            getPath(prevPost.translationId, prevPost.filePath)
-          )}
+          href={getRelativeLocaleUrl(locale, getPath(prevPost.translationId, prevPost.filePath))}
           class="flex w-full gap-1 hover:opacity-75"
         >
-          <Icon
-            name="tabler:chevron-left"
-            class="inline-block size-6 flex-none rtl:rotate-180"
-          />
+          <Icon name="tabler:chevron-left" class="inline-block size-6 flex-none rtl:rotate-180" />
           <div>
             <span>{localeString("nav.prev-post")}</span>
             <div class="text-accent/85 text-sm">{prevPost.title}</div>
@@ -172,20 +152,14 @@ const prevPost =
       )}
       {nextPost && (
         <a
-          href={getRelativeLocaleUrl(
-            locale,
-            getPath(nextPost.translationId, nextPost.filePath)
-          )}
+          href={getRelativeLocaleUrl(locale, getPath(nextPost.translationId, nextPost.filePath))}
           class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
         >
           <div>
             <span>{localeString("nav.next-post")}</span>
             <div class="text-accent/85 text-sm">{nextPost.title}</div>
           </div>
-          <Icon
-            name="tabler:chevron-right"
-            class="inline-block size-6 flex-none rtl:rotate-180"
-          />
+          <Icon name="tabler:chevron-right" class="inline-block size-6 flex-none rtl:rotate-180" />
         </a>
       )}
     </div>
@@ -206,8 +180,7 @@ const prevPost =
   function createProgressBar() {
     // Create the main container div
     const progressContainer = document.createElement("div");
-    progressContainer.className =
-      "progress-container bg-background fixed top-0 z-10 h-1 w-full";
+    progressContainer.className = "progress-container bg-background fixed top-0 z-10 h-1 w-full";
 
     // Create the progress bar div
     const progressBar = document.createElement("div");
@@ -226,11 +199,8 @@ const prevPost =
    *  when user scrolls */
   function updateScrollProgress() {
     document.addEventListener("scroll", () => {
-      const winScroll =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      const height =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = (winScroll / height) * 100;
       if (document) {
         const myBar = document.querySelector("#myBar");
@@ -245,9 +215,7 @@ const prevPost =
   /** Attaches links to headings in the document,
    *  allowing sharing of sections easily */
   function addHeadingLinks() {
-    const headings = Array.from(
-      document.querySelectorAll("h2, h3, h4, h5, h6")
-    );
+    const headings = Array.from(document.querySelectorAll("h2, h3, h4, h5, h6"));
     for (const heading of headings) {
       heading.classList.add("group");
       const link = document.createElement("a");

@@ -1,5 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
+
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import { SITE } from "@/config";
 import { getLangFromUrl } from "@/i18n/utils";
@@ -14,17 +15,11 @@ export type Props = StringTitleProp;
 const { pageTitle, pageDesc } = Astro.props;
 
 const locale = getLangFromUrl(Astro.url) as keyof typeof SITE.locales;
-const backUrl = SITE.showBackButton
-  ? Astro.url.pathname
-  : getRelativeLocaleUrl(locale, "/");
+const backUrl = SITE.showBackButton ? Astro.url.pathname : getRelativeLocaleUrl(locale, "/");
 ---
 
 <Breadcrumb />
-<main
-  data-backUrl={backUrl}
-  id="main-content"
-  class="mx-auto w-full max-w-app px-4 pb-4"
->
+<main data-backUrl={backUrl} id="main-content" class="mx-auto w-full max-w-app px-4 pb-4">
   <h1 class="text-2xl font-semibold sm:text-3xl">{pageTitle}</h1>
   <p class="mt-2 mb-6 italic">{pageDesc}</p>
   <slot />
@@ -32,8 +27,7 @@ const backUrl = SITE.showBackButton
 
 <script>
   document.addEventListener("astro:page-load", () => {
-    const mainContent: HTMLElement | null =
-      document.querySelector("#main-content");
+    const mainContent: HTMLElement | null = document.querySelector("#main-content");
     const backUrl = mainContent?.dataset?.backUrl;
     if (backUrl) {
       sessionStorage.setItem("backUrl", backUrl);

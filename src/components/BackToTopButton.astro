@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 
 const locale = getLangFromUrl(Astro.url);
@@ -27,10 +28,7 @@ const localeString = getTranslations(locale);
       id="progress-indicator"
       class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"
     ></span>
-    <Icon
-      name="tabler:chevron-left"
-      class="inline-block size-6 rotate-90 md:hidden"
-    />
+    <Icon name="tabler:chevron-left" class="inline-block size-6 rotate-90 md:hidden" />
     <span class="group-hover:text-accent sr-only text-sm md:not-sr-only">
       <Icon name="tabler:arrow-narrow-up" class="inline-block size-6 pb-0.5" />
       {localeString("nav.back-to-top")}
@@ -47,8 +45,7 @@ const localeString = getTranslations(locale);
     const backToTopBtn = document.querySelector("[data-button='back-to-top']");
     const progressIndicator = document.querySelector("#progress-indicator");
 
-    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator)
-      return;
+    if (!rootElement || !btnContainer || !backToTopBtn || !progressIndicator) return;
 
     // Attach click event handler for back-to-top button
     backToTopBtn.addEventListener("click", () => {

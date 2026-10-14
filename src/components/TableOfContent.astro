@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from "astro";
+
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
 
 type Props = {
@@ -11,10 +12,7 @@ const { headings, filterSlugs = ["footnote-label"] } = Astro.props;
 
 // Filter headings first to suppress noise
 const filteredHeadings = headings.filter(
-  (heading) =>
-    heading.depth > 1 &&
-    heading.depth < 5 &&
-    filterSlugs.indexOf(heading.slug) === -1
+  (heading) => heading.depth > 1 && heading.depth < 5 && filterSlugs.indexOf(heading.slug) === -1
 );
 
 const locale = getLangFromUrl(Astro.url);

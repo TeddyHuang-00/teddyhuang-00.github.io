@@ -1,8 +1,9 @@
 ---
-import { getCollection } from "astro:content";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import type { GetStaticPaths } from "astro";
 import { Icon } from "astro-icon/components";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
 import Card from "@/components/Card.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
@@ -48,24 +49,17 @@ const backUrl = getRelativeLocaleUrl(locale, "/");
         aria-label={localeString("rss.feed")}
         title={localeString("rss.feed")}
       >
-        <Icon
-          name="tabler:rss"
-          class="text-accent size-6 sm:size-8 rtl:-rotate-90"
-        />
+        <Icon name="tabler:rss" class="text-accent size-6 sm:size-8 rtl:-rotate-90" />
         <span class="sr-only">{localeString("rss.feed")}</span>
       </a>
 
-      <p class="text-lg sm:text-2xl">
-        {localeString("site.description")}
-      </p>
+      <p class="text-lg sm:text-2xl">{localeString("site.description")}</p>
 
       {
         // only display if at least one social link is enabled
         SOCIALS.length > 0 && (
           <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
-              {localeString("social.links")}:
-            </div>
+            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">{localeString("social.links")}:</div>
             <Socials />
           </div>
         )
@@ -74,39 +68,30 @@ const backUrl = getRelativeLocaleUrl(locale, "/");
 
     <Hr />
 
-    {
-      featuredPosts.length > 0 && (
-        <>
-          <section id="featured" class="pt-12 pb-6">
-            <h2 class="text-2xl font-semibold tracking-wide">
-              {localeString("posts.featured")}
-            </h2>
-            <ul>
-              {featuredPosts.map((data) => (
-                <Card variant="h3" {...data} />
-              ))}
-            </ul>
-          </section>
-          {recentPosts.length > 0 && <Hr />}
-        </>
-      )
-    }
-
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">
-            {localeString("posts.recent")}
-          </h2>
+    {featuredPosts.length > 0 && (
+      <>
+        <section id="featured" class="pt-12 pb-6">
+          <h2 class="text-2xl font-semibold tracking-wide">{localeString("posts.featured")}</h2>
           <ul>
-            {recentPosts.map(
-              (data, index) =>
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />
-            )}
+            {featuredPosts.map((data) => (
+              <Card variant="h3" {...data} />
+            ))}
           </ul>
         </section>
-      )
-    }
+        {recentPosts.length > 0 && <Hr />}
+      </>
+    )}
+
+    {recentPosts.length > 0 && (
+      <section id="recent-posts" class="pt-12 pb-6">
+        <h2 class="text-2xl font-semibold tracking-wide">{localeString("posts.recent")}</h2>
+        <ul>
+          {recentPosts.map(
+            (data, index) => index < SITE.postPerIndex && <Card variant="h3" {...data} />
+          )}
+        </ul>
+      </section>
+    )}
 
     <div class="my-8 text-center">
       <LinkButton href={getRelativeLocaleUrl(locale, "/posts/")}>

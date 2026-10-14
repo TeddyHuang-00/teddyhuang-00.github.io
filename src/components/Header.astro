@@ -1,9 +1,11 @@
 ---
-import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import { Toggle } from "astro-theme-toggle";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
 import { SITE } from "@/config";
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
+
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
 
@@ -12,8 +14,7 @@ const { pathname } = Astro.url;
 const currentLang = getLangFromUrl(Astro.url);
 const localeString = getTranslations(currentLang);
 // Remove trailing slash from current pathname if exists
-const currentPath =
-  pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
+const currentPath = pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
 const langAgnosticPath = currentPath.split("/").slice(2).join("/");
 
 const isActive = (path: string) => {
@@ -109,10 +110,7 @@ const isActive = (path: string) => {
                 ariaLabel={localeString("nav.archives")}
                 title={localeString("nav.archives")}
               >
-                <Icon
-                  name="tabler:archive"
-                  class="hidden size-6 sm:inline-block"
-                />
+                <Icon name="tabler:archive" class="hidden size-6 sm:inline-block" />
                 <span class="sm:sr-only">{localeString("nav.archives")}</span>
               </LinkButton>
             </li>
@@ -179,10 +177,7 @@ const isActive = (path: string) => {
               >
                 <Toggle tabindex={-1} class="hover:[&>svg]:stroke-accent flex">
                   <Fragment slot="icon-light">
-                    <Icon
-                      name="tabler:sun-high"
-                      class="block size-6 dark:hidden"
-                    />
+                    <Icon name="tabler:sun-high" class="block size-6 dark:hidden" />
                   </Fragment>
                   <Fragment slot="icon-dark">
                     <Icon name="tabler:moon" class="hidden size-6 dark:block" />
@@ -269,9 +264,7 @@ const isActive = (path: string) => {
   function updateThemeColor() {
     const style = window.getComputedStyle(document.body);
     const color = style.getPropertyValue("--background");
-    document
-      .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", color);
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", color);
   }
 
   toggleNav();

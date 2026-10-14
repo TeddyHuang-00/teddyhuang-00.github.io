@@ -1,6 +1,7 @@
 import { defineConfig } from "oxfmt";
 
 export default defineConfig({
+  astro: true,
   arrowParens: "always",
   bracketSameLine: false,
   bracketSpacing: true,

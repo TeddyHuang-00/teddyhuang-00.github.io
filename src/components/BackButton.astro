@@ -1,8 +1,10 @@
 ---
-import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
+import { getRelativeLocaleUrl } from "astro:i18n";
+
 import { SITE } from "@/config";
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
+
 import LinkButton from "./LinkButton.astro";
 
 const locale = getLangFromUrl(Astro.url);
@@ -16,10 +18,7 @@ const localeString = getTranslations(locale);
       href={getRelativeLocaleUrl(locale, "/")}
       class="hover:text-foreground/75 focus-outline mt-8 mb-2 flex"
     >
-      <Icon
-        name="tabler:chevron-left"
-        class="inline-block size-6 pb-1 rtl:rotate-180"
-      />
+      <Icon name="tabler:chevron-left" class="inline-block size-6 pb-1 rtl:rotate-180" />
       <span>{localeString("nav.go-back")}</span>
     </LinkButton>
   </div>
@@ -28,8 +27,7 @@ const localeString = getTranslations(locale);
 <script>
   /* Update Search Praam */
   function updateGoBackUrl() {
-    const backButton: HTMLAnchorElement | null =
-      document.querySelector("#back-button");
+    const backButton: HTMLAnchorElement | null = document.querySelector("#back-button");
 
     const backUrl = sessionStorage.getItem("backUrl");
 

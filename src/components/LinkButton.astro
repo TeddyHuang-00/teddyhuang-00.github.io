@@ -8,23 +8,11 @@ type Props = {
   disabled?: boolean;
 };
 
-const {
-  id,
-  href,
-  class: className = "",
-  ariaLabel,
-  title,
-  disabled = false,
-} = Astro.props;
+const { id, href, class: className = "", ariaLabel, title, disabled = false } = Astro.props;
 ---
 
 {disabled ? (
-  <span
-    {id}
-    class:list={["group inline-block", className]}
-    {title}
-    aria-disabled={disabled}
-  >
+  <span {id} class:list={["group inline-block", className]} {title} aria-disabled={disabled}>
     <slot />
   </span>
 ) : (

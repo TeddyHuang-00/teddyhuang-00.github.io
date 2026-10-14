@@ -1,9 +1,7 @@
 ---
 import { SITE } from "@/config";
 
-const supportedLocales = Object.keys(
-  SITE.locales
-) as (keyof typeof SITE.locales)[];
+const supportedLocales = Object.keys(SITE.locales) as (keyof typeof SITE.locales)[];
 const defaultLocale = SITE.defaultLocale as keyof typeof SITE.locales;
 ---
 
@@ -20,8 +18,7 @@ const defaultLocale = SITE.defaultLocale as keyof typeof SITE.locales;
       connectedCallback() {
         const getPreferredLocale = () => {
           // Read supported locales and default locale from attributes
-          const supportedLocales =
-            this.dataset.supportedLocales?.split(",") || [];
+          const supportedLocales = this.dataset.supportedLocales?.split(",") || [];
           const defaultLocale = this.dataset.defaultLocale || "en";
 
           // Try to get preferred locale from local storage

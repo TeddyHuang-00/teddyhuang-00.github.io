@@ -1,5 +1,6 @@
 ---
 import { createHash } from "node:crypto";
+
 import { Icon } from "astro-icon/components";
 
 const BadgeTypes = ["tip", "info", "important", "caution", "danger"] as const;
@@ -9,7 +10,7 @@ type Props = {
   text: string;
   type?: BadgeType;
   class?: string;
-}
+};
 
 const { type = "tip", text, class: className = "" } = Astro.props;
 

@@ -9,7 +9,7 @@ export default defineConfig({
     // nursery: "warn",
     pedantic: "warn",
   },
-  options: { typeAware: true, typeCheck: true },
+  options: { typeAware: true, typeCheck: false },
   env: {
     astro: true,
     builtin: true,

@@ -1,8 +1,10 @@
 ---
-import type { CollectionEntry } from "astro:content";
 import type { Page } from "astro";
 import { Icon } from "astro-icon/components";
+import type { CollectionEntry } from "astro:content";
+
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
+
 import LinkButton from "./LinkButton.astro";
 
 type Props = {
@@ -33,10 +35,7 @@ const localeString = getTranslations(locale);
       ariaLabel={localeString("nav.page-next")}
     >
       {localeString("nav.page-next")}
-      <Icon
-        name="tabler:arrow-right"
-        class="inline-block pb-1 rtl:rotate-180"
-      />
+      <Icon name="tabler:arrow-right" class="inline-block pb-1 rtl:rotate-180" />
     </LinkButton>
   </nav>
 )}

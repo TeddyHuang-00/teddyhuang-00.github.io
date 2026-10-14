@@ -1,18 +1,15 @@
 ---
 import fs from "node:fs";
+
 import { processTypstFile } from "@/utils/generateTypstSvg";
 
 type Props = {
   filePath: string;
   workspace?: string;
   fontPaths?: string[];
-}
+};
 
-const {
-  filePath,
-  workspace = "src/assets/images",
-  fontPaths = [".cache/fonts"],
-} = Astro.props;
+const { filePath, workspace = "src/assets/images", fontPaths = [".cache/fonts"] } = Astro.props;
 if (!filePath.endsWith(".typ")) {
   throw new Error("Typst component only supports .typ files");
 }
@@ -38,9 +35,18 @@ const { light, dark } = processTypstFile({
 });
 ---
 
-{
-  light === dark ? (
-    <figure>
+{light === dark ? (
+  <figure>
+    <img src={light} loading="lazy" decoding="async" class="border-none" />
+    {Astro.slots.has("default") && (
+      <figcaption class="text-center">
+        <slot />
+      </figcaption>
+    )}
+  </figure>
+) : (
+  <>
+    <figure class="block dark:hidden">
       <img src={light} loading="lazy" decoding="async" class="border-none" />
       {Astro.slots.has("default") && (
         <figcaption class="text-center">
@@ -48,24 +54,13 @@ const { light, dark } = processTypstFile({
         </figcaption>
       )}
     </figure>
-  ) : (
-    <>
-      <figure class="block dark:hidden">
-        <img src={light} loading="lazy" decoding="async" class="border-none" />
-        {Astro.slots.has("default") && (
-          <figcaption class="text-center">
-            <slot />
-          </figcaption>
-        )}
-      </figure>
-      <figure class="hidden dark:block">
-        <img src={dark} loading="lazy" decoding="async" class="border-none" />
-        {Astro.slots.has("default") && (
-          <figcaption class="text-center">
-            <slot />
-          </figcaption>
-        )}
-      </figure>
-    </>
-  )
-}
+    <figure class="hidden dark:block">
+      <img src={dark} loading="lazy" decoding="async" class="border-none" />
+      {Astro.slots.has("default") && (
+        <figcaption class="text-center">
+          <slot />
+        </figcaption>
+      )}
+    </figure>
+  </>
+)}

@@ -1,7 +1,9 @@
 ---
 import { Icon } from "astro-icon/components";
+
 import { SOCIALS } from "@/constants";
 import { getLangFromUrl, getTranslations } from "@/i18n/utils";
+
 import LinkButton from "./LinkButton.astro";
 
 type Props = {
@@ -20,11 +22,7 @@ const localeString = getTranslations(locale);
         ? localeString("social.find-me-on", { social: social.name })
         : localeString("social.contact-me-via", { social: social.name });
     return (
-      <LinkButton
-        href={social.href}
-        class="p-2 hover:rotate-6 sm:p-1"
-        title={linkText}
-      >
+      <LinkButton href={social.href} class="p-2 hover:rotate-6 sm:p-1" title={linkText}>
         <Icon
           name={social.iconName}
           class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 group-hover:fill-transparent sm:scale-110"

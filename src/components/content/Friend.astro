@@ -1,13 +1,13 @@
 ---
-import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
 
 type Props = {
   name: string;
   description: string;
   avatar?: string;
   link?: string;
-}
+};
 const { name, description, avatar, link } = Astro.props;
 const Wrapper = link ? "a" : "div";
 const wrapperProps = link
@@ -19,29 +19,22 @@ const wrapperProps = link
   : {};
 ---
 
-<Wrapper
-  {...wrapperProps}
-  class="border-border flex items-center space-x-4 rounded-lg border p-4"
->
-  {
-    avatar ? (
-      <Image
-        src={avatar}
-        alt={`${name} avatar`}
-        class="h-16 w-16 rounded-full object-cover"
-        width={256}
-        height={256}
-      />
-    ) : (
-      <div class="bg-muted flex h-16 w-16 items-center justify-center rounded-full">
-        <Icon name="tabler:user" class="text-foreground size-8" />
-      </div>
-    )
-  }
+<Wrapper {...wrapperProps} class="border-border flex items-center space-x-4 rounded-lg border p-4">
+  {avatar ? (
+    <Image
+      src={avatar}
+      alt={`${name} avatar`}
+      class="h-16 w-16 rounded-full object-cover"
+      width={256}
+      height={256}
+    />
+  ) : (
+    <div class="bg-muted flex h-16 w-16 items-center justify-center rounded-full">
+      <Icon name="tabler:user" class="text-foreground size-8" />
+    </div>
+  )}
   <div class="flex-1">
-    <h3 class="text-lg font-semibold">
-      {name}
-    </h3>
+    <h3 class="text-lg font-semibold">{name}</h3>
     <p class="text-foreground">{description}</p>
   </div>
 </Wrapper>

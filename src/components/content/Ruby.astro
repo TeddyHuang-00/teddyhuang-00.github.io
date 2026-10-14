@@ -3,12 +3,11 @@ type Props = {
   rb: string;
   rt: string;
   split?: string;
-}
+};
 
 const { rb, rt, split = "|" } = Astro.props;
 
-const spaceToNbsp = (s: string) =>
-  s.length > 0 && s.trim().length === 0 ? "&nbsp;" : s;
+const spaceToNbsp = (s: string) => (s.length > 0 && s.trim().length === 0 ? "&nbsp;" : s);
 
 const rbs = rb.split(split).map((c) => spaceToNbsp(c));
 const rts = rt.split(split).map((c) => spaceToNbsp(c));
@@ -18,10 +17,7 @@ if (rbs.length !== rts.length) {
   const matched = Array.from({ length }).map((_, i) => {
     return `${rbs[i] ?? "???"} (${rts[i] ?? "???"})`;
   });
-  throw new Error(
-    "The number of rb and rt must be the same. Current have: " +
-      matched.join(", ")
-  );
+  throw new Error("The number of rb and rt must be the same. Current have: " + matched.join(", "));
 }
 const innerHtml = `<rb>${rbs.join("<rb>")}<rp> (<rt>${rts.join("<rt>")}<rp>) `;
 ---
