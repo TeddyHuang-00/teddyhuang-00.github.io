@@ -88,6 +88,10 @@ export function processTypstFile({
 
 /**
  * Compiles a Typst file to SVG strings for light and dark themes.
+ *
+ * typst-ts reports diagnostics on `err.code` and leaves `err.message` empty, so
+ * rethrow with the diagnostic text and source file, otherwise the failure
+ * surfaces as a bare "Error" with no hint about which diagram broke.
  */
 function compileTypst(
   filePath: string,
@@ -98,8 +102,16 @@ function compileTypst(
     workspace,
     fontArgs: fontPaths ? [{ fontPaths }] : undefined,
   });
-  const [lightSvg, darkSvg] = ["light", "dark"].map((theme) =>
-    compiler.plainSvg({ mainFilePath: filePath, inputs: { theme } })
-  );
-  return [lightSvg, darkSvg];
+  const compile = (theme: string) => {
+    try {
+      return compiler.plainSvg({ mainFilePath: filePath, inputs: { theme } });
+    } catch (err) {
+      const code = typeof err === "object" && err !== null && "code" in err ? err.code : undefined;
+      const detail = typeof code === "string" && code ? code : String(err);
+      throw new Error(`Typst compilation failed: ${filePath} (${theme})\n${detail}`, {
+        cause: err,
+      });
+    }
+  };
+  return [compile("light"), compile("dark")];
 }
