@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { type CollectionEntry, getCollection, render } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import Footer from "@/components/Footer.astro";
