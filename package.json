@@ -24,7 +24,7 @@
     "@expressive-code/plugin-collapsible-sections": "0.44.3",
     "@expressive-code/plugin-line-numbers": "0.44.3",
     "@giscus/react": "3.1.0",
-    "@iconify-json/tabler": "1.2.42",
+    "@iconify-json/tabler": "1.2.43",
     "@myriaddreamin/typst-ts-node-compiler": "0.8.0-rc3",
     "@playform/compress": "0.2.5",
     "@tailwindcss/typography": "0.5.20",
